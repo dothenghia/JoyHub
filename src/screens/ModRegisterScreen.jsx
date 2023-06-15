@@ -10,8 +10,8 @@ export default function ModRegisterScreen({ navigation }) {
 
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                 <Button
-                    title="Go to MAIN Screen"
-                    onPress={() => navigation.navigate("CustomerMain")}
+                    title="Go to MODERATOR MAIN Screen"
+                    onPress={() => navigation.navigate("ModeratorMain")}
                 />
             </View>
             
