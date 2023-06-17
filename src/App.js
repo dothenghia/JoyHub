@@ -8,6 +8,7 @@ import ModRegisterScreen from './screens/ModRegisterScreen';
 
 import CustomerIndex from './screens/Customer'
 import ModeratorIndex from './screens/Moderator'
+import AdminIndex from './screens/Customer'
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export default function App() {
 				<Stack.Screen name="ModeratorRegisterPage" component={ModRegisterScreen} />
 				<Stack.Screen name="CustomerMain" component={CustomerIndex} />
 				<Stack.Screen name="ModeratorMain" component={ModeratorIndex} />
+                <Stack.Screen name="AdminMain" component={AdminIndex} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
