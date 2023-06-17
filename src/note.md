@@ -3,7 +3,7 @@
 - expo >= 41 (if you use Expo)
 
 # II. Setup project : 
-(Mọi người ko cần làm những cái này, vì tui đã cài ròi , Chỉ cần pull project về rồi chạy lệnh `npm install` thoi)
+(Mọi người ko cần làm những cái này, vì tui đã cài ròi , Chỉ cần pull project về ; Mở Terminal của thư mục src ; rồi chạy lệnh `npm install` thoi)
 ## 1/ Chạy lệnh sau để tạo "khuôn" cho project :
 
     npx create-expo-app .
