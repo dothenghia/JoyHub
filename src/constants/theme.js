@@ -21,10 +21,4 @@ const TEXTS = {
     xxl : 20,
 };
 
-const WEIGHTS = {
-    regular : 'DMRegular',
-    medium : 'DMMedium',
-    bold : 'DMBold',
-};
-
-export default { COLORS, TEXTS , WEIGHTS };
+export { COLORS, TEXTS };

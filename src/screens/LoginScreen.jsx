@@ -1,48 +1,50 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Button, Image } from "react-native";
 
+// Style & Theme
+import { COLORS } from '../constants/theme'
+import generalStyles from "../styles";
 
+// Components & Assets
+import InputField from "../components/common/InputField/InputField";
 
 export default function LoginScreen({ navigation }) {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const handleLogin = () => {
-        if (username === "admin" && password === "admin") {
-            alert("Login successfully");
-            navigation.navigate("AdminMain");
-        }
-        else {
-            alert('Username or password is incorrect');
-        }
-    }
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
     return (
-        <View style={{ flex: 1 }}>
-            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                <Text>Login Screen</Text>
-                <View style={styles.inputView} >
-                    <TextInput style={styles.TextInput}
-                        placeholder="Username"
-                        placeholderTextColor={"#003f5c"}
-                        onChangeText={(username) => setUsername(username)}
-                    />
-                </View>
-                <View style={styles.inputView}>
-                    <TextInput style={styles.TextInput}
-
-                        placeholder="Password"
-                        placeholderTextColor={"#003f5c"}
-                        onChangeText={(password) => setPassword(password)}
-                    />
-                </View>
+        <View style={{ flex: 1, backgroundColor: COLORS.background_color, marginTop: 33, paddingHorizontal: 32 }}>
+            
+            <View style={{width: '100%', height: 120, marginTop: 76, alignItems: 'center'}}>
+                <Image 
+                    source={require('../assets/icons/home.png')}
+                    style={{width: '100%', height: '100%', resizeMode: 'contain' }}
+                />
             </View>
 
-            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
-                    <Text style={styles.loginText}>LOGIN</Text>
-
-                </TouchableOpacity>
+            <View style={{ width: '100%', height: 50, marginTop: 10, alignItems: 'center'}}>
+                <Image 
+                    source={require('../assets/icons/joyhub.png')}
+                    style={{width: '100%', height: '100%', resizeMode: 'contain' }}
+                />
             </View>
-            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+
+            <Text style={{...generalStyles.subheading_1 , paddingHorizontal: 80}}>where you can discover, book or host a room</Text>
+
+            <Text style={generalStyles.input_label}>Username</Text>
+            <InputField
+                plhd='Enter Username'
+                setTextValue={setUsername}
+            />
+
+            <Text style={generalStyles.input_label}>Password</Text>
+            <InputField
+                plhd='Enter Password'
+                setTextValue={setPassword}
+            />
+            
+
+            <View style={{ backgroundColor: 'salmon' }}>
                 <Button
                     title="Sign up"
                     onPress={() => navigation.navigate("SignupPage")}
@@ -54,28 +56,5 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    inputView: {
-        backgroundColor: "#F9F9F9",
-        borderRadius: 12,
-        width: "70%",
-        height: 45,
-        marginBottom: 20,
-        alignItems: "center",
-    },
-    TextInput: {
-        height: 50,
-        flex: 1,
-        padding: 10,
-        marginLeft: 20,
-    },
-    loginBtn:
-    {
-        width: "80%",
-        borderRadius: 25,
-        height: 50,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 40,
-        backgroundColor: "#FF1493",
-    }
+
 });
