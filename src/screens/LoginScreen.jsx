@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 // Style & Theme
@@ -47,7 +47,7 @@ export default function LoginScreen({ navigation }) {
                 />
             </View>
 
-            <Text style={{ ...generalStyles.subheading_1, paddingHorizontal: 80 }}>where you can discover, book or host a room</Text>
+            <Text style={{ ...generalStyles.subheading_1, paddingHorizontal: 80, textAlign: 'center' }}>where you can discover, book or host a room</Text>
 
             <Text style={generalStyles.input_label}>Username</Text>
             <InputField

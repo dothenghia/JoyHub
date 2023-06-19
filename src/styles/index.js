@@ -12,29 +12,26 @@ const generalStyles = StyleSheet.create({
     
     // Page Heading text styles
     heading_1 : { 
-        textAlign: 'center',
         color: COLORS.heading_text,
         fontSize: TEXTS.xxl,
         fontWeight: '600',
 
         marginTop: 10,
     },
-    heading_2 : { 
-        textAlign: 'center',
-        color: COLORS.heading_text,
-        fontSize: TEXTS.xl,
-        fontWeight: '600',
-
-        marginTop: 10,
-    },
 
     subheading_1: {
-        textAlign: 'center',
         color: COLORS.subheading_text,
         fontSize: TEXTS.xs,
         fontWeight: '500',
 
         marginTop: 8,
+    },
+    subheading_2: {
+        color: COLORS.subheading_text,
+        fontSize: TEXTS.md,
+        fontWeight: '500',
+
+        marginTop: 6,
     },
 
     // Label styles
