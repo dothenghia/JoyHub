@@ -3,6 +3,13 @@ import { StyleSheet } from "react-native";
 import { COLORS, TEXTS } from '../constants/theme';
 
 const generalStyles = StyleSheet.create({
+    page_container: {
+        flex: 1,
+        backgroundColor: COLORS.background_color,
+        marginTop: 33,
+        paddingHorizontal: 32,
+    },
+    
     // Page Heading text styles
     heading_1 : { 
         textAlign: 'center',
