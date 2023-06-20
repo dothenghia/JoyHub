@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
 import Checkbox from 'expo-checkbox';
 
 
@@ -7,8 +7,6 @@ import Checkbox from 'expo-checkbox';
 import { COLORS, TEXTS } from '../constants/theme'
 import generalStyles from "../styles";
 
-// Components
-import InputField from "../components/common/InputField/InputField";
 
 export default function CusRegisterScreen({ navigation }) {
 
@@ -29,6 +27,7 @@ export default function CusRegisterScreen({ navigation }) {
     return (
         <ScrollView style={generalStyles.page_container}>
 
+            {/* Back button */}
             <View style={{ alignItems: 'flex-start', marginTop: 28 }}>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('SignupPage')}
@@ -39,6 +38,7 @@ export default function CusRegisterScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
 
+            {/* Register icon */}
             <View style={styles.icon_wrapper}>
                 <Image
                     source={require('../assets/icons/register.png')}
@@ -46,40 +46,60 @@ export default function CusRegisterScreen({ navigation }) {
                 />
             </View>
 
+            {/* Heading & Subheading */}
             <Text style={generalStyles.heading_1}>Customer Register</Text>
             <Text style={generalStyles.subheading_2}>Enter your personal information</Text>
 
+            
+            {/* ====== Input ====== */}
             <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 2, marginTop: 20 }}>Username</Text>
-            <InputField
-                plhd='Enter Username'
-                setTextValue={setUsername}
+            <TextInput
+                style={generalStyles.input_field}
+                placeholder='Enter Username'
+                placeholderTextColor={COLORS.subheading_text}
+                autoCapitalize="none"
+                onChangeText={(e) => setUsername(e)}
             />
 
             <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 2 }}>Full Name</Text>
-            <InputField
-                plhd='Enter Full Name'
-                setTextValue={setFullname}
+            <TextInput
+                style={generalStyles.input_field}
+                placeholder='Enter Full Name'
+                placeholderTextColor={COLORS.subheading_text}
+                autoCapitalize="none"
+                onChangeText={(e) => setFullname(e)}
             />
 
             <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 2 }}>Email</Text>
-            <InputField
-                plhd='Enter Email'
-                setTextValue={setEmail}
+            <TextInput
+                style={generalStyles.input_field}
+                placeholder='Enter Email'
+                placeholderTextColor={COLORS.subheading_text}
+                autoCapitalize="none"
+                onChangeText={(e) => setEmail(e)}
             />
 
             <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 2 }}>Password</Text>
-            <InputField
-                plhd='Enter Password'
-                setTextValue={setPassword}
+            <TextInput
+                style={generalStyles.input_field}
+                placeholder='Enter Password'
+                placeholderTextColor={COLORS.subheading_text}
+                autoCapitalize="none"
+                secureTextEntry={true}
+                onChangeText={(e) => setPassword(e)}
             />
 
             <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 2 }}>Confirm Password</Text>
-            <InputField
-                plhd='Enter Confirm Password'
-                setTextValue={setConfirm}
+            <TextInput
+                style={generalStyles.input_field}
+                placeholder='Enter Confirm Password'
+                placeholderTextColor={COLORS.subheading_text}
+                autoCapitalize="none"
+                secureTextEntry={true}
+                onChangeText={(e) => setConfirm(e)}
             />
 
-
+            {/* Checkbox Term of Service */}
             <View style={ styles.checkboxLine }>
                 <Checkbox
                     style={styles.checkbox}
@@ -97,6 +117,7 @@ export default function CusRegisterScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
 
+            {/* Submit button */}
             <View style={{ marginBottom: 50 }}>
                 <TouchableOpacity
                     onPress={submitHandler}
@@ -121,7 +142,7 @@ const styles = StyleSheet.create({
         padding: 28,
         borderRadius: 100,
         alignItems: 'center',
-        backgroundColor: 'rgba(255, 100, 0, .2)',
+        backgroundColor: 'rgba(255, 100, 0, .1)',
     },
     icon_image: {
         marginLeft: 9,

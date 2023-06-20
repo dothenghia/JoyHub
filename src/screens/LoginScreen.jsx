@@ -1,66 +1,88 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from "react-native";
 
 // Style & Theme
 import { COLORS, TEXTS } from '../constants/theme'
 import generalStyles from "../styles";
 
-// Components
-import InputField from "../components/common/InputField/InputField";
 
 export default function LoginScreen({ navigation }) {
-    
-    // ------ Handle data
+
+    // ------ Init data state
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    // ------ Handle data
+    // Function called when the user presses Login button
     const loginHandler = () => {
-        if (username === 'thao' && password === 'hien') {
+        if (username === 'cus' && password === 'cus') {
             navigation.navigate("CustomerMain")
-            alert('Log in successfully');
+            alert('[CUSTOMER] Log in successfully');
+        }
+        else if (username === 'mod' && password === 'mod') {
+            navigation.navigate("ModeratorMain")
+            alert('[MODERATOR] Log in successfully');
+        }
+        else if (username === 'admin' && password === 'admin') {
+            navigation.navigate("AdminMain")
+            alert('[ADMIN] Log in successfully');
         }
         else {
-            alert('username : thao\npassword : hien');
+            alert(`[Customer]\nusername & password: cus\n\n[Moderator]\nusername & password: mod\n\n[Admin]\nusername & password: admin`);
         }
     }
 
+    // Function called when the user presses Forgot Password button
     const forgotPasswordHandler = () => {
-        alert('username : thao\npassword : hien');
+        alert(`[Customer]\nusername & password: cus\n\n[Moderator]\nusername & password: mod\n\n[Admin]\nusername & password: admin`);
     }
 
 
     // ------ Render UI
     return (
-        <View style={ generalStyles.page_container }>
+        <View style={generalStyles.page_container}>
 
-            <View style={ styles.logo1 }>
+            {/* Logo HOME */}
+            <View style={styles.logo1}>
                 <Image
                     source={require('../assets/icons/home.png')}
-                    style={ styles.logo_image }
+                    style={styles.logo_image}
                 />
             </View>
 
-            <View style={ styles.logo2 }>
+            {/* Logo JOYHUB text */}
+            <View style={styles.logo2}>
                 <Image
                     source={require('../assets/icons/joyhub.png')}
-                    style={ styles.logo_image }
+                    style={styles.logo_image}
                 />
             </View>
 
+            {/* Slogan */}
             <Text style={{ ...generalStyles.subheading_1, paddingHorizontal: 80, textAlign: 'center' }}>where you can discover, book or host a room</Text>
 
+            {/* Input */}
             <Text style={generalStyles.input_label}>Username</Text>
-            <InputField
-                plhd='Enter Username'
-                setTextValue={setUsername}
+            <TextInput
+                style={generalStyles.input_field}
+                placeholder='Enter Username'
+                placeholderTextColor={COLORS.subheading_text}
+                autoCapitalize="none"
+                onChangeText={(e) => setUsername(e)}
             />
 
+            {/* Input */}
             <Text style={generalStyles.input_label}>Password</Text>
-            <InputField
-                plhd='Enter Password'
-                setTextValue={setPassword}
+            <TextInput
+                style={generalStyles.input_field}
+                placeholder='Enter Password'
+                placeholderTextColor={COLORS.subheading_text}
+                autoCapitalize="none"
+                secureTextEntry={true}
+                onChangeText={(e) => setPassword(e)}
             />
 
+            {/* Forgot Passowrd button */}
             <View style={{ alignItems: 'flex-end', marginTop: 4 }}>
                 <TouchableOpacity
                     onPress={forgotPasswordHandler}
@@ -71,6 +93,7 @@ export default function LoginScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
 
+            {/* Log in button */}
             <View >
                 <TouchableOpacity
                     onPress={loginHandler}
@@ -82,6 +105,7 @@ export default function LoginScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
 
+            {/* Log in as Guest button */}
             <View style={{ alignItems: 'center', marginTop: 28 }}>
                 <TouchableOpacity
                     onPress={() => navigation.navigate("CustomerMain")}
@@ -92,22 +116,24 @@ export default function LoginScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
 
+            {/* Divider */}
             <View style={{ marginTop: 40, width: '100%', height: 2, backgroundColor: '#DEDEDE' }}></View>
 
-            
-            <View style={ styles.signupLine }>
+
+            {/* Sign up Line */}
+            <View style={styles.signupLine}>
                 <Text>
                     If you don't have an account,
                 </Text>
                 <TouchableOpacity
                     onPress={() => navigation.navigate("SignupPage")}
                 >
-                    <Text style={{ color: COLORS.primary, fontWeight: '600', marginLeft: 3}}>
+                    <Text style={{ color: COLORS.primary, fontWeight: '600', marginLeft: 3 }}>
                         Create one
                     </Text>
                 </TouchableOpacity>
             </View>
-            
+
 
         </View>
     );

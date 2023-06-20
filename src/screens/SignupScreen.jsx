@@ -10,6 +10,7 @@ export default function SignupScreen({ navigation }) {
     return (
         <View style={generalStyles.page_container}>
 
+            {/* Back button */}
             <View style={{ alignItems: 'flex-start', marginTop: 28 }}>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('LoginPage')}
@@ -24,9 +25,9 @@ export default function SignupScreen({ navigation }) {
                 You are
             </Text>
 
-            <View
-                style={{ marginTop: 40, flexDirection: 'row', justifyContent: 'space-between' }}
-            >
+            {/* Select-Role buttons */}
+            <View style={{ marginTop: 40, flexDirection: 'row', justifyContent: 'space-between' }}>
+                {/* Role button */}
                 <TouchableOpacity
                     onPress={() => navigation.navigate('CustomerRegisterPage')}
                     style={styles.role_button}
@@ -43,6 +44,7 @@ export default function SignupScreen({ navigation }) {
                     <Text style={styles.button_description}>who want to book accommodation</Text>
                 </TouchableOpacity>
 
+                {/* Role button */}
                 <TouchableOpacity
                     onPress={() => navigation.navigate('ModeratorRegisterPage')}
                     style={styles.role_button}
