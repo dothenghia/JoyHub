@@ -3,14 +3,14 @@ import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, ScrollView 
 import Checkbox from 'expo-checkbox';
 
 
-// Style & Theme
-import { COLORS, TEXTS } from '../constants/theme'
-import generalStyles from "../styles";
+// Import Style & Theme
+import { COLORS, TEXTS } from '../../constants/theme'
+import generalStyles from "../../styles";
 
 
 export default function ModRegisterScreen({ navigation }) {
 
-    // ------ Handle data
+    // ------ Data State
     const [username, setUsername] = useState('');
     const [hotelname, setHotelname] = useState('');
     const [email, setEmail] = useState('');
@@ -20,12 +20,14 @@ export default function ModRegisterScreen({ navigation }) {
     const [description, setDescription] = useState('');
     const [isChecked, setChecked] = useState(false);
 
+    // ------ Event Handlers
     const submitHandler = () => {
         navigation.navigate("LoginPage")
         alert('Register successfully');
     }
 
-    // ------ Render UI
+    
+    // ------ UI Renderer
     return (
         <ScrollView style={generalStyles.page_container}>
 
@@ -43,7 +45,7 @@ export default function ModRegisterScreen({ navigation }) {
             {/* Register icon */}
             <View style={styles.icon_wrapper}>
                 <Image
-                    source={require('../assets/icons/register.png')}
+                    source={require('../../assets/icons/register.png')}
                     style={styles.icon_image}
                 />
             </View>

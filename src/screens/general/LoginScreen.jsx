@@ -1,51 +1,45 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from "react-native";
 
-// Style & Theme
-import { COLORS, TEXTS } from '../constants/theme'
-import generalStyles from "../styles";
+// Import Style & Theme
+import { COLORS, TEXTS } from '../../constants/theme'
+import generalStyles from "../../styles";
+
+// Import Dispatcher
+import GController from "../../controller/generalController";
 
 
 export default function LoginScreen({ navigation }) {
 
-    // ------ Init data state
+    // ------ Data State
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    // ------ Handle data
+    // ------ Event Handlers
     // Function called when the user presses Login button
-    const loginHandler = () => {
-        if (username === 'cus' && password === 'cus') {
-            navigation.navigate("CustomerMain")
-            alert('[CUSTOMER] Log in successfully');
+    const loginHandler = async () => {
+        const accessInfo = {
+            username: username,
+            password: password
         }
-        else if (username === 'mod' && password === 'mod') {
-            navigation.navigate("ModeratorMain")
-            alert('[MODERATOR] Log in successfully');
-        }
-        else if (username === 'admin' && password === 'admin') {
-            navigation.navigate("AdminMain")
-            alert('[ADMIN] Log in successfully');
-        }
-        else {
-            alert(`[Customer]\nusername & password: cus\n\n[Moderator]\nusername & password: mod\n\n[Admin]\nusername & password: admin`);
-        }
+        const ThanhThao = await GController('CHECKLEGIT', accessInfo)
+        console.log('Received Data from Server : ', ThanhThao)
     }
 
     // Function called when the user presses Forgot Password button
     const forgotPasswordHandler = () => {
-        alert(`[Customer]\nusername & password: cus\n\n[Moderator]\nusername & password: mod\n\n[Admin]\nusername & password: admin`);
+        alert('nothing');
     }
 
 
-    // ------ Render UI
+    // ------ UI Renderer
     return (
         <View style={generalStyles.page_container}>
 
             {/* Logo HOME */}
             <View style={styles.logo1}>
                 <Image
-                    source={require('../assets/icons/home.png')}
+                    source={require('../../assets/icons/home.png')}
                     style={styles.logo_image}
                 />
             </View>
@@ -53,7 +47,7 @@ export default function LoginScreen({ navigation }) {
             {/* Logo JOYHUB text */}
             <View style={styles.logo2}>
                 <Image
-                    source={require('../assets/icons/joyhub.png')}
+                    source={require('../../assets/icons/joyhub.png')}
                     style={styles.logo_image}
                 />
             </View>
