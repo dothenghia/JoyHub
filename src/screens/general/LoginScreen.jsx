@@ -6,7 +6,7 @@ import { COLORS, TEXTS } from '../../constants/theme'
 import generalStyles from "../../styles";
 
 // Import Dispatcher
-import GController from "../../controller/generalController";
+import GController from "../../controllers/generalController";
 
 
 export default function LoginScreen({ navigation }) {
@@ -22,8 +22,10 @@ export default function LoginScreen({ navigation }) {
             username: username,
             password: password
         }
-        const receivedData = await GController('CHECKLEGIT', loginInfo)
-        console.log('Received Data from Server : ', receivedData)
+        //const receivedData = await GController('CHECKLEGIT', loginInfo)
+        //console.log('Received Data from Server : ', receivedData)
+
+        navigation.navigate('ModeratorMain')
     }
 
     // Function called when the user presses Forgot Password button

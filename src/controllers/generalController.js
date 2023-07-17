@@ -1,5 +1,5 @@
 import axios from 'axios'
-import checkLegit from "../model/general/checkLegit"
+import checkLegit from "../models/general/checkLegit"
 
 export default async function GController (type, ...payload) {
     switch (type) {
