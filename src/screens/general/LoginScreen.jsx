@@ -18,12 +18,12 @@ export default function LoginScreen({ navigation }) {
     // ------ Event Handlers
     // Function called when the user presses Login button
     const loginHandler = async () => {
-        const accessInfo = {
+        const loginInfo = {
             username: username,
             password: password
         }
-        const ThanhThao = await GController('CHECKLEGIT', accessInfo)
-        console.log('Received Data from Server : ', ThanhThao)
+        const receivedData = await GController('CHECKLEGIT', loginInfo)
+        console.log('Received Data from Server : ', receivedData)
     }
 
     // Function called when the user presses Forgot Password button
