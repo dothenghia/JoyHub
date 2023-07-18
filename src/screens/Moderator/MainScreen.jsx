@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
-import { COLORS } from "../../constants/theme";
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
 import TopBar from "../../components/moderator/TopBar";
 import SearchBar from "../../components/moderator/SearchBar";
+import VerifyWaitingCard from "../../components/moderator/VerifyWaitingCard";
+
 import generalStyles from "../../styles";
 export default function MainScreen() {
 
@@ -12,7 +13,7 @@ export default function MainScreen() {
         <View style={generalStyles.page_container}>
             <TopBar Title={"Hotel Name"}/>
             <SearchBar/>
-            <View style = {{flexDirection : 'row'}}>
+            <View style = {{flexDirection : 'row', marginBottom:10}}>
                 <TouchableOpacity style={{height: 40, flex:1 ,borderWidth: 1, borderRadius: 20, marginTop:15, marginRight:10}}
                     onPress={() => {setPage('verify')}}>
                     <Text style={{textAlign:'center', paddingTop:7}}> Verify </Text>
@@ -28,8 +29,21 @@ export default function MainScreen() {
             </View>
 
             {
+
                 page === 'verify' && (
-                    <Text style= {{ marginTop:20, fontSize : 25, fontWeight:'bold'}}>Waiting for verifying</Text>
+                    <ScrollView>
+                        <Text style= {{ marginTop:20, fontSize : 25, fontWeight:'bold'}}>Waiting for verifying</Text>
+                        <VerifyWaitingCard Username={'Tran Thu Minh'} PhoneNumber={'0909996669'} Room = 'Phong Tinh Iu Chi Anh Va Em <3' NumOfRoom={5} CheckInDate={'15/07/2023'} CheckOutDate={'17/07/2023'}/>
+                        <VerifyWaitingCard Username={'Tran Thu Minh'} PhoneNumber={'0909996669'} Room = 'Phong Tinh Iu Chi Anh Va Em <3' NumOfRoom={5} CheckInDate={'15/07/2023'} CheckOutDate={'17/07/2023'}/>
+                        <VerifyWaitingCard Username={'Tran Thu Minh'} PhoneNumber={'0909996669'} Room = 'Phong Tinh Iu Chi Anh Va Em <3' NumOfRoom={5} CheckInDate={'15/07/2023'} CheckOutDate={'17/07/2023'}/>
+                        <VerifyWaitingCard Username={'Tran Thu Minh'} PhoneNumber={'0909996669'} Room = 'Phong Tinh Iu Chi Anh Va Em <3' NumOfRoom={5} CheckInDate={'15/07/2023'} CheckOutDate={'17/07/2023'}/>
+                        <VerifyWaitingCard Username={'Tran Thu Minh'} PhoneNumber={'0909996669'} Room = 'Phong Tinh Iu Chi Anh Va Em <3' NumOfRoom={5} CheckInDate={'15/07/2023'} CheckOutDate={'17/07/2023'}/>
+                        <VerifyWaitingCard Username={'Tran Thu Minh'} PhoneNumber={'0909996669'} Room = 'Phong Tinh Iu Chi Anh Va Em <3' NumOfRoom={5} CheckInDate={'15/07/2023'} CheckOutDate={'17/07/2023'}/>
+                    
+                    
+                    
+                    </ScrollView>
+                    
                 )
             }
             {
@@ -42,9 +56,7 @@ export default function MainScreen() {
                     <Text style= {{ marginTop:20, fontSize : 25, fontWeight:'bold'}}>Waiting for checking out</Text>
                 )
             }
-            <View>
-
-            </View>
+            
         </View>
 
         
