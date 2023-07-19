@@ -4,7 +4,16 @@ import checkLegit from "../models/general/checkLegit"
 export default async function GController (type, ...payload) {
     switch (type) {
         case 'CHECKLEGIT' : {
-            const response = await axios.get('https://jsonplaceholder.typicode.com/users')
+            // console.log(payload)
+            // const response = await axios.get('https://timely-chebakia-b0eb91.netlify.app/.netlify/functions/api/products')
+
+            let hehe = {
+                name: 'Something',
+                description: 'Someone',
+                price: 101
+            }
+            const response = await axios.post(`https://timely-chebakia-b0eb91.netlify.app/.netlify/functions/api/products`, hehe )
+
             return response
         }
 
