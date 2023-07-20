@@ -19,21 +19,14 @@ export default function LoginScreen({ navigation }) {
     // ------ Event Handlers
     // Function called when the user presses Login button
     const loginHandler = async () => {
-        // const objXaoKe = {
-        //     name: 'IU EM RAT NHIEU DO',
-        //     description: 'EM CO BIET KO HA',
-        //     price : 17072023
-        // }
-
-        // axios.post(`https://timely-chebakia-b0eb91.netlify.app/.netlify/functions/api/products`,  objXaoKe )
-        //     .then(res => {
-        //         console.log(res);
-        //         console.log(res.data);
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
-        navigation.navigate('ModeratorMain')
+        const loginInfo = {
+            username: username,
+            password: password
+        }
+        const receivedData = await GController('CHECKLEGIT', loginInfo)
+        receivedData.data.map((item) => {
+            console.log(item.name)
+        })
     }
 
     // Function called when the user presses Forgot Password button
