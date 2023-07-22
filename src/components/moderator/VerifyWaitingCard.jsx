@@ -43,14 +43,17 @@ export default function VerifyWaitingCard({ Username, PhoneNumber, Room, NumOfRo
 const styles = StyleSheet.create({
     card:
     {
-
         height: 'auto',
         minHeight: 250,
         backgroundColor: 'white',
         padding: 10,
         marginTop: 15,
         borderRadius: 15,
-
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 3,
     },
 
     icon:

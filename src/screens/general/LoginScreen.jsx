@@ -23,10 +23,12 @@ export default function LoginScreen({ navigation }) {
             username: username,
             password: password
         }
-        const receivedData = await GController('CHECKLEGIT', loginInfo)
-        receivedData.data.map((item) => {
-            console.log(item.name)
-        })
+        
+        navigation.navigate('ModeratorMain')
+        //const receivedData = await GController('CHECKLEGIT', loginInfo)
+        // receivedData.data.map((item) => {
+        //     console.log(item.name)
+        // })
     }
 
     // Function called when the user presses Forgot Password button
