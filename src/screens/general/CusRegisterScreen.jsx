@@ -5,7 +5,7 @@ import Checkbox from 'expo-checkbox';
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
-import generalStyles from "../../styles";
+import generalStyles from '../../styles/general'
 
 
 export default function CusRegisterScreen({ navigation }) {
@@ -42,7 +42,7 @@ export default function CusRegisterScreen({ navigation }) {
             {/* Register icon */}
             <View style={styles.icon_wrapper}>
                 <Image
-                    source={require('../../assets/icons/register.png')}
+                    source={require('../../assets/general/register.png')}
                     style={styles.icon_image}
                 />
             </View>

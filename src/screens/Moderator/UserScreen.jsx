@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, ImageBackground, ScrollView, TouchableOpacity } from "react-native";
-import generalStyles from "../../styles";
+import generalStyles from '../../styles/general'
 export default function UserScreen({ navigation }) {
     return (
         <View style={{ flex: 1 }}>

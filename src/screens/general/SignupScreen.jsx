@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
-import generalStyles from "../../styles";
+import generalStyles from '../../styles/general'
 
 export default function SignupScreen({ navigation }) {
 
@@ -36,7 +36,7 @@ export default function SignupScreen({ navigation }) {
 
                     <View style={styles.button_image_wrapper}>
                         <Image
-                            source={require('../../assets/icons/client.png')}
+                            source={require('../../assets/general/client.png')}
                             style={styles.button_image}
                         />
                     </View>
@@ -53,7 +53,7 @@ export default function SignupScreen({ navigation }) {
 
                     <View style={styles.button_image_wrapper}>
                         <Image
-                            source={require('../../assets/icons/hotel.png')}
+                            source={require('../../assets/general/hotel.png')}
                             style={styles.button_image}
                         />
                     </View>
