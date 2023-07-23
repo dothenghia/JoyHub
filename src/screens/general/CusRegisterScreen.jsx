@@ -53,7 +53,7 @@ export default function CusRegisterScreen({ navigation }) {
 
             
             {/* ====== Input ====== */}
-            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 2, marginTop: 20 }}>Username</Text>
+            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20 }}>Username</Text>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter Username'

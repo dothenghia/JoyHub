@@ -9,6 +9,7 @@ export default function RecoveryScreen({ navigation }) {
 
     // ------ Data State
     const [username, setUsername] = useState('');
+    const [otp, setOTP] = useState('');
     const [modalVisibility, setModalVisibility] = useState(false)
 
 
@@ -18,7 +19,8 @@ export default function RecoveryScreen({ navigation }) {
     }
 
     const verifyHandler = () => {
-        navigation.navigate('LoginPage')
+        setModalVisibility(false)
+        navigation.navigate('ResetPasswordPage')
     }
 
     const resendHandler = () => {
@@ -55,7 +57,7 @@ export default function RecoveryScreen({ navigation }) {
 
 
                 {/* ====== Input ====== */}
-                <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 2, marginTop: 20 }}>Username</Text>
+                <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20 }}>Username</Text>
                 <TextInput
                     style={generalStyles.input_field}
                     placeholder='Enter Username'
@@ -83,9 +85,12 @@ export default function RecoveryScreen({ navigation }) {
 
             {/* ======= Recovery Modal ====== */}
             <Modal
-                animationType="slide"
+                animationType="none"
                 transparent={true}
                 visible={modalVisibility}
+                onRequestClose={() => {
+                    setModalVisibility(false);
+                }}
             >
                 <View style={styles.modal_page}>
                     <View style={styles.modal_container}>
@@ -99,6 +104,7 @@ export default function RecoveryScreen({ navigation }) {
                             style={{ ...generalStyles.input_field, marginTop: 20 }}
                             placeholder='Enter OTP Code'
                             placeholderTextColor={COLORS.subheading_text}
+                            onChangeText={(e) => setOTP(e)}
                             autoCapitalize="none"
                         />
 
