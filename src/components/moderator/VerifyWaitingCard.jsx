@@ -8,11 +8,11 @@ export default function VerifyWaitingCard({ Username, PhoneNumber, Room, NumOfRo
 
         <View style={styles.card}>
             <View style={{ flexDirection: 'row' }}>
-                <Image style={styles.icon} source={require('../../assets/icons/people_black.png')} />
+                <Image style={styles.icon} source={require('../../assets/mod/people_black.png')} />
                 <Text style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: 15, fontWeight:'bold' }}> {Username} </Text>
             </View>
             <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                <Image style={styles.icon} source={require('../../assets/icons/phone.png')} />
+                <Image style={styles.icon} source={require('../../assets/mod/phone.png')} />
                 <Text style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: 15, fontWeight:'bold' }}> {PhoneNumber} </Text>
             </View>
             <View style={{ flexDirection: 'row', padding: 10, marginTop:7 }}>
