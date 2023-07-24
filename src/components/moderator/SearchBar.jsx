@@ -8,7 +8,7 @@ export default function SearchBar() {
             <TextInput placeholder="Search" placeholderTextColor="grey" style={{flex:10}}/>
             <TouchableOpacity style={{flex:1,width:30,height:30}} >
                 <Image style={{flex:1,width:30,height:30}}
-                     source = {require('../../assets/icons/search.png')}>
+                     source = {require('../../assets/mod/search.png')}>
                 </Image>
             </TouchableOpacity>
         </View>

@@ -15,17 +15,17 @@ export default function CheckoutCard({ Username, PhoneNumber, Room, CheckInDate 
 
                     
                     <View style={{ flexDirection: 'row', marginTop: 15 }}>
-                        <Image style={styles.icon} source={require('../../assets/icons/checkout.png')} />
+                        <Image style={styles.icon} source={require('../../assets/mod/checkout.png')} />
                         <Text style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: 15, fontWeight: 'bold' }}> {CheckInDate} </Text>
                     </View>
                     
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                        <Image style={styles.icon} source={require('../../assets/icons/phone.png')} />
+                        <Image style={styles.icon} source={require('../../assets/mod/phone.png')} />
                         <Text style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: 15, fontWeight: 'bold' }}> {PhoneNumber} </Text>
                     </View>
                     
                     <View style={{ flexDirection: 'row', marginTop: 5 ,height:50}}>
-                        <Image style={styles.icon} source={require('../../assets/icons/people_black.png')} />
+                        <Image style={styles.icon} source={require('../../assets/mod/people_black.png')} />
                         <Text style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: 15, fontWeight: 'bold' }}> {shortUsername(Username)} </Text>
                     </View>
 

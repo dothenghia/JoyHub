@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View, Image, ScrollView, TouchableOpacity } from "react-native";
-import generalStyles from "../../styles";
+
 export default function UserScreen({ navigation }) {
 
     const [hotelName,setHotelName] = useState('Harley House')
@@ -35,19 +35,19 @@ export default function UserScreen({ navigation }) {
                             }
                             
                             <TouchableOpacity onPress={() => { (hotelNameBlock === 'View') ? setHotelNameBlock('TextInput') : setHotelNameBlock('View') /*and request for changing */ }}>
-                                <Image style={{ marginTop: 10, height: 25, width: 25 }} source={ (hotelNameBlock === 'View') ? require('../../assets/icons/pencil.png') : require('../../assets/icons/star.png')} />
+                                <Image style={{ marginTop: 10, height: 25, width: 25 }} source={ (hotelNameBlock === 'View') ? require('../../assets/mod/pencil.png') : require('../../assets/mod/star.png')} />
                             </TouchableOpacity>
                         </View>
                         <View style={{ flexDirection: 'row', marginTop: 40 }}>
 
-                            <Image style={{ flex: 2, height: 30, width: 30 }} source={require('../../assets/icons/location_orange.png')} />
+                            <Image style={{ flex: 2, height: 30, width: 30 }} source={require('../../assets/mod/location_orange.png')} />
 
                             <Text style={{ marginLeft: 10, flex: 6, fontSize: 17 }}>{'Location:'}</Text>
                             <Text style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'so 1 duong vao tim em'}</Text>
 
                         </View>
                         <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 30 }}>
-                            <Image style={{ flex: 2, height: 30, width: 30 }} source={require('../../assets/icons/star.png')} />
+                            <Image style={{ flex: 2, height: 30, width: 30 }} source={require('../../assets/mod/star.png')} />
 
                             <Text style={{ marginLeft: 10, flex: 6, fontSize: 17 }}>{'Rating:'}</Text>
                             <Text style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'4.2'}</Text>
