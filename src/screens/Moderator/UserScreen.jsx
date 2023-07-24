@@ -1,9 +1,18 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, ImageBackground, ScrollView, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, TextInput, View, Image, ScrollView, TouchableOpacity } from "react-native";
 import generalStyles from "../../styles";
 export default function UserScreen({ navigation }) {
+
+    const [hotelName,setHotelName] = useState('Harley House')
+    const [hotelNameBlock,setHotelNameBlock] = useState('View')
+
+    const changeHotelName = (newName) =>
+    {
+        setHotelName(newName);
+    }
+
     return (
-        <View style={{ flex: 1 }}>
+        <ScrollView >
             <View style={{ flex: 1 }}>
                 <Image style={{ height: 250, width: 'auto' }} source={require('../../assets/images/demoHotel.jpg')} />
             </View>
@@ -14,12 +23,19 @@ export default function UserScreen({ navigation }) {
                 backgroundColor: '#888888',
                 borderTopLeftRadius: 25, borderTopRightRadius: 25
             }}>
-                <ScrollView  style={{borderTopLeftRadius: 25, borderTopRightRadius: 25}}>
+
+                <View style={{ borderTopLeftRadius: 25, borderTopRightRadius: 25 }}>
                     <View style={{ paddingHorizontal: 32, backgroundColor: 'white', borderTopLeftRadius: 25, borderTopRightRadius: 25 }}>
                         <View style={{ flexDirection: 'row', marginTop: 45 }}>
-                            <Text style={{ flex: 7, fontSize: 31, fontWeight: 'bold' }}>Harley House</Text>
-                            <TouchableOpacity onPress={() => { }}>
-                                <Image style={{ marginTop: 10, height: 25, width: 25 }} source={require('../../assets/icons/pencil.png')} />
+                            {
+                                (hotelNameBlock === 'View') ? (<Text style={{ flex: 7, fontSize: 31, fontWeight: 'bold' }}>{hotelName}</Text>) : 
+                                (<TextInput onChangeText={changeHotelName} style={{ flex: 7, fontSize: 31, fontWeight: 'bold' }}>{hotelName}</TextInput>)
+                                
+                                
+                            }
+                            
+                            <TouchableOpacity onPress={() => { (hotelNameBlock === 'View') ? setHotelNameBlock('TextInput') : setHotelNameBlock('View') /*and request for changing */ }}>
+                                <Image style={{ marginTop: 10, height: 25, width: 25 }} source={ (hotelNameBlock === 'View') ? require('../../assets/icons/pencil.png') : require('../../assets/icons/star.png')} />
                             </TouchableOpacity>
                         </View>
                         <View style={{ flexDirection: 'row', marginTop: 40 }}>
@@ -51,16 +67,60 @@ export default function UserScreen({ navigation }) {
                     <View style={{ height: 15, backgroundColor: 'transparent' }} />
 
                     <View style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Description</Text>
-                        <Text style={{ fontSize: 15, marginBottom: 30, textAlign: 'justify' }} >
-                            {'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. Yeu em khong loi thoat.'}
-                        </Text>
+                        <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Account</Text>
+                        <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 10 }}>
+                            <Text style={{ marginLeft: 10, flex: 6, fontSize: 17 }}>{'username:'}</Text>
+                            <Text style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'Harley House'}</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginTop: 0, marginBottom: 10 }}>
+                            <Text style={{ marginLeft: 10, flex: 6, fontSize: 17 }}>{'phone:'}</Text>
+                            <Text style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'09000112233'}</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginTop: 0, marginBottom: 30 }}>
+                            <Text style={{ marginLeft: 10, flex: 6, fontSize: 17 }}>{'email:'}</Text>
+                            <Text style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'harleyverygud@gmail.com'}</Text>
+                        </View>
+
                     </View>
-                </ScrollView>
+
+                    <View style={{ height: 15, backgroundColor: 'transparent' }} />
+
+                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Chỉnh sửa thông tin cá nhân'}</Text>
+                    </TouchableOpacity>
+                    <View style={{ height: 5, backgroundColor: '#888888' }} />
+
+                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Nạp/Rút'}</Text>
+                    </TouchableOpacity>
+                    <View style={{ height: 5, backgroundColor: '#888888' }} />
+
+                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Lịch sử và thống kê'}</Text>
+                    </TouchableOpacity>
+                    <View style={{ height: 5, backgroundColor: '#888888' }} />
+
+                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={()=>{navigation.navigate('LoginPage')}}>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Đăng xuất'}</Text>
+                    </TouchableOpacity>
+                    <View style={{ height: 5, backgroundColor: '#888888' }} />
+
+              
+
+
+
+
+
+                </View>
+
             </View>
 
-        </View>
+        </ScrollView>
     );
 }
+
+
 
 const styles = StyleSheet.create({});
