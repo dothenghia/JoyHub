@@ -16,7 +16,7 @@ export default function VerifyWaitingCard({ Username, PhoneNumber, Room, NumOfRo
                 <Text style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: 15, fontWeight:'bold' }}> {PhoneNumber} </Text>
             </View>
             <View style={{ flexDirection: 'row', padding: 10, marginTop:7 }}>
-                <Image style={{ flex: 2.5, height: 'auto', minHeight:150, borderRadius: 15, borderWidth: 1, }} source={require('../../assets/images/demoHotel.jpg')} />
+                <Image style={{ flex: 2.5, height: 'auto', minHeight:150, borderRadius: 15, borderWidth: 1, }} source={require('../../assets/mod/demoHotel.jpg')} />
                 <View style={{ flex: 5, }}>
                     <Text style={{ marginLeft: 10, justifyContent: 'center', marginTop: 0, fontSize: 17, fontWeight:'bold', color:'#FF6400' }}> {Room} </Text>
                     <View style={{ marginTop: 10 }}>

@@ -7,7 +7,7 @@ import UserScreen from "./UserScreen";
 
 const Tab = createBottomTabNavigator();
 
-export default function CustomerMain() {
+export default function ModeratorMain() {
     return (
         <Tab.Navigator 
             initialRouteName="MainPage"
