@@ -3,11 +3,10 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from "reac
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
-import generalStyles from "../../styles";
+import generalStyles from '../../styles/general'
 
 // Import Dispatcher
 import GController from "../../controllers/generalController";
-import axios from "axios";
 
 
 export default function LoginScreen({ navigation }) {
@@ -19,21 +18,17 @@ export default function LoginScreen({ navigation }) {
     // ------ Event Handlers
     // Function called when the user presses Login button
     const loginHandler = async () => {
-        const loginInfo = {
-            username: username,
-            password: password
+        if (username === 'c') {
+            navigation.navigate('CustomerMain')
         }
-        
-        navigation.navigate('ModeratorMain')
-        //const receivedData = await GController('CHECKLEGIT', loginInfo)
-        // receivedData.data.map((item) => {
-        //     console.log(item.name)
-        // })
+        else {
+            navigation.navigate('ModeratorMain')
+        }
     }
 
     // Function called when the user presses Forgot Password button
     const forgotPasswordHandler = () => {
-        alert('nothing');
+        navigation.navigate('RecoveryPage')
     }
 
 
@@ -44,7 +39,7 @@ export default function LoginScreen({ navigation }) {
             {/* Logo HOME */}
             <View style={styles.logo1}>
                 <Image
-                    source={require('../../assets/icons/home.png')}
+                    source={require('../../assets/general/home.png')}
                     style={styles.logo_image}
                 />
             </View>
@@ -52,7 +47,7 @@ export default function LoginScreen({ navigation }) {
             {/* Logo JOYHUB text */}
             <View style={styles.logo2}>
                 <Image
-                    source={require('../../assets/icons/joyhub.png')}
+                    source={require('../../assets/general/joyhub.png')}
                     style={styles.logo_image}
                 />
             </View>

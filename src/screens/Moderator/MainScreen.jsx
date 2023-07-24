@@ -5,7 +5,7 @@ import SearchBar from "../../components/moderator/SearchBar";
 import VerifyWaitingCard from "../../components/moderator/VerifyWaitingCard";
 import CheckinCard from "../../components/moderator/CheckinCard";
 import CheckoutCard from "../../components/moderator/CheckoutCard";
-import generalStyles from "../../styles";
+import generalStyles from '../../styles/general'
 
 export default function MainScreen() {
 

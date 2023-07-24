@@ -5,7 +5,7 @@ import Checkbox from 'expo-checkbox';
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
-import generalStyles from "../../styles";
+import generalStyles from '../../styles/general'
 
 
 export default function CusRegisterScreen({ navigation }) {
@@ -42,7 +42,7 @@ export default function CusRegisterScreen({ navigation }) {
             {/* Register icon */}
             <View style={styles.icon_wrapper}>
                 <Image
-                    source={require('../../assets/icons/register.png')}
+                    source={require('../../assets/general/register.png')}
                     style={styles.icon_image}
                 />
             </View>
@@ -53,7 +53,7 @@ export default function CusRegisterScreen({ navigation }) {
 
             
             {/* ====== Input ====== */}
-            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 2, marginTop: 20 }}>Username</Text>
+            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20 }}>Username</Text>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter Username'
