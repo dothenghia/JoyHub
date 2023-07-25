@@ -7,7 +7,7 @@ import CheckinCard from "../../components/moderator/CheckinCard";
 import CheckoutCard from "../../components/moderator/CheckoutCard";
 import generalStyles from '../../styles/general'
 
-export default function MainScreen() {
+export default function MainScreen({tab}) {
 
     const [page, setPage] = useState('verify')
     const [verifyColor, setVerifyColor] = useState('#FF6400')

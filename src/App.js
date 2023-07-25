@@ -12,6 +12,7 @@ import CustomerIndex from './screens/customer/index'
 import ModeratorIndex from './screens/moderator/index'
 import AdminIndex from './screens/admin/index'
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -30,6 +31,9 @@ export default function App() {
 				<Stack.Screen name="CustomerMain" component={CustomerIndex} />
 				<Stack.Screen name="ModeratorMain" component={ModeratorIndex} />
                 <Stack.Screen name="AdminMain" component={AdminIndex} />
+
+			
+
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
