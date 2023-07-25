@@ -21,8 +21,11 @@ export default function LoginScreen({ navigation }) {
         if (username === 'c') {
             navigation.navigate('CustomerMain')
         }
-        else {
+        else if (username === 'm') {
             navigation.navigate('ModeratorMain')
+        }
+        else if (username === 'a') {
+            navigation.navigate('AdminMain')
         }
     }
 
@@ -151,4 +154,3 @@ const styles = StyleSheet.create({
         color: COLORS.text,
     },
 });
-

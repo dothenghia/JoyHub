@@ -16,25 +16,20 @@ import AdminIndex from './screens/admin/index'
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-	return (
-		<NavigationContainer>
-			<Stack.Navigator
-				screenOptions={{ headerShown: false }}
-			>
-				<Stack.Screen name="LoginPage" component={LoginScreen} />
-				<Stack.Screen name="SignupPage" component={SignupScreen} />
-				<Stack.Screen name="RecoveryPage" component={RecoveryScreen} />
-				<Stack.Screen name="ResetPasswordPage" component={ResetPasswordScreen} />
-				<Stack.Screen name="CustomerRegisterPage" component={CusRegisterScreen} />
-				<Stack.Screen name="ModeratorRegisterPage" component={ModRegisterScreen} />
-				
-				<Stack.Screen name="CustomerMain" component={CustomerIndex} />
-				<Stack.Screen name="ModeratorMain" component={ModeratorIndex} />
+    return (
+        <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="LoginPage" component={LoginScreen} />
+                <Stack.Screen name="SignupPage" component={SignupScreen} />
+                <Stack.Screen name="RecoveryPage" component={RecoveryScreen} />
+                <Stack.Screen name="ResetPasswordPage" component={ResetPasswordScreen} />
+                <Stack.Screen name="CustomerRegisterPage" component={CusRegisterScreen} />
+                <Stack.Screen name="ModeratorRegisterPage" component={ModRegisterScreen} />
+
+                <Stack.Screen name="CustomerMain" component={CustomerIndex} />
+                <Stack.Screen name="ModeratorMain" component={ModeratorIndex} />
                 <Stack.Screen name="AdminMain" component={AdminIndex} />
-
-			
-
-			</Stack.Navigator>
-		</NavigationContainer>
-	);
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
