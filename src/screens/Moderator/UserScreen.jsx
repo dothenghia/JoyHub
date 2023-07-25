@@ -15,7 +15,7 @@ export default function UserScreen({ navigation }) {
         <ScrollView >
 
             <View style={{ flex: 1 }}>
-                <Image style={{ height: 250, width: 'auto' }} source={require('../../assets/images/demoHotel.jpg')} />
+                <Image style={{ height: 250, width: 'auto' }} source={require('../../assets/mod/demoHotel.jpg')} />
             </View>
 
             <View style={{

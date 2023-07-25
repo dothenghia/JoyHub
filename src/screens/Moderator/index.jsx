@@ -7,7 +7,7 @@ import AddRoomScreen from "./AddRoomScreen";
 
 const Tab = createBottomTabNavigator();
 
-export default function CustomerMain() {
+export default function ModeratorMain() {
     return (
         <Tab.Navigator 
             initialRouteName="MainPage"
