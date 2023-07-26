@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, ToastAndroid, Text, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
 import Checkbox from 'expo-checkbox';
 
 
@@ -23,7 +23,7 @@ export default function ModRegisterScreen({ navigation }) {
     // ------ Event Handlers
     const submitHandler = () => {
         navigation.navigate("LoginPage")
-        alert('Register successfully');
+        ToastAndroid.show('Register successfully', ToastAndroid.SHORT)
     }
 
     
@@ -146,9 +146,9 @@ export default function ModRegisterScreen({ navigation }) {
             <View style={{ marginBottom: 50 }}>
                 <TouchableOpacity
                     onPress={submitHandler}
-                    style={{ backgroundColor: COLORS.primary, height: 52, marginTop: 24, alignItems: 'center', justifyContent: 'center', borderRadius: 50 }}
+                    style={ generalStyles.button_1 }
                 >
-                    <Text style={{ color: '#fff', fontWeight: '800', fontSize: TEXTS.lg }}>
+                    <Text style={ generalStyles.button_text_1 }>
                         Register
                     </Text>
                 </TouchableOpacity>

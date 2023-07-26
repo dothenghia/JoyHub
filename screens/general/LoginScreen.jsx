@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from "react-native";
+import { StyleSheet, ToastAndroid, Text, View, Image, TouchableOpacity, TextInput } from "react-native";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -20,9 +20,11 @@ export default function LoginScreen({ navigation }) {
     const loginHandler = async () => {
         if (username === 'c') {
             navigation.navigate('CustomerMain')
+            ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
         }
         else {
             navigation.navigate('ModeratorMain')
+            ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
         }
     }
 
@@ -81,7 +83,7 @@ export default function LoginScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={forgotPasswordHandler}
                 >
-                    <Text style={{ color: COLORS.primary, fontWeight: '600' }}>
+                    <Text style={{color: COLORS.primary, fontWeight: '600'}}>
                         Forget password?
                     </Text>
                 </TouchableOpacity>
@@ -91,9 +93,9 @@ export default function LoginScreen({ navigation }) {
             <View >
                 <TouchableOpacity
                     onPress={loginHandler}
-                    style={{ backgroundColor: COLORS.primary, height: 52, marginTop: 24, alignItems: 'center', justifyContent: 'center', borderRadius: 50 }}
+                    style={ generalStyles.button_1 }
                 >
-                    <Text style={{ color: '#fff', fontWeight: '800', fontSize: TEXTS.lg }}>
+                    <Text style={ generalStyles.button_text_1 }>
                         Log in
                     </Text>
                 </TouchableOpacity>
@@ -104,14 +106,14 @@ export default function LoginScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={() => navigation.navigate("CustomerMain")}
                 >
-                    <Text style={{ color: COLORS.primary, fontWeight: '600' }}>
+                    <Text style={{color: COLORS.primary, fontWeight: '600'}}>
                         Log in as guest
                     </Text>
                 </TouchableOpacity>
             </View>
 
             {/* Divider */}
-            <View style={{ marginTop: 40, width: '100%', height: 2, backgroundColor: '#DEDEDE' }}></View>
+            <View style={ generalStyles.divider }></View>
 
 
             {/* Sign up Line */}

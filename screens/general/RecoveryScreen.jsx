@@ -71,9 +71,9 @@ export default function RecoveryScreen({ navigation }) {
                 <View style={{ marginBottom: 50 }}>
                     <TouchableOpacity
                         onPress={sendCodeHandler}
-                        style={{ backgroundColor: COLORS.primary, height: 52, marginTop: 24, alignItems: 'center', justifyContent: 'center', borderRadius: 50 }}
+                        style={ generalStyles.button_1 }
                     >
-                        <Text style={{ color: '#fff', fontWeight: '800', fontSize: TEXTS.lg }}>
+                        <Text style={ generalStyles.button_text_1 }>
                             Send Code
                         </Text>
                     </TouchableOpacity>
@@ -101,7 +101,7 @@ export default function RecoveryScreen({ navigation }) {
 
                         {/* ====== Input ====== */}
                         <TextInput
-                            style={{ ...generalStyles.input_field, marginTop: 20 }}
+                            style={{ ...generalStyles.input_field, marginTop: 20, marginBottom: 6 }}
                             placeholder='Enter OTP Code'
                             placeholderTextColor={COLORS.subheading_text}
                             onChangeText={(e) => setOTP(e)}
@@ -112,9 +112,9 @@ export default function RecoveryScreen({ navigation }) {
                         <View style={{ marginBottom: 30 }}>
                             <TouchableOpacity
                                 onPress={verifyHandler}
-                                style={{ backgroundColor: COLORS.primary, height: 52, marginTop: 16, alignItems: 'center', justifyContent: 'center', borderRadius: 50 }}
+                                style={ generalStyles.button_1 }
                             >
-                                <Text style={{ color: '#fff', fontWeight: '800', fontSize: TEXTS.lg }}>
+                                <Text style={ generalStyles.button_text_1 }>
                                     Verify
                                 </Text>
                             </TouchableOpacity>

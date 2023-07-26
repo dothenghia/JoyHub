@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, Text, Modal, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, ToastAndroid, Text, Modal, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -15,6 +15,7 @@ export default function ResetPasswordScreen({ navigation }) {
     // ------ Event Handlers
     const submitHandler = () => {
         navigation.navigate('LoginPage')
+        ToastAndroid.show('Reset password successfully', ToastAndroid.SHORT)
     }
 
 
@@ -61,12 +62,12 @@ export default function ResetPasswordScreen({ navigation }) {
             />
 
             {/* Reset Password button */}
-            <View style={{ marginBottom: 50 }}>
+            <View>
                 <TouchableOpacity
                     onPress={submitHandler}
-                    style={{ backgroundColor: COLORS.primary, height: 52, marginTop: 24, alignItems: 'center', justifyContent: 'center', borderRadius: 50 }}
+                    style={ generalStyles.button_1 }
                 >
-                    <Text style={{ color: '#fff', fontWeight: '800', fontSize: TEXTS.lg }}>
+                    <Text style={ generalStyles.button_text_1 }>
                         Reset Password
                     </Text>
                 </TouchableOpacity>

@@ -31,9 +31,7 @@ export default function App() {
 				<Stack.Screen name="CustomerMain" component={CustomerIndex} />
 				<Stack.Screen name="ModeratorMain" component={ModeratorIndex} />
                 <Stack.Screen name="AdminMain" component={AdminIndex} />
-
-			
-
+				
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
