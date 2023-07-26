@@ -8,8 +8,15 @@ import generalStyles from '../../styles/general'
 // Import Dispatcher
 import GController from "../../controllers/generalController";
 
+// Import Loading Modal
+import LoadingModal from '../../components/general/LoadingModal'
+import { useContext } from "react";
+import { loadingContext } from "../../contexts/LoadingContext";
 
 export default function LoginScreen({ navigation }) {
+
+    const { loading, setLoading } = useContext(loadingContext);
+	console.log('[Login]', loading)
 
     // ------ Data State
     const [username, setUsername] = useState('');
@@ -17,15 +24,24 @@ export default function LoginScreen({ navigation }) {
 
     // ------ Event Handlers
     // Function called when the user presses Login button
+    function fakeWaiting () {
+        setTimeout(() => {
+            setLoading(false)
+        }, 2000)
+        return
+    } 
     const loginHandler = async () => {
-        if (username === 'c') {
-            navigation.navigate('CustomerMain')
-            ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
-        }
-        else {
-            navigation.navigate('ModeratorMain')
-            ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
-        }
+        setLoading(true)
+        fakeWaiting()
+
+        // if (username === 'c') {
+        //     navigation.navigate('CustomerMain')
+        //     ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
+        // }
+        // else {
+            // navigation.navigate('ModeratorMain')
+            // ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
+        // }
     }
 
     // Function called when the user presses Forgot Password button
@@ -37,6 +53,9 @@ export default function LoginScreen({ navigation }) {
     // ------ UI Renderer
     return (
         <View style={generalStyles.page_container}>
+
+            {/* ------ LOADING MODAL ------ */}
+            <LoadingModal isLoading={loading}/>
 
             {/* Logo HOME */}
             <View style={styles.logo1}>
