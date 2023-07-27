@@ -41,11 +41,13 @@ export const TopBar = ({ Title, backIcon = false, navigation = null }) => {
             {/* Title */}
             <Text
                 style={{
-                    flex: 2,
+                    flex: 3,
                     textAlign: "center",
                     marginTop: "auto",
                     marginBottom: "auto",
-                    fontSize: 25,
+                    fontSize: TEXTS.xxl,
+                    fontWeight: 700,
+                    letterSpacing: -0.24,
                 }}
             >
                 {Title}

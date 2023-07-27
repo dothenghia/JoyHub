@@ -1,65 +1,30 @@
-import { Card, Text } from "@rneui/themed";
-import { View, Image } from "react-native";
-import { COLORS, TEXTS } from "../../constants/theme";
-import { StyleSheet } from "react-native";
+import {Text} from "@rneui/themed";
+import {Image, View} from "react-native";
+import { AvatarCardStyles } from "../../styles/admin";
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+
 const hotelImage = require("../../assets/admin/hotel.jpg");
 
-export const AvatarCard = ({ Title, ImageUri, Description }) => {
+const toShortAddress = (address) => {
+    if (address.length < 20) return address;
+    return address.slice(0, 20) + "...";
+}
+
+export const AvatarCard = ({ Title, ImageUri, Address }) => {
     return (
-        <View style={styles.container}>
+        <View style={AvatarCardStyles.container}>
             {/* Avatar part */}
-            <View style={styles.imageContainer}>
-                <Image source={hotelImage} style={styles.avatarImage} />
+            <View style={AvatarCardStyles.imageContainer}>
+                <Image source={hotelImage} style={AvatarCardStyles.avatarImage} />
             </View>
             {/* Information part */}
-            <View style={styles.textContainer}>
-                <Text style={styles.title}>{Title}</Text>
-                <Text style={styles.description}>{Description}</Text>
+            <View style={AvatarCardStyles.textContainer}>
+                <Text style={AvatarCardStyles.title}>{Title}</Text>
+                <View style={{flexDirection : 'row', alignItems : 'center'}}>
+                    <FontAwesome5Icon name={"map-marker-alt"} size={15} color={"#000"} />
+                    <Text style={AvatarCardStyles.description}>{toShortAddress(Address)}</Text>
+                </View>
             </View>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: "row",
-        alignItems: "center",
-        alignContent: "center",
-        borderWidth: 1,
-        borderColor: COLORS.input_border,
-        borderRadius: 10,
-        padding: 12,
-        marginBottom: 10,
-        // justifyContent: "space-between",
-    },
-    imageContainer: {
-        flex: 1,
-    },
-    avatarImage: {
-        width: 147,
-        height: 120,
-        resizeMode: "cover",
-        borderRadius: 7,
-    },
-    textContainer: {
-        flex: 1,
-        flexDirection : 'column',
-        alignContent : 'center',
-        justifyContent : 'center',
-        alignItems : 'center',
-        width: "50%",
-        marginLeft: 10,
-    },
-    title: {
-        fontSize: TEXTS.lg,
-        fontWeight: 700,
-        color: COLORS.text,
-        // margin: "auto"
-    },
-    description: {
-        fontSize: TEXTS.sm,
-        color: COLORS.text,
-        // width: "50%",
-        lineHeight: 20,
-    },
-});

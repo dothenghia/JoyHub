@@ -1,17 +1,9 @@
-import React, { useMemo, useState } from "react";
-import {
-    FlatList,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-} from "react-native";
+import React, {useState} from "react";
+import {FlatList, Text, View,} from "react-native";
 import generalStyles from "../../styles/general";
-import { searchStyles } from "../../styles/admin";
-import { TopBar, SearchBar } from "../../components/admin/Bar";
-import { AvatarCard } from "../../components/admin/Card";
+import {SearchBar, TopBar} from "../../components/admin/Bar";
+import {AvatarCard} from "../../components/admin/Card";
+import {TEXTS} from "../../constants/theme";
 
 const data = [
     { id: "1", name: "Apple" },
@@ -35,14 +27,14 @@ export default function MainScreen({ navigation }) {
 
     return (
         <View style={generalStyles.page_container}>
-            <TopBar Title={"Moderator"} backIcon={true} navigation={navigation} />
+            <TopBar Title={"Moderator Control"} backIcon={true} navigation={navigation} />
 
             <SearchBar
                 placeholder={"Type here..."}
                 onChangeText={handleSearch}
                 value={searchQuery}
             />
-
+            <Text style={{fontSize: TEXTS.xl, fontWeight: "900"}}>Waiting for accept</Text>
             <FlatList
                 data={filteredData}
                 keyExtractor={(item) => item.id}
@@ -50,7 +42,7 @@ export default function MainScreen({ navigation }) {
                     <AvatarCard
                         Title={item.name}
                         ImageUri={"https://unsplash.com/photos/M7GddPqJowg"}
-                        Description={"The idea with React Native Elements is more about component structure than actual design."}
+                        Address={"227 Nguyen Van Cu, TP.HCM"}
                     />
                 )}
             />

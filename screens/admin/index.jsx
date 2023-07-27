@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React, {useMemo, lazy, Suspense} from "react";
+import React, {lazy, Suspense} from "react";
 import {Text} from "react-native";
 
 const LazyLoadScreen = (Component) => (props) => (

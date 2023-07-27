@@ -9,9 +9,9 @@ const generalStyles = StyleSheet.create({
         marginTop: 33,
         paddingHorizontal: 32,
     },
-    
+
     // Page Heading text styles
-    heading_1 : { 
+    heading_1 : {
         color: COLORS.heading_text,
         fontSize: TEXTS.xxl,
         fontWeight: '600',
