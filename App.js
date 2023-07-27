@@ -14,6 +14,8 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 // import ModeratorIndex from './screens/moderator/index'
 // import AdminIndex from './screens/admin/index'
 
+import { LoadingProvider } from './contexts/LoadingContext';
+
 const Stack = createNativeStackNavigator();
 
 const LazyLoadScreen = (Component) => (props) => (
@@ -22,10 +24,10 @@ const LazyLoadScreen = (Component) => (props) => (
     </Suspense>
 );
 
-
 export default function App() {
     const screenOptions = useMemo(() => ({headerShown: false}), []);
     return (
+      <LoadingProvider>
         <NavigationContainer>
             <Stack.Navigator screenOptions={screenOptions}>
                 <Stack.Screen name="LoginPage"
@@ -48,5 +50,6 @@ export default function App() {
                               component={LazyLoadScreen(lazy(() => import('./screens/admin/index')))}/>
             </Stack.Navigator>
         </NavigationContainer>
+      </LoadingProvider>
     );
-}
+};

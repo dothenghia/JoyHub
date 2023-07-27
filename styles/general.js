@@ -34,6 +34,23 @@ const generalStyles = StyleSheet.create({
         marginTop: 6,
     },
 
+    // Button
+    // 1/ Button rounded corners with ORANGE color, WHITE text inside
+    button_1 :{
+        backgroundColor: COLORS.primary,
+        height: 52,
+        marginTop: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 50
+    },
+    button_text_1: {
+        color: '#fff',
+        fontWeight: '800',
+        fontSize: TEXTS.lg
+    },
+
+
     // Label & Text Input styles
     input_label: {
         marginBottom: 4,
@@ -56,7 +73,13 @@ const generalStyles = StyleSheet.create({
         color: COLORS.text
     },
 
-
+    // Divider styles
+    divider : {
+        marginTop: 40,
+        width: '100%',
+        height: 2,
+        backgroundColor: '#DEDEDE',
+    },
 });
 
 export default generalStyles
