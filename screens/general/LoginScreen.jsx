@@ -28,23 +28,29 @@ export default function LoginScreen({ navigation }) {
         setTimeout(() => {
             setLoading(false)
         }, 2000)
-        return
-    } 
+    }
     const loginHandler = async () => {
         setLoading(true)
         fakeWaiting()
-//         if (username === 'c') {
-//             navigation.navigate('CustomerMain')
-//             ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
-//         }
-//         else if (username === 'm') {
-//             navigation.navigate('ModeratorMain')
-//             ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
-//         }
-//         else if (username === 'a') {
-//             navigation.navigate('AdminMain')
-//             ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
-//         }
+        // if (username === 'c') {
+        //     navigation.navigate('CustomerMain')
+        //     ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
+        //     setLoading(false)
+        // }
+        // else if (username === 'm') {
+        //     navigation.navigate('ModeratorMain')
+        //     ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
+        //     setLoading(false)
+        // }
+        // else if (username === 'a') {
+        //     navigation.navigate('AdminMain')
+        //     ToastAndroid.show('Login to ADMIN successfully', ToastAndroid.SHORT)
+        //     setLoading(false)
+        // }
+        // else {
+        //     ToastAndroid.show('Login failed', ToastAndroid.SHORT)
+        //     setLoading(false)
+        // }
     }
 
     // Function called when the user presses Forgot Password button
@@ -68,7 +74,7 @@ export default function LoginScreen({ navigation }) {
                 />
             </View>
 
-            {/* Logo JOYHUB text */}
+            {/* Logo JOY-HUB text */}
             <View style={styles.logo2}>
                 <Image
                     source={require('../../assets/general/joyhub.png')}
@@ -100,7 +106,7 @@ export default function LoginScreen({ navigation }) {
                 onChangeText={(e) => setPassword(e)}
             />
 
-            {/* Forgot Passowrd button */}
+            {/* Forgot Password button */}
             <View style={{ alignItems: 'flex-end', marginTop: 4 }}>
                 <TouchableOpacity
                     onPress={forgotPasswordHandler}
@@ -140,7 +146,7 @@ export default function LoginScreen({ navigation }) {
 
             {/* Sign up Line */}
             <View style={styles.signupLine}>
-                <Text>
+                <Text style={{color: COLORS.text}}>
                     If you don't have an account,
                 </Text>
                 <TouchableOpacity
@@ -172,6 +178,5 @@ const styles = StyleSheet.create({
         marginTop: 32,
         flexDirection: 'row',
         justifyContent: 'center',
-        color: COLORS.text,
     },
 });
