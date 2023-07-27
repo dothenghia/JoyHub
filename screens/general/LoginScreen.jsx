@@ -33,15 +33,18 @@ export default function LoginScreen({ navigation }) {
     const loginHandler = async () => {
         setLoading(true)
         fakeWaiting()
-
-        // if (username === 'c') {
-        //     navigation.navigate('CustomerMain')
-        //     ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
-        // }
-        // else {
-            // navigation.navigate('ModeratorMain')
-            // ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
-        // }
+//         if (username === 'c') {
+//             navigation.navigate('CustomerMain')
+//             ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
+//         }
+//         else if (username === 'm') {
+//             navigation.navigate('ModeratorMain')
+//             ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
+//         }
+//         else if (username === 'a') {
+//             navigation.navigate('AdminMain')
+//             ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
+//         }
     }
 
     // Function called when the user presses Forgot Password button
@@ -172,4 +175,3 @@ const styles = StyleSheet.create({
         color: COLORS.text,
     },
 });
-
