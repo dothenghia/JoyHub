@@ -1,25 +1,22 @@
 import React, { useMemo, useState } from "react";
 import {
     FlatList,
-    ScrollView,
-    StyleSheet,
     Text,
-    TextInput,
-    TouchableOpacity,
     View,
 } from "react-native";
 import generalStyles from "../../styles/general";
 import { searchStyles } from "../../styles/admin";
 import { TopBar, SearchBar } from "../../components/admin/Bar";
-import { AvatarCard } from "../../components/admin/Card";
+import {AvatarCard, ReportCard} from "../../components/admin/Card";
 import { TEXTS } from "../../constants/theme";
 
 const data = [
-    { id: "1", name: "Cynthia Benson" },
-    { id: "2", name: "Johnny Cannon" },
-    { id: "3", name: "Ruth Price" },
-    { id: "4", name: "Alta Thomas" },
+    { id: "1", name: "Ramekin", title: "There is a mouse", isRead: false },
+    { id: "2", name: "Leonine", title: "Bad service", isRead: true },
+    { id: "3", name: "Ebullition", title: "Scam", isRead: false },
+    { id: "4", name: "Atwitter", title: "Scam", isRead: false },
 ];
+
 
 export default function ReportScreen({navigation}) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -43,14 +40,16 @@ export default function ReportScreen({navigation}) {
                 onChangeText={handleSearch}
                 value={searchQuery}
             />
+
             <FlatList
                 data={filteredData}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <AvatarCard
-                        Title={item.name}
-                        ImageUri={"https://unsplash.com/photos/M7GddPqJowg"}
-                        Address={"The idea with React Native Elements is more about component structure than actual design."}
+                    <ReportCard
+                        hotel={item.name}
+                        title={item.title}
+                        isRead={item.isRead}
+                        date={"2021-05-20"}
                     />
                 )}
             />

@@ -6,16 +6,15 @@ import {
 } from "react-native";
 import generalStyles from "../../styles/general";
 import { TopBar, SearchBar } from "../../components/admin/Bar";
-import { AvatarCard } from "../../components/admin/Card";
+import {AvatarCard, HotelCard, ReportCard} from "../../components/admin/Card";
 import { TEXTS } from "../../constants/theme";
 
 const data = [
-    { id: "1", name: "Ramekin" },
-    { id: "2", name: "Leonine" },
-    { id: "3", name: "Ebullition" },
-    { id: "4", name: "Atwitter" },
+    { id: "1", name: "Cynthia Benson" },
+    { id: "2", name: "Johnny Cannon" },
+    { id: "3", name: "Ruth Price" },
+    { id: "4", name: "Alta Thomas" },
 ];
-
 
 export default function HotelScreen({navigation}) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -39,12 +38,12 @@ export default function HotelScreen({navigation}) {
                 onChangeText={handleSearch}
                 value={searchQuery}
             />
-            <Text style={{fontSize: TEXTS.xl, fontWeight: "900"}}>Waiting room for accept</Text>
+            <Text style={{fontSize: TEXTS.xl, fontWeight: "900", marginBottom: 10}}>Waiting room for accept</Text>
             <FlatList
                 data={filteredData}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <AvatarCard
+                    <HotelCard
                         Title={item.name}
                         ImageUri={"https://unsplash.com/photos/M7GddPqJowg"}
                         Address={"The idea with React Native Elements is more about component structure than actual design."}

@@ -1,8 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React, {lazy, Suspense} from "react";
-import {Text} from "react-native";
+import React, { lazy, Suspense } from "react";
+import { Text, Image } from "react-native";
+import { COLORS } from "../../constants/theme";
+import HomeLogo from "../../assets/general/logo.svg";
 
-const LazyLoadScreen = (Component) => (props) => (
+const LazyLoadScreen = (Component) => (props) =>
+(
     <Suspense fallback={<Text>Loading...</Text>}>
         <Component {...props} />
     </Suspense>
@@ -16,8 +19,21 @@ const tab = createBottomTabNavigator();
 
 export default function AdminMain() {
     return (
-        <tab.Navigator initialRouteName="MainPage" screenOptions={{ headerShown: false }}>
-            <tab.Screen name="MainPage" component={MainScreen} />
+        <tab.Navigator
+            initialRouteName="MainPage"
+            screenOptions={{ headerShown: false }}
+        >
+            <tab.Screen
+                name="MainPage"
+                component={MainScreen}
+                options={{
+                    tabBarIcon: ({ focused, size }) => (
+                        <HomeLogo width={size} height={size}
+                            fill={focused ? COLORS.primary : COLORS.disable}
+                        />
+                    ),
+                }}
+            />
             <tab.Screen name="HotelPage" component={HotelScreen} />
             <tab.Screen name="ReportPage" component={ReportScreen} />
         </tab.Navigator>

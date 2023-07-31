@@ -10,7 +10,7 @@ import {
 import { COLORS, TEXTS } from "../../constants/theme";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { SearchBar as RNESearchBar } from "@rneui/themed";
-import { searchStyles } from "../../styles/admin";
+import { searchStyles, DetailHotelStyles } from "../../styles/admin";
 
 export const TopBar = ({ Title, backIcon = false, navigation = null }) => {
     return (
@@ -71,4 +71,44 @@ export const SearchBar = ({ placeholder, onChangeText, value }) => {
             inputStyle={searchStyles.input_text}
         />
     )
+};
+
+const Button = ({ title, onPress }) => {
+    return (
+        <TouchableOpacity
+            style={{ flex: 1, alignItems: "center", marginTop: "auto", marginBottom: "auto" }}
+            onPress={onPress}
+        >
+            <Text style={{ fontSize: TEXTS.xl, fontWeight: "900" }}>{title}</Text>
+        </TouchableOpacity>
+    );
+};
+
+export const ConfirmBar = ({ onConfirm, onCancel, confirmText, cancelText }) => {
+    return (
+        <View style={DetailHotelStyles.confirmBar}>
+            {/* Accept Button */}
+            <TouchableOpacity style={DetailHotelStyles.confirmButton} onPress={onConfirm}>
+                <Text style={DetailHotelStyles.buttonText}>{confirmText}</Text>
+                <Icon
+                    name="check"
+                    brand
+                    // backgroundColor={COLORS.background_color}
+                    color={COLORS.white}
+                    size={30}
+                />
+            </TouchableOpacity>
+            {/* Reject Button */}
+            <TouchableOpacity style={DetailHotelStyles.cancelButton} onPress={onCancel}>
+                <Text style={DetailHotelStyles.buttonText}>{cancelText}</Text>
+                <Icon
+                    name="times"
+                    brand
+                    // backgroundColor={COLORS.background_color}
+                    color={COLORS.white}
+                    size={30}
+                />
+            </TouchableOpacity>
+        </View>
+    );
 };

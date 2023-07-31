@@ -40,6 +40,8 @@ export const AvatarCardStyles = StyleSheet.create({
         borderRadius: 10,
         padding: 12,
         marginBottom: 10,
+        backgroundColor: COLORS.white,
+
     },
     imageContainer: {
         flex: 1,
@@ -55,19 +57,243 @@ export const AvatarCardStyles = StyleSheet.create({
         flex: 1,
         flexDirection : 'column',
         alignContent : 'center',
-        justifyContent : 'center',
-        alignItems : 'center',
+        justifyContent : 'flex-start',
+        // alignItems : 'center',
         width: "50%",
         marginLeft: 10,
+        marginBottom: "auto",
+        marginTop: "auto",
     },
     title: {
-        fontSize: TEXTS.lg,
-        fontWeight: "700",
-        color: COLORS.text
+        fontSize: TEXTS.xxl,
+        fontWeight: "900",
+        color: COLORS.text,
+        lineHeight: 30,
+    },
+    descriptionContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: "auto",
+        marginBottom: "auto",
+        justifyContent: "space-between"
     },
     description: {
         fontSize: TEXTS.sm,
         color: COLORS.text,
         lineHeight: 20,
+        fontWeight: "500"
    },
+    iconStyle: {
+        color: COLORS.text,
+        fontSize: TEXTS.md,
+        fontWeight: "900",
+        marginBottom: "auto",
+        marginTop: "auto",
+    }
+});
+
+export const HotelCardStyles = StyleSheet.create({
+    container: {
+        borderRadius: 10,
+        marginBottom: 17,
+        paddingHorizontal: 12,
+        width: "100%",
+    },
+    image: {
+        width: "100%",
+        height: 186,
+        resizeMode: "cover",
+        borderRadius: 7,
+
+    },
+    textContainer: {
+        padding: 12,
+        position: "absolute",
+        left: 0,
+        bottom: 0,
+        flexDirection : 'column',
+        alignContent : 'center',
+        // alignItems : 'center',
+        width: "50%",
+        marginBottom: "auto",
+        marginTop: "auto",
+        marginLeft: 20,
+    },
+    title: {
+        fontSize: TEXTS.xxl,
+        fontWeight: "900",
+        color: COLORS.white,
+        lineHeight: 30,
+    },
+    descriptionContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: "auto",
+        marginBottom: "auto",
+        justifyContent: "space-between"
+    },
+    description: {
+        fontSize: TEXTS.sm,
+        color: COLORS.white,
+        lineHeight: 20,
+        fontWeight: "500"
+    },
+    iconStyle: {
+        color: COLORS.white,
+        fontSize: TEXTS.md,
+        fontWeight: "900",
+        marginBottom: "auto",
+        marginTop: "auto",
+    }
+});
+
+export const ReportCardStyles = StyleSheet.create({
+    container: {
+        paddingVertical: 20,
+        paddingHorizontal: 17,
+        backgroundColor: COLORS.white,
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+        borderWidth: 1,
+        borderRadius: 10,
+        marginBottom: 28,
+        borderColor: COLORS.input_border,
+    },
+    container_read: {
+        backgroundColor: COLORS.disable,
+    },
+    hotel: {
+        fontSize: TEXTS.xxl,
+        fontWeight: "bold",
+        color: COLORS.primary,
+    },
+    hotel_read: {
+        color: COLORS.secondary
+    },
+    titleContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: "auto",
+        marginBottom: "auto",
+    },
+    icon: {
+        color: COLORS.primary,
+        flex: 1,
+        alignSelf:"center",
+        textAlign:"right",
+        fontSize: TEXTS.xxl
+    },
+    title: {
+        flex: 1,
+        fontSize: TEXTS.md,
+        fontWeight: "700",
+        color: COLORS.text,
+        lineHeight: 20,
+    },
+    title_read: {
+        color: COLORS.grey,
+    },
+    date: {
+        flex: 1,
+        fontSize: TEXTS.sm,
+        color: COLORS.grey
+    }
+});
+
+export const DetailHotelStyles = StyleSheet.create({
+    hotelNameContainer: {
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        marginBottom: 10,
+        marginTop: 10,
+        gap: 12
+    },
+    hotelName: {
+        fontSize: TEXTS['5xl'],
+        fontWeight: "bold",
+        color: COLORS.primary,
+        marginBottom: 10,
+    },
+    confirmBar: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center",
+        marginBottom: 10,
+        padding: 12,
+        gap: 20,
+        width: "100%",
+        height: 64,
+        backgroundColor: COLORS.disable,
+        borderRadius: 10,
+    },
+    confirmButton: {
+        flex: 1,
+        backgroundColor: COLORS.primary,
+        borderRadius: 10,
+        height: 45,
+        marginTop: "auto",
+        marginBottom: "auto",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        gap: 10,
+    },
+    buttonText: {
+        fontSize: TEXTS.md,
+        fontWeight: "bold",
+        color: COLORS.white,
+    },
+    cancelButton: {
+        flex: 1,
+        backgroundColor: COLORS.secondary,
+        borderRadius: 10,
+        height: 45,
+        marginTop: "auto",
+        marginBottom: "auto",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        gap: 10,
+    },
+    hotelDetailsContainer: {
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        marginBottom: 10,
+        gap: 10,
+    },
+    hotelDetailsTitle: {
+        fontSize: TEXTS['4xl'],
+        fontWeight: "bold",
+        color: COLORS.primary,
+    },
+    hotelDetails: {
+        fontSize: TEXTS.md,
+        fontWeight: "bold",
+        color: COLORS.text,
+        textAlign:"justify"
+    },
+    ownerField: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 6,
+        gap: 10,
+        width: "100%",
+    },
+    ownerTitle: {
+        fontSize: TEXTS.md,
+        fontWeight: "600",
+        color: COLORS.heading_text,
+        justifyContent: "flex-start",
+    },
+    ownerDetails: {
+        fontSize: TEXTS.md,
+        fontWeight: "600",
+        color: COLORS.text,
+        justifyContent: "flex-end",
+    },
 });
