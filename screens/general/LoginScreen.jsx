@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StyleSheet, ToastAndroid, Text, View, Image, TouchableOpacity, TextInput } from "react-native";
 
 // Import Style & Theme
-import { COLORS, TEXTS } from '../../constants/theme'
+import { COLORS } from '../../constants/theme'
 import generalStyles from '../../styles/general'
 
 // Import Dispatcher
@@ -32,25 +32,25 @@ export default function LoginScreen({ navigation }) {
     const loginHandler = async () => {
         setLoading(true)
         fakeWaiting()
-        // if (username === 'c') {
-        //     navigation.navigate('CustomerMain')
-        //     ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
-        //     setLoading(false)
-        // }
-        // else if (username === 'm') {
-        //     navigation.navigate('ModeratorMain')
-        //     ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
-        //     setLoading(false)
-        // }
-        // else if (username === 'a') {
-        //     navigation.navigate('AdminMain')
-        //     ToastAndroid.show('Login to ADMIN successfully', ToastAndroid.SHORT)
-        //     setLoading(false)
-        // }
-        // else {
-        //     ToastAndroid.show('Login failed', ToastAndroid.SHORT)
-        //     setLoading(false)
-        // }
+        if (username === 'c') {
+            navigation.navigate('CustomerMain')
+            ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
+            setLoading(false)
+        }
+        else if (username === 'm') {
+            navigation.navigate('ModeratorMain')
+            ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
+            setLoading(false)
+        }
+        else if (username === 'a') {
+            navigation.navigate('AdminMain')
+            ToastAndroid.show('Login to ADMIN successfully', ToastAndroid.SHORT)
+            setLoading(false)
+        }
+        else {
+            ToastAndroid.show('Login failed', ToastAndroid.SHORT)
+            setLoading(false)
+        }
     }
 
     // Function called when the user presses Forgot Password button

@@ -4,7 +4,7 @@ import Checkbox from 'expo-checkbox';
 
 
 // Import Style & Theme
-import { COLORS, TEXTS } from '../../constants/theme'
+import { COLORS } from '../../constants/theme'
 import generalStyles from '../../styles/general'
 
 
