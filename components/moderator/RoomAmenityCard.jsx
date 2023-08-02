@@ -19,9 +19,6 @@ function Amentity({name, icon}) {
 export default function RoomAmentityCard() {
 
 
-    
-   
-
     const listOfAmentities = ['Air Conditioner', 'fasdfsa', 'Wifi', 'TV', 'Shampoo', 'Towel', 'Slippers', 'CD/DVD Player', 'Electronic Safe', 'Mini Frigde', 'Coffee Maker'];
     const res = [];
     const n = listOfAmentities.length;
