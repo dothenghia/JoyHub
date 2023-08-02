@@ -7,6 +7,8 @@ const customerStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.background_color,
         marginTop: StatusBar.currentHeight || 0,
+    },
+    section_container: {
         paddingHorizontal: 32,
     },
 

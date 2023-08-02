@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, FlatList, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView } from "react-native";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -44,7 +44,7 @@ const hotelList = [
 
 export default function MainScreen({navigation}) {
     return (
-        <View style={customerStyles.page_container}>
+        <ScrollView style={customerStyles.page_container}>
             {/* Logo JOY-HUB text */}
             <View style={styles.logo}>
                 <Image
@@ -54,32 +54,37 @@ export default function MainScreen({navigation}) {
             </View>
 
             {/* Search Input */}
-            <TextInput
-                style={styles.search_input}
-                placeholder='Search Hotel Name'
-                placeholderTextColor={COLORS.subheading_text}
-                autoCapitalize="none"
-                // onChangeText={(e) => setUsername(e)}
-            />
+            <View style={customerStyles.section_container}>
+                <TextInput
+                    style={styles.search_input}
+                    placeholder='Search Hotel Name'
+                    placeholderTextColor={COLORS.subheading_text}
+                    autoCapitalize="none"
+                    // onChangeText={(e) => setUsername(e)}
+                />
+            </View>
 
             {/* Filer Location Line */}
-            <TouchableOpacity style={styles.filer_line}>
-                <Text style={{color: COLORS.text}}>
-                    Hồ Chí Minh City
-                </Text>
-                <Text style={{ color: COLORS.primary, fontWeight: '600', marginLeft: 3 }}>
-                    ^
-                </Text>
-            </TouchableOpacity>
-
+            <View style={customerStyles.section_container}>
+                <TouchableOpacity style={styles.filer_line}>
+                    <Text style={{color: COLORS.text}}>
+                        Hồ Chí Minh City
+                    </Text>
+                    <Text style={{ color: COLORS.primary, fontWeight: '600', marginLeft: 3 }}>
+                        ^
+                    </Text>
+                </TouchableOpacity>
+            </View>
 
             {/* Hotel List */}
-            <FlatList
-                data = {hotelList}
-                renderItem={(hotel) => <HotelCard props={hotel} navigation={navigation}/>}
-                keyExtractor={hotel => hotel.id}
-            />
-        </View>
+            <View style={customerStyles.section_container}>
+                {
+                    hotelList.map((hotel) => {
+                        return (<HotelCard key={hotel.id} props={hotel} navigation={navigation}/>)
+                    })
+                }
+            </View>
+        </ScrollView>
     );
 }
 
@@ -88,6 +93,7 @@ const styles = StyleSheet.create({
         width:100,
         height: 32,
         marginTop: 16,
+        marginLeft: 32,
         alignItems : 'flex-start',
     },
     logo_image: {

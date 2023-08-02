@@ -5,6 +5,7 @@ import ScheduleScreen from "./ScheduleScreen";
 import NotificationScreen from './NotificationScreen';
 import UserScreen from "./UserScreen";
 import HotelScreen from "./HotelScreen";
+import RoomScreen from "./RoomScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -24,6 +25,12 @@ export default function CustomerMain() {
                     tabBarButton: (props) => (null), 
                     tabBarStyle: {display: 'none'}}}
             />
+            <Tab.Screen name="RoomPage" component={RoomScreen}
+                options={{
+                    tabBarButton: (props) => (null), 
+                    tabBarStyle: {display: 'none'}}}
+            />
+
         </Tab.Navigator>
     );
 }
