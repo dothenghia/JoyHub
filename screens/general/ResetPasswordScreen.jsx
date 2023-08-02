@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StyleSheet, ToastAndroid, Text, Modal, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
 
 // Import Style & Theme
-import { COLORS, TEXTS } from '../../constants/theme'
+import { COLORS } from '../../constants/theme'
 import generalStyles from '../../styles/general'
 
 export default function ResetPasswordScreen({ navigation }) {
