@@ -3,11 +3,13 @@ import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from "react
 // Import Style & Theme
 import { COLORS } from "../../../constants/theme";
 
-export default function HotelCard({ props , navigation}) {
+export default function HotelCard({ props , navigation }) {
     return (
         <TouchableOpacity
             style={styles.card_container}
-            // onPress={}
+            onPress={
+                () => {navigation.navigate('HotelPage', {slug : props.item.slug})}
+            }
         >
             <ImageBackground
                 source={require('../../../assets/customer/demo.jpg')}
@@ -34,8 +36,6 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         overflow: 'hidden',
         elevation: 20,
-
-        
     },
 
     bg_image: {

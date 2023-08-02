@@ -18,17 +18,24 @@ const customerStyles = StyleSheet.create({
 
         marginTop: 10,
     },
+    heading_2 : {
+        color: COLORS.heading_text,
+        fontSize: TEXTS.lg,
+        fontWeight: '600',
+
+        marginTop: 10,
+    },
 
     subheading_1: {
         color: COLORS.subheading_text,
-        fontSize: TEXTS.xs,
-        fontWeight: '500',
+        fontSize: TEXTS.md,
+        fontWeight: '600',
 
         marginTop: 8,
     },
-    subheading_2: {
+    text_1: {
         color: COLORS.subheading_text,
-        fontSize: TEXTS.md,
+        fontSize: TEXTS.sm,
         fontWeight: '500',
 
         marginTop: 6,
@@ -50,34 +57,11 @@ const customerStyles = StyleSheet.create({
         fontSize: TEXTS.lg
     },
 
-
-    // Label & Text Input styles
-    input_label: {
-        marginBottom: 4,
-        color: COLORS.heading_text,
-        fontSize: TEXTS.md,
-        fontWeight: '500',
-    },
-    input_field: {
-        width: '100%',
-        height: 50,
-        marginBottom: 14,
-        backgroundColor: COLORS.input_background,
-
-        paddingHorizontal: 20,
-        borderColor: COLORS.input_border,
-        borderWidth: 2,
-        borderRadius: 50,
-
-        fontSize: TEXTS.md,
-        color: COLORS.text
-    },
-
     // Divider styles
     divider : {
         marginTop: 40,
         width: '100%',
-        height: 2,
+        height: 3,
         backgroundColor: '#DEDEDE',
     },
 });

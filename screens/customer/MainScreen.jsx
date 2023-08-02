@@ -18,39 +18,31 @@ const hotelList = [
     },
     {
         id: 2,
-        name: 'Haley House',
-        location: 'District 7, HCM',
-        star: '4.8',
-        price: '123.000',
-        slug: 'haleyhouse'
+        name: 'Bixcuit',
+        location: 'District BT, HCM',
+        star: '4.6',
+        price: '100.000',
+        slug: 'bixcuit'
     },
     {
         id: 3,
-        name: 'Haley House',
-        location: 'District 7, HCM',
-        star: '4.8',
-        price: '123.000',
-        slug: 'haleyhouse'
+        name: 'Anis',
+        location: 'District 6, HCM',
+        star: '4.7',
+        price: '150.000',
+        slug: 'anis'
     },
     {
         id: 4,
-        name: 'Haley House',
-        location: 'District 7, HCM',
-        star: '4.8',
-        price: '123.000',
-        slug: 'haleyhouse'
-    },
-    {
-        id: 5,
-        name: 'Haley House',
-        location: 'District 7, HCM',
-        star: '4.8',
-        price: '123.000',
-        slug: 'haleyhouse'
+        name: 'Truro',
+        location: 'District 5, HCM',
+        star: '4.2',
+        price: '110.000',
+        slug: 'truro'
     },
 ]
 
-export default function MainScreen() {
+export default function MainScreen({navigation}) {
     return (
         <View style={customerStyles.page_container}>
             {/* Logo JOY-HUB text */}
@@ -81,9 +73,10 @@ export default function MainScreen() {
             </TouchableOpacity>
 
 
+            {/* Hotel List */}
             <FlatList
                 data = {hotelList}
-                renderItem={(hotel) => <HotelCard props={hotel}/>}
+                renderItem={(hotel) => <HotelCard props={hotel} navigation={navigation}/>}
                 keyExtractor={hotel => hotel.id}
             />
         </View>
