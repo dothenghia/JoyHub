@@ -27,6 +27,14 @@ const customerStyles = StyleSheet.create({
 
         marginTop: 10,
     },
+    page_name : {
+        color: COLORS.heading_text,
+        fontSize: TEXTS.xxl,
+        fontWeight: '600',
+        textAlign: 'center',
+        marginTop: 12,
+        marginBottom: 12,
+    },
 
     subheading_1: {
         color: COLORS.subheading_text,
@@ -64,6 +72,11 @@ const customerStyles = StyleSheet.create({
         marginTop: 40,
         width: '100%',
         height: 3,
+        backgroundColor: '#DEDEDE',
+    },
+    divider_reservation : {
+        width: '100%',
+        height: 4,
         backgroundColor: '#DEDEDE',
     },
 });

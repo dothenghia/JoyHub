@@ -25,7 +25,6 @@ export default function HotelScreen({ navigation, route }) {
     useEffect(() => {
         const fetchHotelInformation = async () => {
             let data = await CController('GETHOTELINFORMATION')
-            console.log(data)
             setHotelInfo(data)
             setFacilities(data.facilities)
             setRoomList(data.roomList)

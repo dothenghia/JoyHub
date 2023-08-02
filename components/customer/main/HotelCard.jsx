@@ -4,7 +4,6 @@ import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from "react
 import { COLORS } from "../../../constants/theme";
 
 export default function HotelCard({ props , navigation }) {
-    // console.log(props)
     return (
         <TouchableOpacity
             style={styles.card_container}
@@ -23,7 +22,6 @@ export default function HotelCard({ props , navigation }) {
                 <Text style={styles.text}>{props.price}</Text>
             </ImageBackground>
         </TouchableOpacity>
-
     );
 }
 
