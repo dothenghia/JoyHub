@@ -30,8 +30,8 @@ export default function LoginScreen({ navigation }) {
         }, 2000)
     }
     const loginHandler = async () => {
-        setLoading(true)
-        fakeWaiting()
+        // setLoading(true)
+        // fakeWaiting()
         // if (username === 'c') {
         //     navigation.navigate('CustomerMain')
         //     ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
@@ -51,6 +51,7 @@ export default function LoginScreen({ navigation }) {
         //     ToastAndroid.show('Login failed', ToastAndroid.SHORT)
         //     setLoading(false)
         // }
+        navigation.navigate('ModeratorMain')
     }
 
     // Function called when the user presses Forgot Password button
