@@ -1,15 +1,58 @@
-import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { useState, useEffect } from "react";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 
-export default function NotificationScreen() {
+// Import Style & Theme
+import { COLORS, TEXTS } from '../../constants/theme'
+import customerStyles from '../../styles/customer'
+
+// Import Controller
+import CController from "../../controllers/customerController";
+
+// Import Component
+import NotificationCard from "../../components/customer/notification/NotificationCard";
+
+export default function NotificationScreen({ navigation }) {
+    console.log('[Customer] NotificationScreen')
+
+    // ------ Data State
+    const [notificationList, setNotificationList] = useState([])
+
+    // ------ Fetch Data at first render
+    useEffect(() => {
+        const fetchNotificationList = async () => {
+            let data = await CController('GETNOTIFICATIONLIST')
+            setNotificationList(data)
+        }
+
+        fetchNotificationList()
+    }, [])
+
+
     return (
-        <View style={{ flex: 1 }}>
-            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                <Text>CUSTOMER NOTIFICATION Screen</Text>
+        <ScrollView style={customerStyles.page_container}>
+            <Text style={customerStyles.page_name}>Notification</Text>
+
+            <View>
+                {
+                    notificationList.map((notification) => (
+                        <View key={notification.id} style={styles.card_container}>
+                            <NotificationCard
+                                props={notification}
+                                navigation={navigation}
+                            />
+                        </View>
+                    ))
+                }
             </View>
 
-        </View>
+
+        </ScrollView>
     );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    card_container: {
+        marginTop: 12,
+        paddingHorizontal: 20,
+    },
+});

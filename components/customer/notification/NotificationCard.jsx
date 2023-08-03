@@ -1,47 +1,44 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 
 // Import Style & Theme
 import { COLORS } from "../../../constants/theme";
 
-export default function ReservationCard({ props , navigation }) {
-    console.log(props)
+export default function NotificationCard({ props , navigation }) {
     return (
-        <TouchableOpacity
+        <View
             style={styles.card_container}
         >
             <View style={styles.thumbnail_wrapper}>
                 <Image
-                    source={require('../../../assets/customer/demo.jpg')}
+                    source={require('../../../assets/customer/notification_tick.png')}
                     style={styles.thumbnail_image}
                 />
             </View>
 
             <View style={styles.text_container}>
-                <Text>{props.status}</Text>
-                <Text>{props.hotel_name}</Text>
-                <Text>{props.room_name}</Text>
-                <Text>{props.date}</Text>
-                <Text>{props.price}</Text>
-
+                <Text>{props.message}</Text>
+                <Text style={{textAlign: 'right', color: COLORS.primary, fontWeight: '600'}}>{props.time}</Text>
             </View>
-        </TouchableOpacity>
-
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     card_container: {
         width: '100%',
-        height: 190,
+        height: 100,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        elevation: 20,
     },
 
     thumbnail_wrapper: {
-        width: '30%',
-        height: '92%',
-        marginLeft: 10,
+        width: 60,
+        height: 60,
+        marginLeft: 20,
         borderRadius: 20,
         overflow: 'hidden',
     },
@@ -54,6 +51,7 @@ const styles = StyleSheet.create({
     text_container: {
         color: 'white',
         flex: 1,
-        paddingHorizontal: 8,
+        paddingLeft: 12,
+        paddingRight: 16,
     }
 });

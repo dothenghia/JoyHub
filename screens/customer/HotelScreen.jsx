@@ -1,35 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, ImageBackground, ScrollView } from "react-native";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
 
+// Import Controller
+import CController from "../../controllers/customerController";
+
+// Import Component
 import RoomCard from "../../components/customer/main/RoomCard";
 
-const roomList = [
-    {
-        id: 1,
-        name: 'Queen Room',
-        price: '123.000',
-        slug: 'queen-room'
-    },
-    {
-        id: 2,
-        name: 'Deluxe Room',
-        price: '200.000',
-        slug: 'deluxe-room'
-    },
-    {
-        id: 3,
-        name: 'Hehe Room',
-        price: '666.000',
-        slug: 'hehe-room'
-    },
-]
 
 export default function HotelScreen({ navigation, route }) {
-    console.log(route.params.slug)
+    console.log('[Customer] HotelScreen')
+    
+    // ------ Data State
+    const [hotelInfo, setHotelInfo] = useState(null)
+    const [facilities, setFacilities] = useState([])
+    const [roomList, setRoomList] = useState([])
+    const [reviewList, setReviewList] = useState([])
+
+    // ------ Fetch Data at first render
+    useEffect(() => {
+        const fetchHotelInformation = async () => {
+            let data = await CController('GETHOTELINFORMATION')
+            setHotelInfo(data)
+            setFacilities(data.facilities)
+            setRoomList(data.roomList)
+            setReviewList(data.reviews)
+        }
+
+        fetchHotelInformation()
+    }, [])
+
+
 
     return (
         <ScrollView style={customerStyles.page_container}>
@@ -49,14 +54,19 @@ export default function HotelScreen({ navigation, route }) {
                         </Text>
                     </TouchableOpacity>
                 </ImageBackground>
+
+                <Text>Slug : {route.params.slug}</Text>
             </View>
 
 
             {/* Hotel Information */}
             <View style={customerStyles.section_container}>
-                <Text style={customerStyles.heading_1}>{route.params.slug}</Text>
-                <Text style={customerStyles.subheading_1}>District 7, HCM</Text>
-                <Text style={customerStyles.text_1}>description about this hotel hehe</Text>
+                <Text style={customerStyles.heading_1}>{hotelInfo ? hotelInfo.name : 'Loading ...'}</Text>
+                <Text style={customerStyles.subheading_1}>{hotelInfo ? hotelInfo.location : 'Loading ...'}</Text>
+                <Text style={customerStyles.subheading_1}>
+                    {hotelInfo ? hotelInfo.star : 'Loading ...'} ({hotelInfo ? hotelInfo.review : 'Loading ...'})
+                </Text>
+                <Text style={customerStyles.text_1}>{hotelInfo ? hotelInfo.description : 'Loading ...'}</Text>
             </View>
 
             <View style={customerStyles.divider}></View>
@@ -64,7 +74,11 @@ export default function HotelScreen({ navigation, route }) {
             {/* Hotel Facilities */}
             <View style={customerStyles.section_container}>
                 <Text style={customerStyles.heading_2}>Hotel facilities</Text>
-
+                {
+                    facilities.map((facility) => (
+                        <Text key={facility.f_id}>{facility.f_name}</Text>
+                    ))
+                }
             </View>
 
             <View style={customerStyles.divider}></View>
@@ -72,11 +86,10 @@ export default function HotelScreen({ navigation, route }) {
             {/* Hotel Room List */}
             <View style={customerStyles.section_container}>
                 <Text style={customerStyles.heading_2}>Standard</Text>
-
                 {
-                    roomList.map((room) => {
-                        return (<RoomCard key={room.id} props={room} parentSlug={route.params.slug} navigation={navigation} />)
-                    })
+                    roomList.map((room) => (
+                        <RoomCard key={room.id} props={room} parentSlug={route.params.slug} navigation={navigation} />
+                    ))
                 }
             </View>
 
@@ -85,7 +98,14 @@ export default function HotelScreen({ navigation, route }) {
             {/* Hotel Review */}
             <View style={customerStyles.section_container}>
                 <Text style={customerStyles.heading_2}>Review</Text>
-
+                {
+                    reviewList.map((review) => (
+                        <View key={review.r_id} style={{marginBottom: 16}}>
+                            <Text>{review.r_name} ({review.r_star})</Text>
+                            <Text>{review.r_comment}</Text>
+                        </View>
+                    ))
+                }
             </View>
         </ScrollView>
     );

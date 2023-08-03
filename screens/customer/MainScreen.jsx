@@ -1,48 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView } from "react-native";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
 
+// Import Controller
+import CController from "../../controllers/customerController";
+
+// Import Component
 import HotelCard from "../../components/customer/main/HotelCard";
 
-const hotelList = [
-    {
-        id: 1,
-        name: 'Haley House',
-        location: 'District 7, HCM',
-        star: '4.8',
-        price: '123.000',
-        slug: 'haleyhouse'
-    },
-    {
-        id: 2,
-        name: 'Bixcuit',
-        location: 'District BT, HCM',
-        star: '4.6',
-        price: '100.000',
-        slug: 'bixcuit'
-    },
-    {
-        id: 3,
-        name: 'Anis',
-        location: 'District 6, HCM',
-        star: '4.7',
-        price: '150.000',
-        slug: 'anis'
-    },
-    {
-        id: 4,
-        name: 'Truro',
-        location: 'District 5, HCM',
-        star: '4.2',
-        price: '110.000',
-        slug: 'truro'
-    },
-]
 
-export default function MainScreen({navigation}) {
+export default function MainScreen({ navigation }) {
+    console.log('[Customer] MainScreen')
+    // ------ Data State
+    const [hotelList, setHotelList] = useState([])
+    const [searchInput, setSearchInput] = useState('')
+
+    // ------ Fetch Data at first render
+    useEffect(() => {
+        const fetchHotelList = async () => {
+            let data = await CController('GETHOTELLIST')
+            setHotelList(data)
+        }
+
+        fetchHotelList()
+    }, [])
+
+
+
     return (
         <ScrollView style={customerStyles.page_container}>
             {/* Logo JOY-HUB text */}
@@ -60,7 +47,7 @@ export default function MainScreen({navigation}) {
                     placeholder='Search Hotel Name'
                     placeholderTextColor={COLORS.subheading_text}
                     autoCapitalize="none"
-                    // onChangeText={(e) => setUsername(e)}
+                    onChangeText={(e) => setSearchInput(e)}
                 />
             </View>
 

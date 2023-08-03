@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import MainScreen from "./MainScreen";
-import ScheduleScreen from "./ScheduleScreen";
+import ReservationScreen from "./ReservationScreen";
 import NotificationScreen from './NotificationScreen';
 import UserScreen from "./UserScreen";
 import HotelScreen from "./HotelScreen";
@@ -16,7 +16,7 @@ export default function CustomerMain() {
             screenOptions={{ headerShown: false }}
         >
             <Tab.Screen name="MainPage" component={MainScreen} />
-            <Tab.Screen name="SchedulePage" component={ScheduleScreen} />
+            <Tab.Screen name="ReservationPage" component={ReservationScreen} />
             <Tab.Screen name="NotificationPage" component={NotificationScreen} />
             <Tab.Screen name="UserPage" component={UserScreen} />
 
