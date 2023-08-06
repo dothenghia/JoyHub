@@ -43,6 +43,21 @@ const customerStyles = StyleSheet.create({
 
         marginTop: 8,
     },
+    subheading_2: {
+        color: COLORS.subheading_text,
+        fontSize: TEXTS.md,
+        fontWeight: '500',
+
+        marginTop: 8,
+    },
+    heading_primary: {
+        color: COLORS.primary,
+        fontSize: TEXTS.lg,
+        fontWeight: '600',
+
+        marginTop: 8,
+    },
+
     text_1: {
         color: COLORS.subheading_text,
         fontSize: TEXTS.sm,
@@ -69,14 +84,14 @@ const customerStyles = StyleSheet.create({
 
     // Divider styles
     divider : {
-        marginTop: 40,
+        marginTop: 20,
         width: '100%',
         height: 3,
         backgroundColor: '#DEDEDE',
     },
     divider_reservation : {
         width: '100%',
-        height: 4,
+        height: 6,
         backgroundColor: '#DEDEDE',
     },
 });

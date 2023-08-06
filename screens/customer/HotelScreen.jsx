@@ -43,10 +43,10 @@ export default function HotelScreen({ navigation, route }) {
                 <ImageBackground
                     source={require('../../assets/customer/demo.jpg')}
                     resizeMode="cover"
-                    style={styles.thumbnail_image}
+                    style={{...styles.thumbnail_image, justifyContent: 'flex-start'}}
                 >
                     <TouchableOpacity
-                        style={{width: 80, padding: 10, backgroundColor: '#fff' }}
+                        style={{width: 62, padding: 10, backgroundColor: '#fff' , borderRadius: 12, marginLeft: 12, marginTop: 20}}
                         onPress={() => navigation.goBack()}
                     >
                         <Text style={{ color: COLORS.primary, fontWeight: '600' }}>

@@ -40,10 +40,11 @@ const styles = StyleSheet.create({
 
     thumbnail_wrapper: {
         width: '30%',
-        height: '92%',
-        marginLeft: 10,
+        height: '88%',
+        marginLeft: 12,
         borderRadius: 20,
         overflow: 'hidden',
+        elevation: 8,
     },
     thumbnail_image: {
         width: '100%',
