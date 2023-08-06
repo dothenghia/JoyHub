@@ -5,7 +5,7 @@ import { StyleSheet, Text, TouchableOpacity, View, ImageBackground, ScrollView }
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
 
-export default function RoomScreen({ navigation, route, parentSlug }) {
+export default function PaymentScreen({ navigation, route, parentSlug }) {
     // console.log(route.params)
 
     return (
@@ -21,7 +21,7 @@ export default function RoomScreen({ navigation, route, parentSlug }) {
                             Back
                         </Text>
                     </TouchableOpacity>
-                    <Text style={customerStyles.page_name}>Detail Room</Text>
+                    <Text style={customerStyles.page_name}>Confirm & Payment</Text>
                 </View>
 
 
@@ -39,8 +39,9 @@ export default function RoomScreen({ navigation, route, parentSlug }) {
 
                 {/* Room Information */}
                 <View style={customerStyles.section_container}>
-                    <Text style={customerStyles.heading_1}>{route.params.slug}</Text>
-                    <Text style={customerStyles.subheading_1}>Bla bla</Text>
+                    <Text style={customerStyles.heading_1}>Haley House</Text>
+                    <Text style={customerStyles.subheading_1}>Deluxe Room</Text>
+                    <Text style={customerStyles.text_1}>District 7, HCM</Text>
                 </View>
 
                 <View style={customerStyles.divider}></View>
@@ -69,57 +70,16 @@ export default function RoomScreen({ navigation, route, parentSlug }) {
                         <Text style={customerStyles.heading_primary}>Total</Text>
                         <Text style={customerStyles.heading_primary}>400.000 VND</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={customerStyles.heading_primary}>Total</Text>
-                        <Text style={customerStyles.heading_primary}>400.000 VND</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={customerStyles.heading_primary}>Total</Text>
-                        <Text style={customerStyles.heading_primary}>400.000 VND</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={customerStyles.heading_primary}>Total</Text>
-                        <Text style={customerStyles.heading_primary}>400.000 VND</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={customerStyles.heading_primary}>Total</Text>
-                        <Text style={customerStyles.heading_primary}>400.000 VND</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={customerStyles.heading_primary}>Total</Text>
-                        <Text style={customerStyles.heading_primary}>400.000 VND</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={customerStyles.heading_primary}>Total</Text>
-                        <Text style={customerStyles.heading_primary}>400.000 VND</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={customerStyles.heading_primary}>Total</Text>
-                        <Text style={customerStyles.heading_primary}>400.000 VND</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={customerStyles.heading_primary}>Total</Text>
-                        <Text style={customerStyles.heading_primary}>400.000 VND</Text>
-                    </View>
                 </View>
 
-                <View style={customerStyles.divider}></View>
-
-
-                {/* Cancellation Policy */}
-                <View style={customerStyles.section_container}>
-                    <Text style={customerStyles.heading_2}>Cancellation Policy</Text>
-                    <Text style={customerStyles.subheading_2}>Free cancellation 1 hour before check-in</Text>
-                </View>
 
 
             </ScrollView>
             <View style={styles.bar_container}>
-                <View style={{flex:1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 28}}>
-                    <Text style={styles.bar_price}>400.000 VND</Text>
+                <View style={{flex:1, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 28}}>
                     <TouchableOpacity
                         style={styles.bar_button}
-                        onPress={() => {navigation.navigate('PaymentPage')}}>
+                        onPress={() => {navigation.navigate('AfterPaymentPage')}}>
                         <Text style={customerStyles.button_text_1}>Book</Text>
                     </TouchableOpacity>
                 </View>
@@ -165,7 +125,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 50,
-        width: '30%',
+        width: '100%',
     },
 
 });
