@@ -8,92 +8,55 @@ const customerStyles = StyleSheet.create({
         backgroundColor: COLORS.background_color,
         marginTop: StatusBar.currentHeight || 0,
     },
+    page_title_left : { // Hotel Name, Room Name
+        color: COLORS.heading_text,
+        fontSize: TEXTS.xxl,
+        fontWeight: '600',
+    },
+    page_title_center : { // Hotel Name, Room Name
+        color: COLORS.heading_text,
+        fontSize: TEXTS.xxl,
+        fontWeight: '600',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+    },
+
+
+
     section_container: {
         paddingHorizontal: 32,
+        paddingBottom: 14,
+        paddingTop: 10,
     },
-
-    // Page Heading text styles
-    heading_1 : {
-        color: COLORS.heading_text,
-        fontSize: TEXTS.xxl,
-        fontWeight: '600',
-
-        marginTop: 10,
-    },
-    heading_2 : {
+    section_title: {
         color: COLORS.heading_text,
         fontSize: TEXTS.lg,
         fontWeight: '600',
-
-        marginTop: 10,
-    },
-    page_name : {
-        color: COLORS.heading_text,
-        fontSize: TEXTS.xxl,
-        fontWeight: '600',
-        textAlign: 'center',
-        marginTop: 12,
-        marginBottom: 12,
     },
 
-    subheading_1: {
-        color: COLORS.subheading_text,
-        fontSize: TEXTS.md,
-        fontWeight: '600',
 
-        marginTop: 8,
-    },
-    subheading_2: {
-        color: COLORS.subheading_text,
-        fontSize: TEXTS.md,
-        fontWeight: '500',
-
-        marginTop: 8,
-    },
-    heading_primary: {
-        color: COLORS.primary,
-        fontSize: TEXTS.lg,
-        fontWeight: '600',
-
-        marginTop: 8,
-    },
-
-    text_1: {
-        color: COLORS.subheading_text,
-        fontSize: TEXTS.sm,
-        fontWeight: '500',
-
-        marginTop: 6,
-    },
-
-    // Button
-    // 1/ Button rounded corners with ORANGE color, WHITE text inside
-    button_1 :{
-        backgroundColor: COLORS.primary,
-        height: 52,
-        marginTop: 24,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 50
-    },
-    button_text_1: {
-        color: '#fff',
-        fontWeight: '800',
-        fontSize: TEXTS.lg
-    },
-
-    // Divider styles
-    divider : {
+    top_button: {
+        height: 40,
+        width: 40,
+        padding: 10,
+        backgroundColor: '#fff' ,
+        borderRadius: 10,
+        marginHorizontal: 20,
         marginTop: 20,
-        width: '100%',
-        height: 3,
-        backgroundColor: '#DEDEDE',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    divider_reservation : {
+
+    
+
+    divider: {
         width: '100%',
         height: 6,
         backgroundColor: '#DEDEDE',
     },
 });
 
-export default customerStyles
+
+export default customerStyles;
