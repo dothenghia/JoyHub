@@ -52,6 +52,9 @@ const customerStyles = StyleSheet.create({
         paddingBottom: 14,
         paddingTop: 10,
     },
+    section_container_no_py: {
+        paddingHorizontal: 24,
+    },
     section_title: {
         color: COLORS.heading_text,
         fontSize: TEXTS.lg,

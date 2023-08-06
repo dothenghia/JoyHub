@@ -28,7 +28,7 @@ export default function RoomScreen({ navigation, route }) {
                 </View>
 
                 {/* Thumbnail Slider */}
-                <View style={styles.slider_container}>
+                <View style={customerStyles.section_container_no_py}>
                     <ImageBackground
                         source={require('../../assets/customer/demo.jpg')}
                         resizeMode="cover"
@@ -110,9 +110,6 @@ export default function RoomScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-    slider_container: {
-        paddingHorizontal: 24,
-    },
     slider_image: {
         marginTop: 12,
         width: '100%',
