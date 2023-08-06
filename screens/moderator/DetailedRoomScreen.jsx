@@ -4,13 +4,13 @@ import generalStyles from "../../styles/general";
 import TopBar from "../../components/moderator/TopBar";
 import RoomAmentityCard from "../../components/moderator/RoomAmenityCard";
 
-export default function AddRoomScreen({ navigation, room }) {
+export default function DetailedRoomScreen({ navigation, room }) {
 
 
     return (
         <View style={generalStyles.page_container}>
             <ScrollView >
-                <TopBar Title={"Add A Room"} />
+                <TopBar Title={"Hoa Hau Y Nhi Room"} />
                 <Image style={{ marginTop: 25, height: 250, width: 'auto', borderRadius: 15 }} source={require('../../assets/mod/demoHotel.jpg')} />
                 <View style={{ height: 70, marginBottom: 15 }}>
                     <TextInput placeholder="Enter room name" style={{ flex: 7, marginTop: 15, paddingLeft: 15, height: 60, borderColor: 'black', borderWidth: 1, borderRadius: 15, fontSize: 20 }} />

@@ -4,7 +4,7 @@ import RoomScreen from "./RoomScreen";
 import NotificationScreen from './NotificationScreen';
 import UserScreen from "./UserScreen";
 import AddRoomScreen from "./AddRoomScreen";
-
+import DetailedRoomScreen from "./DetailedRoomScreen";
 const Tab = createBottomTabNavigator();
 
 export default function ModeratorMain() {
@@ -18,6 +18,7 @@ export default function ModeratorMain() {
             <Tab.Screen name="NotificationPage" component={NotificationScreen} />
             <Tab.Screen name="UserPage" component={UserScreen} />
             <Tab.Screen name="AddRoomPage" component={AddRoomScreen} options={{tabBarButton: (props) => (null),}}/>
+            <Tab.Screen name="DetailedRoomPage" component={DetailedRoomScreen} options={{tabBarButton: (props) => (null),}}/>
 
         </Tab.Navigator>
     );
