@@ -11,6 +11,7 @@ const COLORS = {
     input_background : '#F7F8FA',
     input_border : '#DEE7F5',
 
+    top_button_border : '#DDDDDD',
 };
 
 const TEXTS = {

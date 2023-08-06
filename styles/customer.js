@@ -8,25 +8,47 @@ const customerStyles = StyleSheet.create({
         backgroundColor: COLORS.background_color,
         marginTop: StatusBar.currentHeight || 0,
     },
-    page_title_left : { // Hotel Name, Room Name
+    page_title : { // Hotel Name, Room Name
         color: COLORS.heading_text,
         fontSize: TEXTS.xxl,
         fontWeight: '600',
     },
-    page_title_center : { // Hotel Name, Room Name
+
+
+    top_bar: {
+        height: 60,
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    top_bar_title: {
         color: COLORS.heading_text,
         fontSize: TEXTS.xxl,
         fontWeight: '600',
         position: 'absolute',
         left: 0,
+        top: 20,
         right: 0,
-        bottom: 0,
+        textAlign: 'center',
+    },
+    top_bar_button: {
+        height: 40,
+        width: 40,
+        padding: 10,
+        backgroundColor: '#fff' ,
+        borderRadius: 10,
+        marginHorizontal: 24,
+        marginTop: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10,
+        borderWidth: 1,
+        borderColor: COLORS.top_button_border,
     },
 
 
-
     section_container: {
-        paddingHorizontal: 32,
+        paddingHorizontal: 24,
         paddingBottom: 14,
         paddingTop: 10,
     },
@@ -37,17 +59,7 @@ const customerStyles = StyleSheet.create({
     },
 
 
-    top_button: {
-        height: 40,
-        width: 40,
-        padding: 10,
-        backgroundColor: '#fff' ,
-        borderRadius: 10,
-        marginHorizontal: 20,
-        marginTop: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+
 
     
 

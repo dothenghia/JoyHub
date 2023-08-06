@@ -41,7 +41,7 @@ export default function MainScreen({ navigation }) {
             </View>
 
             {/* Search Input */}
-            <View style={customerStyles.section_container}>
+            <View style={{ paddingHorizontal: 24 }}>
                 <TextInput
                     style={styles.search_input}
                     placeholder='Search Hotel Name'
@@ -52,7 +52,7 @@ export default function MainScreen({ navigation }) {
             </View>
 
             {/* Filer Location Line */}
-            <View style={customerStyles.section_container}>
+            <View style={{ paddingHorizontal: 24 }}>
                 <TouchableOpacity style={styles.filer_line}>
                     <Text style={{color: COLORS.text}}>
                         Hồ Chí Minh City

@@ -38,10 +38,10 @@ export default function HotelScreen({ navigation, route }) {
 
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={ customerStyles.page_container }>
 
             {/* Hotel Screen Scroll View */}
-            <ScrollView style={{ ...customerStyles.page_container, marginBottom: 80 }}>
+            <ScrollView style={{ flex: 1, marginBottom: 80 }}>
                 {/* Thumbnail Hotel Image */}
                 <View style={styles.thumbnail_wrapper}>
                     <ImageBackground
@@ -51,14 +51,17 @@ export default function HotelScreen({ navigation, route }) {
                     >
 
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                            {/* Back Button */}
                             <TouchableOpacity
-                                style={customerStyles.top_button}
+                                style={customerStyles.top_bar_button}
                                 onPress={() => navigation.goBack()}
                             >
                                 <FontAwesome5Icon name={"arrow-left"} size={18} color={COLORS.primary} />
                             </TouchableOpacity>
+
+                            {/* Like Button */}
                             <TouchableOpacity
-                                style={customerStyles.top_button}
+                                style={customerStyles.top_bar_button}
                             >
                                 <FontAwesome5Icon name={"heart"} size={18} color={COLORS.primary} />
                             </TouchableOpacity>
@@ -70,7 +73,7 @@ export default function HotelScreen({ navigation, route }) {
                 {/* Hotel Information */}
                 <View style={customerStyles.section_container}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text style={customerStyles.page_title_left}>
+                        <Text style={customerStyles.page_title}>
                             {hotelInfo ? hotelInfo.name : 'Loading ...'}
                         </Text>
                         <Text style={styles.rating}>
@@ -118,10 +121,13 @@ export default function HotelScreen({ navigation, route }) {
                 {/* Hotel Review */}
                 <View style={customerStyles.section_container}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                        {/* Rating Statistic */}
                         <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
                             <Text style={{fontSize: 24, fontWeight: '600'}}>{hotelInfo ? hotelInfo.star : ''}</Text>
                             <Text style={{fontSize: 12, color: COLORS.subheading_text}}> ({hotelInfo ? hotelInfo.review : ''} reviews)</Text>
                         </View>
+
+                        {/* See all Reviews Button */}
                         <View>
                             <TouchableOpacity>
                                 <Text style={{ color: COLORS.primary, fontWeight: '600' }}>
@@ -165,14 +171,6 @@ const styles = StyleSheet.create({
     thumbnail_image: {
         flex: 1,
         justifyContent: 'flex-start'
-    },
-
-    title_1: {
-        color: COLORS.heading_text,
-        fontSize: TEXTS.xxl,
-        fontWeight: '600',
-
-        marginTop: 10,
     },
 
     location: {

@@ -5,7 +5,7 @@ import { StyleSheet, Text, TouchableOpacity, View, ImageBackground, ScrollView }
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
 
-export default function PaymentScreen({ navigation, route, parentSlug }) {
+export default function PaymentScreen({ navigation, route }) {
     // console.log(route.params)
 
     return (
@@ -15,7 +15,7 @@ export default function PaymentScreen({ navigation, route, parentSlug }) {
                 <View style={styles.top_bar}>
                     <TouchableOpacity
                         style={{ width: 62, padding: 10, backgroundColor: '#fff', borderRadius: 12, marginLeft: 12 }}
-                        onPress={() => navigation.navigate('HotelPage', { slug: route.params.parentSlug })}
+                        onPress={() => navigation.navigate('RoomPage')}
                     >
                         <Text style={{ color: COLORS.primary, fontWeight: '600' }}>
                             Back
