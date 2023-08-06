@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, ImageBackground, ScrollView } from "react-native";
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
-import customerStyles from '../../styles/customer'
+import customerStyles from "../../styles/customer";
 
 // Import Controller
 import CController from "../../controllers/customerController";
@@ -14,7 +15,7 @@ import RoomCard from "../../components/customer/main/RoomCard";
 
 export default function HotelScreen({ navigation, route }) {
     console.log('[Customer] HotelScreen')
-    
+
     // ------ Data State
     const [hotelInfo, setHotelInfo] = useState(null)
     const [facilities, setFacilities] = useState([])
@@ -37,77 +38,122 @@ export default function HotelScreen({ navigation, route }) {
 
 
     return (
-        <ScrollView style={customerStyles.page_container}>
-            {/* Thumbnail Hotel Image */}
-            <View style={styles.thumbnail_wrapper}>
-                <ImageBackground
-                    source={require('../../assets/customer/demo.jpg')}
-                    resizeMode="cover"
-                    style={styles.thumbnail_image}
-                >
-                    <TouchableOpacity
-                        style={{width: 80, padding: 10, backgroundColor: '#fff' }}
-                        onPress={() => navigation.goBack()}
+        <View style={{ flex: 1 }}>
+
+            {/* Hotel Screen Scroll View */}
+            <ScrollView style={{ ...customerStyles.page_container, marginBottom: 80 }}>
+                {/* Thumbnail Hotel Image */}
+                <View style={styles.thumbnail_wrapper}>
+                    <ImageBackground
+                        source={require('../../assets/customer/demo.jpg')}
+                        resizeMode="cover"
+                        style={styles.thumbnail_image}
                     >
-                        <Text style={{ color: COLORS.primary, fontWeight: '600' }}>
-                            Back
-                        </Text>
-                    </TouchableOpacity>
-                </ImageBackground>
 
-                <Text>Slug : {route.params.slug}</Text>
-            </View>
-
-
-            {/* Hotel Information */}
-            <View style={customerStyles.section_container}>
-                <Text style={customerStyles.heading_1}>{hotelInfo ? hotelInfo.name : 'Loading ...'}</Text>
-                <Text style={customerStyles.subheading_1}>{hotelInfo ? hotelInfo.location : 'Loading ...'}</Text>
-                <Text style={customerStyles.subheading_1}>
-                    {hotelInfo ? hotelInfo.star : 'Loading ...'} ({hotelInfo ? hotelInfo.review : 'Loading ...'})
-                </Text>
-                <Text style={customerStyles.text_1}>{hotelInfo ? hotelInfo.description : 'Loading ...'}</Text>
-            </View>
-
-            <View style={customerStyles.divider}></View>
-
-            {/* Hotel Facilities */}
-            <View style={customerStyles.section_container}>
-                <Text style={customerStyles.heading_2}>Hotel facilities</Text>
-                {
-                    facilities.map((facility) => (
-                        <Text key={facility.f_id}>{facility.f_name}</Text>
-                    ))
-                }
-            </View>
-
-            <View style={customerStyles.divider}></View>
-
-            {/* Hotel Room List */}
-            <View style={customerStyles.section_container}>
-                <Text style={customerStyles.heading_2}>Standard</Text>
-                {
-                    roomList.map((room) => (
-                        <RoomCard key={room.id} props={room} parentSlug={route.params.slug} navigation={navigation} />
-                    ))
-                }
-            </View>
-
-            <View style={customerStyles.divider}></View>
-
-            {/* Hotel Review */}
-            <View style={customerStyles.section_container}>
-                <Text style={customerStyles.heading_2}>Review</Text>
-                {
-                    reviewList.map((review) => (
-                        <View key={review.r_id} style={{marginBottom: 16}}>
-                            <Text>{review.r_name} ({review.r_star})</Text>
-                            <Text>{review.r_comment}</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <TouchableOpacity
+                                style={customerStyles.top_button}
+                                onPress={() => navigation.goBack()}
+                            >
+                                <FontAwesome5Icon name={"arrow-left"} size={18} color={COLORS.primary} />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={customerStyles.top_button}
+                            >
+                                <FontAwesome5Icon name={"heart"} size={18} color={COLORS.primary} />
+                            </TouchableOpacity>
                         </View>
-                    ))
-                }
+                    </ImageBackground>
+                </View>
+
+
+                {/* Hotel Information */}
+                <View style={customerStyles.section_container}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Text style={customerStyles.page_title_left}>
+                            {hotelInfo ? hotelInfo.name : 'Loading ...'}
+                        </Text>
+                        <Text style={styles.rating}>
+                            {hotelInfo ? hotelInfo.star : 'Loading ...'} ({hotelInfo ? hotelInfo.review : 'Loading ...'})
+                        </Text>
+                    </View>
+                    <Text style={styles.location}>
+                        {hotelInfo ? hotelInfo.location : 'Loading ...'}
+                    </Text>
+                    <Text style={styles.description} numberOfLines={3}>
+                        {hotelInfo ? hotelInfo.description : 'Loading ...'}
+
+                    </Text>
+                </View>
+
+                <View style={customerStyles.divider}></View>
+
+
+                {/* Hotel Facilities */}
+                <View style={customerStyles.section_container}>
+                    <Text style={customerStyles.section_title}>Hotel facilities</Text>
+                    {
+                        facilities.map((facility) => (
+                            <Text key={facility.f_id}>{facility.f_name}</Text>
+                        ))
+                    }
+                </View>
+
+                <View style={customerStyles.divider}></View>
+
+
+                {/* Hotel Room List */}
+                <View style={customerStyles.section_container}>
+                    <Text style={customerStyles.section_title}>Standard</Text>
+                    {
+                        roomList.map((room) => (
+                            <RoomCard key={room.id} props={room} parentSlug={route.params.slug} navigation={navigation} />
+                        ))
+                    }
+                </View>
+
+                <View style={{ ...customerStyles.divider, marginTop: 16 }}></View>
+
+
+                {/* Hotel Review */}
+                <View style={customerStyles.section_container}>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+                            <Text style={{fontSize: 24, fontWeight: '600'}}>{hotelInfo ? hotelInfo.star : ''}</Text>
+                            <Text style={{fontSize: 12, color: COLORS.subheading_text}}> ({hotelInfo ? hotelInfo.review : ''} reviews)</Text>
+                        </View>
+                        <View>
+                            <TouchableOpacity>
+                                <Text style={{ color: COLORS.primary, fontWeight: '600' }}>
+                                    See all
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    {
+                        reviewList.map((review) => (
+                            <View key={review.r_id} style={{ marginBottom: 16 }}>
+                                <Text>{review.r_name} ({review.r_star})</Text>
+                                <Text>{review.r_comment}</Text>
+                            </View>
+                        ))
+                    }
+                </View>
+            </ScrollView>
+
+
+
+            {/* Fixed Booking Bar */}
+            <View style={fixedBarStyle.bar_container}>
+                <TouchableOpacity
+                    style={fixedBarStyle.bar_calendar}
+                >
+                    <FontAwesome5Icon name={"calendar-alt"} size={28} color={COLORS.primary} />
+                    <Text style={fixedBarStyle.calendar_text}>Thu, 4/6/2023 - Sat, 6/6/2023</Text>
+                </TouchableOpacity>
             </View>
-        </ScrollView>
+        </View>
     );
 }
 
@@ -118,7 +164,69 @@ const styles = StyleSheet.create({
     },
     thumbnail_image: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-start'
     },
 
+    title_1: {
+        color: COLORS.heading_text,
+        fontSize: TEXTS.xxl,
+        fontWeight: '600',
+
+        marginTop: 10,
+    },
+
+    location: {
+        color: COLORS.subheading_text,
+        fontSize: TEXTS.md,
+        fontWeight: '600',
+
+        marginTop: 8,
+    },
+
+    rating: {
+        color: COLORS.subheading_text,
+        fontSize: TEXTS.md,
+        fontWeight: '500',
+
+        marginTop: 8,
+    },
+
+    description: {
+        color: COLORS.subheading_text,
+        fontSize: TEXTS.sm,
+        fontWeight: '500',
+        marginTop: 6,
+        textAlign: 'justify',
+        flex: 1,
+    },
 });
+
+const fixedBarStyle = StyleSheet.create({
+    bar_container: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#fff',
+        height: 80,
+        elevation: 20,
+        justifyContent: 'center',
+        paddingHorizontal: 20,
+    },
+    bar_calendar: {height: 60,
+        width: '100%',
+        backgroundColor: COLORS.primary_50,
+        borderRadius: 60,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: COLORS.primary,
+    },
+    calendar_text: {
+        marginLeft: 8,
+        fontWeight: 'bold',
+        fontSize: TEXTS.md,
+    },
+
+})

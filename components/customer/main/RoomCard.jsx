@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         marginTop: 24,
         borderRadius: 16,
         overflow: 'hidden',
-        elevation: 20,
+        elevation: 10,
     },
 
     bg_image: {

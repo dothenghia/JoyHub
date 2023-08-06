@@ -6,6 +6,8 @@ import NotificationScreen from './NotificationScreen';
 import UserScreen from "./UserScreen";
 import HotelScreen from "./HotelScreen";
 import RoomScreen from "./RoomScreen";
+import PaymentScreen from "./PaymentScreen";
+import AfterPaymentScreen from "./AfterPaymentScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -26,6 +28,16 @@ export default function CustomerMain() {
                     tabBarStyle: {display: 'none'}}}
             />
             <Tab.Screen name="RoomPage" component={RoomScreen}
+                options={{
+                    tabBarButton: (props) => (null), 
+                    tabBarStyle: {display: 'none'}}}
+            />
+            <Tab.Screen name="PaymentPage" component={PaymentScreen}
+                options={{
+                    tabBarButton: (props) => (null), 
+                    tabBarStyle: {display: 'none'}}}
+            />
+            <Tab.Screen name="AfterPaymentPage" component={AfterPaymentScreen}
                 options={{
                     tabBarButton: (props) => (null), 
                     tabBarStyle: {display: 'none'}}}

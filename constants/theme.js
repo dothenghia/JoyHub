@@ -1,5 +1,6 @@
 const COLORS = {
     primary : '#FF6400',
+    primary_50 : 'rgba(255, 100, 0, 0.2)',
 
     heading_text : '#333333',
     subheading_text : '#888888',
