@@ -95,6 +95,7 @@ export const AvatarCardStyles = StyleSheet.create({
 export const HotelCardStyles = StyleSheet.create({
     container: {
         borderRadius: 10,
+        marginTop: 7,
         marginBottom: 17,
         paddingHorizontal: 12,
         width: "100%",
@@ -144,6 +145,26 @@ export const HotelCardStyles = StyleSheet.create({
         fontWeight: "900",
         marginBottom: "auto",
         marginTop: "auto",
+    },
+    waitingContainer:{
+        position: "absolute",
+        right: 5,
+        top: -7,
+        backgroundColor: COLORS.primary,
+        borderRadius: 40,
+        borderWidth: 2,
+        borderColor: "#DF4B07",
+        padding: 7,
+        paddingHorizontal: 10,
+        alignContent: "center",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlignVertical: "middle",
+    },
+    waitingText:{
+        fontSize: TEXTS.lg,
+        color: COLORS.white,
+        fontWeight: "bold"
     }
 });
 
@@ -295,5 +316,164 @@ export const DetailHotelStyles = StyleSheet.create({
         fontWeight: "600",
         color: COLORS.text,
         justifyContent: "flex-end",
+    },
+});
+
+export const RoomStyles = StyleSheet.create({
+    container: {
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        marginBottom: 17,
+        padding: 20,
+        gap: 10,
+        width: "100%",
+        height: 200,
+        borderColor: COLORS.input_border,
+        borderWidth: 1,
+        borderRadius: 10,
+    },
+    image: {
+        height: 168,
+        width: 110,
+        resizeMode: "cover",
+        borderRadius: 7,
+    },
+    descriptionContainer: {
+        flexDirection: "row",
+    },
+    textContainer: {
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        marginBottom: 10,
+        padding: 12,
+        gap: 7,
+    },
+    title: {
+        fontSize: TEXTS.xl,
+        fontWeight: "bold",
+        color: COLORS.primary,
+    },
+    price: {
+        fontSize: TEXTS.lg,
+        fontWeight: "bold",
+        // color: COLORS.text,
+    },
+    description: {
+        fontSize: TEXTS.lg,
+        // fontWeight: "bold",
+    }
+});
+
+export const DetailRoomStyles = StyleSheet.create({
+    roomNameContainer: {
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        marginBottom: 10,
+        marginTop: 10,
+        gap: 6
+    },
+    roomName: {
+        fontSize: TEXTS['3xl'],
+        fontWeight: "900",
+    },
+    roomPrice: {
+        fontSize: TEXTS['2xl'],
+        fontWeight: "700",
+    },
+    roomDetailsContainer: {
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        marginBottom: 10,
+        gap: 10,
+    },
+    roomInfoContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 6,
+        gap: 20,
+        width: "100%",
+    },
+    roomInfoField: {
+        flex: 1,
+        flexDirection: "row",
+        gap: 3,
+        fontSize: TEXTS.md,
+        fontWeight: "600",
+        color: COLORS.heading_text,
+        justifyContent: "flex-start",
+        // borderWidth: 1,
+        borderColor: COLORS.input_border,
+        borderRadius: 3,
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        marginRight: 20,
+    },
+    roomInfoLabel: {
+        fontSize: TEXTS.xl,
+        fontWeight: "600",
+        color: COLORS.text,
+        justifyContent: "center",
+    },
+    roomInfoIcon: {
+        fontSize: TEXTS['3xl'],
+        fontWeight: "600",
+        color: COLORS.text,
+        justifyContent: "center",
+    },
+    roomAmenContainer: {
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        marginBottom: 6,
+        gap: 10,
+        width: "100%",
+    },
+    roomAmenField: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        padding: 5,
+        paddingHorizontal: 10,
+        borderRadius: 3,
+        backgroundColor: COLORS.disable,
+        marginRight: 10,
+        gap: 10,
+    },
+    roomAmenLabel: {
+        fontSize: TEXTS.md,
+        fontWeight: "600",
+        color: COLORS.text,
+
+    },
+    roomAmenIcon: {
+        fontSize: TEXTS['3xl'],
+
+        fontWeight: "600",
+        color: COLORS.text,
+        justifyContent: "center",
+    },
+    roomFieldContainer: {
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        marginBottom: 5,
+        gap: 10,
+    },
+    roomFieldLabel: {
+        fontSize: TEXTS.xxl,
+        fontWeight: "bold",
+        color: COLORS.primary,
+    },
+    roomField: {
+        fontSize: TEXTS.md,
+        color: COLORS.text,
+        textAlign:"justify"
     },
 });

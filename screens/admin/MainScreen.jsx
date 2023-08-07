@@ -32,14 +32,6 @@ export default function MainScreen({ navigation }) {
         setFilteredData(filtered);
     };
 
-    // Handle click on item
-    const handleTouch = (name = "ABC") => {
-        console.log(`Navigating to ${name}`);
-        // Load detail page
-        const data = { name: name };
-        navigation.navigate("AdminDetailHotel", { hotel_name: name });
-    };
-
     // Render
     return (
         <View style={generalStyles.page_container}>

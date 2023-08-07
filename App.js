@@ -37,8 +37,7 @@ export default function App() {
                               component={LazyLoadScreen(lazy(() => import('./screens/moderator/index')))}/>
                 <Stack.Screen name="AdminMain"
                               component={LazyLoadScreen(lazy(() => import('./screens/admin/index')))}/>
-                <Stack.Screen name="AdminDetailHotel"
-                              component={LazyLoadScreen(lazy(() => import('./screens/admin/DetailHotel')))}/>
+
             </Stack.Navigator>
         </NavigationContainer>
       </LoadingProvider>

@@ -5,6 +5,7 @@ import { TopBar, ConfirmBar } from "../../components/admin/Bar";
 import { TEXTS } from "../../constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { DetailHotelStyles } from "../../styles/admin";
+import { useIsFocused } from "@react-navigation/native";
 
 const HotelAddress = ({ address }) => (
     <View style={DetailHotelStyles.hotelDetailsContainer}>
@@ -47,7 +48,7 @@ const HotelDetails = ({ hotel }) => (
             </Text>
         </View>
         {/* Confirm Bar (Accept, Reject) */}
-        <ConfirmBar confirmText={"Accept"} cancelText={"Reject"}/>
+        <ConfirmBar confirmText={"Accept"} cancelText={"Reject"} />
         {/* Hotel Details Part */}
         <View style={DetailHotelStyles.hotelDetailsContainer}>
             {/* Hotel Address */}
@@ -61,6 +62,14 @@ const HotelDetails = ({ hotel }) => (
 )
 
 export default function DetailHotelScreen({ route, navigation }) {
+    const scrollRef = React.useRef(null);
+    const isFocused = useIsFocused();
+    React.useEffect(() => {
+        if (!isFocused) {
+            scrollRef.current?.scrollTo({ x: 0, y: 0, animated: true });
+        }
+    }, [isFocused]);
+
     // const route = useRoute();
     const { hotel_name } = route.params;
     const hotel = {
@@ -75,7 +84,7 @@ export default function DetailHotelScreen({ route, navigation }) {
         }
     }
     return (
-        <ScrollView style={generalStyles.page_container}>
+        <ScrollView style={generalStyles.page_container} ref={scrollRef}>
             <TopBar Title={"Detail"} backIcon={true} navigation={navigation} />
             {/* Hotel Image */}
             <Image
@@ -93,14 +102,3 @@ export default function DetailHotelScreen({ route, navigation }) {
         </ScrollView>
     );
 }
-
-/* <View style={{ flexDirection: "row" }}>
-                {/* Accept Button
-<TouchableOpacity>
-    <Text>Accept</Text>
-</TouchableOpacity>
-{/* Reject Button
-<TouchableOpacity>
-    <Text>Reject</Text>
-</TouchableOpacity>
-            </View > */

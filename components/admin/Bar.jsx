@@ -12,14 +12,14 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import { SearchBar as RNESearchBar } from "@rneui/themed";
 import { searchStyles, DetailHotelStyles } from "../../styles/admin";
 
-export const TopBar = ({ Title, backIcon = false, navigation = null }) => {
+export const TopBar = ({ Title, backIcon = false, navigation = null}) => {
     return (
         <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%", height: 42, marginTop: 10}}>
             {/* Back Button */}
             {backIcon ? (
                 <TouchableOpacity
                     style={{ flex: 1, alignItems: "flex-start", marginTop: "auto", marginBottom: "auto" }}
-                    onPress={() => navigation.goBack()}
+                    onPress={() => (navigation.goBack())}
                 >
                     <Icon
                         name="angle-left"
