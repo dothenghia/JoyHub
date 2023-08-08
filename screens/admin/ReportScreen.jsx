@@ -1,13 +1,9 @@
 import React, { useMemo, useState } from "react";
-import {
-    FlatList,
-    Text,
-    View,
-} from "react-native";
+import { FlatList, Text, View, TouchableOpacity } from "react-native";
 import generalStyles from "../../styles/general";
 import { searchStyles } from "../../styles/admin";
 import { TopBar, SearchBar } from "../../components/admin/Bar";
-import {AvatarCard, ReportCard} from "../../components/admin/Card";
+import { AvatarCard, ReportCard } from "../../components/admin/Card";
 import { TEXTS } from "../../constants/theme";
 
 const data = [
@@ -17,8 +13,7 @@ const data = [
     { id: "4", name: "Atwitter", title: "Scam", isRead: false },
 ];
 
-
-export default function ReportScreen({navigation}) {
+export default function ReportScreen({ navigation }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredData, setFilteredData] = useState(data);
 
@@ -31,9 +26,23 @@ export default function ReportScreen({navigation}) {
         setFilteredData(filtered);
     };
 
+    const markAsRead = (id) => {
+        const updatedData = data.map((item) => {
+            if (item.id === id) {
+                item.isRead = true;
+            }
+            return item;
+        });
+        setFilteredData(updatedData);
+    };
+
     return (
         <View style={generalStyles.page_container}>
-            <TopBar Title={"Report Control"} backIcon={true} navigation={navigation} />
+            <TopBar
+                Title={"Report Control"}
+                backIcon={true}
+                navigation={navigation}
+            />
 
             <SearchBar
                 placeholder={"Type here..."}
@@ -45,12 +54,21 @@ export default function ReportScreen({navigation}) {
                 data={filteredData}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <ReportCard
-                        hotel={item.name}
-                        title={item.title}
-                        isRead={item.isRead}
-                        date={"2021-05-20"}
-                    />
+                    <TouchableOpacity onPress={
+                        () => {
+                            if (!item.isRead) {
+                                markAsRead(item.id);
+                            }
+                            navigation.navigate("AdminDetailReport", { hotel_name: item.name })
+                        }
+                    }>
+                        <ReportCard
+                            hotel={item.name}
+                            title={item.title}
+                            isRead={item.isRead}
+                            date={"2021-05-20"}
+                        />
+                    </TouchableOpacity>
                 )}
             />
         </View>

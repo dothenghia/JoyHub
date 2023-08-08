@@ -477,3 +477,91 @@ export const DetailRoomStyles = StyleSheet.create({
         textAlign:"justify"
     },
 });
+
+export const ReportDetailStyles = StyleSheet.create({
+    container: {
+        paddingVertical: 20,
+        paddingHorizontal: 17,
+        backgroundColor: COLORS.white,
+        marginBottom: 16,
+        borderRadius: 10,
+    },
+    idContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        // marginBottom: 6,
+        // gap: 10,
+        width: "100%",
+    },
+    idText: {
+        fontSize: TEXTS.lg,
+        // fontWeight: "bold",
+        color: COLORS.text,
+    },
+    date: {
+        fontSize: TEXTS.lg,
+        // fontWeight: "bold",
+        color: COLORS.text,
+    },
+    title: {
+        fontSize: TEXTS.xxl,
+        fontWeight: "bold",
+        color: COLORS.primary,
+        // marginBottom: 10,
+    },
+    descriptionContainer: {
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+    },
+    descriptionTitle: {
+        fontSize: TEXTS.xxl,
+        fontWeight: "bold",
+        color: COLORS.primary,
+        // marginBottom: 10,
+    },
+    descriptionText: {
+        fontSize: TEXTS.lg,
+        fontWeight: "bold",
+        color: COLORS.text,
+        textAlign:"justify",
+        marginTop: 10,
+    },
+    contactButton: {
+        flex: 1,
+        backgroundColor: COLORS.primary,
+        borderRadius: 10,
+        height: 45,
+        marginTop: "auto",
+        marginBottom: "auto",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        gap: 10,
+    },
+    buttonText: {
+        fontSize: TEXTS.md,
+        fontWeight: "bold",
+        color: COLORS.white,
+    },
+    removeButton: {
+        flex: 1,
+        backgroundColor: "#FF0000",
+        borderRadius: 10,
+        height: 45,
+        marginTop: "auto",
+        marginBottom: "auto",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        gap: 10,
+    },
+    removeButtonText: {
+        fontSize: TEXTS.md,
+        fontWeight: "bold",
+        color: COLORS.white,
+    },
+
+
+});

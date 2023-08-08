@@ -17,6 +17,7 @@ const ReportScreen = LazyLoadScreen(lazy(() => import("./ReportScreen")));
 const DetailHotel = LazyLoadScreen(lazy(() => import("./DetailHotel")));
 const RoomScreen = LazyLoadScreen(lazy(() => import("./RoomScreen")));
 const DetailRoom = LazyLoadScreen(lazy(() => import("./DetailRoom")));
+const DetailReport = LazyLoadScreen(lazy(() => import("./DetailReport")));
 
 const tab = createBottomTabNavigator();
 
@@ -68,6 +69,15 @@ export default function AdminMain() {
                     tabBarStyle: { display: "none" },
                 }}
             />
+            <tab.Screen
+                name="AdminDetailReport"
+                component={DetailReport}
+                options={{
+                    tabBarButton: (props) => (null),
+                    tabBarStyle: { display: "none" },
+                }}
+            />
+
         </tab.Navigator>
     );
 }

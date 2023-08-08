@@ -1,6 +1,6 @@
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Image, View, Text, Animated, Easing } from "react-native";
-import { AvatarCardStyles, HotelCardStyles, ReportCardStyles, RoomStyles } from "../../styles/admin";
+import { AvatarCardStyles, HotelCardStyles, ReportCardStyles, RoomStyles, ReportDetailStyles } from "../../styles/admin";
 // import { Easing } from "react-native";
 import { useRef, useEffect, useState } from "react";
 
@@ -57,7 +57,7 @@ export const HotelCard = ({ Title, ImageUri, Address, WaitingAmount = 0 }) => {
                 <Text style={HotelCardStyles.title}>{Title}</Text>
                 <View style={HotelCardStyles.descriptionContainer}>
                     <Icon name="map-marker-outline" style={HotelCardStyles.iconStyle} />
-                    <Text style={HotelCardStyles.description}>{toShort(Address,20)}</Text>
+                    <Text style={HotelCardStyles.description}>{toShort(Address, 20)}</Text>
                 </View>
             </View>
 
@@ -99,6 +99,27 @@ export const RoomCard = ({ Title, ImageUri, Price }) => {
                     <Text style={RoomStyles.description}>/night</Text>
                 </View>
             </View>
+        </View>
+    );
+}
+
+export const ReportDetailCard = ({ IdBooking, Date, Title, Description }) => {
+    return (
+        <View style={ReportDetailStyles.container}>
+            <View style={ReportDetailStyles.idContainer}>
+                {/* Id booking */}
+                <Text style={ReportDetailStyles.idText}>{IdBooking}</Text>
+                <Text style={ReportDetailStyles.date}>{Date}</Text>
+                {/* Date */}
+            </View>
+            {/* Report Title*/}
+            <Text style={ReportDetailStyles.title}>{Title}</Text>
+            {/* Report Description */}
+
+            <Text style={ReportDetailStyles.descriptionText}>
+                {Description}
+            </Text>
+
         </View>
     );
 }
