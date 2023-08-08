@@ -40,10 +40,12 @@ export default function LoginScreen({ navigation }) {
         else if (username === 'm') {
             navigation.navigate('ModeratorMain')
             ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
+            setLoading(false)
         }
         else if (username === 'a') {
             navigation.navigate('AdminMain')
             ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
+            setLoading(false)
         }
     }
 
