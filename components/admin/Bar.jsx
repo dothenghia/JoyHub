@@ -10,16 +10,16 @@ import {
 import { COLORS, TEXTS } from "../../constants/theme";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { SearchBar as RNESearchBar } from "@rneui/themed";
-import { searchStyles } from "../../styles/admin";
+import { searchStyles, DetailHotelStyles, ReportDetailStyles } from "../../styles/admin";
 
 export const TopBar = ({ Title, backIcon = false, navigation = null }) => {
     return (
-        <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%", height: 42, marginTop: 10}}>
+        <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%", height: 42, marginTop: 10 }}>
             {/* Back Button */}
             {backIcon ? (
                 <TouchableOpacity
                     style={{ flex: 1, alignItems: "flex-start", marginTop: "auto", marginBottom: "auto" }}
-                    onPress={() => navigation.goBack()}
+                    onPress={() => (navigation.goBack())}
                 >
                     <Icon
                         name="angle-left"
@@ -72,3 +72,83 @@ export const SearchBar = ({ placeholder, onChangeText, value }) => {
         />
     )
 };
+
+const Button = ({ title, onPress }) => {
+    return (
+        <TouchableOpacity
+            style={{ flex: 1, alignItems: "center", marginTop: "auto", marginBottom: "auto" }}
+            onPress={onPress}
+        >
+            <Text style={{ fontSize: TEXTS.xl, fontWeight: "900" }}>{title}</Text>
+        </TouchableOpacity>
+    );
+};
+
+export const ConfirmBar = ({ onConfirm, onCancel, confirmText, cancelText }) => {
+    return (
+        <View style={DetailHotelStyles.confirmBar}>
+            {/* Accept Button */}
+            <TouchableOpacity style={DetailHotelStyles.confirmButton} onPress={onConfirm}>
+                <Text style={DetailHotelStyles.buttonText}>{confirmText}</Text>
+                <Icon
+                    name="check"
+                    brand
+                    // backgroundColor={COLORS.background_color}
+                    color={COLORS.white}
+                    size={30}
+                />
+            </TouchableOpacity>
+            {/* Reject Button */}
+            <TouchableOpacity style={DetailHotelStyles.cancelButton} onPress={onCancel}>
+                <Text style={DetailHotelStyles.buttonText}>{cancelText}</Text>
+                <Icon
+                    name="times"
+                    brand
+                    // backgroundColor={COLORS.background_color}
+                    color={COLORS.white}
+                    size={30}
+                />
+            </TouchableOpacity>
+        </View>
+    );
+};
+
+export const RemoveBar = ({ onRemove, contactText, removeText }) => {
+    return (
+        <View style={
+            {
+                borderRadius: 10,
+                borderTopWidth: 1,
+                borderTopColor: COLORS.input_border,
+                height: 130,
+                flexDirection: "column",
+                justifyContent: "space-between",
+                gap: 10,
+                marginBottom: 10,
+            }
+        }>
+            {/* Contact Button */}
+            <TouchableOpacity style={ReportDetailStyles.contactButton} >
+                <Text style={ReportDetailStyles.buttonText}>{contactText}</Text>
+                <Icon
+                    name="phone"
+                    brand
+                    // backgroundColor={COLORS.background_color}
+                    color={COLORS.white}
+                    size={30}
+                />
+            </TouchableOpacity>
+            {/* Remove Button */}
+            <TouchableOpacity style={ReportDetailStyles.removeButton} onPress={onRemove}>
+                <Text style={ReportDetailStyles.buttonText}>{removeText}</Text>
+                <Icon
+                    name="trash"
+                    brand
+                    // backgroundColor={COLORS.background_color}
+                    color={COLORS.white}
+                    size={30}
+                />
+            </TouchableOpacity>
+        </View>
+    );
+}

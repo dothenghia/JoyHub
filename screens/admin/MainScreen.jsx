@@ -1,10 +1,16 @@
-import React, {useState} from "react";
-import {FlatList, Text, View,} from "react-native";
+import React, { useState, lazy, Suspense } from "react";
+import { FlatList, Text, TouchableOpacity, View, } from "react-native";
 import generalStyles from "../../styles/general";
-import {SearchBar, TopBar} from "../../components/admin/Bar";
-import {AvatarCard} from "../../components/admin/Card";
-import {TEXTS} from "../../constants/theme";
+import { SearchBar, TopBar } from "../../components/admin/Bar";
+import { AvatarCard } from "../../components/admin/Card";
+import { TEXTS } from "../../constants/theme";
 
+const LazyLoadScreen = (Component) => (props) =>
+(
+    <Suspense fallback={<Text>Loading...</Text>}>
+        <Component {...props} />
+    </Suspense>
+);
 const data = [
     { id: "1", name: "Apple" },
     { id: "2", name: "Banana" },
@@ -16,6 +22,7 @@ export default function MainScreen({ navigation }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredData, setFilteredData] = useState(data);
 
+    // Handle search query
     const handleSearch = (text) => {
         setSearchQuery(text);
         // Filter data
@@ -25,6 +32,7 @@ export default function MainScreen({ navigation }) {
         setFilteredData(filtered);
     };
 
+    // Render
     return (
         <View style={generalStyles.page_container}>
             <TopBar Title={"Moderator Control"} backIcon={true} navigation={navigation} />
@@ -34,16 +42,20 @@ export default function MainScreen({ navigation }) {
                 onChangeText={handleSearch}
                 value={searchQuery}
             />
-            <Text style={{fontSize: TEXTS.xl, fontWeight: "900"}}>Waiting for accept</Text>
+            <Text style={{ fontSize: TEXTS.xl, fontWeight: "900" }}>Waiting for accept</Text>
             <FlatList
                 data={filteredData}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <AvatarCard
-                        Title={item.name}
-                        ImageUri={"https://unsplash.com/photos/M7GddPqJowg"}
-                        Address={"227 Nguyen Van Cu, TP.HCM"}
-                    />
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate("AdminDetailHotel", { hotel_name: item.name });
+                    }}>
+                        <AvatarCard
+                            Title={item.name}
+                            ImageUri={"https://unsplash.com/photos/M7GddPqJowg"}
+                            Address={"227 Nguyen Van Cu, TP.HCM"}
+                        />
+                    </TouchableOpacity>
                 )}
             />
         </View>

@@ -1,13 +1,14 @@
-import {Text} from "@rneui/themed";
-import {Image, View} from "react-native";
-import { AvatarCardStyles } from "../../styles/admin";
-import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Image, View, Text, Animated, Easing } from "react-native";
+import { AvatarCardStyles, HotelCardStyles, ReportCardStyles, RoomStyles, ReportDetailStyles } from "../../styles/admin";
+// import { Easing } from "react-native";
+import { useRef, useEffect, useState } from "react";
 
 const hotelImage = require("../../assets/admin/hotel.jpg");
 
-const toShortAddress = (address) => {
-    if (address.length < 20) return address;
-    return address.slice(0, 20) + "...";
+const toShort = (string, len) => {
+    if (string.length <= len) return string;
+    return string.slice(0, len) + "...";
 }
 
 export const AvatarCard = ({ Title, ImageUri, Address }) => {
@@ -20,11 +21,105 @@ export const AvatarCard = ({ Title, ImageUri, Address }) => {
             {/* Information part */}
             <View style={AvatarCardStyles.textContainer}>
                 <Text style={AvatarCardStyles.title}>{Title}</Text>
-                <View style={{flexDirection : 'row', alignItems : 'center'}}>
-                    <FontAwesome5Icon name={"map-marker-alt"} size={15} color={"#000"} />
-                    <Text style={AvatarCardStyles.description}>{toShortAddress(Address)}</Text>
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: "auto",
+                    marginBottom: "auto"
+                }}>
+                    <Icon name="map-marker-outline" style={AvatarCardStyles.iconStyle} />
+                    <Text style={AvatarCardStyles.description}>{toShort(Address, 20)}</Text>
                 </View>
             </View>
         </View>
     );
 };
+
+export const HotelCard = ({ Title, ImageUri, Address, WaitingAmount = 0 }) => {
+    const convertWaitingAmount = (amount) => {
+        if (amount < 10) return "0" + amount;
+        if (amount > 99) return "99+";
+        return amount;
+    }
+    return (
+        <View style={HotelCardStyles.container}>
+            {/* Avatar part */}
+            <Image source={hotelImage} style={HotelCardStyles.image} />
+            {/* Waiting amount */}
+            {WaitingAmount > 0 &&
+                <View style={HotelCardStyles.waitingContainer}>
+                    <Text style={HotelCardStyles.waitingText}>{convertWaitingAmount(WaitingAmount)}</Text>
+                </View>
+            }
+            {/* Information part */}
+            <View style={HotelCardStyles.textContainer}>
+                <Text style={HotelCardStyles.title}>{Title}</Text>
+                <View style={HotelCardStyles.descriptionContainer}>
+                    <Icon name="map-marker-outline" style={HotelCardStyles.iconStyle} />
+                    <Text style={HotelCardStyles.description}>{toShort(Address, 20)}</Text>
+                </View>
+            </View>
+
+        </View>
+    );
+}
+
+// ReportCard.js
+export const ReportCard = ({ hotel, title, date, isRead }) => {
+    // Change style based on isRead
+    const containerStyle = isRead ? { ...ReportCardStyles.container, ...ReportCardStyles.container_read } : ReportCardStyles.container;
+    const hotelStyle = isRead ? { ...ReportCardStyles.hotel, ...ReportCardStyles.hotel_read } : ReportCardStyles.hotel;
+    const titleStyle = isRead ? { ...ReportCardStyles.title, ...ReportCardStyles.title_read } : ReportCardStyles.title;
+
+    return (
+        <View style={containerStyle}>
+            {/* Hotel name */}
+            <Text style={hotelStyle}>{hotel}</Text>
+            {/* Title of report */}
+            <View style={ReportCardStyles.titleContainer}>
+                <Text style={titleStyle}>{title.toUpperCase()}</Text>
+                {/* Unread icon */}
+                {!isRead && <Icon name="circle" style={ReportCardStyles.icon} />}
+            </View>
+            {/* Date of report*/}
+            <Text style={ReportCardStyles.date}>{date}</Text>
+        </View>
+    );
+}
+
+export const RoomCard = ({ Title, ImageUri, Price }) => {
+    return (
+        <View style={RoomStyles.container}>
+            <Image source={hotelImage} style={RoomStyles.image} />
+            <View style={RoomStyles.textContainer}>
+                <Text style={RoomStyles.title}>{toShort(Title, 13)}</Text>
+                <View style={RoomStyles.descriptionContainer}>
+                    <Text style={RoomStyles.price}>{Price + " VND"}</Text>
+                    <Text style={RoomStyles.description}>/night</Text>
+                </View>
+            </View>
+        </View>
+    );
+}
+
+export const ReportDetailCard = ({ IdBooking, Date, Title, Description }) => {
+    return (
+        <View style={ReportDetailStyles.container}>
+            <View style={ReportDetailStyles.idContainer}>
+                {/* Id booking */}
+                <Text style={ReportDetailStyles.idText}>{IdBooking}</Text>
+                <Text style={ReportDetailStyles.date}>{Date}</Text>
+                {/* Date */}
+            </View>
+            {/* Report Title*/}
+            <Text style={ReportDetailStyles.title}>{Title}</Text>
+            {/* Report Description */}
+
+            <Text style={ReportDetailStyles.descriptionText}>
+                {Description}
+            </Text>
+
+        </View>
+    );
+}
