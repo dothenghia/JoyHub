@@ -91,7 +91,7 @@ export default function UserScreen({ navigation }) {
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#888888' }} />
 
-                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
+                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { navigation.navigate('WalletPage') }}>
                         <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Nạp/Rút'}</Text>
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#888888' }} />
