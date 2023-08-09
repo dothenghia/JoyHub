@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView } from "react-native";
+import SelectDropdown from 'react-native-select-dropdown'
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -12,11 +13,14 @@ import CController from "../../controllers/customerController";
 import HotelCard from "../../components/customer/main/HotelCard";
 
 
+
 export default function MainScreen({ navigation }) {
     console.log('[Customer] MainScreen')
     // ------ Data State
     const [hotelList, setHotelList] = useState([])
     const [searchInput, setSearchInput] = useState('')
+    const [locationList, setLocationList] = useState([])
+    const [city, setCity] = useState({})
 
     // ------ Fetch Data at first render
     useEffect(() => {
@@ -28,7 +32,14 @@ export default function MainScreen({ navigation }) {
         fetchHotelList()
     }, [])
 
+    useEffect(() => {
+        const fetchLocationList = async () => {
+            const data = await CController('GETLOCATIONLIST')
+            setLocationList(data)
+        }
 
+        fetchLocationList()
+    }, [])
 
     return (
         <ScrollView style={customerStyles.page_container}>
@@ -52,36 +63,74 @@ export default function MainScreen({ navigation }) {
             </View>
 
             {/* Filer Location Line */}
-            <View style={customerStyles.section_container_no_py}>
-                <TouchableOpacity style={styles.filer_line}>
-                    <Text style={{color: COLORS.text}}>
-                        Hồ Chí Minh City
-                    </Text>
-                    <Text style={{ color: COLORS.primary, fontWeight: '600', marginLeft: 3 }}>
-                        ^
-                    </Text>
-                </TouchableOpacity>
+            <View style={styles.dropdowns_container}>
+
+                <SelectDropdown
+                    data={locationList}
+                    buttonStyle={styles.dropdown}
+                    dropdownStyle={{marginTop: -24}}
+                    rowStyle={styles.dropdown_text}
+                    selectedRowStyle={{backgroundColor: COLORS.primary}}
+                    selectedRowTextStyle={{color: 'white'}}
+                    defaultButtonText="Select City"
+                    onSelect={(city, index) => {
+                        setCity(city)
+                    }}
+                    buttonTextAfterSelection={(city, index) => {
+                        // console.log(city.name)
+                        return city.name
+                    }}
+                    rowTextForSelection={(city, index) => {
+                        // console.log(city.name)
+                        return city.name
+                    }}
+                />
+
+                <SelectDropdown
+                    data={city.districts}
+                    buttonStyle={styles.dropdown}
+                    dropdownStyle={{marginTop: -24}}
+                    rowStyle={styles.dropdown_text}
+                    selectedRowStyle={{backgroundColor: COLORS.primary}}
+                    selectedRowTextStyle={{color: 'white'}}
+                    defaultButtonText="Select District"
+                    // onSelect={(district, index) => {
+                    //     console.log(district, index)
+                    // }}
+                    buttonTextAfterSelection={(district, index) => {
+                        // console.log(district.name)
+                        return district.name
+                    }}
+                    rowTextForSelection={(district, index) => {
+                        // console.log(district.name)
+                        return district.name
+                    }}
+                />
             </View>
+
+
 
             {/* Hotel List */}
             <View style={customerStyles.section_container}>
                 {
                     hotelList.map((hotel) => {
-                        return (<HotelCard key={hotel.id} props={hotel} navigation={navigation}/>)
+                        return (<HotelCard key={hotel.id} props={hotel} navigation={navigation} />)
                     })
                 }
             </View>
+
+
         </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     logo: {
-        width:100,
+        width: 100,
         height: 32,
         marginTop: 16,
         marginLeft: 32,
-        alignItems : 'flex-start',
+        alignItems: 'flex-start',
     },
     logo_image: {
         width: '100%',
@@ -98,15 +147,29 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderColor: COLORS.input_border,
         borderWidth: 2,
-        borderRadius: 50,
+        borderRadius: 10,
 
         fontSize: TEXTS.md,
         color: COLORS.text
     },
 
-    filer_line: {
-        marginTop: 20,
+    dropdowns_container: {
+        ...customerStyles.section_container_no_py ,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        marginTop: 12
+    },
+    dropdown: {
+        width: '48%',
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        borderColor: COLORS.top_button_border,
+        borderWidth: 2,
+
+    },
+    dropdown_text: {
+        width: '100%',
+        backgroundColor: '#fff',
+
     },
 });
