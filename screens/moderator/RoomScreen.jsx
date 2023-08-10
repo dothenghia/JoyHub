@@ -8,13 +8,13 @@ import modStyles from '../../styles/mod'
 export default function RoomScreen({ navigation }) {
 
 
-    const listOfAmentities = ['Air Conditioner', 'Fasdfsa', 'Wifi', 'TV', 'Shampoo', 'Towel', 'Slippers', 'CD/DVD Player', 'Electronic Safe', 'Mini Frigde', 'Coffee Maker'];
+    const listOfAmenities = ['Air Conditioner', 'Fasdfsa', 'Wifi', 'TV', 'Shampoo', 'Towel', 'Slippers', 'CD/DVD Player', 'Electronic Safe', 'Mini Frigde', 'Coffee Maker'];
 
     const listOfType = ['Standard', 'Deluxe', 'Luxury Nha Giau Dai Gia']
     const listOfRoom = [['Small Room', 'Large Room', 'Couple', 'Threesome'], ['Queen', 'King', 'reggiN'], ['Hoa Hau Y Nhi', 'Han Mac Tu', 'Quang Trung']]
 
     const res = [];
-    const n = listOfAmentities.length;
+    const n = listOfAmenities.length;
 
     return (
         <ScrollView style={modStyles.page_container}>
@@ -37,9 +37,9 @@ export default function RoomScreen({ navigation }) {
             </View>
 
             <View style={{ ...modStyles.page_padding, marginTop: 20 }}>
-                <Text style={{ fontSize: 20 }}>Hotel Amentities</Text>
+                <Text style={{ fontSize: 20 }}>Hotel Amenities</Text>
                 <FlatList style={{ height: 100 }}
-                    horizontal data={listOfAmentities}
+                    horizontal data={listOfAmenities}
 
                     renderItem={({ item }) => (
                         <Amentity icon={require("../../assets/mod/wifi.png")} name={item} />

@@ -5,7 +5,7 @@ import TopBar from "./TopBar";
 import SearchBar from "./SearchBar";
 
 
-function Amentity({name, icon}) {
+function Amenitiy({name, icon}) {
        
     return(
         <TouchableOpacity style={{ flex: 7, height: 50, flexDirection: 'row', marginTop: 7, padding: 5, borderWidth: 1, borderRadius: 10 }}>
@@ -16,21 +16,21 @@ function Amentity({name, icon}) {
 }
 
 
-export default function RoomAmentityCard() {
+export default function RoomAmenityCard() {
 
 
-    const listOfAmentities = ['Air Conditioner', 'fasdfsa', 'Wifi', 'TV', 'Shampoo', 'Towel', 'Slippers', 'CD/DVD Player', 'Electronic Safe', 'Mini Frigde', 'Coffee Maker'];
+    const listOfAmenities = ['Air Conditioner', 'fasdfsa', 'Wifi', 'TV', 'Shampoo', 'Towel', 'Slippers', 'CD/DVD Player', 'Electronic Safe', 'Mini Frigde', 'Coffee Maker'];
     const res = [];
-    const n = listOfAmentities.length;
+    const n = listOfAmenities.length;
 
 
 
     for (let i = 0; i < parseInt(n / 2); i++) {
         res.push(
             <View style={{ flexDirection: 'row' }}>
-                <Amentity name={listOfAmentities[2 * i]} icon={require('../../assets/mod/wifi.png')} />
+                <Amenitiy name={listOfAmenities[2 * i]} icon={require('../../assets/mod/wifi.png')} />
                 <View style={{flex:0.7}}/>
-                <Amentity name={listOfAmentities[2 * i + 1]} icon={require('../../assets/mod/wifi.png')} />
+                <Amenitiy name={listOfAmenities[2 * i + 1]} icon={require('../../assets/mod/wifi.png')} />
             </View>
         );
     }
@@ -38,9 +38,9 @@ export default function RoomAmentityCard() {
     if (n % 2 === 1) {
         res.push(
                 <View style={{ flexDirection: 'row' }}>
-                    <Amentity name={listOfAmentities[n - 1]} icon={require('../../assets/mod/wifi.png')} />
+                    <Amenitiy name={listOfAmenities[n - 1]} icon={require('../../assets/mod/wifi.png')} />
                     <View style={{flex:1}}/>
-                    <Amentity name={''} icon={null} />
+                    <Amenitiy name={''} icon={null} />
                 </View>
             )
     }
