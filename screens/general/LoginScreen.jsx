@@ -108,7 +108,7 @@ export default function LoginScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={forgotPasswordHandler}
                 >
-                    <JoyText style={{color: COLORS.primary, fontWeight: '600'}}>
+                    <JoyText style={{color: COLORS.primary, fontSize: TEXTS.md, fontWeight: '600'}}>
                         Forget password?
                     </JoyText>
                 </TouchableOpacity>
@@ -131,7 +131,7 @@ export default function LoginScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={() => navigation.navigate("CustomerMain")}
                 >
-                    <JoyText style={{color: COLORS.primary, fontWeight: '600'}}>
+                    <JoyText style={{color: COLORS.primary, fontSize: TEXTS.md, fontWeight: '600'}}>
                         Log in as guest
                     </JoyText>
                 </TouchableOpacity>

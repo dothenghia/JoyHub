@@ -1,4 +1,4 @@
-import { StyleSheet, View, JoyText, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import JoyText from "../../general/JoyText";
 
 // Import Style & Theme
