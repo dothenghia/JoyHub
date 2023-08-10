@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { StyleSheet, ToastAndroid, Text, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, ToastAndroid, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
 import Checkbox from 'expo-checkbox';
+import JoyText from '../../components/general/JoyText'
 
 
 // Import Style & Theme
@@ -36,9 +37,9 @@ export default function ModRegisterScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={() => navigation.navigate('SignupPage')}
                 >
-                    <Text style={{ color: COLORS.primary, fontWeight: '600' }}>
+                    <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
                         Back
-                    </Text>
+                    </JoyText>
                 </TouchableOpacity>
             </View>
 
@@ -51,11 +52,11 @@ export default function ModRegisterScreen({ navigation }) {
             </View>
 
             {/* Heading & Subheading */}
-            <Text style={generalStyles.heading_1}>Moderator Register</Text>
-            <Text style={generalStyles.subheading_2}>Enter hotel's information</Text>
+            <JoyText style={generalStyles.heading_1}>Moderator Register</JoyText>
+            <JoyText style={generalStyles.subheading_2}>Enter hotel's information</JoyText>
 
             {/* ====== Input ====== */}
-            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20}}>Username</Text>
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20}}>Username</JoyText>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter Username'
@@ -64,7 +65,7 @@ export default function ModRegisterScreen({ navigation }) {
                 onChangeText={(e) => setUsername(e)}
             />
 
-            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Hotel Name</Text>
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Hotel Name</JoyText>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter Hotel Name'
@@ -73,7 +74,7 @@ export default function ModRegisterScreen({ navigation }) {
                 onChangeText={(e) => setHotelname(e)}
             />
 
-            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Email</Text>
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Email</JoyText>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter Email'
@@ -82,7 +83,7 @@ export default function ModRegisterScreen({ navigation }) {
                 onChangeText={(e) => setEmail(e)}
             />
 
-            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Password</Text>
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Password</JoyText>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter Password'
@@ -92,7 +93,7 @@ export default function ModRegisterScreen({ navigation }) {
                 onChangeText={(e) => setPassword(e)}
             />
 
-            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Confirm Password</Text>
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Confirm Password</JoyText>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter Confirm Password'
@@ -102,7 +103,7 @@ export default function ModRegisterScreen({ navigation }) {
                 onChangeText={(e) => setConfirm(e)}
             />
 
-            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Hotel Address</Text>
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Hotel Address</JoyText>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter Hotel Address'
@@ -111,7 +112,7 @@ export default function ModRegisterScreen({ navigation }) {
                 onChangeText={(e) => setAddress(e)}
             />
 
-            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Description</Text>
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Description</JoyText>
             <TextInput
                 style={{ ...generalStyles.input_field , height: 200, borderRadius: 24, paddingTop: 12 }}
                 placeholder='Enter description about the hotel'
@@ -132,13 +133,13 @@ export default function ModRegisterScreen({ navigation }) {
                     onValueChange={setChecked}
                     color={isChecked ? '#FF6400' : undefined}
                 />
-                <Text>
+                <JoyText>
                     I accept the
-                </Text>
+                </JoyText>
                 <TouchableOpacity>
-                    <Text style={{ color: COLORS.primary, marginLeft: 3 }}>
+                    <JoyText style={{ color: COLORS.primary, marginLeft: 3 }}>
                         Terms of Service
-                    </Text>
+                    </JoyText>
                 </TouchableOpacity>
             </View>
 
@@ -148,9 +149,9 @@ export default function ModRegisterScreen({ navigation }) {
                     onPress={submitHandler}
                     style={ generalStyles.button_1 }
                 >
-                    <Text style={ generalStyles.button_text_1 }>
+                    <JoyText style={ generalStyles.button_text_1 }>
                         Register
-                    </Text>
+                    </JoyText>
                 </TouchableOpacity>
             </View>
 

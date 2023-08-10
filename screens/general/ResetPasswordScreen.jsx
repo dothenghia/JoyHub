@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { StyleSheet, ToastAndroid, Text, Modal, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, ToastAndroid, View, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
 import { COLORS } from '../../constants/theme'
@@ -28,20 +29,20 @@ export default function ResetPasswordScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={() => navigation.navigate('RecoveryPage')}
                 >
-                    <Text style={{ color: COLORS.primary, fontWeight: '600' }}>
+                    <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
                         Back
-                    </Text>
+                    </JoyText>
                 </TouchableOpacity>
             </View>
 
 
             {/* Heading & Subheading */}
-            <Text style={generalStyles.heading_1}>Create New Password</Text>
-            <Text style={generalStyles.subheading_2}>Your new password must be unique from those previously used</Text>
+            <JoyText style={generalStyles.heading_1}>Create New Password</JoyText>
+            <JoyText style={generalStyles.subheading_2}>Your new password must be unique from those previously used</JoyText>
 
             
             {/* ====== Input ====== */}
-            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20 }}>New Password</Text>
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20 }}>New Password</JoyText>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter New Password'
@@ -51,7 +52,7 @@ export default function ResetPasswordScreen({ navigation }) {
                 onChangeText={(e) => setPassword(e)}
             />
 
-            <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 2 }}>Confirm New Password</Text>
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 2 }}>Confirm New Password</JoyText>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter Confirm New Password'
@@ -67,9 +68,9 @@ export default function ResetPasswordScreen({ navigation }) {
                     onPress={submitHandler}
                     style={ generalStyles.button_1 }
                 >
-                    <Text style={ generalStyles.button_text_1 }>
+                    <JoyText style={ generalStyles.button_text_1 }>
                         Reset Password
-                    </Text>
+                    </JoyText>
                 </TouchableOpacity>
             </View>
 

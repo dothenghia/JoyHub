@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { StyleSheet, ToastAndroid, Text, View, Image, TouchableOpacity, TextInput } from "react-native";
+import { StyleSheet, ToastAndroid, View, Image, TouchableOpacity, TextInput } from "react-native";
+import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
 import { COLORS } from '../../constants/theme'
@@ -79,10 +80,10 @@ export default function LoginScreen({ navigation }) {
             </View>
 
             {/* Slogan */}
-            <Text style={{ ...generalStyles.subheading_1, paddingHorizontal: 80, textAlign: 'center' }}>where you can discover, book or host a room</Text>
+            <JoyText style={{ ...generalStyles.subheading_1, paddingHorizontal: 80, textAlign: 'center' }}>where you can discover, book or host a room</JoyText>
 
             {/* Input */}
-            <Text style={generalStyles.input_label}>Username</Text>
+            <JoyText style={generalStyles.input_label}>Username</JoyText>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter Username'
@@ -92,7 +93,7 @@ export default function LoginScreen({ navigation }) {
             />
 
             {/* Input */}
-            <Text style={generalStyles.input_label}>Password</Text>
+            <JoyText style={generalStyles.input_label}>Password</JoyText>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter Password'
@@ -107,9 +108,9 @@ export default function LoginScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={forgotPasswordHandler}
                 >
-                    <Text style={{color: COLORS.primary, fontWeight: '600'}}>
+                    <JoyText style={{color: COLORS.primary, fontSize: TEXTS.md, fontWeight: '600'}}>
                         Forget password?
-                    </Text>
+                    </JoyText>
                 </TouchableOpacity>
             </View>
 
@@ -119,9 +120,9 @@ export default function LoginScreen({ navigation }) {
                     onPress={loginHandler}
                     style={ generalStyles.button_1 }
                 >
-                    <Text style={ generalStyles.button_text_1 }>
+                    <JoyText style={ generalStyles.button_text_1 }>
                         Log in
-                    </Text>
+                    </JoyText>
                 </TouchableOpacity>
             </View>
 
@@ -130,9 +131,9 @@ export default function LoginScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={() => navigation.navigate("CustomerMain")}
                 >
-                    <Text style={{color: COLORS.primary, fontWeight: '600'}}>
+                    <JoyText style={{color: COLORS.primary, fontSize: TEXTS.md, fontWeight: '600'}}>
                         Log in as guest
-                    </Text>
+                    </JoyText>
                 </TouchableOpacity>
             </View>
 
@@ -142,15 +143,15 @@ export default function LoginScreen({ navigation }) {
 
             {/* Sign up Line */}
             <View style={styles.signupLine}>
-                <Text style={{color: COLORS.text}}>
+                <JoyText style={{color: COLORS.text}}>
                     If you don't have an account,
-                </Text>
+                </JoyText>
                 <TouchableOpacity
                     onPress={() => navigation.navigate("SignupPage")}
                 >
-                    <Text style={{ color: COLORS.primary, fontWeight: '600', marginLeft: 3 }}>
+                    <JoyText style={{ color: COLORS.primary, fontWeight: '600', marginLeft: 3 }}>
                         Create one
-                    </Text>
+                    </JoyText>
                 </TouchableOpacity>
             </View>
 

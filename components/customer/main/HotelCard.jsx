@@ -1,4 +1,5 @@
-import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from "react-native";
+import { StyleSheet, View, ImageBackground, TouchableOpacity } from "react-native";
+import JoyText from "../../general/JoyText";
 
 // Import Style & Theme
 import { COLORS } from "../../../constants/theme";
@@ -16,10 +17,10 @@ export default function HotelCard({ props , navigation }) {
                 resizeMode="cover"
                 style={styles.bg_image}
             >
-                <Text style={styles.text}>{props.name}</Text>
-                <Text style={styles.text}>{props.location}</Text>
-                <Text style={styles.text}>{props.star}</Text>
-                <Text style={styles.text}>{props.price}</Text>
+                <JoyText style={styles.text}>{props.name}</JoyText>
+                <JoyText style={styles.text}>{props.location}</JoyText>
+                <JoyText style={styles.text}>{props.star}</JoyText>
+                <JoyText style={styles.text}>{props.price}</JoyText>
             </ImageBackground>
         </TouchableOpacity>
     );

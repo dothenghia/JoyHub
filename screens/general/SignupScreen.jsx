@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -15,15 +16,15 @@ export default function SignupScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={() => navigation.navigate('LoginPage')}
                 >
-                    <Text style={{ color: COLORS.primary, fontWeight: '600' }}>
+                    <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
                         Back
-                    </Text>
+                    </JoyText>
                 </TouchableOpacity>
             </View>
 
-            <Text style={{ marginTop: 180, color: COLORS.heading_text, fontSize: 22, fontWeight: 'bold', textAlign: 'center' }}>
+            <JoyText style={{ marginTop: 180, color: COLORS.heading_text, fontSize: 30, fontWeight: 'bold', textAlign: 'center' }}>
                 You are
-            </Text>
+            </JoyText>
 
             {/* Select-Role buttons */}
             <View style={{ marginTop: 40, flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -32,7 +33,7 @@ export default function SignupScreen({ navigation }) {
                     onPress={() => navigation.navigate('CustomerRegisterPage')}
                     style={styles.role_button}
                 >
-                    <Text style={styles.button_title}>Customer</Text>
+                    <JoyText style={styles.button_title}>Customer</JoyText>
 
                     <View style={styles.button_image_wrapper}>
                         <Image
@@ -41,7 +42,7 @@ export default function SignupScreen({ navigation }) {
                         />
                     </View>
 
-                    <Text style={styles.button_description}>who want to book accommodation</Text>
+                    <JoyText style={styles.button_description}>who want to book accommodation</JoyText>
                 </TouchableOpacity>
 
                 {/* Role button */}
@@ -49,7 +50,7 @@ export default function SignupScreen({ navigation }) {
                     onPress={() => navigation.navigate('ModeratorRegisterPage')}
                     style={styles.role_button}
                 >
-                    <Text style={styles.button_title}>Moderator</Text>
+                    <JoyText style={styles.button_title}>Moderator</JoyText>
 
                     <View style={styles.button_image_wrapper}>
                         <Image
@@ -58,7 +59,7 @@ export default function SignupScreen({ navigation }) {
                         />
                     </View>
 
-                    <Text style={styles.button_description}>who provide accommodation</Text>
+                    <JoyText style={styles.button_description}>who provide accommodation</JoyText>
                 </TouchableOpacity>
             </View>
 

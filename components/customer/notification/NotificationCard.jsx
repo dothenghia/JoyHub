@@ -1,4 +1,5 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
+import JoyText from "../../general/JoyText";
 
 // Import Style & Theme
 import { COLORS } from "../../../constants/theme";
@@ -16,8 +17,8 @@ export default function NotificationCard({ props , navigation }) {
             </View>
 
             <View style={styles.text_container}>
-                <Text>{props.message}</Text>
-                <Text style={{textAlign: 'right', color: COLORS.primary, fontWeight: '600'}}>{props.time}</Text>
+                <JoyText>{props.message}</JoyText>
+                <JoyText style={{textAlign: 'right', color: COLORS.primary, fontWeight: '600'}}>{props.time}</JoyText>
             </View>
         </View>
     );

@@ -11,14 +11,27 @@ const hotelInformation = {
         {
             f_id: 1,
             f_name: 'Free Wifi',
+            f_icon: 'https://cdn-icons-png.flaticon.com/512/159/159599.png',
         },
         {
             f_id: 2,
             f_name: 'River View',
+            f_icon: 'https://cdn-icons-png.flaticon.com/512/4758/4758302.png',
         },
         {
             f_id: 3,
             f_name: 'Bath Tub',
+            f_icon: 'https://cdn-icons-png.flaticon.com/512/638/638137.png',
+        },
+        {
+            f_id: 4,
+            f_name: 'Air Conditioner',
+            f_icon: 'https://cdn-icons-png.flaticon.com/512/1530/1530297.png',
+        },
+        {
+            f_id: 5,
+            f_name: 'Meal',
+            f_icon: 'https://cdn-icons-png.flaticon.com/512/590/590296.png',
         },
     ],
 

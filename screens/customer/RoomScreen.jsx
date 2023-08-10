@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, ImageBackground, ScrollView } from "react-native";
+import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView } from "react-native";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -24,7 +25,7 @@ export default function RoomScreen({ navigation, route }) {
                     >
                         <FontAwesome5Icon name={"arrow-left"} size={18} color={COLORS.primary} />
                     </TouchableOpacity>
-                    <Text style={customerStyles.top_bar_title}>Detail Room</Text>
+                    <JoyText style={customerStyles.top_bar_title}>Detail Room</JoyText>
                 </View>
 
                 {/* Thumbnail Slider */}
@@ -40,8 +41,8 @@ export default function RoomScreen({ navigation, route }) {
 
                 {/* Room Information */}
                 <View style={customerStyles.section_container}>
-                    <Text style={customerStyles.page_title}>Deluxe room</Text>
-                    <Text>Bla bla</Text>
+                    <JoyText style={customerStyles.page_title}>Deluxe room</JoyText>
+                    <JoyText>Bla bla</JoyText>
                 </View>
 
                 <View style={customerStyles.divider}></View>
@@ -49,26 +50,26 @@ export default function RoomScreen({ navigation, route }) {
 
                 {/* Payment Information */}
                 <View style={customerStyles.section_container}>
-                    <Text style={customerStyles.section_title}>Payment Information</Text>
+                    <JoyText style={customerStyles.section_title}>Payment Information</JoyText>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={styles.text}>Per night</Text>
-                        <Text style={styles.text}>200.000 VND</Text>
+                        <JoyText style={styles.text}>Per night</JoyText>
+                        <JoyText style={styles.text}>200.000 VND</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={styles.text}>From</Text>
-                        <Text style={styles.text}>Thu, 4/6/2023</Text>
+                        <JoyText style={styles.text}>From</JoyText>
+                        <JoyText style={styles.text}>Thu, 4/6/2023</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={styles.text}>To</Text>
-                        <Text style={styles.text}>Sat, 6/6/2023</Text>
+                        <JoyText style={styles.text}>To</JoyText>
+                        <JoyText style={styles.text}>Sat, 6/6/2023</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={styles.text}>Total night</Text>
-                        <Text style={styles.text}>2 night</Text>
+                        <JoyText style={styles.text}>Total night</JoyText>
+                        <JoyText style={styles.text}>2 night</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={styles.primary_text}>Total</Text>
-                        <Text style={styles.primary_text}>400.000 VND</Text>
+                        <JoyText style={styles.primary_text}>Total</JoyText>
+                        <JoyText style={styles.primary_text}>400.000 VND</JoyText>
                     </View>
                 </View>
 
@@ -77,8 +78,8 @@ export default function RoomScreen({ navigation, route }) {
 
                 {/* Cancellation Policy */}
                 <View style={customerStyles.section_container}>
-                    <Text style={customerStyles.section_title}>Cancellation Policy</Text>
-                    <Text style={styles.text}>Free cancellation 1 hour before check-in</Text>
+                    <JoyText style={customerStyles.section_title}>Cancellation Policy</JoyText>
+                    <JoyText style={styles.text}>Free cancellation 1 hour before check-in</JoyText>
                 </View>
 
             </ScrollView>
@@ -91,17 +92,17 @@ export default function RoomScreen({ navigation, route }) {
                     style={fixedBarStyle.bar_calendar}
                 >
                     <FontAwesome5Icon name={"calendar-alt"} size={28} color={COLORS.primary} />
-                    <Text style={fixedBarStyle.calendar_text}>Thu, 4/6/2023 - Sat, 6/6/2023</Text>
+                    <JoyText style={fixedBarStyle.calendar_text}>Thu, 4/6/2023 - Sat, 6/6/2023</JoyText>
                 </TouchableOpacity>
 
 
                 {/* Price - Book button */}
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={fixedBarStyle.bar_price}>400.000 VND</Text>
+                    <JoyText style={fixedBarStyle.bar_price}>400.000 VND</JoyText>
                     <TouchableOpacity
                         style={fixedBarStyle.book_button}
                         onPress={() => { navigation.navigate('PaymentPage') }}>
-                        <Text style={fixedBarStyle.book_button_text}>Book</Text>
+                        <JoyText style={fixedBarStyle.book_button_text}>Book</JoyText>
                     </TouchableOpacity>
                 </View>
             </View>
