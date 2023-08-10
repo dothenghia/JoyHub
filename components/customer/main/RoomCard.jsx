@@ -1,4 +1,5 @@
-import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from "react-native";
+import { StyleSheet, View, ImageBackground, TouchableOpacity } from "react-native";
+import JoyText from "../../general/JoyText";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from "../../../constants/theme";
@@ -19,8 +20,8 @@ export default function RoomCard({ name , navigation }) {
             ></ImageBackground>
 
             <View style={styles.text_container}>
-                <Text style={styles.hotel_name}>{name.name}</Text>
-                <Text>{name.price}</Text>
+                <JoyText style={styles.hotel_name}>{name.name}</JoyText>
+                <JoyText>{name.price}</JoyText>
             </View>
         </TouchableOpacity>
     );

@@ -19,12 +19,13 @@ const COLORS = {
 };
 
 const TEXTS = {
-    xs : 10,
-    sm : 12,
-    md : 14,
-    lg : 16,
-    xl : 18,
-    xxl : 20,
+    xxs : 10,
+    xs : 12,
+    sm : 14,
+    md : 16,
+    lg : 18,
+    xl : 20,
+    xxl : 22,
     '3xl' : 24,
     '4xl' : 28,
     '5xl' : 32,

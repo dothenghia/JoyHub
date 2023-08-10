@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView } from "react-native";
-import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import { StyleSheet, TouchableOpacity, View, Image, ScrollView } from "react-native";
+import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -14,7 +14,7 @@ export default function AfterPaymentScreen({ navigation, route, parentSlug }) {
             <ScrollView style={{flex: 1}}>
                 {/* Top Bar */}
                 <View style={customerStyles.top_bar}>
-                    <Text style={customerStyles.top_bar_title}>Booking Status</Text>
+                    <JoyText style={customerStyles.top_bar_title}>Booking Status</JoyText>
                 </View>
 
 
@@ -37,9 +37,9 @@ export default function AfterPaymentScreen({ navigation, route, parentSlug }) {
 
                 {/* Booking Status */}
                 <View style={customerStyles.section_container}>
-                    <Text style={styles.text_1}>Booking successfully</Text>
-                    <Text style={styles.text_2}>Congratulations on your successful booking at</Text>
-                    <Text style={styles.hotel_name}>Haley House</Text>
+                    <JoyText style={styles.text_1}>Booking successfully</JoyText>
+                    <JoyText style={styles.text_2}>Congratulations on your successful booking at</JoyText>
+                    <JoyText style={styles.hotel_name}>Haley House</JoyText>
                 </View>
             </ScrollView>
 
@@ -47,12 +47,12 @@ export default function AfterPaymentScreen({ navigation, route, parentSlug }) {
                 <TouchableOpacity
                     style={styles.check_button}
                     onPress={() => { navigation.navigate('ReservationPage') }}>
-                    <Text style={styles.check_button_text}>Check Reservation</Text>
+                    <JoyText style={styles.check_button_text}>Check Reservation</JoyText>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.home_button}
                     onPress={() => { navigation.navigate('MainPage') }}>
-                    <Text style={styles.home_button_text}>Back to Home Page</Text>
+                    <JoyText style={styles.home_button_text}>Back to Home Page</JoyText>
                 </TouchableOpacity>
             </View>
 

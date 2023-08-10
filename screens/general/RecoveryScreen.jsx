@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, Text, Modal, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, Modal, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
 import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
@@ -38,9 +38,9 @@ export default function RecoveryScreen({ navigation }) {
                     <TouchableOpacity
                         onPress={() => navigation.navigate('LoginPage')}
                     >
-                        <Text style={{ color: COLORS.primary, fontWeight: '600' }}>
+                        <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
                             Back
-                        </Text>
+                        </JoyText>
                     </TouchableOpacity>
                 </View>
 
@@ -53,12 +53,12 @@ export default function RecoveryScreen({ navigation }) {
                 </View>
 
                 {/* Heading & Subheading */}
-                <Text style={generalStyles.heading_1}>Forgot Password?</Text>
-                <Text style={generalStyles.subheading_2}>Don’t worry! Enter the username, we will send recovery code to your email.</Text>
+                <JoyText style={generalStyles.heading_1}>Forgot Password?</JoyText>
+                <JoyText style={generalStyles.subheading_2}>Don’t worry! Enter the username, we will send recovery code to your email.</JoyText>
 
 
                 {/* ====== Input ====== */}
-                <Text style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20 }}>Username</Text>
+                <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20 }}>Username</JoyText>
                 <TextInput
                     style={generalStyles.input_field}
                     placeholder='Enter Username'
@@ -74,9 +74,9 @@ export default function RecoveryScreen({ navigation }) {
                         onPress={sendCodeHandler}
                         style={ generalStyles.button_1 }
                     >
-                        <Text style={ generalStyles.button_text_1 }>
+                        <JoyText style={ generalStyles.button_text_1 }>
                             Send Code
-                        </Text>
+                        </JoyText>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -97,8 +97,8 @@ export default function RecoveryScreen({ navigation }) {
                     <View style={styles.modal_container}>
 
                         {/* Heading & Subheading */}
-                        <Text style={generalStyles.heading_1}>OTP Verification</Text>
-                        <Text style={generalStyles.subheading_2}>Enter the recovery code we just sent to your email address</Text>
+                        <JoyText style={generalStyles.heading_1}>OTP Verification</JoyText>
+                        <JoyText style={generalStyles.subheading_2}>Enter the recovery code we just sent to your email address</JoyText>
 
                         {/* ====== Input ====== */}
                         <TextInput
@@ -115,9 +115,9 @@ export default function RecoveryScreen({ navigation }) {
                                 onPress={verifyHandler}
                                 style={ generalStyles.button_1 }
                             >
-                                <Text style={ generalStyles.button_text_1 }>
+                                <JoyText style={ generalStyles.button_text_1 }>
                                     Verify
-                                </Text>
+                                </JoyText>
                             </TouchableOpacity>
                         </View>
 
@@ -128,15 +128,15 @@ export default function RecoveryScreen({ navigation }) {
 
                         {/* Resend code Line */}
                         <View style={styles.resendLine}>
-                            <Text>
+                            <JoyText>
                                 Didn't received code?
-                            </Text>
+                            </JoyText>
                             <TouchableOpacity
                                 onPress={resendHandler}
                             >
-                                <Text style={{ color: COLORS.primary, fontWeight: '600', marginLeft: 4 }}>
+                                <JoyText style={{ color: COLORS.primary, fontWeight: '600', marginLeft: 4 }}>
                                     Resend
-                                </Text>
+                                </JoyText>
                             </TouchableOpacity>
                         </View>
 
@@ -145,9 +145,9 @@ export default function RecoveryScreen({ navigation }) {
                             <TouchableOpacity
                                 onPress={() => setModalVisibility(false)}
                             >
-                                <Text style={{ color: COLORS.primary, fontWeight: '600' }}>
+                                <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
                                     Cancel
-                                </Text>
+                                </JoyText>
                             </TouchableOpacity>
                         </View>
 

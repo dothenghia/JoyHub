@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView } from "react-native";
+import { StyleSheet, View, Image, TextInput, ScrollView } from "react-native";
 import SelectDropdown from 'react-native-select-dropdown'
 
 // Import Style & Theme

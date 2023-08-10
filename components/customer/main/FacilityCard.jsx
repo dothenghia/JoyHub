@@ -1,4 +1,5 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, JoyText, Image } from "react-native";
+import JoyText from "../../general/JoyText";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from "../../../constants/theme";
@@ -14,7 +15,7 @@ export default function FacilityCard({ name }) {
                     }}
                 />
             </View>
-            <Text style={styles.text}>{name.f_name}</Text>
+            <JoyText style={styles.text}>{name.f_name}</JoyText>
         </View>
     );
 }

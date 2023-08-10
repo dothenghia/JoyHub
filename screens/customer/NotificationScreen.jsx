@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
+import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -30,7 +31,7 @@ export default function NotificationScreen({ navigation }) {
 
     return (
         <ScrollView style={customerStyles.page_container}>
-            <Text style={customerStyles.page_name}>Notification</Text>
+            <JoyText style={customerStyles.page_name}>Notification</JoyText>
 
             <View>
                 {
