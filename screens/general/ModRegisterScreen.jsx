@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, ToastAndroid, Text, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
 import Checkbox from 'expo-checkbox';
+import JoyText from '../../components/general/JoyText'
 
 
 // Import Style & Theme

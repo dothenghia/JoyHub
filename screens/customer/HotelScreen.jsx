@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, ImageBackground, ScrollView } from "react-native";
+import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, FlatList } from "react-native";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -11,6 +12,7 @@ import CController from "../../controllers/customerController";
 
 // Import Component
 import RoomCard from "../../components/customer/main/RoomCard";
+import FacilityCard from "../../components/customer/main/FacilityCard";
 
 
 export default function HotelScreen({ navigation, route }) {
@@ -38,7 +40,7 @@ export default function HotelScreen({ navigation, route }) {
 
 
     return (
-        <View style={ customerStyles.page_container }>
+        <View style={customerStyles.page_container}>
 
             {/* Hotel Screen Scroll View */}
             <ScrollView style={{ flex: 1, marginBottom: 80 }}>
@@ -73,20 +75,20 @@ export default function HotelScreen({ navigation, route }) {
                 {/* Hotel Information */}
                 <View style={customerStyles.section_container}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text style={customerStyles.page_title}>
+                        <JoyText style={customerStyles.page_title}>
                             {hotelInfo ? hotelInfo.name : 'Loading ...'}
-                        </Text>
-                        <Text style={styles.rating}>
+                        </JoyText>
+                        <JoyText style={styles.rating}>
                             {hotelInfo ? hotelInfo.star : 'Loading ...'} ({hotelInfo ? hotelInfo.review : 'Loading ...'})
-                        </Text>
+                        </JoyText>
                     </View>
-                    <Text style={styles.location}>
+                    <JoyText style={styles.location}>
                         {hotelInfo ? hotelInfo.location : 'Loading ...'}
-                    </Text>
-                    <Text style={styles.description} numberOfLines={3}>
+                    </JoyText>
+                    <JoyText style={styles.description} numberOfLines={3}>
                         {hotelInfo ? hotelInfo.description : 'Loading ...'}
 
-                    </Text>
+                    </JoyText>
                 </View>
 
                 <View style={customerStyles.divider}></View>
@@ -94,12 +96,17 @@ export default function HotelScreen({ navigation, route }) {
 
                 {/* Hotel Facilities */}
                 <View style={customerStyles.section_container}>
-                    <Text style={customerStyles.section_title}>Hotel facilities</Text>
-                    {
-                        facilities.map((facility) => (
-                            <Text key={facility.f_id}>{facility.f_name}</Text>
-                        ))
-                    }
+                    <JoyText style={customerStyles.section_title}>Hotel facilities</JoyText>
+                    <FlatList style={{ height: 120, marginTop: 8 }}
+                        horizontal data={facilities}
+
+                        renderItem={({ item }) => (
+                            <FacilityCard
+                                name={item}
+                            />
+                        )}
+                    >
+                    </FlatList>
                 </View>
 
                 <View style={customerStyles.divider}></View>
@@ -107,12 +114,18 @@ export default function HotelScreen({ navigation, route }) {
 
                 {/* Hotel Room List */}
                 <View style={customerStyles.section_container}>
-                    <Text style={customerStyles.section_title}>Standard</Text>
-                    {
-                        roomList.map((room) => (
-                            <RoomCard key={room.id} props={room} parentSlug={route.params.slug} navigation={navigation} />
-                        ))
-                    }
+                    <JoyText style={customerStyles.section_title}>Standard</JoyText>
+                    <FlatList style={{ height: 330, marginTop: 8 }}
+                        horizontal data={roomList}
+
+                        renderItem={({ item }) => (
+                            <RoomCard
+                                name={item}
+                                navigation={navigation}
+                            />
+                        )}
+                    >
+                    </FlatList>
                 </View>
 
                 <View style={{ ...customerStyles.divider, marginTop: 16 }}></View>
@@ -120,19 +133,19 @@ export default function HotelScreen({ navigation, route }) {
 
                 {/* Hotel Review */}
                 <View style={customerStyles.section_container}>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                         {/* Rating Statistic */}
-                        <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-                            <Text style={{fontSize: 24, fontWeight: '600'}}>{hotelInfo ? hotelInfo.star : ''}</Text>
-                            <Text style={{fontSize: 12, color: COLORS.subheading_text}}> ({hotelInfo ? hotelInfo.review : ''} reviews)</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                            <JoyText style={{ fontSize: 24, fontWeight: '600' }}>{hotelInfo ? hotelInfo.star : ''}</JoyText>
+                            <JoyText style={{ fontSize: 12, color: COLORS.subheading_text }}> ({hotelInfo ? hotelInfo.review : ''} reviews)</JoyText>
                         </View>
 
                         {/* See all Reviews Button */}
                         <View>
                             <TouchableOpacity>
-                                <Text style={{ color: COLORS.primary, fontWeight: '600' }}>
+                                <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
                                     See all
-                                </Text>
+                                </JoyText>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -140,8 +153,8 @@ export default function HotelScreen({ navigation, route }) {
                     {
                         reviewList.map((review) => (
                             <View key={review.r_id} style={{ marginBottom: 16 }}>
-                                <Text>{review.r_name} ({review.r_star})</Text>
-                                <Text>{review.r_comment}</Text>
+                                <JoyText>{review.r_name} ({review.r_star})</JoyText>
+                                <JoyText>{review.r_comment}</JoyText>
                             </View>
                         ))
                     }
@@ -156,7 +169,7 @@ export default function HotelScreen({ navigation, route }) {
                     style={fixedBarStyle.bar_calendar}
                 >
                     <FontAwesome5Icon name={"calendar-alt"} size={28} color={COLORS.primary} />
-                    <Text style={fixedBarStyle.calendar_text}>Thu, 4/6/2023 - Sat, 6/6/2023</Text>
+                    <JoyText style={fixedBarStyle.calendar_text}>Thu, 4/6/2023 - Sat, 6/6/2023</JoyText>
                 </TouchableOpacity>
             </View>
         </View>
@@ -211,7 +224,8 @@ const fixedBarStyle = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 20,
     },
-    bar_calendar: {height: 60,
+    bar_calendar: {
+        height: 60,
         width: '100%',
         backgroundColor: COLORS.primary_50,
         borderRadius: 60,

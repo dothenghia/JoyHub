@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, ToastAndroid, Text, Modal, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
+import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
 import { COLORS } from '../../constants/theme'
