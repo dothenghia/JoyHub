@@ -31,15 +31,15 @@ export default function WalletScreen({ navigation }) {
 
                             <Image style={{ flex: 2, height: 30, width: 30 }} source={require('../../assets/mod/location_orange.png')} />
 
-                            <Text style={{ marginLeft: 10, flex: 6, fontSize: 17 }}>{'JoyCoin:'}</Text>
+                            <Text style={{ marginLeft: 10, flex: 6, fontSize: 17}}>{'JoyCoin: '}</Text>
                             <Text style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{joycoin}</Text>
 
                         </View>
                         <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 30 }}>
                             <Image style={{ flex: 2, height: 30, width: 30 }} source={require('../../assets/mod/star.png')} />
 
-                            <Text style={{ marginLeft: 10, flex: 6, fontSize: 17 }}>{'Rating:'}</Text>
-                            <Text style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'4.2'}</Text>
+                            <Text style={{marginLeft: 10, flex: 6, fontSize: 17 }}>{'Bank: '}</Text>
+                            <Text style={{marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'845122142179'}</Text>
                         </View>
 
                     </View>
@@ -62,6 +62,13 @@ export default function WalletScreen({ navigation }) {
 
                     <View style={{ height: 15, backgroundColor: 'transparent' }} />
 
+                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Liên kết ngân hàng'}</Text>
+                    </TouchableOpacity>
+                    <View style={{ height: 5, backgroundColor: '#888888' }} />
+                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
+                        <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Hủy liên kết ngân hàng'}</Text>
+                    </TouchableOpacity>
                     
 
                     
