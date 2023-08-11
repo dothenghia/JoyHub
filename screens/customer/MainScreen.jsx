@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 10,
 
-        fontSize: TEXTS.md,
+        fontSize: TEXTS.sm,
         color: COLORS.text
     },
 

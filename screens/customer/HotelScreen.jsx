@@ -16,6 +16,7 @@ import FacilityCard from "../../components/customer/main/FacilityCard";
 
 
 export default function HotelScreen({ navigation, route }) {
+    console.log(route.params)
     console.log('[Customer] HotelScreen')
 
     // ------ Data State

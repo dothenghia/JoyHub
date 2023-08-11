@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     bg_image: {
         width: '100%',
         height: 210,
-        justifyContent: 'center',
     },
 
     text_container: {
