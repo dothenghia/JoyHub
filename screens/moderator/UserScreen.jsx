@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View, Image, ScrollView, TouchableOpacity } from "react-native";
-
-
+import JoyText from '../../components/general/JoyText'
+import { TEXTS } from "../../constants/theme";
 export default function UserScreen({ navigation }) {
 
     const [hotelName, setHotelName] = useState('Harley House')
@@ -29,7 +29,7 @@ export default function UserScreen({ navigation }) {
                     <View style={{ paddingHorizontal: 32, backgroundColor: 'white', borderTopLeftRadius: 25, borderTopRightRadius: 25 }}>
                         <View style={{ flexDirection: 'row', marginTop: 45 }}>
                             {
-                                (hotelNameBlock === 'View') ? (<Text style={{ flex: 7, fontSize: 31, fontWeight: 'bold' }}>{hotelName}</Text>) :
+                                (hotelNameBlock === 'View') ? (<JoyText  style={{ flex: 7, fontSize: TEXTS["5xl"], fontWeight: 'bold' }}>{hotelName}</JoyText >) :
                                     (<TextInput onChangeText={changeHotelName} style={{ flex: 7, fontSize: 31, fontWeight: 'bold' }}>{hotelName}</TextInput>)
                             }
 
@@ -41,15 +41,15 @@ export default function UserScreen({ navigation }) {
 
                             <Image style={{ flex: 2, height: 30, width: 30 }} source={require('../../assets/mod/location_orange.png')} />
 
-                            <Text style={{ marginLeft: 10, flex: 6, fontSize: 17 }}>{'Location:'}</Text>
-                            <Text style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'so 1 duong vao tim em'}</Text>
+                            <JoyText  style={{ marginLeft: 10, flex: 6, fontSize: TEXTS.lg }}>{'Location:'}</JoyText >
+                            <JoyText  style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888' }}>{'so 1 duong vao tim em'}</JoyText >
 
                         </View>
                         <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 30 }}>
                             <Image style={{ flex: 2, height: 30, width: 30 }} source={require('../../assets/mod/star.png')} />
 
-                            <Text style={{ marginLeft: 10, flex: 6, fontSize: 17 }}>{'Rating:'}</Text>
-                            <Text style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'4.2'}</Text>
+                            <JoyText  style={{ marginLeft: 10, flex: 6, fontSize: TEXTS.lg }}>{'Rating:'}</JoyText >
+                            <JoyText  style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888' }}>{'4.2'}</JoyText >
                         </View>
 
                     </View>
@@ -57,29 +57,29 @@ export default function UserScreen({ navigation }) {
                     <View style={{ height: 15, backgroundColor: 'transparent' }} />
 
                     <View style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Description</Text>
-                        <Text style={{ fontSize: 15, marginBottom: 30, textAlign: 'justify' }} >
+                        <JoyText  style={{ fontSize: TEXTS["3xl"], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Description</JoyText >
+                        <JoyText  style={{ fontSize: TEXTS.lg, marginBottom: 30, textAlign: 'justify' }} >
                             {'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. Yeu em khong loi thoat.'}
-                        </Text>
+                        </JoyText >
                     </View>
 
                     <View style={{ height: 15, backgroundColor: 'transparent' }} />
 
                     <View style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Account</Text>
+                        <JoyText  style={{ fontSize: TEXTS["3xl"], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Account</JoyText >
                         <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 10 }}>
-                            <Text style={{ marginLeft: 0, flex: 6, fontSize: 17 }}>{'username:'}</Text>
-                            <Text style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'Harley House'}</Text>
+                            <JoyText  style={{ marginLeft: 0, flex: 6, fontSize: TEXTS.lg }}>{'username:'}</JoyText >
+                            <JoyText  style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888' }}>{'Harley House'}</JoyText >
                         </View>
 
                         <View style={{ flexDirection: 'row', marginTop: 0, marginBottom: 10 }}>
-                            <Text style={{ marginLeft: 0, flex: 6, fontSize: 17 }}>{'phone:'}</Text>
-                            <Text style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'09000112233'}</Text>
+                            <JoyText  style={{ marginLeft: 0, flex: 6, fontSize: TEXTS.lg }}>{'phone:'}</JoyText >
+                            <JoyText  style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888' }}>{'09000112233'}</JoyText >
                         </View>
 
                         <View style={{ flexDirection: 'row', marginTop: 0, marginBottom: 30 }}>
-                            <Text style={{ marginLeft: 0, flex: 6, fontSize: 17 }}>{'email:'}</Text>
-                            <Text style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'harleyverygud@gmail.com'}</Text>
+                            <JoyText  style={{ marginLeft: 0, flex: 6, fontSize: TEXTS.lg }}>{'email:'}</JoyText >
+                            <JoyText  style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888' }}>{'harleyverygud@gmail.com'}</JoyText >
                         </View>
 
                     </View>
@@ -87,27 +87,27 @@ export default function UserScreen({ navigation }) {
                     <View style={{ height: 15, backgroundColor: 'transparent' }} />
 
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Chỉnh sửa thông tin cá nhân'}</Text>
+                        <JoyText  style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Chỉnh sửa thông tin cá nhân'}</JoyText >
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#888888' }} />
 
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { navigation.navigate('WalletPage') }}>
-                        <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Nạp/Rút'}</Text>
+                        <JoyText  style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Nạp/Rút'}</JoyText >
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#888888' }} />
 
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Lịch sử và thống kê'}</Text>
+                        <JoyText  style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Lịch sử và thống kê'}</JoyText >
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#888888' }} />
 
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { navigation.navigate('LoginPage') }}>
-                        <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Đăng xuất'}</Text>
+                        <JoyText  style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Đăng xuất'}</JoyText >
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#888888' }} />
 
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => {navigation.navigate('AddRoomPage')}} >
-                        <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'TEST BTN'}</Text>
+                        <JoyText  style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'TEST BTN'}</JoyText >
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#888888' }} />
 

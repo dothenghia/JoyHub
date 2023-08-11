@@ -1,58 +1,195 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View, Image, ScrollView, TouchableOpacity } from "react-native";
-import generalStyles from "../../styles/general";
-import TopBar from "./TopBar";
-import SearchBar from "./SearchBar";
+import { COLORS, TEXTS } from "../../constants/theme";
+import JoyText from '../../components/general/JoyText'
+import { Ionicons } from "@expo/vector-icons";
+import { FlatList } from "react-native";
+import modStyles from "../../styles/mod";
+const Icons = {
+    area: "expand",
+    bed: "bed-outline",
+    capacity: "person-outline",
+    free_wifi: "wifi-outline",
+    window: "grid-outline",
+    air_conditioner: "snow-outline",
+};
 
 
-function Amenitiy({name, icon}) {
-       
-    return(
-        <TouchableOpacity style={{ flex: 7, height: 50, flexDirection: 'row', marginTop: 7, padding: 5, borderWidth: 1, borderRadius: 10 }}>
-            <Image style={{ marginLeft: 5,marginTop: 3, height: 30, width: 30 }} source={icon} />
-            <Text style={{ marginLeft: 15,marginTop: 3, height: 30, width: 'auto', textAlign: 'center', paddingTop: 5 }}>{name}</Text>
-        </TouchableOpacity>
-    )
-}
-
-
-export default function RoomAmenityCard() {
-
-
-    const listOfAmenities = ['Air Conditioner', 'fasdfsa', 'Wifi', 'TV', 'Shampoo', 'Towel', 'Slippers', 'CD/DVD Player', 'Electronic Safe', 'Mini Frigde', 'Coffee Maker'];
-    const res = [];
-    const n = listOfAmenities.length;
+export default function RoomAmenityCard({ amenities }) {
 
 
 
-    for (let i = 0; i < parseInt(n / 2); i++) {
-        res.push(
-            <View style={{ flexDirection: 'row' }}>
-                <Amenitiy name={listOfAmenities[2 * i]} icon={require('../../assets/mod/wifi.png')} />
-                <View style={{flex:0.7}}/>
-                <Amenitiy name={listOfAmenities[2 * i + 1]} icon={require('../../assets/mod/wifi.png')} />
-            </View>
-        );
-    }
+    const n = amenities.length;
 
-    if (n % 2 === 1) {
-        res.push(
-                <View style={{ flexDirection: 'row' }}>
-                    <Amenitiy name={listOfAmenities[n - 1]} icon={require('../../assets/mod/wifi.png')} />
-                    <View style={{flex:1}}/>
-                    <Amenitiy name={''} icon={null} />
-                </View>
-            )
-    }
-    res.push(
-        <View style={{ marginBottom: 20 }} />
-    )
+
+    const res = (
+        <View style={modStyles.section_container}>
+            <JoyText style={{fontSize : TEXTS["3xl"], fontWeight:'bold', marginTop: 20}}>Hotel facilities</JoyText>
+            <FlatList style={{ height: 120, marginTop: 8 }}
+                horizontal data={amenities}
+
+                renderItem={({ item }) => (
+                    <View style={styles.card_container} >
+                        <View style={styles.image_wrapper}>
+                            <Ionicons
+                                style={DetailRoomStyles.roomAmenIcon}
+                                name={Icons[item.label]}
+                                size={40}
+                                color="black"
+                            />
+                        </View>
+                        <JoyText style={styles.text}>{item.value}</JoyText>
+                    </View>
+                )}
+            >
+            </FlatList>
+        </View>)
+
+
 
     return res;
 
 
-
-
-
 }
 
+const styles = StyleSheet.create({
+    card_container: {
+        width: 92,
+        height: 100,
+        marginRight: 8,
+        backgroundColor: '#EEEEEE',
+        alignSelf: 'center',
+        justifyContent: 'space-between',
+        borderRadius: 12,
+    },
+    image_wrapper: {
+        width: '100%',
+        height: 40,
+        marginTop: 14,
+        alignItems: 'center'
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'contain'
+    },
+    text: {
+        marginBottom: 12,
+        textAlign: 'center',
+        fontSize: TEXTS.sm,
+    },
+});
+
+
+
+const DetailRoomStyles = StyleSheet.create({
+    roomNameContainer: {
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        marginBottom: 10,
+        marginTop: 10,
+        gap: 6
+    },
+    roomName: {
+        fontSize: TEXTS['3xl'],
+        fontWeight: "900",
+    },
+    roomPrice: {
+        fontSize: TEXTS['2xl'],
+        fontWeight: "700",
+    },
+    roomDetailsContainer: {
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        marginBottom: 10,
+        gap: 10,
+    },
+    roomInfoContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 6,
+        gap: 20,
+        width: "100%",
+    },
+    roomInfoField: {
+        flex: 1,
+        flexDirection: "row",
+        gap: 3,
+        fontSize: TEXTS.md,
+        fontWeight: "600",
+        color: COLORS.heading_text,
+        justifyContent: "flex-start",
+        // borderWidth: 1,
+        borderColor: COLORS.input_border,
+        borderRadius: 3,
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        marginRight: 20,
+    },
+    roomInfoLabel: {
+        fontSize: TEXTS.xl,
+        fontWeight: "600",
+        color: COLORS.text,
+        justifyContent: "center",
+    },
+    roomInfoIcon: {
+        fontSize: TEXTS['3xl'],
+        fontWeight: "600",
+        color: COLORS.text,
+        justifyContent: "center",
+    },
+    roomAmenContainer: {
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        marginBottom: 6,
+        gap: 10,
+        width: "100%",
+    },
+    roomAmenField: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        padding: 5,
+        paddingHorizontal: 10,
+        borderRadius: 3,
+        backgroundColor: COLORS.disable,
+        marginRight: 10,
+        gap: 10,
+    },
+    roomAmenLabel: {
+        fontSize: TEXTS.md,
+        fontWeight: "600",
+        color: COLORS.text,
+
+    },
+    roomAmenIcon: {
+        fontSize: TEXTS['3xl'],
+
+        fontWeight: "600",
+        color: COLORS.text,
+        justifyContent: "center",
+    },
+    roomFieldContainer: {
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        marginBottom: 5,
+        gap: 10,
+    },
+    roomFieldLabel: {
+        fontSize: TEXTS.xxl,
+        fontWeight: "bold",
+        color: COLORS.primary,
+    },
+    roomField: {
+        fontSize: TEXTS.md,
+        color: COLORS.text,
+        textAlign: "justify"
+    },
+});

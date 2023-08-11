@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView, StatusBar } from "react-native";
 import TopBar from "../../components/moderator/TopBar";
 import NotificationCard from "../../components/moderator/NotificationCard";
 import modStyles from "../../styles/mod"
-
+import JoyText from '../../components/general/JoyText'
 export default function NotificationScreen() {
   
     return (
