@@ -3,7 +3,7 @@ import { StyleSheet, ToastAndroid, View, Image, TouchableOpacity, TextInput } fr
 import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
-import { COLORS } from '../../constants/theme'
+import { COLORS , TEXTS} from '../../constants/theme'
 import generalStyles from '../../styles/general'
 
 // Import Dispatcher
@@ -108,7 +108,7 @@ export default function LoginScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={forgotPasswordHandler}
                 >
-                    <JoyText style={{color: COLORS.primary, fontSize: TEXTS.md, fontWeight: '600'}}>
+                    <JoyText style={{color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600'}}>
                         Forget password?
                     </JoyText>
                 </TouchableOpacity>
@@ -131,7 +131,7 @@ export default function LoginScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={() => navigation.navigate("CustomerMain")}
                 >
-                    <JoyText style={{color: COLORS.primary, fontSize: TEXTS.md, fontWeight: '600'}}>
+                    <JoyText style={{color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600'}}>
                         Log in as guest
                     </JoyText>
                 </TouchableOpacity>
@@ -143,13 +143,13 @@ export default function LoginScreen({ navigation }) {
 
             {/* Sign up Line */}
             <View style={styles.signupLine}>
-                <JoyText style={{color: COLORS.text}}>
+                <JoyText style={{color: COLORS.text, fontSize: TEXTS.lg}}>
                     If you don't have an account,
                 </JoyText>
                 <TouchableOpacity
                     onPress={() => navigation.navigate("SignupPage")}
                 >
-                    <JoyText style={{ color: COLORS.primary, fontWeight: '600', marginLeft: 3 }}>
+                    <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600', marginLeft: 3 }}>
                         Create one
                     </JoyText>
                 </TouchableOpacity>
@@ -175,5 +175,6 @@ const styles = StyleSheet.create({
         marginTop: 32,
         flexDirection: 'row',
         justifyContent: 'center',
+        
     },
 });

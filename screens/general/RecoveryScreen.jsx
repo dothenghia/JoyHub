@@ -3,7 +3,7 @@ import { StyleSheet, Modal, View, TextInput, Image, TouchableOpacity, ScrollView
 import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
-import { COLORS } from '../../constants/theme'
+import { COLORS, TEXTS } from '../../constants/theme'
 import generalStyles from '../../styles/general'
 
 export default function RecoveryScreen({ navigation }) {
@@ -38,7 +38,7 @@ export default function RecoveryScreen({ navigation }) {
                     <TouchableOpacity
                         onPress={() => navigation.navigate('LoginPage')}
                     >
-                        <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
+                        <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                             Back
                         </JoyText>
                     </TouchableOpacity>
@@ -128,13 +128,13 @@ export default function RecoveryScreen({ navigation }) {
 
                         {/* Resend code Line */}
                         <View style={styles.resendLine}>
-                            <JoyText>
+                            <JoyText style={{color: COLORS.text, fontSize: TEXTS.lg}}>
                                 Didn't received code?
                             </JoyText>
                             <TouchableOpacity
                                 onPress={resendHandler}
                             >
-                                <JoyText style={{ color: COLORS.primary, fontWeight: '600', marginLeft: 4 }}>
+                                <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600', marginLeft: 4 }}>
                                     Resend
                                 </JoyText>
                             </TouchableOpacity>
@@ -145,7 +145,7 @@ export default function RecoveryScreen({ navigation }) {
                             <TouchableOpacity
                                 onPress={() => setModalVisibility(false)}
                             >
-                                <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
+                                <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                                     Cancel
                                 </JoyText>
                             </TouchableOpacity>

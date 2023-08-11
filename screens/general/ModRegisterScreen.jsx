@@ -5,7 +5,7 @@ import JoyText from '../../components/general/JoyText'
 
 
 // Import Style & Theme
-import { COLORS } from '../../constants/theme'
+import { COLORS, TEXTS } from '../../constants/theme'
 import generalStyles from '../../styles/general'
 
 
@@ -27,7 +27,7 @@ export default function ModRegisterScreen({ navigation }) {
         ToastAndroid.show('Register successfully', ToastAndroid.SHORT)
     }
 
-    
+
     // ------ UI Renderer
     return (
         <ScrollView style={generalStyles.page_container}>
@@ -37,7 +37,7 @@ export default function ModRegisterScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={() => navigation.navigate('SignupPage')}
                 >
-                    <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
+                    <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                         Back
                     </JoyText>
                 </TouchableOpacity>
@@ -56,7 +56,7 @@ export default function ModRegisterScreen({ navigation }) {
             <JoyText style={generalStyles.subheading_2}>Enter hotel's information</JoyText>
 
             {/* ====== Input ====== */}
-            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20}}>Username</JoyText>
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20 }}>Username</JoyText>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter Username'
@@ -114,7 +114,7 @@ export default function ModRegisterScreen({ navigation }) {
 
             <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Description</JoyText>
             <TextInput
-                style={{ ...generalStyles.input_field , height: 200, borderRadius: 24, paddingTop: 12 }}
+                style={{ ...generalStyles.input_field, height: 200, borderRadius: 20, paddingTop: 12 }}
                 placeholder='Enter description about the hotel'
                 placeholderTextColor={COLORS.subheading_text}
                 autoCapitalize="none"
@@ -133,23 +133,23 @@ export default function ModRegisterScreen({ navigation }) {
                     onValueChange={setChecked}
                     color={isChecked ? '#FF6400' : undefined}
                 />
-                <JoyText>
+                <JoyText style={{ fontSize: TEXTS.lg }}>
                     I accept the
                 </JoyText>
                 <TouchableOpacity>
-                    <JoyText style={{ color: COLORS.primary, marginLeft: 3 }}>
+                    <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, marginLeft: 3 }}>
                         Terms of Service
                     </JoyText>
                 </TouchableOpacity>
             </View>
 
             {/* Submit button */}
-            <View style={{ marginBottom: 50 }}>
+            <View style={{ marginBottom: 50, marginTop: 8 }}>
                 <TouchableOpacity
                     onPress={submitHandler}
-                    style={ generalStyles.button_1 }
+                    style={generalStyles.button_1}
                 >
-                    <JoyText style={ generalStyles.button_text_1 }>
+                    <JoyText style={generalStyles.button_text_1}>
                         Register
                     </JoyText>
                 </TouchableOpacity>
