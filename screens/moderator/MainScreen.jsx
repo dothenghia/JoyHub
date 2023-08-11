@@ -8,7 +8,7 @@ import CheckoutCard from "../../components/moderator/CheckoutCard";
 import modStyles from "../../styles/mod"
 import JoyText from '../../components/general/JoyText'
 
-export default function MainScreen() {
+export default function MainScreen({navigation}) {
 
     const [page, setPage] = useState('verify')
     const [verifyColor, setVerifyColor] = useState('#FF6400')
@@ -33,7 +33,7 @@ export default function MainScreen() {
     return (
         <View style={{ ...modStyles.page_container}}>
             <View style={modStyles.page_padding}>
-                <TopBar Title={"Hotel Name"} />
+                <TopBar Title={"Hotel Name"} navigation={navigation}/>
                 <SearchBar />
 
                 <View style={{ flexDirection: 'row', marginBottom: 10 }}>

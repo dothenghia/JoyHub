@@ -4,12 +4,12 @@ import TopBar from "../../components/moderator/TopBar";
 import NotificationCard from "../../components/moderator/NotificationCard";
 import modStyles from "../../styles/mod"
 import JoyText from '../../components/general/JoyText'
-export default function NotificationScreen() {
+export default function NotificationScreen({navigation}) {
   
     return (
         <View style={modStyles.page_container}>
             <ScrollView >
-                <TopBar Title = "Notification" Style={modStyles.page_padding}/>
+                <TopBar Title = "Notification" Style={modStyles.page_padding} navigation={navigation}/>
                 <View style={{marginTop:50, ...modStyles.page_padding}}>
                     <NotificationCard Id="ID1234" Title="Booking is made by Ngoc Trinh 8x Mai Iu Anh" Time="7" Type="Book"/>
                     <NotificationCard Id="ID1234" Title="Bao' Dong^. Do?: ANH NHO EM" Time="7" Type="Alert"/>

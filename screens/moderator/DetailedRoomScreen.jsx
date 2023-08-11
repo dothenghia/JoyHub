@@ -14,7 +14,7 @@ export default function DetailedRoomScreen({ navigation, route }) {
     return (
         <View style={generalStyles.page_container}>
             <ScrollView >
-                <TopBar Title={room.name} />
+                <TopBar Title={room.name} navigation={navigation} />
                 <Image style={{ marginTop: 25, height: 250, width: 'auto', borderRadius: 15 }} source={require('../../assets/mod/demoHotel.jpg')} />
                 
                 <RoomAmentityCard amenities={room.amenities} />

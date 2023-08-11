@@ -1,50 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, ImageBackground, Image, ScrollView, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import { COLORS, TEXTS } from '../../constants/theme'
 import modStyles from '../../styles/mod'
 import JoyText from '../../components/general/JoyText'
+
 import RoomAmenityCard from "../../components/moderator/RoomAmenityCard";
+
+//CONTROLLER
+import MController from "../../controllers/moderatorController";
+
+
 export default function RoomScreen({ navigation }) {
 
 
     const listOfAmenities = ['Air Conditioner', 'Fasdfsa', 'Wifi', 'TV', 'Shampoo', 'Towel', 'Slippers', 'CD/DVD Player', 'Electronic Safe', 'Mini Frigde', 'Coffee Maker'];
 
-    const listOfType = ['Standard', 'Deluxe', 'Luxury Nha Giau Dai Gia']
-    const listOfRoom = [['Small Room', 'Couple', 'Threesome'], ['Queen', 'King', 'reggiN'], ['Hoa Hau Y Nhi', 'Han Mac Tu', 'Quang Trung']]
 
-    let deluxe = []
-    let standard = []
-    let luxury = []
-    let roomTypeList = []
-    let allAmenities = []
+    // ------ Data State
+    const [hotelInfo, setHotelInfo] = useState(null)
+    const [amenities, setamenities] = useState([])
+    const [roomList, setRoomList] = useState([])
 
-    for(let i = 0; i < 3; ++i)
-    {   
-        standard.push(newRoom({rname : listOfRoom[0][i] , rprice : 256000}))
-        deluxe.push(newRoom({rname : listOfRoom[1][i] , rprice : 296000}))
-        luxury.push(newRoom({rname : listOfRoom[2][i], rprice: 296000}))
-    }
-    
-    roomTypeList.push({ roomType: 'Standard' , roomList : standard})
-    roomTypeList.push({ roomType: 'Deluxe' , roomList : deluxe})
-    roomTypeList.push({ roomType: 'Luxury' , roomList : luxury})
-  
-    
-    
-    for(let i = 0; i < roomTypeList.length; ++i)
-    {
-        for(let j = 0; j < roomTypeList[i].roomList.length; ++j)
-        {
-            roomTypeList[i].roomList[j].amenities.forEach(element => {
-                if(!(element in allAmenities))
-                {
-                    allAmenities.push(element)
-                }
-            });
+    // ------ Fetch Data at first render
+    useEffect(() => {
+        const fetchHotelInformation = async () => {
+            let data = await MController('GETHOTELINFO')
+            setHotelInfo(data)
+            setamenities(data.amenitiesList)
+            setRoomList(data.roomList)
         }
-    }
+
+        fetchHotelInformation()
+    }, [])
 
 
     return (
@@ -68,7 +57,7 @@ export default function RoomScreen({ navigation }) {
             </View>
 
             <View style={{ ...modStyles.page_padding, marginTop: 20 }}>
-                <RoomAmenityCard amenities={allAmenities} />
+                <RoomAmenityCard amenities={amenities} />
             </View>
 
             <View style={{ marginTop: 10, height: 7, backgroundColor: '#E7E7E7' }} />
@@ -87,20 +76,20 @@ export default function RoomScreen({ navigation }) {
                     </TouchableOpacity>
                 </View>
             </View>
-            <RoomArea roomTypeList = {roomTypeList} navigation={navigation} />
+            <RoomArea roomList = {roomList} navigation={navigation} />
 
         </ScrollView>
     );
 }
 
-function RoomArea({roomTypeList, navigation }) {
+function RoomArea({roomList, navigation }) {
 
-    n = roomTypeList.length
+    n = roomList.length
     listOfType = []
 
-    for (let i = 0;i < roomTypeList.length;i++) 
+    for (let i = 0;i < roomList.length;i++) 
     {
-        listOfType.push(roomTypeList[i].roomType)
+        listOfType.push(roomList[i].roomType)
     }
 
     res = []
@@ -109,7 +98,7 @@ function RoomArea({roomTypeList, navigation }) {
             <View style={modStyles.page_padding}>
                 <JoyText  style={{ fontSize: TEXTS['5xl'], marginBottom: 20, marginTop: 20, fontWeight: 'bold' }}>{listOfType[i]}</JoyText >
                 <FlatList style={{ height: 350 }}
-                    horizontal data={roomTypeList[i].roomList}
+                    horizontal data={roomList[i].roomList}
                     renderItem={({ item }) => (
                         <RoomCard img={require("../../assets/mod/demoHotel.jpg")} room={item} navigation={navigation} />
                     )}
@@ -191,15 +180,15 @@ function newRoom({rname,rprice})
         ],
         amenities: [
             {
-                label: "free_wifi",
-                value: "Free Wifi",
+                label: "wifi",
+                value: "Wifi",
             },
             {
-                label: "window",
-                value: "Window",
+                label: "bathtub",
+                value: "Bathtub",
             },
             {
-                label: "air_conditioner",
+                label: "ac",
                 value: "Air Conditioner",
             },
         ],
