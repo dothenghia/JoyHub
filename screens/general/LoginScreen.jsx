@@ -3,7 +3,7 @@ import { StyleSheet, ToastAndroid, View, Image, TouchableOpacity, TextInput } fr
 import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
-import { COLORS , TEXTS} from '../../constants/theme'
+import { COLORS, TEXTS } from '../../constants/theme'
 import generalStyles from '../../styles/general'
 
 // Import Dispatcher

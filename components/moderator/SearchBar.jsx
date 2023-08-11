@@ -1,6 +1,8 @@
 import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native'
 import { StyleSheet } from 'react-native';
 import React from 'react'
+import JoyText from '../../components/general/JoyText'
+
 
 export default function SearchBar() {
     return (

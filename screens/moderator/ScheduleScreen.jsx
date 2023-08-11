@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
-
+import JoyText from '../../components/general/JoyText'
 export default function ScheduleScreen() {
     return (
         <View style={{ flex: 1 }}>
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                <Text>MODERRATOR SCHEDULE Screen</Text>
+                <JoyText >MODERRATOR SCHEDULE Screen</JoyText >
             </View>
 
         </View>
