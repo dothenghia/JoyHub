@@ -17,7 +17,7 @@ import { loadingContext } from "../../contexts/LoadingContext";
 export default function LoginScreen({ navigation }) {
 
     const { loading, setLoading } = useContext(loadingContext);
-	console.log('[Login]', loading)
+    console.log('[Login]', loading)
 
     // ------ Data State
     const [username, setUsername] = useState('');
@@ -25,7 +25,7 @@ export default function LoginScreen({ navigation }) {
 
     // ------ Event Handlers
     // Function called when the user presses Login button
-    function fakeWaiting () {
+    function fakeWaiting() {
         setTimeout(() => {
             setLoading(false)
         }, 2000)
@@ -33,6 +33,7 @@ export default function LoginScreen({ navigation }) {
     const loginHandler = async () => {
         setLoading(true)
         fakeWaiting()
+        // for testing UI
         if (username === 'c') {
             navigation.navigate('CustomerMain')
             ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
@@ -45,8 +46,34 @@ export default function LoginScreen({ navigation }) {
         }
         else if (username === 'a') {
             navigation.navigate('AdminMain')
-            ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
+            ToastAndroid.show('Login to ADMIN successfully', ToastAndroid.SHORT)
             setLoading(false)
+        }
+        // for testing server
+        else {
+            const { error, role } = await GController('LOGIN', username, password);
+            if (error) {
+                alert(error);
+            }
+            else {
+                switch (role) {
+                    case 'customer':
+                        navigation.navigate('CustomerMain');
+                        ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
+                        break;
+                    case 'moderator':
+                        navigation.navigate('ModeratorMain');
+                        ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
+                        break;
+                    case 'admin':
+                        navigation.navigate('AdminMain');
+                        ToastAndroid.show('Login to ADMIN successfully', ToastAndroid.SHORT)
+                        break;
+                    default:
+                        alert('Invalid role');
+                        break;
+                }
+            }
         }
     }
 
@@ -61,7 +88,7 @@ export default function LoginScreen({ navigation }) {
         <View style={generalStyles.page_container}>
 
             {/* ------ LOADING MODAL ------ */}
-            <LoadingModal isLoading={loading}/>
+            <LoadingModal isLoading={loading} />
 
             {/* Logo HOME */}
             <View style={styles.logo1}>
@@ -108,7 +135,7 @@ export default function LoginScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={forgotPasswordHandler}
                 >
-                    <JoyText style={{color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600'}}>
+                    <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                         Forget password?
                     </JoyText>
                 </TouchableOpacity>
@@ -118,9 +145,9 @@ export default function LoginScreen({ navigation }) {
             <View >
                 <TouchableOpacity
                     onPress={loginHandler}
-                    style={ generalStyles.button_1 }
+                    style={generalStyles.button_1}
                 >
-                    <JoyText style={ generalStyles.button_text_1 }>
+                    <JoyText style={generalStyles.button_text_1}>
                         Log in
                     </JoyText>
                 </TouchableOpacity>
@@ -131,19 +158,19 @@ export default function LoginScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={() => navigation.navigate("CustomerMain")}
                 >
-                    <JoyText style={{color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600'}}>
+                    <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                         Log in as guest
                     </JoyText>
                 </TouchableOpacity>
             </View>
 
             {/* Divider */}
-            <View style={ generalStyles.divider }></View>
+            <View style={generalStyles.divider}></View>
 
 
             {/* Sign up Line */}
             <View style={styles.signupLine}>
-                <JoyText style={{color: COLORS.text, fontSize: TEXTS.lg}}>
+                <JoyText style={{ color: COLORS.text, fontSize: TEXTS.lg }}>
                     If you don't have an account,
                 </JoyText>
                 <TouchableOpacity
@@ -175,6 +202,6 @@ const styles = StyleSheet.create({
         marginTop: 32,
         flexDirection: 'row',
         justifyContent: 'center',
-        
+
     },
 });

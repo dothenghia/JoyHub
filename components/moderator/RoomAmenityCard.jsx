@@ -4,6 +4,7 @@ import { COLORS, TEXTS } from "../../constants/theme";
 import JoyText from '../../components/general/JoyText'
 import { Ionicons } from "@expo/vector-icons";
 import { FlatList } from "react-native";
+import JoyIcon from '../../components/general/JoyIcon'
 import modStyles from "../../styles/mod";
 const Icons = {
     area: "expand",
@@ -31,12 +32,7 @@ export default function RoomAmenityCard({ amenities }) {
                 renderItem={({ item }) => (
                     <View style={styles.card_container} >
                         <View style={styles.image_wrapper}>
-                            <Ionicons
-                                style={DetailRoomStyles.roomAmenIcon}
-                                name={Icons[item.label]}
-                                size={40}
-                                color="black"
-                            />
+                            <JoyIcon name={item.label} size = {35} />
                         </View>
                         <JoyText style={styles.text}>{item.value}</JoyText>
                     </View>

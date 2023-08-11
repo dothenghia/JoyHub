@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TextInput, View, Image, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TextInput, View, Image, ImageBackground, ScrollView, TouchableOpacity } from "react-native";
 import JoyText from '../../components/general/JoyText'
-import { TEXTS } from "../../constants/theme";
+import { TEXTS, COLORS } from "../../constants/theme";
+import modStyles from "../../styles/mod";
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 export default function UserScreen({ navigation }) {
 
     const [hotelName, setHotelName] = useState('Harley House')
@@ -12,10 +14,23 @@ export default function UserScreen({ navigation }) {
     }
    
     return (
-        <ScrollView >
+        <ScrollView style={modStyles.page_container}>
 
-            <View style={{ flex: 1 }}>
-                <Image style={{ height: 250, width: 'auto' }} source={require('../../assets/mod/demoHotel.jpg')} />
+            <View style={{width: '100%', height: 250}}>
+                <ImageBackground
+                    source={require('../../assets/mod/demoHotel.jpg')}
+                    resizeMode="cover"
+                    style={{flex: 1, justifyContent: 'center',}}
+                >
+                    <TouchableOpacity
+                        style={ modStyles.top_bar_button}
+                        onPress={
+                            () => { navigation.goBack() }
+                        }
+                    >
+                        <FontAwesome5Icon name={"arrow-left"} size={18} color={COLORS.primary} />
+                    </TouchableOpacity>
+                </ImageBackground>
             </View>
 
             <View style={{
