@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView } from "react-native";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import JoyText from '../../components/general/JoyText'
 
@@ -11,7 +12,7 @@ export default function RoomScreen({ navigation, route }) {
     console.log('[Customer] RoomScreen')
 
     return (
-        <View style={ customerStyles.page_container }>
+        <View style={customerStyles.page_container}>
 
             {/* Room Screen Scroll View */}
             <ScrollView style={{ flex: 1, marginBottom: 140 }}>
@@ -23,7 +24,7 @@ export default function RoomScreen({ navigation, route }) {
                             () => { navigation.goBack() }
                         }
                     >
-                        <FontAwesome5Icon name={"arrow-left"} size={18} color={COLORS.primary} />
+                        <AntDesign name={"arrowleft"} size={18} color={COLORS.primary} />
                     </TouchableOpacity>
                     <JoyText style={customerStyles.top_bar_title}>Detail Room</JoyText>
                 </View>

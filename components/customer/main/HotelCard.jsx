@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     text_container: {
         backgroundColor: '#fff',
         flex: 1,
-        paddingHorizontal: 10,
+        paddingHorizontal: 12,
         paddingVertical: 8,
     },
     hotel_name: {

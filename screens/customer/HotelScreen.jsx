@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, FlatList } from "react-native";
+import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, FlatList, Modal } from "react-native";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import JoyText from '../../components/general/JoyText'
@@ -14,7 +14,7 @@ import CController from "../../controllers/customerController";
 // Import Component
 import RoomCard from "../../components/customer/main/RoomCard";
 import FacilityCard from "../../components/customer/main/FacilityCard";
-
+import ReviewCard from "../../components/customer/main/ReviewCard";
 
 export default function HotelScreen({ navigation, route }) {
     console.log(route.params)
@@ -25,7 +25,7 @@ export default function HotelScreen({ navigation, route }) {
     const [facilities, setFacilities] = useState([])
     const [roomList, setRoomList] = useState([])
     const [reviewList, setReviewList] = useState([])
-
+    const [seeAllComments, setSeeAllComments] = useState(false)
     // ------ Fetch Data at first render
     useEffect(() => {
         const fetchHotelInformation = async () => {
@@ -43,141 +43,178 @@ export default function HotelScreen({ navigation, route }) {
 
     return (
         <View style={customerStyles.page_container}>
+            <View style={{ flex: 1 }}>
+                {/* Hotel Screen Scroll View */}
+                <ScrollView style={{ flex: 1, marginBottom: 80 }}>
+                    {/* Thumbnail Hotel Image */}
+                    <View style={styles.thumbnail_wrapper}>
+                        <ImageBackground
+                            source={require('../../assets/customer/demo.jpg')}
+                            resizeMode="cover"
+                            style={styles.thumbnail_image}
+                        >
 
-            {/* Hotel Screen Scroll View */}
-            <ScrollView style={{ flex: 1, marginBottom: 80 }}>
-                {/* Thumbnail Hotel Image */}
-                <View style={styles.thumbnail_wrapper}>
-                    <ImageBackground
-                        source={require('../../assets/customer/demo.jpg')}
-                        resizeMode="cover"
-                        style={styles.thumbnail_image}
-                    >
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                {/* Back Button */}
+                                <TouchableOpacity
+                                    style={customerStyles.top_bar_button}
+                                    onPress={() => navigation.goBack()}
+                                >
+                                    <AntDesign name={"arrowleft"} size={18} color={COLORS.primary} />
+                                </TouchableOpacity>
 
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            {/* Back Button */}
-                            <TouchableOpacity
-                                style={customerStyles.top_bar_button}
-                                onPress={() => navigation.goBack()}
-                            >
-                                <AntDesign name={"arrowleft"} size={18} color={COLORS.primary} />
-                            </TouchableOpacity>
-
-                            {/* Like Button */}
-                            <TouchableOpacity
-                                style={customerStyles.top_bar_button}
-                            >
-                                <FontAwesome5Icon name={"heart"} size={18} color={COLORS.primary} />
-                            </TouchableOpacity>
-                        </View>
-                    </ImageBackground>
-                </View>
-
-
-                {/* Hotel Information */}
-                <View style={customerStyles.section_container}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <JoyText style={customerStyles.page_title}>
-                            {hotelInfo ? hotelInfo.name : 'Loading ...'}
-                        </JoyText>
-                        <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                            <FontAwesome5Icon name={"star"} solid size={18} color='#FFCA18' />
-
-                            <JoyText style={styles.rating}> {hotelInfo ? hotelInfo.star : 'Loading ...'}</JoyText>
-                            <JoyText style={styles.review}> ({hotelInfo ? hotelInfo.review : 'Loading ...'})</JoyText>
-                        </View>
-
+                                {/* Like Button */}
+                                <TouchableOpacity
+                                    style={customerStyles.top_bar_button}
+                                >
+                                    <FontAwesome5Icon name={"heart"} size={18} color={COLORS.primary} />
+                                </TouchableOpacity>
+                            </View>
+                        </ImageBackground>
                     </View>
-                    <JoyText style={styles.location}>
-                        {hotelInfo ? hotelInfo.location : 'Loading ...'}
-                    </JoyText>
-                    <JoyText style={styles.description} numberOfLines={3}>
-                        {hotelInfo ? hotelInfo.description : 'Loading ...'}
-
-                    </JoyText>
-                </View>
-
-                <View style={customerStyles.divider}></View>
 
 
-                {/* Hotel Facilities */}
-                <View style={customerStyles.section_container}>
-                    <JoyText style={customerStyles.section_title}>Hotel amenities</JoyText>
-                    <FlatList style={{ height: 120, marginTop: 8 }}
-                        horizontal data={facilities}
+                    {/* Hotel Information */}
+                    <View style={customerStyles.section_container}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <JoyText style={customerStyles.page_title}>
+                                {hotelInfo ? hotelInfo.name : 'Loading ...'}
+                            </JoyText>
+                            <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                                <FontAwesome5Icon name={"star"} solid size={18} color='#FFCA18' />
 
-                        renderItem={({ item }) => (
-                            <FacilityCard
-                                name={item}
-                            />
-                        )}
-                    >
-                    </FlatList>
-                </View>
+                                <JoyText style={styles.rating}> {hotelInfo ? hotelInfo.star : 'Loading ...'}</JoyText>
+                                <JoyText style={styles.review}> ({hotelInfo ? hotelInfo.review : 'Loading ...'})</JoyText>
+                            </View>
 
-                <View style={customerStyles.divider}></View>
+                        </View>
+                        <JoyText style={styles.location}>
+                            {hotelInfo ? hotelInfo.location : 'Loading ...'}
+                        </JoyText>
+                        <JoyText style={styles.description} numberOfLines={3}>
+                            {hotelInfo ? hotelInfo.description : 'Loading ...'}
 
+                        </JoyText>
+                    </View>
 
-                {/* Hotel Room List */}
-                <View style={customerStyles.section_container}>
-                    <JoyText style={customerStyles.section_title}>Standard</JoyText>
-                    <FlatList style={{ height: 330, marginTop: 8 }}
-                        horizontal data={roomList}
-
-                        renderItem={({ item }) => (
-                            <RoomCard
-                                name={item}
-                                navigation={navigation}
-                            />
-                        )}
-                    >
-                    </FlatList>
-                </View>
-
-                <View style={{ ...customerStyles.divider, marginTop: 16 }}></View>
+                    <View style={customerStyles.divider}></View>
 
 
-                {/* Hotel Review */}
-                <View style={customerStyles.section_container}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        {/* Rating Statistic */}
-                        <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                            <JoyText style={{ fontSize: 24, fontWeight: '600' }}>{hotelInfo ? hotelInfo.star : ''}</JoyText>
-                            <JoyText style={{ fontSize: 12, color: COLORS.subheading_text }}> ({hotelInfo ? hotelInfo.review : ''} reviews)</JoyText>
+                    {/* Hotel Facilities */}
+                    <View style={customerStyles.section_container}>
+                        <JoyText style={customerStyles.section_title}>Hotel amenities</JoyText>
+                        <FlatList style={{ height: 120, marginTop: 8 }}
+                            horizontal data={facilities}
+
+                            renderItem={({ item }) => (
+                                <FacilityCard
+                                    name={item}
+                                />
+                            )}
+                        >
+                        </FlatList>
+                    </View>
+
+                    <View style={customerStyles.divider}></View>
+
+
+                    {/* Hotel Room List */}
+                    <View style={customerStyles.section_container}>
+                        <JoyText style={customerStyles.section_title}>Standard</JoyText>
+                        <FlatList style={{ height: 300, marginTop: 8 }}
+                            horizontal data={roomList}
+
+                            renderItem={({ item }) => (
+                                <RoomCard
+                                    name={item}
+                                    navigation={navigation}
+                                />
+                            )}
+                        >
+                        </FlatList>
+                    </View>
+
+                    <View style={{ ...customerStyles.divider, marginTop: 16 }}></View>
+
+
+                    {/* Hotel Review */}
+                    <View style={{ ...customerStyles.section_container_no_py, paddingTop: 10, marginBottom: -2 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                            {/* Rating Statistic */}
+                            <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                                <JoyText style={{ fontSize: 32, fontWeight: '600' }}>{hotelInfo ? hotelInfo.star : ''}</JoyText>
+                                <JoyText style={{ fontSize: 16, color: COLORS.subheading_text }}> ({hotelInfo ? hotelInfo.review : ''} reviews)</JoyText>
+                            </View>
+
+                            {/* See all Reviews Button */}
+                            <View>
+                                <TouchableOpacity>
+                                    <JoyText
+                                        style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}
+                                        onPress={() => { setSeeAllComments(true) }}
+                                    >
+                                        See all
+                                    </JoyText>
+                                </TouchableOpacity>
+                            </View>
                         </View>
 
-                        {/* See all Reviews Button */}
-                        <View>
-                            <TouchableOpacity>
-                                <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
-                                    See all
+                        {reviewList.length === 0 && (<JoyText>No review</JoyText>)}
+                        {reviewList.length === 1 && (<ReviewCard props={reviewList[0]} />)}
+                        {reviewList.length >= 2 && (<ReviewCard props={reviewList[0]} />)}
+                        {reviewList.length >= 2 && (<ReviewCard props={reviewList[1]} />)}
+                    </View>
+                </ScrollView>
+
+
+
+                {/* Fixed Booking Bar */}
+                <View style={fixedBarStyle.bar_container}>
+                    <TouchableOpacity
+                        style={fixedBarStyle.bar_calendar}
+                    >
+                        <FontAwesome5Icon name={"calendar-alt"} size={28} color={COLORS.primary} />
+                        <JoyText style={fixedBarStyle.calendar_text}>Thu, 4/6/2023 - Sat, 6/6/2023</JoyText>
+                    </TouchableOpacity>
+                </View>
+
+            </View>
+
+
+
+            {/* See all Review Modal */}
+            <Modal
+                animationType="none"
+                transparent={true}
+                visible={seeAllComments}
+            >
+                <View style={styles.modal_page}>
+                    <View style={styles.modal_container}>
+                        <View style={{paddingHorizontal: 12, marginTop: 12, marginBottom: 8}}>
+                            <TouchableOpacity
+                                onPress={() => setSeeAllComments(false)}
+                                style={{width: 46 , marginBottom: 6}}
+                            >
+                                <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600'}}>
+                                    Close
                                 </JoyText>
                             </TouchableOpacity>
+                            <JoyText style={customerStyles.section_title}>All comments ({hotelInfo ? hotelInfo.review : 'Loading ...'})</JoyText>
+
                         </View>
+                        <ScrollView>
+                            {
+                                reviewList.map((review, index) => (
+                                    <ReviewCard
+                                        props={review}
+                                        key={index}
+                                    />
+                                ))
+                            }
+                        </ScrollView>
                     </View>
-
-                    {
-                        reviewList.map((review, index) => (
-                            <View key={index} style={{ marginBottom: 16 }}>
-                                <JoyText>{review.r_name} ({review.r_star})</JoyText>
-                                <JoyText>{review.r_comment}</JoyText>
-                            </View>
-                        ))
-                    }
                 </View>
-            </ScrollView>
-
-
-
-            {/* Fixed Booking Bar */}
-            <View style={fixedBarStyle.bar_container}>
-                <TouchableOpacity
-                    style={fixedBarStyle.bar_calendar}
-                >
-                    <FontAwesome5Icon name={"calendar-alt"} size={28} color={COLORS.primary} />
-                    <JoyText style={fixedBarStyle.calendar_text}>Thu, 4/6/2023 - Sat, 6/6/2023</JoyText>
-                </TouchableOpacity>
-            </View>
+            </Modal>
         </View>
     );
 }
@@ -218,6 +255,30 @@ const styles = StyleSheet.create({
         marginTop: 6,
         textAlign: 'justify',
         flex: 1,
+    },
+    review_name: {
+        color: COLORS.subheading_text,
+        fontSize: TEXTS.md,
+
+        marginTop: 4,
+    },
+    review_comment: {
+        color: COLORS.text,
+        fontSize: TEXTS.md,
+
+        marginTop: 4,
+    },
+    modal_page: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modal_container: {
+        width: 360,
+        height: 600,
+        backgroundColor: 'white',
+        borderRadius: 16,
     },
 });
 

@@ -67,6 +67,55 @@ const hotelInformation = {
             review_id: 462,
             r_name: 'Mac Tuan Trung',
             r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 4.5,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 3,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 2,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 1,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 1.5,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 2.5,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 1.5,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
             r_star: 5,
         }
     ]

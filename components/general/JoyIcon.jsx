@@ -11,8 +11,8 @@ export default function JoyIcon({ name, ...props }) {
         river: <MaterialIcons name={"pool"} {...props} />,
         bathtub: <FontAwesome name={"bathtub"} {...props} />,
         ac: <FontAwesome name={"snowflake-o"} {...props} />,
-        meal: <MaterialIcons name={"pool"} {...props} />,
+        meal: <MaterialCommunityIcons name={"food-fork-drink"} {...props} />,
     };
 
-    return iconMapping[name] || null;
+    return iconMapping[name] || (<AntDesign name={"question"} {...props} />);
 }
