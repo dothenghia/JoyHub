@@ -9,9 +9,9 @@ export default function RoomCard({ name , navigation }) {
     return (
         <TouchableOpacity
             style={styles.card_container}
-            // onPress={
-            //     () => {navigation.navigate('RoomPage', {slug : name.slug, parentSlug: parentSlug})}
-            // }
+            onPress={
+                () => {navigation.navigate('RoomPage')}
+            }
         >
             <ImageBackground
                 source={require('../../../assets/customer/demo.jpg')}

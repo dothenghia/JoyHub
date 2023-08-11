@@ -1,19 +1,16 @@
 import { StyleSheet, View, Image } from "react-native";
 import JoyText from "../../general/JoyText";
+import JoyIcon from "../../general/JoyIcon";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from "../../../constants/theme";
 
 export default function FacilityCard({ name }) {
+
     return (
         <View style={styles.card_container} >
             <View style={styles.image_wrapper}>
-                <Image
-                    style={styles.image}
-                    source={{
-                        uri: name.f_icon,
-                    }}
-                />
+                <JoyIcon name={name.f_icon} size={35}/>
             </View>
             <JoyText style={styles.text}>{name.f_name}</JoyText>
         </View>

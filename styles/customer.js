@@ -10,7 +10,7 @@ const customerStyles = StyleSheet.create({
     },
     page_title : { // Hotel Name, Room Name
         color: COLORS.heading_text,
-        fontSize: TEXTS.xxl,
+        fontSize: TEXTS["4xl"],
         fontWeight: '600',
     },
 
@@ -23,7 +23,7 @@ const customerStyles = StyleSheet.create({
     },
     top_bar_title: {
         color: COLORS.heading_text,
-        fontSize: TEXTS.xxl,
+        fontSize: TEXTS["4xl"],
         fontWeight: '600',
         position: 'absolute',
         left: 0,
@@ -57,7 +57,7 @@ const customerStyles = StyleSheet.create({
     },
     section_title: {
         color: COLORS.heading_text,
-        fontSize: TEXTS.lg,
+        fontSize: TEXTS.xxl,
         fontWeight: '600',
     },
 
