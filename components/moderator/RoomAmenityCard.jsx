@@ -24,7 +24,7 @@ export default function RoomAmenityCard({ amenities }) {
 
     const res = (
         <View style={modStyles.section_container}>
-            <JoyText style={{fontSize : TEXTS["3xl"], fontWeight:'bold', marginTop: 20}}>Hotel facilities</JoyText>
+            <JoyText style={{fontSize : TEXTS["4xl"], fontWeight:'bold', marginTop: 20}}>Hotel facilities</JoyText>
             <FlatList style={{ height: 120, marginTop: 8 }}
                 horizontal data={amenities}
 

@@ -68,7 +68,6 @@ export default function RoomScreen({ navigation }) {
             </View>
 
             <View style={{ ...modStyles.page_padding, marginTop: 20 }}>
-                <JoyText  style={{ fontSize: TEXTS['3xl'] }}>Hotel Amenities</JoyText >
                 <RoomAmenityCard amenities={allAmenities} />
             </View>
 
