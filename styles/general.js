@@ -21,14 +21,14 @@ const generalStyles = StyleSheet.create({
 
     subheading_1: {
         color: COLORS.subheading_text,
-        fontSize: TEXTS.xs,
+        fontSize: TEXTS.sm,
         fontWeight: '500',
 
         marginTop: 8,
     },
     subheading_2: {
         color: COLORS.subheading_text,
-        fontSize: TEXTS.md,
+        fontSize: TEXTS.lg,
         fontWeight: '500',
 
         marginTop: 6,
@@ -47,7 +47,7 @@ const generalStyles = StyleSheet.create({
     button_text_1: {
         color: '#fff',
         fontWeight: '800',
-        fontSize: TEXTS.lg
+        fontSize: TEXTS.xl
     },
 
 
@@ -55,7 +55,7 @@ const generalStyles = StyleSheet.create({
     input_label: {
         marginBottom: 4,
         color: COLORS.heading_text,
-        fontSize: TEXTS.md,
+        fontSize: TEXTS.lg,
         fontWeight: '500',
     },
     input_field: {
@@ -69,7 +69,7 @@ const generalStyles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 50,
 
-        fontSize: TEXTS.md,
+        fontSize: TEXTS.sm,
         color: COLORS.text
     },
 

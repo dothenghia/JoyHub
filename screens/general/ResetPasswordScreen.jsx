@@ -3,7 +3,7 @@ import { StyleSheet, ToastAndroid, View, TextInput, TouchableOpacity, ScrollView
 import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
-import { COLORS } from '../../constants/theme'
+import { COLORS, TEXTS } from '../../constants/theme'
 import generalStyles from '../../styles/general'
 
 export default function ResetPasswordScreen({ navigation }) {
@@ -29,7 +29,7 @@ export default function ResetPasswordScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={() => navigation.navigate('RecoveryPage')}
                 >
-                    <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
+                    <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                         Back
                     </JoyText>
                 </TouchableOpacity>

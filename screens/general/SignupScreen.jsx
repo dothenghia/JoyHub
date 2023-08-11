@@ -16,7 +16,7 @@ export default function SignupScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={() => navigation.navigate('LoginPage')}
                 >
-                    <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
+                    <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                         Back
                     </JoyText>
                 </TouchableOpacity>
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         width: 156,
         alignItems: 'center',
         paddingVertical: 16,
-        paddingHorizontal: 20,
+        paddingHorizontal: 12,
         backgroundColor: '#fff',
         borderRadius: 16,
 
@@ -103,6 +103,6 @@ const styles = StyleSheet.create({
         marginTop: 12,
         color: COLORS.subheading_text,
         textAlign: 'center',
-        fontSize: TEXTS.xs,
+        fontSize: TEXTS.sm,
     },
 });

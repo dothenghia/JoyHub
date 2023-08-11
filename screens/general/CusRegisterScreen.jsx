@@ -5,7 +5,7 @@ import JoyText from '../../components/general/JoyText'
 
 
 // Import Style & Theme
-import { COLORS } from '../../constants/theme'
+import { COLORS, TEXTS } from '../../constants/theme'
 import generalStyles from '../../styles/general'
 
 
@@ -34,7 +34,7 @@ export default function CusRegisterScreen({ navigation }) {
                 <TouchableOpacity
                     onPress={() => navigation.navigate('SignupPage')}
                 >
-                    <JoyText style={{ color: COLORS.primary, fontWeight: '600' }}>
+                    <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                         Back
                     </JoyText>
                 </TouchableOpacity>
@@ -52,7 +52,7 @@ export default function CusRegisterScreen({ navigation }) {
             <JoyText style={generalStyles.heading_1}>Customer Register</JoyText>
             <JoyText style={generalStyles.subheading_2}>Enter your personal information</JoyText>
 
-            
+
             {/* ====== Input ====== */}
             <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20 }}>Username</JoyText>
             <TextInput
@@ -102,30 +102,30 @@ export default function CusRegisterScreen({ navigation }) {
             />
 
             {/* Checkbox Term of Service */}
-            <View style={ styles.checkboxLine }>
+            <View style={styles.checkboxLine}>
                 <Checkbox
                     style={styles.checkbox}
                     value={isChecked}
                     onValueChange={setChecked}
                     color={isChecked ? '#FF6400' : undefined}
                 />
-                <JoyText>
-                    I accept the 
+                <JoyText style={{ fontSize: TEXTS.lg }}>
+                    I accept the
                 </JoyText>
                 <TouchableOpacity>
-                    <JoyText style={{ color: COLORS.primary, marginLeft: 3}}>
+                    <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, marginLeft: 3 }}>
                         Terms of Service
                     </JoyText>
                 </TouchableOpacity>
             </View>
 
             {/* Submit button */}
-            <View style={{ marginBottom: 50 }}>
+            <View style={{ marginBottom: 50, marginTop: 8 }}>
                 <TouchableOpacity
                     onPress={submitHandler}
-                    style={ generalStyles.button_1 }
+                    style={generalStyles.button_1}
                 >
-                    <JoyText style={ generalStyles.button_text_1 }>
+                    <JoyText style={generalStyles.button_text_1}>
                         Register
                     </JoyText>
                 </TouchableOpacity>
