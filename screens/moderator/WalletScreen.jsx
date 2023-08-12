@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TextInput, View, Image, ScrollView, TouchableOpacity, Alert, Modal, Pressable } from "react-native";
+import { StyleSheet, TextInput, Modal, View, Image, ScrollView, TouchableOpacity} from "react-native";
 import JoyText from '../../components/general/JoyText'
+import { COLORS, TEXTS } from '../../constants/theme'
 
 export default function WalletScreen({ navigation }) {
 
     hotelName = 'HARLEY HOUSE'
-    joycoin = 9999999
-   
+    jc = 250000
+
+    const [topupPopUp, setTopupPopUp] = useState(false)
+    const [withdrawPopUp, setwithdrawPopUp] = useState(false)
+    const [joycoin, setJoycoin] = useState(jc)
+
+
     return (
         <ScrollView >
 
@@ -24,22 +30,22 @@ export default function WalletScreen({ navigation }) {
                 <View style={{ borderTopLeftRadius: 25, borderTopRightRadius: 25 }}>
                     <View style={{ paddingHorizontal: 32, backgroundColor: 'white', borderTopLeftRadius: 25, borderTopRightRadius: 25 }}>
                         <View style={{ flexDirection: 'row', marginTop: 45 }}>
-                               <JoyText  style={{ flex: 7, fontSize: 31, fontWeight: 'bold' }}>{hotelName}</JoyText >
-                            
+                            <JoyText style={{ flex: 7, fontSize: 31, fontWeight: 'bold' }}>{hotelName}</JoyText >
+
                         </View>
                         <View style={{ flexDirection: 'row', marginTop: 40 }}>
 
                             <Image style={{ flex: 2, height: 30, width: 30 }} source={require('../../assets/mod/location_orange.png')} />
 
-                            <JoyText  style={{ marginLeft: 10, flex: 6, fontSize: 17}}>{'JoyCoin: '}</JoyText >
-                            <JoyText  style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{joycoin}</JoyText >
+                            <JoyText style={{ marginLeft: 10, flex: 6, fontSize: 17 }}>{'JoyCoin: '}</JoyText >
+                            <JoyText style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{joycoin}</JoyText >
 
                         </View>
                         <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 30 }}>
                             <Image style={{ flex: 2, height: 30, width: 30 }} source={require('../../assets/mod/star.png')} />
 
-                            <JoyText  style={{marginLeft: 10, flex: 6, fontSize: 17 }}>{'Bank: '}</JoyText >
-                            <JoyText  style={{marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'845122142179'}</JoyText >
+                            <JoyText style={{ marginLeft: 10, flex: 6, fontSize: 17 }}>{'Bank: '}</JoyText >
+                            <JoyText style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'845122142179'}</JoyText >
                         </View>
 
                     </View>
@@ -47,14 +53,14 @@ export default function WalletScreen({ navigation }) {
                     <View style={{ height: 15, backgroundColor: 'transparent' }} />
 
                     <View style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <JoyText  style={{ fontSize: 25, fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Nạp/Rút</JoyText >
-                        <View style ={{flexDirection:'row'}}>
-                            
-                            <TouchableOpacity style = {{width:120, height:50, borderRadius:10, borderWidth:1, marginBottom: 20, marginRight:15}} onPress={withdraw()} >
-                                <JoyText  style={{fontSize:20, textAlign:'center', paddingTop:7}}>Nạp</JoyText >
+                        <JoyText style={{ fontSize: 25, fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Nạp/Rút</JoyText >
+                        <View style={{ flexDirection: 'row' }}>
+
+                            <TouchableOpacity style={{ width: 120, height: 50, borderRadius: 10, borderWidth: 1, marginBottom: 20, marginRight: 15 }} onPress={() => {setTopupPopUp(!topupPopUp)}} >
+                                <JoyText style={{ fontSize: 20, textAlign: 'center', paddingTop: 7 }}>Nạp</JoyText >
                             </TouchableOpacity>
-                            <TouchableOpacity style = {{width:120, height:50, borderRadius:10, borderWidth:1, marginBottom: 20}} >
-                                <JoyText  style={{fontSize:20, textAlign:'center', paddingTop:7}}>Rút</JoyText >
+                            <TouchableOpacity style={{ width: 120, height: 50, borderRadius: 10, borderWidth: 1, marginBottom: 20 }} >
+                                <JoyText style={{ fontSize: 20, textAlign: 'center', paddingTop: 7 }}>Rút</JoyText >
                             </TouchableOpacity>
                         </View>
 
@@ -63,15 +69,53 @@ export default function WalletScreen({ navigation }) {
                     <View style={{ height: 15, backgroundColor: 'transparent' }} />
 
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <JoyText  style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Liên kết ngân hàng'}</JoyText >
+                        <JoyText style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Liên kết ngân hàng'}</JoyText >
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#888888' }} />
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <JoyText  style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Hủy liên kết ngân hàng'}</JoyText >
+                        <JoyText style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Hủy liên kết ngân hàng'}</JoyText >
                     </TouchableOpacity>
-                    
 
-                    
+
+                    <Modal
+                        animationType="none"
+                        transparent={true}
+                        visible={topupPopUp}
+                    >
+                        <View style={styles.modal_page}>
+                            <View style={styles.modal_container}>
+                                <View style={{ paddingHorizontal: 14, marginTop: 14, marginBottom: 8 }}>
+                                    <TouchableOpacity
+                                        onPress={() => setTopupPopUp(false)}
+                                        style={{ width: 46, marginBottom: 6 }}
+                                    >
+                                        <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
+                                            Close
+                                        </JoyText>
+                                    </TouchableOpacity>
+                                    <View>
+                                        <JoyText style={{ color: COLORS.heading_text,fontSize: TEXTS.xxl,fontWeight: '600',}}>Nap tien</JoyText>
+                                        <TextInput
+                                            style = {{marginTop: 30, padding:10, fontSize:TEXTS.lg, height: 60, borderWidth:1, borderRadius:10}}
+                                            placeholder="Enter amount of money"
+
+                                            onChangeText={()=>{}}
+                                            keyboardType="numeric"
+                                        />
+                                        <TouchableOpacity style={{alignSelf:'flex-end', backgroundColor:"#FF6400", width: 70, height: 45, marginRight: 20, marginTop: 30, borderRadius: 10 ,}}
+                                        onPress = {() => { 
+                                            setTopupPopUp(false)
+                                            setJoycoin(joycoin + 1)
+                                        }} 
+                                        >
+                                            <JoyText style={{fontSize: TEXTS.xl, color: 'white', textAlign: 'center', paddingTop:7, fontWeight:'bold'}}> OK </JoyText>
+                                            </TouchableOpacity>
+                                    </View>
+                                </View>
+                                
+                            </View>
+                        </View>
+                    </Modal>
 
 
                 </View>
@@ -82,10 +126,26 @@ export default function WalletScreen({ navigation }) {
     );
 }
 
-function withdraw()
-{
-    
+function withdraw() {
+
 }
 
+function topup() {
 
-const styles = StyleSheet.create({});
+}
+
+const styles = StyleSheet.create({
+    modal_page: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    modal_container: {
+        width: 360,
+        height: 300,
+        backgroundColor: 'white',
+        borderRadius: 16,
+    },
+});
