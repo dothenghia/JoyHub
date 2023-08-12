@@ -65,20 +65,21 @@ export const AvatarCardStyles = StyleSheet.create({
         marginTop: "auto",
     },
     title: {
-        fontSize: TEXTS.xxl,
+        fontSize: TEXTS.lg,
         fontWeight: "900",
         color: COLORS.text,
         lineHeight: 30,
+        width: "100%",
     },
     descriptionContainer: {
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "flex-start",
         marginTop: "auto",
         marginBottom: "auto",
-        justifyContent: "space-between"
+        justifyContent: "flex-start"
     },
     description: {
-        fontSize: TEXTS.sm,
+        fontSize: TEXTS.xs,
         color: COLORS.text,
         lineHeight: 20,
         fontWeight: "500"
@@ -228,15 +229,18 @@ export const DetailHotelStyles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
+        alginVertical: "center",
         marginBottom: 10,
         marginTop: 10,
         gap: 12
     },
     hotelName: {
-        fontSize: TEXTS['5xl'],
+        fontSize: TEXTS['3xl'],
         fontWeight: "bold",
         color: COLORS.primary,
-        marginBottom: 10,
+        justifyContent: "center",
+        alignItems: "center",
+
     },
     confirmBar: {
         flexDirection: "row",
