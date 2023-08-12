@@ -24,9 +24,7 @@ export default function AddRoomScreen({ navigation, route }) {
             <ScrollView >
                 <TopBar Title={"Add A Room"} navigation={navigation} />
                 <Image style={{ marginTop: 25, height: 250, width: 'auto', borderRadius: 15 }} source={require('../../assets/mod/demoHotel.jpg')} />
-                <View style={{ height: 70, marginBottom: 15 }}>
-                    <TextInput placeholder="Enter room name" style={{ flex: 7, marginTop: 15, paddingLeft: 15, height: 60, borderColor: 'black', borderWidth: 1, borderRadius: 15, fontSize: TEXTS.xl }} />
-                </View>
+                
                 <RoomAmentityCard pressable={true} amenities={amenities} />
 
                 <View>
