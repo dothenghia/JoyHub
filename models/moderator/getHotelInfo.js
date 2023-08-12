@@ -27,8 +27,8 @@ const roomList =
                         value: "Wifi",
                     },
                     {
-                        label: "river",
-                        value: "River",
+                        label: "pool",
+                        value: "Pool",
                     },
                     {
                         label: "bathtub",
@@ -64,8 +64,8 @@ const roomList =
                         value: "Wifi",
                     },
                     {
-                        label: "river",
-                        value: "River",
+                        label: "pool",
+                        value: "Pool",
                     },
                     {
                         label: "ac",
@@ -187,8 +187,8 @@ const roomList =
                         value: "Wifi",
                     },
                     {
-                        label: "river",
-                        value: "River",
+                        label: "pool",
+                        value: "Pool",
                     },
                     {
                         label: "bathtub",
@@ -224,8 +224,8 @@ const roomList =
                         value: "Wifi",
                     },
                     {
-                        label: "river",
-                        value: "River",
+                        label: "pool",
+                        value: "Pool",
                     },
                     {
                         label: "ac",
@@ -347,8 +347,8 @@ const roomList =
                         value: "Wifi",
                     },
                     {
-                        label: "river",
-                        value: "River",
+                        label: "pool",
+                        value: "Pool",
                     },
                     {
                         label: "bathtub",
@@ -384,8 +384,8 @@ const roomList =
                         value: "Wifi",
                     },
                     {
-                        label: "river",
-                        value: "River",
+                        label: "pool",
+                        value: "Pool",
                     },
                     {
                         label: "ac",

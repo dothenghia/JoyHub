@@ -16,7 +16,8 @@ const Icons = {
 };
 
 
-export default function RoomAmenityCard({ amenities }) {
+
+export default function RoomAmenityCard({ amenities, pressable = false }) {
 
 
 
@@ -25,17 +26,14 @@ export default function RoomAmenityCard({ amenities }) {
 
     const res = (
         <View style={modStyles.section_container}>
-            <JoyText style={{fontSize : TEXTS["4xl"], fontWeight:'bold', marginTop: 20}}>Hotel facilities</JoyText>
+            <JoyText style={{ fontSize: TEXTS["4xl"], fontWeight: 'bold', marginTop: 20 }}>Hotel facilities</JoyText>
             <FlatList style={{ height: 120, marginTop: 8 }}
                 horizontal data={amenities}
 
                 renderItem={({ item }) => (
-                    <View style={styles.card_container} >
-                        <View style={styles.image_wrapper}>
-                            <JoyIcon name={item.label} size = {35} />
-                        </View>
-                        <JoyText style={styles.text}>{item.value}</JoyText>
-                    </View>
+                    <ChangeColorButton pressable={pressable} item = {item}>
+                 
+                    </ChangeColorButton>
                 )}
             >
             </FlatList>
@@ -48,12 +46,47 @@ export default function RoomAmenityCard({ amenities }) {
 
 }
 
+
+function ChangeColorButton({pressable, item }) {
+    
+    const [cardStyle,setCardStyle] = useState(styles.card_container) 
+    const [iconColor, setIconColor] = useState('#000000')
+    return (
+        <TouchableOpacity style={cardStyle} disabled={!pressable} onPress={() => {
+            if(cardStyle === styles.card_container)
+            {
+                setCardStyle(styles.card_container_pressed)
+                setIconColor('#FFFFFF')
+            }    
+            else 
+            {
+                setCardStyle(styles.card_container)
+                setIconColor('#000000')
+            }
+        }}>
+            <View style={styles.image_wrapper}>
+                <JoyIcon name={item.label} size={35} color ={iconColor} />
+            </View>
+            <JoyText style={{...styles.text, color : iconColor }} textColor >{item.value}</JoyText>
+        </TouchableOpacity>
+    )
+}
+
 const styles = StyleSheet.create({
     card_container: {
         width: 92,
         height: 100,
         marginRight: 8,
         backgroundColor: '#EEEEEE',
+        alignSelf: 'center',
+        justifyContent: 'space-between',
+        borderRadius: 12,
+    },
+    card_container_pressed: {
+        width: 92,
+        height: 100,
+        marginRight: 8,
+        backgroundColor: '#FF6400',
         alignSelf: 'center',
         justifyContent: 'space-between',
         borderRadius: 12,
