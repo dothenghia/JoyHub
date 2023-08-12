@@ -59,6 +59,7 @@ export default function MainScreen({ navigation }) {
                     placeholder='Search Hotel Name'
                     placeholderTextColor={COLORS.subheading_text}
                     autoCapitalize="none"
+                    allowFontScaling={false}
                     onChangeText={(e) => setSearchInput(e)}
                 />
                 <TouchableOpacity
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
 
-        fontSize: TEXTS.sm,
+        fontSize: TEXTS.lg,
         color: COLORS.text
     },
     search_button: {

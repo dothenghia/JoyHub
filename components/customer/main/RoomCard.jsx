@@ -2,12 +2,13 @@ import { StyleSheet, View, ImageBackground, TouchableOpacity } from "react-nativ
 import JoyText from "../../general/JoyText";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Feather from "react-native-vector-icons/Feather";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from "../../../constants/theme";
 
 export default function RoomCard({ name, navigation }) {
-    console.log(name)
+    // console.log(name)
     return (
         <TouchableOpacity
             style={styles.card_container}
@@ -31,16 +32,22 @@ export default function RoomCard({ name, navigation }) {
 
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
-                    <Ionicons name={"expand"} size={20} color={COLORS.subheading_text}/>
+                    <Ionicons name={"expand"} size={20} color={COLORS.subheading_text} />
                     <JoyText style={styles.amenity}> 69 m2 </JoyText>
-                    <FontAwesome name={"circle"} size={6} style={{alignSelf: 'center', marginHorizontal: 6}} color={COLORS.subheading_text}/>
-                    <Ionicons name={"person"} size={20} color={COLORS.subheading_text}/>
+                    <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
+                    <Ionicons name={"person"} size={20} color={COLORS.subheading_text} />
                     <JoyText style={styles.amenity}> 2 People </JoyText>
-                    <FontAwesome name={"circle"} size={6} style={{alignSelf: 'center', marginHorizontal: 6}} color={COLORS.subheading_text}/>
-                    <Ionicons name={"bed-outline"} size={26} style={{paddingTop: 4}} color={COLORS.subheading_text}/>
+                    <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
+                    <Ionicons name={"bed-outline"} size={26} style={{ paddingTop: 4 }} color={COLORS.subheading_text} />
                     <JoyText style={styles.amenity}> 1 Bed</JoyText>
                 </View>
             </View>
+
+            {name.status === 'full' && (<View style={styles.status_tag}>
+                <Feather name={"x-circle"} size={26} color={COLORS.warning} />
+                <JoyText style={styles.status_text}>Full</JoyText>
+            </View>)}
+
         </TouchableOpacity>
     );
 }
@@ -83,5 +90,23 @@ const styles = StyleSheet.create({
         fontSize: TEXTS.md,
         color: COLORS.subheading_text,
     },
-    
+
+    status_tag: {
+        position: 'absolute',
+        top: 12,
+        right: 12,
+        backgroundColor: '#EEB0AE',
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        borderRadius: 8,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    status_text: {
+        fontSize: TEXTS.xl,
+        color: COLORS.warning,
+        fontWeight: 'bold',
+        marginLeft: 4,
+    },
 });

@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, FlatList, Modal } from "react-native";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import JoyText from '../../components/general/JoyText'
+import { DatePickerModal } from 'react-native-paper-dates';
+import formatDate from "../../models/customer/formatDate";
+
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -16,10 +19,11 @@ import RoomCard from "../../components/customer/main/RoomCard";
 import FacilityCard from "../../components/customer/main/FacilityCard";
 import ReviewCard from "../../components/customer/main/ReviewCard";
 
-export default function HotelScreen({ navigation, route }) {
-    console.log(route.params)
-    console.log('[Customer] HotelScreen')
 
+export default function HotelScreen({ navigation, route }) {
+    // console.log(route.params)
+    console.log('[Customer] HotelScreen')
+    
     // ------ Data State
     const [isFavorite, setIsFavorite] = useState(false)
     const [hotelInfo, setHotelInfo] = useState(null)
@@ -28,6 +32,19 @@ export default function HotelScreen({ navigation, route }) {
     const [reviewList, setReviewList] = useState([])
     const [seeAllComments, setSeeAllComments] = useState(false)
 
+
+    // Date Picker
+    const [range, setRange] = useState({ startDate: undefined, endDate: undefined });
+    const [open, setOpen] = useState(false);
+
+    const onDismiss = useCallback(() => {
+        setOpen(false);
+    }, [setOpen]);
+
+    const onConfirm = useCallback(({ startDate, endDate }) => {
+        setOpen(false);
+        setRange({ startDate, endDate });
+    }, [setOpen, setRange]);
 
     // ------ Fetch Data at first render
     useEffect(() => {
@@ -136,9 +153,22 @@ export default function HotelScreen({ navigation, route }) {
                             )}
                         >
                         </FlatList>
+
+                        <JoyText style={customerStyles.section_title}>Standard</JoyText>
+                        <FlatList style={{ height: 300, marginTop: 8 }}
+                            horizontal data={roomList}
+
+                            renderItem={({ item }) => (
+                                <RoomCard
+                                    name={item}
+                                    navigation={navigation}
+                                />
+                            )}
+                        >
+                        </FlatList>
                     </View>
 
-                    <View style={{ ...customerStyles.divider, marginTop: 16 }}></View>
+                    <View style={customerStyles.divider}></View>
 
 
                     {/* Hotel Review */}
@@ -176,12 +206,21 @@ export default function HotelScreen({ navigation, route }) {
                 <View style={fixedBarStyle.bar_container}>
                     <TouchableOpacity
                         style={fixedBarStyle.bar_calendar}
+                        onPress={() => setOpen(true)}
                     >
                         <FontAwesome5Icon name={"calendar-alt"} size={28} color={COLORS.primary} />
-                        <JoyText style={fixedBarStyle.calendar_text}>Thu, 4/6/2023 - Sat, 6/6/2023</JoyText>
+                        <JoyText style={fixedBarStyle.calendar_text}>{formatDate(range.startDate)} - {formatDate(range.endDate)}</JoyText>
                     </TouchableOpacity>
                 </View>
-
+                <DatePickerModal
+                    locale="en"
+                    mode="range"
+                    visible={open}
+                    onDismiss={onDismiss}
+                    startDate={range.startDate}
+                    endDate={range.endDate}
+                    onConfirm={onConfirm}
+                />
             </View>
 
 

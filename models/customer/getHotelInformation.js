@@ -40,19 +40,29 @@ const hotelInformation = {
             id: 1,
             name: 'Queen Room',
             price: '123.000',
-            slug: 'queen-room'
+            slug: 'queen-room',
+            status: 'full'
         },
         {
             id: 2,
             name: 'Deluxe Room',
             price: '200.000',
-            slug: 'deluxe-room'
+            slug: 'deluxe-room',
+            status: 'full'
         },
         {
             id: 3,
             name: 'Hehe Room',
             price: '666.000',
-            slug: 'hehe-room'
+            slug: 'hehe-room',
+            status: 'available'
+        },
+        {
+            id: 4,
+            name: 'Test Room',
+            price: '234.000',
+            slug: 'test-room',
+            status: 'available'
         },
     ],
 
