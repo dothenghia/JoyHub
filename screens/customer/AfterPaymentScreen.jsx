@@ -87,20 +87,20 @@ const styles = StyleSheet.create({
 
     text_1 : {
         color: COLORS.heading_text,
-        fontSize: TEXTS.xxl,
+        fontSize: TEXTS["3xl"],
         fontWeight: '600',
         textAlign: 'center',
     },
     text_2 : {
         color: COLORS.subheading_text,
-        fontSize: TEXTS.sm,
+        fontSize: TEXTS.md,
         fontWeight: '500',
         textAlign: 'center',
         marginTop: 20,
     },
     hotel_name : {
         color: COLORS.heading_text,
-        fontSize: TEXTS.lg,
+        fontSize: TEXTS.xxl,
         fontWeight: '600',
         textAlign: 'center',
         marginTop: 4,

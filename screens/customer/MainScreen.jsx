@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     search_input: {
         // width: '%',
         flex: 1,
-        height: 50,
+        height: 52,
         backgroundColor: COLORS.input_background,
 
         paddingHorizontal: 20,
@@ -163,8 +163,8 @@ const styles = StyleSheet.create({
         color: COLORS.text
     },
     search_button: {
-        height: 50,
-        width: 50,
+        height: 52,
+        width: 52,
         backgroundColor: COLORS.input_background,
         borderColor: COLORS.input_border,
         borderWidth: 2,
