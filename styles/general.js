@@ -60,7 +60,7 @@ const generalStyles = StyleSheet.create({
     },
     input_field: {
         width: '100%',
-        height: 50,
+        height: 52,
         marginBottom: 14,
         backgroundColor: COLORS.input_background,
 

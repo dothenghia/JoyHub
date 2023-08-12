@@ -23,11 +23,11 @@ const customerStyles = StyleSheet.create({
     },
     top_bar_title: {
         color: COLORS.heading_text,
-        fontSize: TEXTS["4xl"],
+        fontSize: TEXTS["3xl"],
         fontWeight: '600',
         position: 'absolute',
         left: 0,
-        top: 20,
+        top: 22,
         right: 0,
         textAlign: 'center',
     },
