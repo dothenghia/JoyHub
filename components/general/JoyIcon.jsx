@@ -8,7 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 export default function JoyIcon({ name, ...props }) {
     const iconMapping = {
         wifi: <AntDesign name={"wifi"} {...props} />,
-        river: <MaterialIcons name={"pool"} {...props} />,
+        pool: <MaterialIcons name={"pool"} {...props} />,
         bathtub: <FontAwesome name={"bathtub"} {...props} />,
         ac: <FontAwesome name={"snowflake-o"} {...props} />,
         meal: <MaterialCommunityIcons name={"food-fork-drink"} {...props} />,

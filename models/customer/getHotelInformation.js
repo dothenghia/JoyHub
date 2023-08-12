@@ -15,8 +15,8 @@ const hotelInformation = {
         },
         {
             f_id: 2,
-            f_name: 'River View',
-            f_icon: 'river',
+            f_name: 'Pool',
+            f_icon: 'pool',
         },
         {
             f_id: 3,

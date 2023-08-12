@@ -6,7 +6,7 @@ import JoyText from "../../general/JoyText";
 import { COLORS, TEXTS } from "../../../constants/theme";
 
 export default function HotelCard({ props, navigation }) {
-    console.log(props)
+    // console.log(props)
     return (
         <TouchableOpacity
             style={styles.card_container}

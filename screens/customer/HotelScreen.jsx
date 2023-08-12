@@ -21,11 +21,14 @@ export default function HotelScreen({ navigation, route }) {
     console.log('[Customer] HotelScreen')
 
     // ------ Data State
+    const [isFavorite, setIsFavorite] = useState(false)
     const [hotelInfo, setHotelInfo] = useState(null)
     const [facilities, setFacilities] = useState([])
     const [roomList, setRoomList] = useState([])
     const [reviewList, setReviewList] = useState([])
     const [seeAllComments, setSeeAllComments] = useState(false)
+
+
     // ------ Fetch Data at first render
     useEffect(() => {
         const fetchHotelInformation = async () => {
@@ -66,8 +69,9 @@ export default function HotelScreen({ navigation, route }) {
                                 {/* Like Button */}
                                 <TouchableOpacity
                                     style={customerStyles.top_bar_button}
+                                    onPress={() => { setIsFavorite(!isFavorite) }}
                                 >
-                                    <FontAwesome5Icon name={"heart"} size={18} color={COLORS.primary} />
+                                    <FontAwesome5Icon name={"heart"} solid={isFavorite} size={18} color={COLORS.primary} />
                                 </TouchableOpacity>
                             </View>
                         </ImageBackground>
@@ -147,16 +151,16 @@ export default function HotelScreen({ navigation, route }) {
                             </View>
 
                             {/* See all Reviews Button */}
-                            <View>
-                                <TouchableOpacity>
-                                    <JoyText
-                                        style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}
-                                        onPress={() => { setSeeAllComments(true) }}
-                                    >
-                                        See all
-                                    </JoyText>
-                                </TouchableOpacity>
-                            </View>
+
+                            <TouchableOpacity>
+                                <JoyText
+                                    style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}
+                                    onPress={() => { setSeeAllComments(true) }}
+                                >
+                                    See all
+                                </JoyText>
+                            </TouchableOpacity>
+
                         </View>
 
                         {reviewList.length === 0 && (<JoyText>No review</JoyText>)}
@@ -190,17 +194,16 @@ export default function HotelScreen({ navigation, route }) {
             >
                 <View style={styles.modal_page}>
                     <View style={styles.modal_container}>
-                        <View style={{paddingHorizontal: 12, marginTop: 12, marginBottom: 8}}>
+                        <View style={{ paddingHorizontal: 14, marginTop: 14, marginBottom: 8 }}>
                             <TouchableOpacity
                                 onPress={() => setSeeAllComments(false)}
-                                style={{width: 46 , marginBottom: 6}}
+                                style={{ width: 46, marginBottom: 6 }}
                             >
-                                <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600'}}>
+                                <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                                     Close
                                 </JoyText>
                             </TouchableOpacity>
                             <JoyText style={customerStyles.section_title}>All comments ({hotelInfo ? hotelInfo.review : 'Loading ...'})</JoyText>
-
                         </View>
                         <ScrollView>
                             {
