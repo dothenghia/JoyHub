@@ -9,9 +9,9 @@ export default function WalletScreen({ navigation }) {
     jc = 250000
 
     const [topupPopUp, setTopupPopUp] = useState(false)
-    const [withdrawPopUp, setwithdrawPopUp] = useState(false)
+    const [withdrawPopUp, setWithdrawPopUp] = useState(false)
     const [joycoin, setJoycoin] = useState(jc)
-
+    const [money, setMoney] = useState(0)
 
     return (
         <ScrollView >
@@ -59,7 +59,7 @@ export default function WalletScreen({ navigation }) {
                             <TouchableOpacity style={{ width: 120, height: 50, borderRadius: 10, borderWidth: 1, marginBottom: 20, marginRight: 15 }} onPress={() => {setTopupPopUp(!topupPopUp)}} >
                                 <JoyText style={{ fontSize: 20, textAlign: 'center', paddingTop: 7 }}>Nạp</JoyText >
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ width: 120, height: 50, borderRadius: 10, borderWidth: 1, marginBottom: 20 }} >
+                            <TouchableOpacity style={{ width: 120, height: 50, borderRadius: 10, borderWidth: 1, marginBottom: 20 }} onPress={() => {setWithdrawPopUp(!withdrawPopUp)}}>
                                 <JoyText style={{ fontSize: 20, textAlign: 'center', paddingTop: 7 }}>Rút</JoyText >
                             </TouchableOpacity>
                         </View>
@@ -98,14 +98,58 @@ export default function WalletScreen({ navigation }) {
                                         <TextInput
                                             style = {{marginTop: 30, padding:10, fontSize:TEXTS.lg, height: 60, borderWidth:1, borderRadius:10}}
                                             placeholder="Enter amount of money"
-
-                                            onChangeText={()=>{}}
+                                            onChangeText={(value)=>{ setMoney(parseInt(value))}}
                                             keyboardType="numeric"
                                         />
                                         <TouchableOpacity style={{alignSelf:'flex-end', backgroundColor:"#FF6400", width: 70, height: 45, marginRight: 20, marginTop: 30, borderRadius: 10 ,}}
                                         onPress = {() => { 
+                                            setJoycoin(joycoin + money)
+                                            setMoney(0)
                                             setTopupPopUp(false)
-                                            setJoycoin(joycoin + 1)
+                                        }} 
+                                        >
+                                            <JoyText style={{fontSize: TEXTS.xl, color: 'white', textAlign: 'center', paddingTop:7, fontWeight:'bold'}}> OK </JoyText>
+                                            </TouchableOpacity>
+                                    </View>
+                                </View>
+                                
+                            </View>
+                        </View>
+                    </Modal>
+                    
+
+                    <Modal
+                        animationType="none"
+                        transparent={true}
+                        visible={withdrawPopUp}
+                    >
+                        <View style={styles.modal_page}>
+                            <View style={styles.modal_container}>
+                                <View style={{ paddingHorizontal: 14, marginTop: 14, marginBottom: 8 }}>
+                                    <TouchableOpacity
+                                        onPress={() => setWithdrawPopUp(false)}
+                                        style={{ width: 46, marginBottom: 6 }}
+                                    >
+                                        <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
+                                            Close
+                                        </JoyText>
+                                    </TouchableOpacity>
+                                    <View>
+                                        <JoyText style={{ color: COLORS.heading_text,fontSize: TEXTS.xxl,fontWeight: '600',}}>Rut tien</JoyText>
+                                        <TextInput
+                                            style = {{marginTop: 30, padding:10, fontSize:TEXTS.lg, height: 60, borderWidth:1, borderRadius:10}}
+                                            placeholder="Enter amount of money"
+                                            onChangeText={(value)=>{setMoney(parseInt(value))}}
+                                            keyboardType="numeric"
+                                        />
+                                        <TouchableOpacity style={{alignSelf:'flex-end', backgroundColor:"#FF6400", width: 70, height: 45, marginRight: 20, marginTop: 30, borderRadius: 10 ,}}
+                                        onPress = {() => { 
+                                            if(money <= joycoin)
+                                            {
+                                                setJoycoin(joycoin - money)
+                                                setMoney(0)
+                                            }
+                                            setWithdrawPopUp(false)
                                         }} 
                                         >
                                             <JoyText style={{fontSize: TEXTS.xl, color: 'white', textAlign: 'center', paddingTop:7, fontWeight:'bold'}}> OK </JoyText>
