@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView } from "react-native";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import JoyText from '../../components/general/JoyText'
 
@@ -23,7 +24,7 @@ export default function PaymentScreen({ navigation, route }) {
                             () => { navigation.goBack() }
                         }
                     >
-                        <FontAwesome5Icon name={"arrow-left"} size={18} color={COLORS.primary} />
+                        <AntDesign name={"arrowleft"} size={18} color={COLORS.primary} />
                     </TouchableOpacity>
                     <JoyText style={customerStyles.top_bar_title}>Confirm & Payment</JoyText>
                 </View>

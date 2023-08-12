@@ -15,8 +15,8 @@ const hotelInformation = {
         },
         {
             f_id: 2,
-            f_name: 'River View',
-            f_icon: 'river',
+            f_name: 'Pool',
+            f_icon: 'pool',
         },
         {
             f_id: 3,
@@ -67,6 +67,55 @@ const hotelInformation = {
             review_id: 462,
             r_name: 'Mac Tuan Trung',
             r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 4.5,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 3,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 2,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 1,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 1.5,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 2.5,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
+            r_star: 1.5,
+        }
+        ,
+        {
+            review_id: 462,
+            r_name: 'Mac Tuan Trung',
+            r_comment: 'Cho nay rat la oke, Toi rat thich',
             r_star: 5,
         }
     ]
@@ -78,6 +127,6 @@ export default async function getHotelInformation() {
         setTimeout(function () {
             resolve(hotelInformation)
             console.log("[getHotelInformation.js] Finish")
-        }, 2000)
+        }, 500)
     })
 }

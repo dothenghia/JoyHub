@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, View, Image, TextInput, ScrollView } from "react-native";
+import { StyleSheet, View, Image, TextInput, ScrollView, TouchableOpacity } from "react-native";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import SelectDropdown from 'react-native-select-dropdown'
 
 // Import Style & Theme
@@ -52,7 +53,7 @@ export default function MainScreen({ navigation }) {
             </View>
 
             {/* Search Input */}
-            <View style={customerStyles.section_container_no_py}>
+            <View style={{ ...customerStyles.section_container_no_py, marginTop: 14, flexDirection: 'row', alignItems: 'center' }}>
                 <TextInput
                     style={styles.search_input}
                     placeholder='Search Hotel Name'
@@ -60,6 +61,12 @@ export default function MainScreen({ navigation }) {
                     autoCapitalize="none"
                     onChangeText={(e) => setSearchInput(e)}
                 />
+                <TouchableOpacity
+                    style={styles.search_button}
+
+                >
+                    <AntDesign name={"search1"} size={24} color={COLORS.subheading_text} />
+                </TouchableOpacity>
             </View>
 
             {/* Filer Location Line */}
@@ -68,10 +75,10 @@ export default function MainScreen({ navigation }) {
                 <SelectDropdown
                     data={locationList}
                     buttonStyle={styles.dropdown}
-                    dropdownStyle={{marginTop: -24}}
+                    dropdownStyle={{ marginTop: -24 }}
                     rowStyle={styles.dropdown_text}
-                    selectedRowStyle={{backgroundColor: COLORS.primary}}
-                    selectedRowTextStyle={{color: 'white'}}
+                    selectedRowStyle={{ backgroundColor: COLORS.primary }}
+                    selectedRowTextStyle={{ color: 'white' }}
                     defaultButtonText="Select City"
                     onSelect={(city, index) => {
                         setCity(city)
@@ -89,10 +96,10 @@ export default function MainScreen({ navigation }) {
                 <SelectDropdown
                     data={city.districts}
                     buttonStyle={styles.dropdown}
-                    dropdownStyle={{marginTop: -24}}
+                    dropdownStyle={{ marginTop: -24 }}
                     rowStyle={styles.dropdown_text}
-                    selectedRowStyle={{backgroundColor: COLORS.primary}}
-                    selectedRowTextStyle={{color: 'white'}}
+                    selectedRowStyle={{ backgroundColor: COLORS.primary }}
+                    selectedRowTextStyle={{ color: 'white' }}
                     defaultButtonText="Select District"
                     // onSelect={(district, index) => {
                     //     console.log(district, index)
@@ -139,22 +146,37 @@ const styles = StyleSheet.create({
     },
 
     search_input: {
-        width: '100%',
+        // width: '%',
+        flex: 1,
         height: 50,
-        marginTop: 14,
         backgroundColor: COLORS.input_background,
 
         paddingHorizontal: 20,
         borderColor: COLORS.input_border,
         borderWidth: 2,
         borderRadius: 10,
+        borderRightWidth: 0,
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
 
         fontSize: TEXTS.sm,
         color: COLORS.text
     },
+    search_button: {
+        height: 50,
+        width: 50,
+        backgroundColor: COLORS.input_background,
+        borderColor: COLORS.input_border,
+        borderWidth: 2,
+        borderRadius: 10,
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 
     dropdowns_container: {
-        ...customerStyles.section_container_no_py ,
+        ...customerStyles.section_container_no_py,
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 12

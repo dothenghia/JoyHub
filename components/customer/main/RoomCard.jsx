@@ -1,16 +1,18 @@
 import { StyleSheet, View, ImageBackground, TouchableOpacity } from "react-native";
 import JoyText from "../../general/JoyText";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from "../../../constants/theme";
 
-export default function RoomCard({ name , navigation }) {
+export default function RoomCard({ name, navigation }) {
     console.log(name)
     return (
         <TouchableOpacity
             style={styles.card_container}
             onPress={
-                () => {navigation.navigate('RoomPage')}
+                () => { navigation.navigate('RoomPage') }
             }
         >
             <ImageBackground
@@ -20,8 +22,24 @@ export default function RoomCard({ name , navigation }) {
             ></ImageBackground>
 
             <View style={styles.text_container}>
-                <JoyText style={styles.hotel_name}>{name.name}</JoyText>
-                <JoyText>{name.price}</JoyText>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                    <JoyText style={styles.name}>{name.name}</JoyText>
+                    <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                        <JoyText style={styles.price}>{name.price}</JoyText>
+                        <JoyText> VND/night</JoyText>
+                    </View>
+
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
+                    <Ionicons name={"expand"} size={20} color={COLORS.subheading_text}/>
+                    <JoyText style={styles.amenity}> 69 m2 </JoyText>
+                    <FontAwesome name={"circle"} size={6} style={{alignSelf: 'center', marginHorizontal: 6}} color={COLORS.subheading_text}/>
+                    <Ionicons name={"person"} size={20} color={COLORS.subheading_text}/>
+                    <JoyText style={styles.amenity}> 2 People </JoyText>
+                    <FontAwesome name={"circle"} size={6} style={{alignSelf: 'center', marginHorizontal: 6}} color={COLORS.subheading_text}/>
+                    <Ionicons name={"bed-outline"} size={26} style={{paddingTop: 4}} color={COLORS.subheading_text}/>
+                    <JoyText style={styles.amenity}> 1 Bed</JoyText>
+                </View>
             </View>
         </TouchableOpacity>
     );
@@ -30,9 +48,9 @@ export default function RoomCard({ name , navigation }) {
 const styles = StyleSheet.create({
     card_container: {
         width: 320,
-        height: 320,
+        height: 286,
         alignSelf: 'flex-start',
-        marginRight: 10,
+        marginRight: 12,
         marginLeft: 3,
         elevation: 3,
         borderRadius: 16,
@@ -41,19 +59,29 @@ const styles = StyleSheet.create({
 
     bg_image: {
         width: '100%',
-        height: 210,
+        height: 200,
     },
 
     text_container: {
         backgroundColor: '#fff',
         flex: 1,
+        paddingVertical: 6,
         paddingHorizontal: 10
     },
-    hotel_name: {
+    name: {
+        fontSize: TEXTS["xxl"],
+        fontWeight: 'bold',
         color: COLORS.heading_text,
-        fontSize: TEXTS.lg,
-        fontWeight: '600',
-
-        marginTop: 8,
-    }
+    },
+    price: {
+        fontSize: TEXTS.xxl,
+        fontWeight: 'bold',
+        color: COLORS.heading_text
+    },
+    amenity: {
+        marginLeft: 4,
+        fontSize: TEXTS.md,
+        color: COLORS.subheading_text,
+    },
+    
 });

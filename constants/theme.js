@@ -16,6 +16,7 @@ const COLORS = {
     white: "#FFFFFF",
     grey: "#9DA8B5",
     disable: "#E5E5E5",
+    divider: '#DEDEDE',
 };
 
 const TEXTS = {
