@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, Dimensions, FlatList } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
@@ -6,6 +6,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import JoyText from '../../components/general/JoyText'
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { DatePickerModal } from 'react-native-paper-dates';
+import formatDate from "../../models/customer/formatDate";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -52,6 +54,24 @@ export default function RoomScreen({ navigation, route }) {
         { f_id: 4, f_name: 'Air Conditioner', f_icon: 'ac', },
         { f_id: 5, f_name: 'Meal', f_icon: 'meal', },
     ];
+
+
+
+    // ------ Date Picker
+    const [range, setRange] = useState({ startDate: undefined, endDate: undefined });
+    const [open, setOpen] = useState(false);
+
+    const onDismiss = useCallback(() => {
+        setOpen(false);
+    }, [setOpen]);
+
+    const onConfirm = useCallback(({ startDate, endDate }) => {
+        setOpen(false);
+        setRange({ startDate, endDate });
+    }, [setOpen, setRange]);
+
+
+
 
     return (
         <View style={customerStyles.page_container}>
@@ -184,9 +204,10 @@ export default function RoomScreen({ navigation, route }) {
                 {/* Choose Date */}
                 <TouchableOpacity
                     style={fixedBarStyle.bar_calendar}
+                    onPress={() => setOpen(true)}
                 >
                     <FontAwesome5Icon name={"calendar-alt"} size={28} color={COLORS.primary} />
-                    <JoyText style={fixedBarStyle.calendar_text}>Thu, 4/6/2023 - Sat, 6/6/2023</JoyText>
+                    <JoyText style={fixedBarStyle.calendar_text}>{formatDate(range.startDate)} - {formatDate(range.endDate)}</JoyText>
                 </TouchableOpacity>
 
 
@@ -200,6 +221,15 @@ export default function RoomScreen({ navigation, route }) {
                     </TouchableOpacity>
                 </View>
             </View>
+            <DatePickerModal
+                locale="en"
+                mode="range"
+                visible={open}
+                onDismiss={onDismiss}
+                startDate={range.startDate}
+                endDate={range.endDate}
+                onConfirm={onConfirm}
+            />
         </View>
     );
 }
