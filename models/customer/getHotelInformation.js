@@ -127,6 +127,6 @@ export default async function getHotelInformation() {
         setTimeout(function () {
             resolve(hotelInformation)
             console.log("[getHotelInformation.js] Finish")
-        }, 2000)
+        }, 500)
     })
 }
