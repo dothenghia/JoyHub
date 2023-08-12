@@ -6,18 +6,26 @@ import RoomAmentityCard from "../../components/moderator/RoomAmenityCard";
 import JoyText from '../../components/general/JoyText'
 import { TEXTS } from "../../constants/theme";
 
-export default function AddRoomScreen({ navigation, route }) {
+import MController from "../../controllers/moderatorController";
 
-    amenities = route.params.listOfAmenities
+export default function AddRoomScreen({ navigation, route }) {
+    const [amenities, setAmenities] = useState([])
+
+    useEffect(() => {
+        const fetchAmenities = async () => {
+            let data = await MController('GETALLAMENITIES')
+            setAmenities(data)
+        }
+        fetchAmenities()
+    }, [])
+    console.log(amenities)
     return (
         <View style={generalStyles.page_container}>
             <ScrollView >
                 <TopBar Title={"Add A Room"} navigation={navigation} />
                 <Image style={{ marginTop: 25, height: 250, width: 'auto', borderRadius: 15 }} source={require('../../assets/mod/demoHotel.jpg')} />
-                <View style={{ height: 70, marginBottom: 15 }}>
-                    <TextInput placeholder="Enter room name" style={{ flex: 7, marginTop: 15, paddingLeft: 15, height: 60, borderColor: 'black', borderWidth: 1, borderRadius: 15, fontSize: TEXTS.xl }} />
-                </View>
-                <RoomAmentityCard amenities={amenities} />
+                
+                <RoomAmentityCard pressable={true} amenities={amenities} />
 
                 <View>
                     <JoyText  style={{ fontSize: TEXTS["4xl"], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Description</JoyText >

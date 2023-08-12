@@ -1,5 +1,5 @@
 import getRoomList from "../models/moderator/getRoomList"
-import getHotelAmenities from "../models/moderator/getHotelAmenities"
+import getAllAmenities from "../models/moderator/getAllAmenities"
 import getHotelInfo from "../models/moderator/getHotelInfo"
 import modMainScreen from "../models/moderator/ModMainScreen"
 import getNotifications from "../models/moderator/getNotifications"
@@ -13,6 +13,9 @@ export default async function MController (type, ...payload)
         case 'GETROOMLIST':
             const roomList = await getRoomList()
             return roomList
+        case 'GETALLAMENITIES':
+            const amenities = await getAllAmenities()
+            return amenities
         case 'MODMAINSCREEN':
             const mainscreenInfo = await modMainScreen()
             return mainscreenInfo
