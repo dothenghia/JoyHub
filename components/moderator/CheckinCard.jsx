@@ -3,7 +3,7 @@ import JoyText from '../../components/general/JoyText'
 import { TEXTS } from "../../constants/theme";
 import React from 'react'
 
-export default function CheckinCard({ Username, PhoneNumber, Room, CheckInDate }) {
+export default function CheckinCard({ bookingInfo }) {
     return (
 
         <View style={styles.card}>
@@ -11,22 +11,22 @@ export default function CheckinCard({ Username, PhoneNumber, Room, CheckInDate }
             <View style={{ flexDirection: 'row', padding: 10, marginTop: 7 }}>
                 <Image style={{ flex: 3.5, height: 'auto', minHeight: 170, borderRadius: 15, borderWidth: 1, }} source={require('../../assets/mod/demoHotel.jpg')} />
                 <View style={{ flex: 5, }}>
-                    <JoyText  style={{ marginLeft: 10, justifyContent: 'center', marginTop: 0, fontSize: TEXTS.xl, fontWeight: 'bold', color: '#FF6400' }}> {Room} </JoyText >
+                    <JoyText  style={{ marginLeft: 10, justifyContent: 'center', marginTop: 0, fontSize: TEXTS.xl, fontWeight: 'bold', color: '#FF6400' }}> {bookingInfo.room} </JoyText >
 
                     
                     <View style={{ flexDirection: 'row', marginTop: 15 }}>
                         <Image style={styles.icon} source={require('../../assets/mod/checkin.png')} />
-                        <JoyText  style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: TEXTS.md, fontWeight: 'bold' }}> {CheckInDate} </JoyText >
+                        <JoyText  style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: TEXTS.md, fontWeight: 'bold' }}> {bookingInfo.checkin} </JoyText >
                     </View>
 
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <Image style={styles.icon} source={require('../../assets/mod/phone.png')} />
-                        <JoyText  style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: TEXTS.md, fontWeight: 'bold' }}> {PhoneNumber} </JoyText >
+                        <JoyText  style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: TEXTS.md, fontWeight: 'bold' }}> {bookingInfo.phone} </JoyText >
                     </View>
 
                     <View style={{ flexDirection: 'row', marginTop: 5, height:50 }}>
                         <Image style={styles.icon} source={require('../../assets/mod/people_black.png')} />
-                        <JoyText  style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: TEXTS.md, fontWeight: 'bold', marginRight: 10 }}> {shortUsername(Username)} 
+                        <JoyText  style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: TEXTS.md, fontWeight: 'bold', marginRight: 10 }}> {shortUsername(bookingInfo.customer)} 
                         </JoyText >
                     </View>
                     
