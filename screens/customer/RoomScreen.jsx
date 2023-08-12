@@ -1,13 +1,17 @@
 import { useState, useRef } from "react";
-import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, Dimensions } from "react-native";
+import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, Dimensions, FlatList } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import JoyText from '../../components/general/JoyText'
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
+
+import FacilityCard from "../../components/customer/main/FacilityCard";
 
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
@@ -38,6 +42,15 @@ export default function RoomScreen({ navigation, route }) {
         { id: 3, url: 'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/363905976_208169411906510_696484087669685590_n.png?_nc_cat=105&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=xEywbgEpCykAX9XZ2ou&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdQbz1ZFcYE_5Fi6cchVbGeDQtBxK-uk6TwWkX8kkW0E1w&oe=64FE7EDA' },
         { id: 4, url: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t1.15752-9/356972542_1024286308987579_5149156721244225163_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=KJmu10PO1YkAX_p4L8u&_nc_ht=scontent.fsgn2-5.fna&oh=03_AdQ2fvoENIizLOtJwdqGWvKiTr64I0yPcsctqBB7ZKVkJw&oe=64FE6CDA' },
         { id: 5, url: 'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/358822586_742771977620993_6308341829672982832_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=ThDj6VjGnwEAX-P5vfJ&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdQC6tNkmHgjGJCNqLoAsDpUjZAhYN2DPtkwAMnn7yQRTQ&oe=64FE9C81' },
+        { id: 6, url: 'https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.15752-9/344562306_1317460595781255_3448803945707846987_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=KosdFxgY26MAX9ftxQE&_nc_ht=scontent.fsgn2-3.fna&oh=03_AdTXy9f_G8sYxtO--_ZAWCNo44kH35MQcFNVIx5XZIdkpg&oe=64FE90FC' },
+    ];
+
+    const facilities = [
+        { f_id: 1, f_name: 'Free Wifi', f_icon: 'wifi', },
+        { f_id: 2, f_name: 'Pool', f_icon: 'pool', },
+        { f_id: 3, f_name: 'Bath Tub', f_icon: 'bathtub', },
+        { f_id: 4, f_name: 'Air Conditioner', f_icon: 'ac', },
+        { f_id: 5, f_name: 'Meal', f_icon: 'meal', },
     ];
 
     return (
@@ -55,11 +68,11 @@ export default function RoomScreen({ navigation, route }) {
                     >
                         <AntDesign name={"arrowleft"} size={18} color={COLORS.primary} />
                     </TouchableOpacity>
-                    <JoyText style={customerStyles.top_bar_title}>Detail Room</JoyText>
+                    <JoyText style={customerStyles.top_bar_title}>Detail</JoyText>
                 </View>
 
                 {/* Thumbnail Slider */}
-                <View style={{ marginTop: 12 }}>
+                <View style={{ marginTop: 12, marginBottom: -32 }}>
                     <Carousel
                         ref={isCarousel}
                         data={SliderItems}
@@ -92,8 +105,38 @@ export default function RoomScreen({ navigation, route }) {
 
                 {/* Room Information */}
                 <View style={customerStyles.section_container}>
+                    {/* Room NAME */}
                     <JoyText style={customerStyles.page_title}>Deluxe room</JoyText>
-                    <JoyText>Bla bla</JoyText>
+
+                    {/* Room PROPERTY */}
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
+                        <Ionicons name={"expand"} size={24} color={COLORS.subheading_text} />
+                        <JoyText style={styles.amenity}> 69 m2 </JoyText>
+                        <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
+                        <Ionicons name={"person"} size={24} color={COLORS.subheading_text} />
+                        <JoyText style={styles.amenity}> 2 People </JoyText>
+                        <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
+                        <Ionicons name={"bed-outline"} size={30} style={{ paddingTop: 4 }} color={COLORS.subheading_text} />
+                        <JoyText style={styles.amenity}> 1 Bed</JoyText>
+                    </View>
+
+
+                    {/* Room AMENITY */}
+                    <FlatList style={{ height: 120, marginTop: 8 }}
+                        horizontal data={facilities}
+
+                        renderItem={({ item }) => (
+                            <FacilityCard
+                                name={item}
+                            />
+                        )}
+                    >
+                    </FlatList>
+
+                    {/* Room DESCRIPTION */}
+
+                    <JoyText style={customerStyles.section_title}>Description</JoyText>
+                    <JoyText style={styles.description} numberOfLines={3}>Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna More ...</JoyText>
                 </View>
 
                 <View style={customerStyles.divider}></View>
@@ -169,17 +212,29 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         overflow: 'hidden',
     },
+    amenity: {
+        marginLeft: 4,
+        fontSize: TEXTS.lg,
+        color: COLORS.subheading_text,
+    },
+    description: {
+        color: COLORS.subheading_text,
+        fontSize: TEXTS.sm,
+        marginTop: 6,
+        textAlign: 'justify',
+    },
+
+
 
     text: {
         color: COLORS.subheading_text,
-        fontSize: TEXTS.md,
-        fontWeight: '500',
+        fontSize: TEXTS.lg,
 
         marginTop: 8,
     },
     primary_text: {
         color: COLORS.primary,
-        fontSize: TEXTS.xl,
+        fontSize: TEXTS.xxl,
         fontWeight: '600',
 
         marginTop: 8,
@@ -213,11 +268,11 @@ const fixedBarStyle = StyleSheet.create({
     calendar_text: {
         marginLeft: 8,
         fontWeight: 'bold',
-        fontSize: TEXTS.md,
+        fontSize: TEXTS.lg,
     },
     bar_price: {
         color: COLORS.heading_text,
-        fontSize: TEXTS.xxl,
+        fontSize: TEXTS["3xl"],
         fontWeight: '600',
         alignSelf: 'center'
     },
@@ -232,6 +287,6 @@ const fixedBarStyle = StyleSheet.create({
     book_button_text: {
         color: '#fff',
         fontWeight: '800',
-        fontSize: TEXTS.lg
+        fontSize: TEXTS.xxl
     },
 })

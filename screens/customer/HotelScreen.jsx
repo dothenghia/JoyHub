@@ -311,7 +311,7 @@ const fixedBarStyle = StyleSheet.create({
     calendar_text: {
         marginLeft: 8,
         fontWeight: 'bold',
-        fontSize: TEXTS.md,
+        fontSize: TEXTS.lg,
     },
 
 })
