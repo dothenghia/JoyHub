@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+// Import Hook & Component
+import { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, Image, TextInput, ScrollView, TouchableOpacity } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import SelectDropdown from 'react-native-select-dropdown'
@@ -13,10 +14,13 @@ import CController from "../../controllers/customerController";
 // Import Component
 import HotelCard from "../../components/customer/main/HotelCard";
 
-
+// Import Context
+import { globalContext } from "../../contexts/GlobalContext";
 
 export default function MainScreen({ navigation }) {
-    console.log('[Customer] MainScreen')
+    const { role } = useContext(globalContext)
+    console.log('[Customer] MainScreen :', role)
+    
     // ------ Data State
     const [hotelList, setHotelList] = useState([])
     const [searchInput, setSearchInput] = useState('')
@@ -42,6 +46,12 @@ export default function MainScreen({ navigation }) {
         fetchLocationList()
     }, [])
 
+    
+    // ------ Event Handlers
+    const searchHandler = () => {
+        console.log(searchInput)
+    }
+
     return (
         <ScrollView style={customerStyles.page_container}>
             {/* Logo JOY-HUB text */}
@@ -64,7 +74,7 @@ export default function MainScreen({ navigation }) {
                 />
                 <TouchableOpacity
                     style={styles.search_button}
-
+                    onPress={searchHandler}
                 >
                     <AntDesign name={"search1"} size={24} color={COLORS.subheading_text} />
                 </TouchableOpacity>

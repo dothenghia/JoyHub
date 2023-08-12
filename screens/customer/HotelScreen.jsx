@@ -1,11 +1,15 @@
-import { useState, useEffect, useCallback } from "react";
-import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, FlatList, Modal } from "react-native";
+// Import Hook & Component
+import { useState, useEffect, useCallback, useContext } from "react";
+import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, FlatList, Modal, ToastAndroid } from "react-native";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import JoyText from '../../components/general/JoyText'
 import { DatePickerModal } from 'react-native-paper-dates';
 import formatDate from "../../models/customer/formatDate";
 
+import RoomCard from "../../components/customer/main/RoomCard";
+import FacilityCard from "../../components/customer/main/FacilityCard";
+import ReviewCard from "../../components/customer/main/ReviewCard";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -14,51 +18,71 @@ import customerStyles from "../../styles/customer";
 // Import Controller
 import CController from "../../controllers/customerController";
 
-// Import Component
-import RoomCard from "../../components/customer/main/RoomCard";
-import FacilityCard from "../../components/customer/main/FacilityCard";
-import ReviewCard from "../../components/customer/main/ReviewCard";
+
+// Import Context
+import { globalContext } from "../../contexts/GlobalContext";
 
 
 export default function HotelScreen({ navigation, route }) {
-    // console.log(route.params)
+    const { role, dateRange, setDateRange } = useContext(globalContext)
     console.log('[Customer] HotelScreen')
-    
+
     // ------ Data State
     const [isFavorite, setIsFavorite] = useState(false)
     const [hotelInfo, setHotelInfo] = useState(null)
-    const [facilities, setFacilities] = useState([])
-    const [roomList, setRoomList] = useState([])
-    const [reviewList, setReviewList] = useState([])
+    const [openDatePicker, setOpenDatePicker] = useState(false);
     const [seeAllComments, setSeeAllComments] = useState(false)
 
 
-    // Date Picker
-    const [range, setRange] = useState({ startDate: undefined, endDate: undefined });
-    const [open, setOpen] = useState(false);
-
+    // Date Picker Handlers
     const onDismiss = useCallback(() => {
-        setOpen(false);
-    }, [setOpen]);
+        setOpenDatePicker(false);
+    }, [setOpenDatePicker]);
 
     const onConfirm = useCallback(({ startDate, endDate }) => {
-        setOpen(false);
-        setRange({ startDate, endDate });
-    }, [setOpen, setRange]);
+        setOpenDatePicker(false);
+        setDateRange({ startDate, endDate });
+    }, [setOpenDatePicker, setDateRange]);
+
 
     // ------ Fetch Data at first render
     useEffect(() => {
         const fetchHotelInformation = async () => {
             let data = await CController('GETHOTELINFORMATION')
             setHotelInfo(data)
-            setFacilities(data.facilities)
-            setRoomList(data.roomList)
-            setReviewList(data.reviews)
         }
 
         fetchHotelInformation()
     }, [])
 
+    // ------ Event Handlers
+    const backHandler = () => {
+        navigation.goBack()
+    }
+
+    const likeHandler = () => {
+        if (role === 'guest') {
+            ToastAndroid.show('You have not logged in yet', ToastAndroid.SHORT)
+        }
+        if (role === ' customer') {
+            setIsFavorite(!isFavorite)
+        }
+        if (role === 'moderator' || role === 'admin') {
+            ToastAndroid.show('Oops 🫣 wrong role', ToastAndroid.SHORT)
+        }
+    }
+
+    const seeAllCommentsHandler = () => {
+        setSeeAllComments(true)
+    }
+
+    const closeCommentsHandler = () => {
+        setSeeAllComments(false)
+    }
+
+    const pickDateHandler = () => {
+        setOpenDatePicker(true)
+    }
 
 
     return (
@@ -78,7 +102,7 @@ export default function HotelScreen({ navigation, route }) {
                                 {/* Back Button */}
                                 <TouchableOpacity
                                     style={customerStyles.top_bar_button}
-                                    onPress={() => navigation.goBack()}
+                                    onPress={backHandler}
                                 >
                                     <AntDesign name={"arrowleft"} size={18} color={COLORS.primary} />
                                 </TouchableOpacity>
@@ -86,7 +110,7 @@ export default function HotelScreen({ navigation, route }) {
                                 {/* Like Button */}
                                 <TouchableOpacity
                                     style={customerStyles.top_bar_button}
-                                    onPress={() => { setIsFavorite(!isFavorite) }}
+                                    onPress={likeHandler}
                                 >
                                     <FontAwesome5Icon name={"heart"} solid={isFavorite} size={18} color={COLORS.primary} />
                                 </TouchableOpacity>
@@ -104,16 +128,16 @@ export default function HotelScreen({ navigation, route }) {
                             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                                 <FontAwesome5Icon name={"star"} solid size={18} color='#FFCA18' />
 
-                                <JoyText style={styles.rating}> {hotelInfo ? hotelInfo.star : 'Loading ...'}</JoyText>
-                                <JoyText style={styles.review}> ({hotelInfo ? hotelInfo.review : 'Loading ...'})</JoyText>
+                                <JoyText style={styles.rating}> {hotelInfo && hotelInfo.star}</JoyText>
+                                <JoyText style={styles.review}> ({hotelInfo && hotelInfo.review})</JoyText>
                             </View>
 
                         </View>
                         <JoyText style={styles.location}>
-                            {hotelInfo ? hotelInfo.location : 'Loading ...'}
+                            {hotelInfo && hotelInfo.location}
                         </JoyText>
                         <JoyText style={styles.description} numberOfLines={3}>
-                            {hotelInfo ? hotelInfo.description : 'Loading ...'}
+                            {hotelInfo && hotelInfo.description}
 
                         </JoyText>
                     </View>
@@ -125,7 +149,7 @@ export default function HotelScreen({ navigation, route }) {
                     <View style={customerStyles.section_container}>
                         <JoyText style={customerStyles.section_title}>Hotel amenities</JoyText>
                         <FlatList style={{ height: 120, marginTop: 8 }}
-                            horizontal data={facilities}
+                            horizontal data={hotelInfo && hotelInfo.facilities}
 
                             renderItem={({ item }) => (
                                 <FacilityCard
@@ -143,7 +167,7 @@ export default function HotelScreen({ navigation, route }) {
                     <View style={customerStyles.section_container}>
                         <JoyText style={customerStyles.section_title}>Standard</JoyText>
                         <FlatList style={{ height: 300, marginTop: 8 }}
-                            horizontal data={roomList}
+                            horizontal data={hotelInfo && hotelInfo.roomList}
 
                             renderItem={({ item }) => (
                                 <RoomCard
@@ -156,7 +180,7 @@ export default function HotelScreen({ navigation, route }) {
 
                         <JoyText style={customerStyles.section_title}>Standard</JoyText>
                         <FlatList style={{ height: 300, marginTop: 8 }}
-                            horizontal data={roomList}
+                            horizontal data={hotelInfo && hotelInfo.roomList}
 
                             renderItem={({ item }) => (
                                 <RoomCard
@@ -176,8 +200,8 @@ export default function HotelScreen({ navigation, route }) {
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                             {/* Rating Statistic */}
                             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                                <JoyText style={{ fontSize: 32, fontWeight: '600' }}>{hotelInfo ? hotelInfo.star : ''}</JoyText>
-                                <JoyText style={{ fontSize: 16, color: COLORS.subheading_text }}> ({hotelInfo ? hotelInfo.review : ''} reviews)</JoyText>
+                                <JoyText style={{ fontSize: 32, fontWeight: '600' }}>{hotelInfo && hotelInfo.star}</JoyText>
+                                <JoyText style={{ fontSize: 16, color: COLORS.subheading_text }}> ({hotelInfo && hotelInfo.review} reviews)</JoyText>
                             </View>
 
                             {/* See all Reviews Button */}
@@ -185,7 +209,7 @@ export default function HotelScreen({ navigation, route }) {
                             <TouchableOpacity>
                                 <JoyText
                                     style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}
-                                    onPress={() => { setSeeAllComments(true) }}
+                                    onPress={seeAllCommentsHandler}
                                 >
                                     See all
                                 </JoyText>
@@ -193,10 +217,10 @@ export default function HotelScreen({ navigation, route }) {
 
                         </View>
 
-                        {reviewList.length === 0 && (<JoyText>No review</JoyText>)}
-                        {reviewList.length === 1 && (<ReviewCard props={reviewList[0]} />)}
-                        {reviewList.length >= 2 && (<ReviewCard props={reviewList[0]} />)}
-                        {reviewList.length >= 2 && (<ReviewCard props={reviewList[1]} />)}
+                        {(hotelInfo && hotelInfo.reviews.length === 0) && (<JoyText>No review</JoyText>)}
+                        {(hotelInfo && hotelInfo.reviews.length === 1) && (<ReviewCard props={hotelInfo.reviews[0]} />)}
+                        {(hotelInfo && hotelInfo.reviews.length >= 2) && (<ReviewCard props={hotelInfo.reviews[0]} />)}
+                        {(hotelInfo && hotelInfo.reviews.length >= 2) && (<ReviewCard props={hotelInfo.reviews[1]} />)}
                     </View>
                 </ScrollView>
 
@@ -206,19 +230,19 @@ export default function HotelScreen({ navigation, route }) {
                 <View style={fixedBarStyle.bar_container}>
                     <TouchableOpacity
                         style={fixedBarStyle.bar_calendar}
-                        onPress={() => setOpen(true)}
+                        onPress={pickDateHandler}
                     >
                         <FontAwesome5Icon name={"calendar-alt"} size={28} color={COLORS.primary} />
-                        <JoyText style={fixedBarStyle.calendar_text}>{formatDate(range.startDate)} - {formatDate(range.endDate)}</JoyText>
+                        <JoyText style={fixedBarStyle.calendar_text}>{formatDate(dateRange.startDate)} - {formatDate(dateRange.endDate)}</JoyText>
                     </TouchableOpacity>
                 </View>
                 <DatePickerModal
                     locale="en"
                     mode="range"
-                    visible={open}
+                    visible={openDatePicker}
                     onDismiss={onDismiss}
-                    startDate={range.startDate}
-                    endDate={range.endDate}
+                    startDate={dateRange.startDate}
+                    endDate={dateRange.endDate}
                     onConfirm={onConfirm}
                 />
             </View>
@@ -235,18 +259,18 @@ export default function HotelScreen({ navigation, route }) {
                     <View style={styles.modal_container}>
                         <View style={{ paddingHorizontal: 14, marginTop: 14, marginBottom: 8 }}>
                             <TouchableOpacity
-                                onPress={() => setSeeAllComments(false)}
+                                onPress={closeCommentsHandler}
                                 style={{ width: 46, marginBottom: 6 }}
                             >
                                 <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                                     Close
                                 </JoyText>
                             </TouchableOpacity>
-                            <JoyText style={customerStyles.section_title}>All comments ({hotelInfo ? hotelInfo.review : 'Loading ...'})</JoyText>
+                            <JoyText style={customerStyles.section_title}>All comments ({hotelInfo && hotelInfo.review})</JoyText>
                         </View>
                         <ScrollView>
-                            {
-                                reviewList.map((review, index) => (
+                            {hotelInfo &&
+                                hotelInfo.reviews.map((review, index) => (
                                     <ReviewCard
                                         props={review}
                                         key={index}

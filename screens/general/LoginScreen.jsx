@@ -1,4 +1,5 @@
-import { useState } from "react";
+// Import Hook & Component
+import { useState, useContext } from "react";
 import { StyleSheet, ToastAndroid, View, Image, TouchableOpacity, TextInput } from "react-native";
 import JoyText from '../../components/general/JoyText'
 
@@ -6,18 +7,17 @@ import JoyText from '../../components/general/JoyText'
 import { COLORS, TEXTS } from '../../constants/theme'
 import generalStyles from '../../styles/general'
 
-// Import Dispatcher
+// Import Controller
 import GController from "../../controllers/generalController";
 
-// Import Loading Modal
-import LoadingModal from '../../components/general/LoadingModal'
-import { useContext } from "react";
-import { loadingContext } from "../../contexts/LoadingContext";
+// Import Context
+import { globalContext } from "../../contexts/GlobalContext";
+
 
 export default function LoginScreen({ navigation }) {
-
-    const { loading, setLoading } = useContext(loadingContext);
-    console.log('[Login]', loading)
+    // Get Context value (Global Variables)
+    const { role, setRole } = useContext(globalContext)
+    console.log('[Login] role :', role)
 
     // ------ Data State
     const [username, setUsername] = useState('');
@@ -25,29 +25,22 @@ export default function LoginScreen({ navigation }) {
 
     // ------ Event Handlers
     // Function called when the user presses Login button
-    function fakeWaiting() {
-        setTimeout(() => {
-            setLoading(false)
-        }, 2000)
-    }
     const loginHandler = async () => {
-        setLoading(true)
-        fakeWaiting()
         // for testing UI
         if (username === 'c') {
             navigation.navigate('CustomerMain')
             ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
-            setLoading(false)
+            setRole('customer')
         }
         else if (username === 'm') {
             navigation.navigate('ModeratorMain')
             ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
-            setLoading(false)
+            setRole('moderator')
         }
         else if (username === 'a') {
             navigation.navigate('AdminMain')
             ToastAndroid.show('Login to ADMIN successfully', ToastAndroid.SHORT)
-            setLoading(false)
+            setRole('admin')
         }
         // for testing server
         else {
@@ -82,13 +75,18 @@ export default function LoginScreen({ navigation }) {
         navigation.navigate('RecoveryPage')
     }
 
+    const guestHandler = () => {
+        navigation.navigate("CustomerMain")
+    }
+
+    const signupHandler = () => {
+        navigation.navigate("SignupPage")
+    }
+
 
     // ------ UI Renderer
     return (
         <View style={generalStyles.page_container}>
-
-            {/* ------ LOADING MODAL ------ */}
-            <LoadingModal isLoading={loading} />
 
             {/* Logo HOME */}
             <View style={styles.logo1}>
@@ -156,7 +154,7 @@ export default function LoginScreen({ navigation }) {
             {/* Log in as Guest button */}
             <View style={{ alignItems: 'center', marginTop: 28 }}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("CustomerMain")}
+                    onPress={guestHandler}
                 >
                     <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                         Log in as guest
@@ -174,7 +172,7 @@ export default function LoginScreen({ navigation }) {
                     If you don't have an account,
                 </JoyText>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("SignupPage")}
+                    onPress={signupHandler}
                 >
                     <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600', marginLeft: 3 }}>
                         Create one

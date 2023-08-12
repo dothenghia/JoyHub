@@ -1,4 +1,5 @@
-import { useState, useRef, useCallback } from "react";
+// Import Hook & Component
+import { useState, useRef, useCallback, useEffect, useContext } from "react";
 import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, Dimensions, FlatList } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
@@ -9,12 +10,17 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { DatePickerModal } from 'react-native-paper-dates';
 import formatDate from "../../models/customer/formatDate";
 
+import FacilityCard from "../../components/customer/main/FacilityCard";
+
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
 
-import FacilityCard from "../../components/customer/main/FacilityCard";
+// Import Controller
+import CController from "../../controllers/customerController";
 
+// Import Context
+import { globalContext } from "../../contexts/GlobalContext";
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.88);
@@ -33,44 +39,48 @@ const renderItem = ({ item }) => {
 };
 
 export default function RoomScreen({ navigation, route }) {
+    const { role, dateRange, setDateRange } = useContext(globalContext)
     console.log('[Customer] RoomScreen')
 
-    const [index, setIndex] = useState(0);
-    const isCarousel = useRef(null);
+    // ------ Data State
+    const [roomInfo, setRoomInfo] = useState(null)
+    const [openDatePicker, setOpenDatePicker] = useState(false);
+    const [currentThumbnail, setCurrentThumnail] = useState(0);
+    const carouselRef = useRef(null);
 
-    const SliderItems = [
-        { id: 1, url: 'https://scontent.fsgn2-4.fna.fbcdn.net/v/t1.15752-9/364948962_948012216497505_6791312942664554980_n.png?_nc_cat=101&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=Oy-c3LkHLb0AX8daFF4&_nc_ht=scontent.fsgn2-4.fna&oh=03_AdQB_0n0EFZaRUtStFfHPxCQ_EhleFf7USAQhLBd82yMhA&oe=64FE85F7' },
-        { id: 2, url: 'https://scontent.fsgn2-8.fna.fbcdn.net/v/t1.15752-9/364428559_1719210895196107_5437612367951079772_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=_1Kpu1OCwgIAX-SVyz_&_nc_ht=scontent.fsgn2-8.fna&oh=03_AdSb-qfZnGDK4vooNBDZf5nkUemPRADmZ8GU-XOtkNBcVQ&oe=64FE6FC3' },
-        { id: 3, url: 'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/363905976_208169411906510_696484087669685590_n.png?_nc_cat=105&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=xEywbgEpCykAX9XZ2ou&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdQbz1ZFcYE_5Fi6cchVbGeDQtBxK-uk6TwWkX8kkW0E1w&oe=64FE7EDA' },
-        { id: 4, url: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t1.15752-9/356972542_1024286308987579_5149156721244225163_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=KJmu10PO1YkAX_p4L8u&_nc_ht=scontent.fsgn2-5.fna&oh=03_AdQ2fvoENIizLOtJwdqGWvKiTr64I0yPcsctqBB7ZKVkJw&oe=64FE6CDA' },
-        { id: 5, url: 'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/358822586_742771977620993_6308341829672982832_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=ThDj6VjGnwEAX-P5vfJ&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdQC6tNkmHgjGJCNqLoAsDpUjZAhYN2DPtkwAMnn7yQRTQ&oe=64FE9C81' },
-        { id: 6, url: 'https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.15752-9/344562306_1317460595781255_3448803945707846987_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=KosdFxgY26MAX9ftxQE&_nc_ht=scontent.fsgn2-3.fna&oh=03_AdTXy9f_G8sYxtO--_ZAWCNo44kH35MQcFNVIx5XZIdkpg&oe=64FE90FC' },
-    ];
-
-    const facilities = [
-        { f_id: 1, f_name: 'Free Wifi', f_icon: 'wifi', },
-        { f_id: 2, f_name: 'Pool', f_icon: 'pool', },
-        { f_id: 3, f_name: 'Bath Tub', f_icon: 'bathtub', },
-        { f_id: 4, f_name: 'Air Conditioner', f_icon: 'ac', },
-        { f_id: 5, f_name: 'Meal', f_icon: 'meal', },
-    ];
-
-
-
-    // ------ Date Picker
-    const [range, setRange] = useState({ startDate: undefined, endDate: undefined });
-    const [open, setOpen] = useState(false);
-
+    // Date Picker Handlers
     const onDismiss = useCallback(() => {
-        setOpen(false);
-    }, [setOpen]);
+        setOpenDatePicker(false);
+    }, [setOpenDatePicker]);
 
     const onConfirm = useCallback(({ startDate, endDate }) => {
-        setOpen(false);
-        setRange({ startDate, endDate });
-    }, [setOpen, setRange]);
+        setOpenDatePicker(false);
+        setDateRange({ startDate, endDate });
+    }, [setOpenDatePicker, setDateRange]);
 
 
+    // ------ Fetch Data at first render
+    useEffect(() => {
+        const fetchRoomInformation = async () => {
+            let data = await CController('GETROOMINFORMATION')
+            setRoomInfo(data)
+        }
+
+        fetchRoomInformation()
+    }, [])
+
+    // ------ Event Handlers
+    const backHandler = () => {
+        navigation.goBack()
+    }
+
+    const pickDateHandler = () => {
+        setOpenDatePicker(true)
+    }
+
+    const bookHandler = () => {
+        navigation.navigate('PaymentPage')
+    }
 
 
     return (
@@ -82,9 +92,7 @@ export default function RoomScreen({ navigation, route }) {
                 <View style={customerStyles.top_bar}>
                     <TouchableOpacity
                         style={customerStyles.top_bar_button}
-                        onPress={
-                            () => { navigation.goBack() }
-                        }
+                        onPress={backHandler}
                     >
                         <AntDesign name={"arrowleft"} size={18} color={COLORS.primary} />
                     </TouchableOpacity>
@@ -94,17 +102,17 @@ export default function RoomScreen({ navigation, route }) {
                 {/* Thumbnail Slider */}
                 <View style={{ marginTop: 12, marginBottom: -32 }}>
                     <Carousel
-                        ref={isCarousel}
-                        data={SliderItems}
+                        ref={carouselRef}
+                        data={roomInfo ? roomInfo.thumbnails : []}
                         renderItem={renderItem}
                         sliderWidth={SLIDER_WIDTH}
                         itemWidth={ITEM_WIDTH}
-                        onSnapToItem={index => setIndex(index)}
+                        onSnapToItem={currentThumbnail => setCurrentThumnail(currentThumbnail)}
                     />
                     <Pagination
-                        dotsLength={SliderItems.length}
-                        activeDotIndex={index}
-                        carouselRef={isCarousel}
+                        dotsLength={roomInfo ? roomInfo.thumbnails.length : 0}
+                        activeDotIndex={currentThumbnail}
+                        carouselRef={carouselRef}
                         dotStyle={{
                             width: 10,
                             height: 10,
@@ -126,24 +134,24 @@ export default function RoomScreen({ navigation, route }) {
                 {/* Room Information */}
                 <View style={customerStyles.section_container}>
                     {/* Room NAME */}
-                    <JoyText style={customerStyles.page_title}>Deluxe room</JoyText>
+                    <JoyText style={customerStyles.page_title}>{roomInfo ? roomInfo.name : 'Loading ...'}</JoyText>
 
                     {/* Room PROPERTY */}
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
                         <Ionicons name={"expand"} size={24} color={COLORS.subheading_text} />
-                        <JoyText style={styles.amenity}> 69 m2 </JoyText>
+                        <JoyText style={styles.amenity}> {roomInfo && roomInfo.area} m2 </JoyText>
                         <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
                         <Ionicons name={"person"} size={24} color={COLORS.subheading_text} />
-                        <JoyText style={styles.amenity}> 2 People </JoyText>
+                        <JoyText style={styles.amenity}> {roomInfo && roomInfo.capacity} People </JoyText>
                         <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
                         <Ionicons name={"bed-outline"} size={30} style={{ paddingTop: 4 }} color={COLORS.subheading_text} />
-                        <JoyText style={styles.amenity}> 1 Bed</JoyText>
+                        <JoyText style={styles.amenity}> {roomInfo && roomInfo.bed} Bed</JoyText>
                     </View>
 
 
                     {/* Room AMENITY */}
                     <FlatList style={{ height: 120, marginTop: 8 }}
-                        horizontal data={facilities}
+                        horizontal data={roomInfo && roomInfo.facilities}
 
                         renderItem={({ item }) => (
                             <FacilityCard
@@ -156,7 +164,7 @@ export default function RoomScreen({ navigation, route }) {
                     {/* Room DESCRIPTION */}
 
                     <JoyText style={customerStyles.section_title}>Description</JoyText>
-                    <JoyText style={styles.description} numberOfLines={3}>Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna More ...</JoyText>
+                    <JoyText style={styles.description} numberOfLines={3}>{roomInfo && roomInfo.description}</JoyText>
                 </View>
 
                 <View style={customerStyles.divider}></View>
@@ -167,7 +175,7 @@ export default function RoomScreen({ navigation, route }) {
                     <JoyText style={customerStyles.section_title}>Payment Information</JoyText>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.text}>Per night</JoyText>
-                        <JoyText style={styles.text}>200.000 VND</JoyText>
+                        <JoyText style={styles.text}>{roomInfo && roomInfo.price}</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.text}>From</JoyText>
@@ -204,10 +212,10 @@ export default function RoomScreen({ navigation, route }) {
                 {/* Choose Date */}
                 <TouchableOpacity
                     style={fixedBarStyle.bar_calendar}
-                    onPress={() => setOpen(true)}
+                    onPress={pickDateHandler}
                 >
                     <FontAwesome5Icon name={"calendar-alt"} size={28} color={COLORS.primary} />
-                    <JoyText style={fixedBarStyle.calendar_text}>{formatDate(range.startDate)} - {formatDate(range.endDate)}</JoyText>
+                    <JoyText style={fixedBarStyle.calendar_text}>{formatDate(dateRange.startDate)} - {formatDate(dateRange.endDate)}</JoyText>
                 </TouchableOpacity>
 
 
@@ -216,7 +224,7 @@ export default function RoomScreen({ navigation, route }) {
                     <JoyText style={fixedBarStyle.bar_price}>400.000 VND</JoyText>
                     <TouchableOpacity
                         style={fixedBarStyle.book_button}
-                        onPress={() => { navigation.navigate('PaymentPage') }}>
+                        onPress={bookHandler}>
                         <JoyText style={fixedBarStyle.book_button_text}>Book</JoyText>
                     </TouchableOpacity>
                 </View>
@@ -224,10 +232,10 @@ export default function RoomScreen({ navigation, route }) {
             <DatePickerModal
                 locale="en"
                 mode="range"
-                visible={open}
+                visible={openDatePicker}
                 onDismiss={onDismiss}
-                startDate={range.startDate}
-                endDate={range.endDate}
+                startDate={dateRange.startDate}
+                endDate={dateRange.endDate}
                 onConfirm={onConfirm}
             />
         </View>
