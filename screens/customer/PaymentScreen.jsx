@@ -89,7 +89,7 @@ export default function PaymentScreen({ navigation, route }) {
                             <JoyText style={customerStyles.section_title}>JoyCoin</JoyText>
                             <JoyText style={styles.joycoin}>200.000</JoyText>
                         </View>
-                        <JoyText style={styles.warning}>You don't have enough JoyCoin to make payment</JoyText>
+                        <JoyText style={styles.warning}>You don't have enough JoyCoin to make payment !</JoyText>
                     </View>
 
                     <View style={customerStyles.divider}></View>
