@@ -116,7 +116,7 @@ export const HotelCardStyles = StyleSheet.create({
         flexDirection : 'column',
         alignContent : 'center',
         // alignItems : 'center',
-        width: "50%",
+        width: "70%",
         marginBottom: "auto",
         marginTop: "auto",
         marginLeft: 20,
@@ -126,19 +126,23 @@ export const HotelCardStyles = StyleSheet.create({
         fontWeight: "900",
         color: COLORS.white,
         lineHeight: 30,
+        width: "100%",
+        elevation: 1,
     },
     descriptionContainer: {
         flexDirection: "row",
         alignItems: "center",
         marginTop: "auto",
         marginBottom: "auto",
-        justifyContent: "space-between"
+        justifyContent: "flex-start",
+
     },
     description: {
         fontSize: TEXTS.sm,
         color: COLORS.white,
         lineHeight: 20,
-        fontWeight: "500"
+        fontWeight: "500",
+        elevation: 2,
     },
     iconStyle: {
         color: COLORS.white,

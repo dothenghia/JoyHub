@@ -54,7 +54,15 @@ const updateModerator = async (id) => {
         return false;
     };
     // update local data
+    return true;
+}
 
+const removeModerator = async (id) => {
+    const result = await AController("REMOVEMODERATOR", id);
+    if (result.error) {
+        return false;
+    };
+    return true;
 }
 
 const HotelDetails = ({ hotel }) => (
@@ -74,7 +82,14 @@ const HotelDetails = ({ hotel }) => (
             else {
                 alert("Accept failed")
             }
-        }} onCancel={() => { }} />
+        }} onCancel={() => {
+            if (removeModerator(hotel.id)) {
+                alert("Reject successfully")
+            }
+            else {
+                alert("Reject failed")
+            }
+        }} />
         {/* Hotel Details Part */}
         <View style={DetailHotelStyles.hotelDetailsContainer}>
             {/* Hotel Address */}
