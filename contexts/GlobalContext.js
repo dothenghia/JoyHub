@@ -10,9 +10,12 @@ import { useState, createContext } from 'react';
 const globalContext = createContext()
 
 function GlobalProvider ({ children }) {
+    const today = new Date()
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
     // Tạo ra các biến "global"
 	const [role, setRole] = useState('guest') // Biến này dùng để check role => nếu là guest thì bắt phải đăng nhập mới cho đặt phòng, ...
-    const [dateRange, setDateRange] = useState({ startDate: undefined, endDate: undefined });
+    const [dateRange, setDateRange] = useState({ startDate: today, endDate: tomorrow });
 
     const globalData = {
         role, setRole,

@@ -9,6 +9,7 @@ import JoyText from '../../components/general/JoyText'
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { DatePickerModal } from 'react-native-paper-dates';
 import formatDate from "../../models/customer/formatDate";
+import calculateDay from "../../models/customer/calculateDay";
 
 import FacilityCard from "../../components/customer/main/FacilityCard";
 
@@ -175,23 +176,23 @@ export default function RoomScreen({ navigation, route }) {
                     <JoyText style={customerStyles.section_title}>Payment Information</JoyText>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.text}>Per night</JoyText>
-                        <JoyText style={styles.text}>{roomInfo && roomInfo.price}</JoyText>
+                        <JoyText style={styles.text}>{roomInfo && roomInfo.price} VND</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.text}>From</JoyText>
-                        <JoyText style={styles.text}>Thu, 4/6/2023</JoyText>
+                        <JoyText style={styles.text}>{formatDate(dateRange.startDate)}</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.text}>To</JoyText>
-                        <JoyText style={styles.text}>Sat, 6/6/2023</JoyText>
+                        <JoyText style={styles.text}>{formatDate(dateRange.endDate)}</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.text}>Total night</JoyText>
-                        <JoyText style={styles.text}>2 night</JoyText>
+                        <JoyText style={styles.text}>{calculateDay(dateRange.startDate, dateRange.endDate)} night</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.primary_text}>Total</JoyText>
-                        <JoyText style={styles.primary_text}>400.000 VND</JoyText>
+                        <JoyText style={styles.primary_text}>{roomInfo && Number(roomInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)).toFixed(3)} VND</JoyText>
                     </View>
                 </View>
 
@@ -221,7 +222,7 @@ export default function RoomScreen({ navigation, route }) {
 
                 {/* Price - Book button */}
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <JoyText style={fixedBarStyle.bar_price}>400.000 VND</JoyText>
+                    <JoyText style={fixedBarStyle.bar_price}>{roomInfo && Number(roomInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)).toFixed(3) } VND</JoyText>
                     <TouchableOpacity
                         style={fixedBarStyle.book_button}
                         onPress={bookHandler}>

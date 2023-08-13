@@ -1,5 +1,7 @@
 const roomInformation = {
     id: 1,
+    hotel: 'Haley House',
+    location: 'District 7, Ho Chi Minh City',
     name: 'Deluxe Room',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam..',
     area: 20,
