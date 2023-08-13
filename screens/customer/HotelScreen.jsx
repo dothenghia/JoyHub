@@ -64,7 +64,7 @@ export default function HotelScreen({ navigation, route }) {
         if (role === 'guest') {
             ToastAndroid.show('You have not logged in yet', ToastAndroid.SHORT)
         }
-        if (role === ' customer') {
+        if (role === 'customer') {
             setIsFavorite(!isFavorite)
         }
         if (role === 'moderator' || role === 'admin') {

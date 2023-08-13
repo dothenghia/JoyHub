@@ -19,6 +19,7 @@ export default function PaymentScreen({ navigation, route }) {
     console.log('[Customer] PaymentScreen')
 
     // ------ Data State
+    const notEnoughJoyCoin = false // Temporary
     const [roomInfo, setRoomInfo] = useState(null)
     const [confirmModal, setConfirmModal] = useState(false)
 
@@ -35,6 +36,10 @@ export default function PaymentScreen({ navigation, route }) {
     // ------ Event Handlers
     const backHandler = () => {
         navigation.goBack()
+    }
+
+    const topupHandler = () => {
+        navigation.navigate('UserPage')
     }
 
     const showConfirmModalHandler = () => {
@@ -119,11 +124,21 @@ export default function PaymentScreen({ navigation, route }) {
 
                     {/* JoyCoin checking */}
                     <View style={customerStyles.section_container}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
                             <JoyText style={customerStyles.section_title}>JoyCoin</JoyText>
                             <JoyText style={styles.joycoin}>200.000</JoyText>
                         </View>
-                        <JoyText style={styles.warning}>You don't have enough JoyCoin to make payment !</JoyText>
+                        {notEnoughJoyCoin && (
+                        <View>
+                            <JoyText style={styles.warning}>You don't have enough JoyCoin to make payment !</JoyText>
+                            <TouchableOpacity
+                                style={styles.topup_button}
+                                onPress={topupHandler}
+                            >
+                                <JoyText style={styles.topup_text}>Go to Top up JoyCoin</JoyText>
+                            </TouchableOpacity>
+                        </View>
+                        )}
                     </View>
 
                     <View style={customerStyles.divider}></View>
@@ -142,7 +157,8 @@ export default function PaymentScreen({ navigation, route }) {
                 <View style={fixedBarStyle.bar_container}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 28 }}>
                         <TouchableOpacity
-                            style={fixedBarStyle.book_button}
+                            style={notEnoughJoyCoin ? fixedBarStyle.disable_book_button : fixedBarStyle.book_button}
+                            disabled={notEnoughJoyCoin}
                             onPress={showConfirmModalHandler}>
                             <JoyText style={fixedBarStyle.book_button_text}>Book</JoyText>
                         </TouchableOpacity>
@@ -151,7 +167,7 @@ export default function PaymentScreen({ navigation, route }) {
             </View>
 
 
-            {/* See all Review Modal */}
+            {/* Confirm Modal */}
             <Modal
                 animationType="none"
                 transparent={true}
@@ -225,6 +241,18 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 8,
     },
+    topup_button: {
+        marginTop: 12,
+        backgroundColor: COLORS.primary,
+        height: 52,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 50,
+        width: '100%',
+    },
+    topup_text: {
+        color: COLORS.white, fontSize: TEXTS.lg, fontWeight: '600' , textAlign: 'center'
+    },
 
 
     modal_page: {
@@ -255,6 +283,14 @@ const fixedBarStyle = StyleSheet.create({
     },
     book_button: {
         backgroundColor: COLORS.primary,
+        height: 52,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 50,
+        width: '100%',
+    },
+    disable_book_button: {
+        backgroundColor: COLORS.disable,
         height: 52,
         alignItems: 'center',
         justifyContent: 'center',

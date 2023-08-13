@@ -3,6 +3,7 @@ const roomInformation = {
     hotel: 'Haley House',
     location: 'District 7, Ho Chi Minh City',
     name: 'Deluxe Room',
+    // status: 'full',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam..',
     area: 20,
     capacity: 2,
