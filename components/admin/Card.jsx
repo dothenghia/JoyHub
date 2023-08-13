@@ -46,10 +46,6 @@ class CropString {
         return this.string.slice(0, maxChar) + "...";
     }
 }
-const toShortWidth = (string, width, size) => {
-    const cropString = new CropString(string, width, size);
-    return cropString.crop();
-}
 
 export const AvatarCard = ({ Title, ImageUri, Address }) => {
     return (
@@ -91,7 +87,7 @@ export const HotelCard = ({ Title, ImageUri, Address, WaitingAmount = 0 }) => {
                 <JoyText style={HotelCardStyles.title}>{Title}</JoyText>
                 <View style={HotelCardStyles.descriptionContainer}>
                     <Icon name="map-marker-outline" style={HotelCardStyles.iconStyle} />
-                    <JoyText style={HotelCardStyles.description}>{toShort(Address, 20)}</JoyText>
+                    <JoyText style={HotelCardStyles.description} numberOfLines={1}>{Address}</JoyText>
                 </View>
             </View>
 
