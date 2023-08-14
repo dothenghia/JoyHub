@@ -3,6 +3,9 @@ import getAllAmenities from "../models/moderator/getAllAmenities"
 import getHotelInfo from "../models/moderator/getHotelInfo"
 import modMainScreen from "../models/moderator/ModMainScreen"
 import getNotifications from "../models/moderator/getNotifications"
+import getModInfo from "../models/moderator/getModInfo"
+
+
 export default async function MController (type, ...payload) 
 {
     switch (type) 
@@ -22,6 +25,9 @@ export default async function MController (type, ...payload)
         case 'GETNOTIFICATIONS':
             const notifications = await getNotifications()
             return notifications
+        case 'GETMODINFO':
+            const modInfo = await getModInfo()
+            return modInfo
         default:
             return null
     }

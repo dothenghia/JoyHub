@@ -18,7 +18,8 @@ export default function AddRoomScreen({ navigation, route }) {
         }
         fetchAmenities()
     }, [])
-    console.log(amenities)
+
+  
     return (
         <View style={generalStyles.page_container}>
             <ScrollView >
