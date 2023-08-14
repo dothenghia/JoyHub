@@ -1,14 +1,50 @@
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { Image, View, Text, Animated, Easing } from "react-native";
+import { Image, View, Text, Dimensions } from "react-native";
+import JoyText from "../../components/general/JoyText";
 import { AvatarCardStyles, HotelCardStyles, ReportCardStyles, RoomStyles, ReportDetailStyles } from "../../styles/admin";
 // import { Easing } from "react-native";
-import { useRef, useEffect, useState } from "react";
+import rnTextSize from "react-native-text-size";
+import { TEXTS } from "../../constants/theme";
 
 const hotelImage = require("../../assets/admin/hotel.jpg");
 
 const toShort = (string, len) => {
     if (string.length <= len) return string;
     return string.slice(0, len) + "...";
+}
+// crop string to width
+class CropString {
+    state = {
+        charWidth: 0,
+        maxChar: 0,
+    }
+    constructor(string, width, size) {
+        this.string = string;
+        this.width = width;
+        this.size = size;
+        // this.charWidth = getCharWidth(string[0], size);
+        // this.maxChar = Math.floor(width / this.charWidth);
+    }
+    async componentDidMount() {
+        const windowWidth = Dimensions.get("window").width;
+        const size = await rnTextSize.measure({
+            text: this.string,
+            width: windowWidth,
+            fontSize: this.size
+        });
+        this.charWidth = size.width;
+        this.maxChar = Math.floor(this.width / this.charWidth);
+        this.setState({
+            charWidth: this.charWidth,
+            maxChar: this.maxChar,
+        });
+    }
+    crop() {
+        const { charWidth, maxChar } = this.state;
+        if (this.string.length <= maxChar) return this.string;
+        console.log(charWidth, maxChar)
+        return this.string.slice(0, maxChar) + "...";
+    }
 }
 
 export const AvatarCard = ({ Title, ImageUri, Address }) => {
@@ -20,16 +56,10 @@ export const AvatarCard = ({ Title, ImageUri, Address }) => {
             </View>
             {/* Information part */}
             <View style={AvatarCardStyles.textContainer}>
-                <Text style={AvatarCardStyles.title}>{Title}</Text>
-                <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginTop: "auto",
-                    marginBottom: "auto"
-                }}>
+                <JoyText style={AvatarCardStyles.title} numberOfLines={1}>{Title}</JoyText>
+                <View style={AvatarCardStyles.descriptionContainer}>
                     <Icon name="map-marker-outline" style={AvatarCardStyles.iconStyle} />
-                    <Text style={AvatarCardStyles.description}>{toShort(Address, 20)}</Text>
+                    <JoyText style={AvatarCardStyles.description} numberOfLines={1}>{Address}</JoyText>
                 </View>
             </View>
         </View>
@@ -49,15 +79,15 @@ export const HotelCard = ({ Title, ImageUri, Address, WaitingAmount = 0 }) => {
             {/* Waiting amount */}
             {WaitingAmount > 0 &&
                 <View style={HotelCardStyles.waitingContainer}>
-                    <Text style={HotelCardStyles.waitingText}>{convertWaitingAmount(WaitingAmount)}</Text>
+                    <JoyText style={HotelCardStyles.waitingText}>{convertWaitingAmount(WaitingAmount)}</JoyText>
                 </View>
             }
             {/* Information part */}
             <View style={HotelCardStyles.textContainer}>
-                <Text style={HotelCardStyles.title}>{Title}</Text>
+                <JoyText style={HotelCardStyles.title}>{Title}</JoyText>
                 <View style={HotelCardStyles.descriptionContainer}>
                     <Icon name="map-marker-outline" style={HotelCardStyles.iconStyle} />
-                    <Text style={HotelCardStyles.description}>{toShort(Address, 20)}</Text>
+                    <JoyText style={HotelCardStyles.description} numberOfLines={1}>{Address}</JoyText>
                 </View>
             </View>
 
@@ -95,8 +125,8 @@ export const RoomCard = ({ Title, ImageUri, Price }) => {
             <View style={RoomStyles.textContainer}>
                 <Text style={RoomStyles.title}>{toShort(Title, 13)}</Text>
                 <View style={RoomStyles.descriptionContainer}>
-                    <Text style={RoomStyles.price}>{Price + " VND"}</Text>
-                    <Text style={RoomStyles.description}>/night</Text>
+                    <JoyText style={RoomStyles.price}>{Price + " VND"}</JoyText>
+                    <JoyText style={RoomStyles.description}>/night</JoyText>
                 </View>
             </View>
         </View>
@@ -108,17 +138,17 @@ export const ReportDetailCard = ({ IdBooking, Date, Title, Description }) => {
         <View style={ReportDetailStyles.container}>
             <View style={ReportDetailStyles.idContainer}>
                 {/* Id booking */}
-                <Text style={ReportDetailStyles.idText}>{IdBooking}</Text>
-                <Text style={ReportDetailStyles.date}>{Date}</Text>
+                <JoyText style={ReportDetailStyles.idText}>{IdBooking}</JoyText>
+                <JoyText style={ReportDetailStyles.date}>{Date}</JoyText>
                 {/* Date */}
             </View>
             {/* Report Title*/}
-            <Text style={ReportDetailStyles.title}>{Title}</Text>
+            <JoyText style={ReportDetailStyles.title}>{Title}</JoyText>
             {/* Report Description */}
 
-            <Text style={ReportDetailStyles.descriptionText}>
+            <JoyText style={ReportDetailStyles.descriptionText}>
                 {Description}
-            </Text>
+            </JoyText>
 
         </View>
     );

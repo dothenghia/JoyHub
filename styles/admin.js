@@ -65,20 +65,21 @@ export const AvatarCardStyles = StyleSheet.create({
         marginTop: "auto",
     },
     title: {
-        fontSize: TEXTS.xxl,
+        fontSize: TEXTS.lg,
         fontWeight: "900",
         color: COLORS.text,
         lineHeight: 30,
+        width: "100%",
     },
     descriptionContainer: {
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "flex-start",
         marginTop: "auto",
         marginBottom: "auto",
-        justifyContent: "space-between"
+        justifyContent: "flex-start"
     },
     description: {
-        fontSize: TEXTS.sm,
+        fontSize: TEXTS.xs,
         color: COLORS.text,
         lineHeight: 20,
         fontWeight: "500"
@@ -115,7 +116,7 @@ export const HotelCardStyles = StyleSheet.create({
         flexDirection : 'column',
         alignContent : 'center',
         // alignItems : 'center',
-        width: "50%",
+        width: "70%",
         marginBottom: "auto",
         marginTop: "auto",
         marginLeft: 20,
@@ -125,19 +126,23 @@ export const HotelCardStyles = StyleSheet.create({
         fontWeight: "900",
         color: COLORS.white,
         lineHeight: 30,
+        width: "100%",
+        elevation: 1,
     },
     descriptionContainer: {
         flexDirection: "row",
         alignItems: "center",
         marginTop: "auto",
         marginBottom: "auto",
-        justifyContent: "space-between"
+        justifyContent: "flex-start",
+
     },
     description: {
         fontSize: TEXTS.sm,
         color: COLORS.white,
         lineHeight: 20,
-        fontWeight: "500"
+        fontWeight: "500",
+        elevation: 2,
     },
     iconStyle: {
         color: COLORS.white,
@@ -228,15 +233,18 @@ export const DetailHotelStyles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
+        alginVertical: "center",
         marginBottom: 10,
         marginTop: 10,
         gap: 12
     },
     hotelName: {
-        fontSize: TEXTS['5xl'],
+        fontSize: TEXTS['3xl'],
         fontWeight: "bold",
         color: COLORS.primary,
-        marginBottom: 10,
+        justifyContent: "center",
+        alignItems: "center",
+
     },
     confirmBar: {
         flexDirection: "row",

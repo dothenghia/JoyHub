@@ -1,18 +1,28 @@
-import { useState, useRef } from "react";
-import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, Dimensions, FlatList } from "react-native";
+// Import Hook & Component
+import { useState, useRef, useCallback, useEffect, useContext } from "react";
+import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, Dimensions, FlatList, Modal } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Feather from "react-native-vector-icons/Feather";
 import JoyText from '../../components/general/JoyText'
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { DatePickerModal } from 'react-native-paper-dates';
+import formatDate from "../../models/customer/formatDate";
+import calculateDay from "../../models/customer/calculateDay";
+
+import FacilityCard from "../../components/customer/main/FacilityCard";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
 
-import FacilityCard from "../../components/customer/main/FacilityCard";
+// Import Controller
+import CController from "../../controllers/customerController";
 
+// Import Context
+import { globalContext } from "../../contexts/GlobalContext";
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.88);
@@ -31,175 +41,260 @@ const renderItem = ({ item }) => {
 };
 
 export default function RoomScreen({ navigation, route }) {
+    const { role, dateRange, setDateRange } = useContext(globalContext)
     console.log('[Customer] RoomScreen')
 
-    const [index, setIndex] = useState(0);
-    const isCarousel = useRef(null);
+    // ------ Data State
+    const [roomInfo, setRoomInfo] = useState(null)
+    const [loginModal, setLoginModal] = useState(false)
+    const [openDatePicker, setOpenDatePicker] = useState(false);
+    const [currentThumbnail, setCurrentThumnail] = useState(0);
+    const carouselRef = useRef(null);
 
-    const SliderItems = [
-        { id: 1, url: 'https://scontent.fsgn2-4.fna.fbcdn.net/v/t1.15752-9/364948962_948012216497505_6791312942664554980_n.png?_nc_cat=101&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=Oy-c3LkHLb0AX8daFF4&_nc_ht=scontent.fsgn2-4.fna&oh=03_AdQB_0n0EFZaRUtStFfHPxCQ_EhleFf7USAQhLBd82yMhA&oe=64FE85F7' },
-        { id: 2, url: 'https://scontent.fsgn2-8.fna.fbcdn.net/v/t1.15752-9/364428559_1719210895196107_5437612367951079772_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=_1Kpu1OCwgIAX-SVyz_&_nc_ht=scontent.fsgn2-8.fna&oh=03_AdSb-qfZnGDK4vooNBDZf5nkUemPRADmZ8GU-XOtkNBcVQ&oe=64FE6FC3' },
-        { id: 3, url: 'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/363905976_208169411906510_696484087669685590_n.png?_nc_cat=105&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=xEywbgEpCykAX9XZ2ou&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdQbz1ZFcYE_5Fi6cchVbGeDQtBxK-uk6TwWkX8kkW0E1w&oe=64FE7EDA' },
-        { id: 4, url: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t1.15752-9/356972542_1024286308987579_5149156721244225163_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=KJmu10PO1YkAX_p4L8u&_nc_ht=scontent.fsgn2-5.fna&oh=03_AdQ2fvoENIizLOtJwdqGWvKiTr64I0yPcsctqBB7ZKVkJw&oe=64FE6CDA' },
-        { id: 5, url: 'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/358822586_742771977620993_6308341829672982832_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=ThDj6VjGnwEAX-P5vfJ&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdQC6tNkmHgjGJCNqLoAsDpUjZAhYN2DPtkwAMnn7yQRTQ&oe=64FE9C81' },
-        { id: 6, url: 'https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.15752-9/344562306_1317460595781255_3448803945707846987_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=KosdFxgY26MAX9ftxQE&_nc_ht=scontent.fsgn2-3.fna&oh=03_AdTXy9f_G8sYxtO--_ZAWCNo44kH35MQcFNVIx5XZIdkpg&oe=64FE90FC' },
-    ];
+    // Date Picker Handlers
+    const onDismiss = useCallback(() => {
+        setOpenDatePicker(false);
+    }, [setOpenDatePicker]);
 
-    const facilities = [
-        { f_id: 1, f_name: 'Free Wifi', f_icon: 'wifi', },
-        { f_id: 2, f_name: 'Pool', f_icon: 'pool', },
-        { f_id: 3, f_name: 'Bath Tub', f_icon: 'bathtub', },
-        { f_id: 4, f_name: 'Air Conditioner', f_icon: 'ac', },
-        { f_id: 5, f_name: 'Meal', f_icon: 'meal', },
-    ];
+    const onConfirm = useCallback(({ startDate, endDate }) => {
+        setOpenDatePicker(false);
+        setDateRange({ startDate, endDate });
+    }, [setOpenDatePicker, setDateRange]);
+
+
+    // ------ Fetch Data at first render
+    useEffect(() => {
+        const fetchRoomInformation = async () => {
+            let data = await CController('GETROOMINFORMATION')
+            setRoomInfo(data)
+        }
+
+        fetchRoomInformation()
+    }, [])
+
+    // ------ Event Handlers
+    const backHandler = () => {
+        navigation.goBack()
+    }
+
+    const pickDateHandler = () => {
+        setOpenDatePicker(true)
+    }
+
+    const bookHandler = () => {
+        if (role === 'guest') {
+            setLoginModal(true)
+        }
+        else if (role === 'customer') {
+            navigation.navigate('PaymentPage')
+        }
+    }
+
+    const closeLoginModalHandler = () => {
+        setLoginModal(false)
+
+    }
+
+    const backToLoginHandler = () => {
+        setLoginModal(false)
+        navigation.navigate('LoginPage')
+    }
+
 
     return (
         <View style={customerStyles.page_container}>
+            <View style={{ flex: 1 }}>
 
-            {/* Room Screen Scroll View */}
-            <ScrollView style={{ flex: 1, marginBottom: 140 }}>
-                {/* Top Bar */}
-                <View style={customerStyles.top_bar}>
+                {/* Room Screen Scroll View */}
+                <ScrollView style={{ flex: 1, marginBottom: 140 }}>
+                    {/* Top Bar */}
+                    <View style={customerStyles.top_bar}>
+                        <TouchableOpacity
+                            style={customerStyles.top_bar_button}
+                            onPress={backHandler}
+                        >
+                            <AntDesign name={"arrowleft"} size={18} color={COLORS.primary} />
+                        </TouchableOpacity>
+                        <JoyText style={customerStyles.top_bar_title}>Detail</JoyText>
+                    </View>
+
+                    {/* Thumbnail Slider */}
+                    <View style={{ marginTop: 12, marginBottom: -32 }}>
+                        <Carousel
+                            ref={carouselRef}
+                            data={roomInfo ? roomInfo.thumbnails : []}
+                            renderItem={renderItem}
+                            sliderWidth={SLIDER_WIDTH}
+                            itemWidth={ITEM_WIDTH}
+                            onSnapToItem={currentThumbnail => setCurrentThumnail(currentThumbnail)}
+                        />
+                        <Pagination
+                            dotsLength={roomInfo ? roomInfo.thumbnails.length : 0}
+                            activeDotIndex={currentThumbnail}
+                            carouselRef={carouselRef}
+                            dotStyle={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 5,
+                                marginHorizontal: 1,
+                                backgroundColor: COLORS.primary,
+                            }}
+                            inactiveDotStyle={{
+                                backgroundColor: COLORS.grey,
+                            }}
+                            tappableDots={true}
+                            inactiveDotOpacity={0.5}
+                            inactiveDotScale={1}
+                        />
+                        {roomInfo && roomInfo.status === 'full' && (<View style={styles.status_tag}>
+                            <Feather name={"x-circle"} size={26} color={COLORS.warning} />
+                            <JoyText style={styles.status_text}>Full</JoyText>
+                        </View>)}
+                    </View>
+
+
+
+                    {/* Room Information */}
+                    <View style={customerStyles.section_container}>
+                        {/* Room NAME */}
+                        <JoyText style={customerStyles.page_title}>{roomInfo ? roomInfo.name : 'Loading ...'}</JoyText>
+
+                        {/* Room PROPERTY */}
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
+                            <Ionicons name={"expand"} size={24} color={COLORS.subheading_text} />
+                            <JoyText style={styles.amenity}> {roomInfo && roomInfo.area} m2 </JoyText>
+                            <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
+                            <Ionicons name={"person"} size={24} color={COLORS.subheading_text} />
+                            <JoyText style={styles.amenity}> {roomInfo && roomInfo.capacity} People </JoyText>
+                            <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
+                            <Ionicons name={"bed-outline"} size={30} style={{ paddingTop: 4 }} color={COLORS.subheading_text} />
+                            <JoyText style={styles.amenity}> {roomInfo && roomInfo.bed} Bed</JoyText>
+                        </View>
+
+
+                        {/* Room AMENITY */}
+                        <FlatList style={{ height: 120, marginTop: 8 }}
+                            horizontal data={roomInfo && roomInfo.facilities}
+
+                            renderItem={({ item }) => (
+                                <FacilityCard
+                                    name={item}
+                                />
+                            )}
+                        >
+                        </FlatList>
+
+                        {/* Room DESCRIPTION */}
+
+                        <JoyText style={customerStyles.section_title}>Description</JoyText>
+                        <JoyText style={styles.description} numberOfLines={3}>{roomInfo && roomInfo.description}</JoyText>
+                    </View>
+
+                    <View style={customerStyles.divider}></View>
+
+
+                    {/* Payment Information */}
+                    <View style={customerStyles.section_container}>
+                        <JoyText style={customerStyles.section_title}>Payment Information</JoyText>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <JoyText style={styles.text}>Per night</JoyText>
+                            <JoyText style={styles.text}>{roomInfo && roomInfo.price} VND</JoyText>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <JoyText style={styles.text}>From</JoyText>
+                            <JoyText style={styles.text}>{formatDate(dateRange.startDate)}</JoyText>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <JoyText style={styles.text}>To</JoyText>
+                            <JoyText style={styles.text}>{formatDate(dateRange.endDate)}</JoyText>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <JoyText style={styles.text}>Total night</JoyText>
+                            <JoyText style={styles.text}>{calculateDay(dateRange.startDate, dateRange.endDate)} night</JoyText>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <JoyText style={styles.primary_text}>Total</JoyText>
+                            <JoyText style={styles.primary_text}>{roomInfo && Number(roomInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)).toFixed(3)} VND</JoyText>
+                        </View>
+                    </View>
+
+                    <View style={customerStyles.divider}></View>
+
+
+                    {/* Cancellation Policy */}
+                    <View style={customerStyles.section_container}>
+                        <JoyText style={customerStyles.section_title}>Cancellation Policy</JoyText>
+                        <JoyText style={styles.text}>Free cancellation 1 hour before check-in</JoyText>
+                    </View>
+
+                </ScrollView>
+
+
+                {/* Fixed Booking Bar */}
+                <View style={fixedBarStyle.bar_container}>
+                    {/* Choose Date */}
                     <TouchableOpacity
-                        style={customerStyles.top_bar_button}
-                        onPress={
-                            () => { navigation.goBack() }
-                        }
+                        style={fixedBarStyle.bar_calendar}
+                        onPress={pickDateHandler}
                     >
-                        <AntDesign name={"arrowleft"} size={18} color={COLORS.primary} />
+                        <FontAwesome5Icon name={"calendar-alt"} size={28} color={COLORS.primary} />
+                        <JoyText style={fixedBarStyle.calendar_text}>{formatDate(dateRange.startDate)} - {formatDate(dateRange.endDate)}</JoyText>
                     </TouchableOpacity>
-                    <JoyText style={customerStyles.top_bar_title}>Detail</JoyText>
-                </View>
-
-                {/* Thumbnail Slider */}
-                <View style={{ marginTop: 12, marginBottom: -32 }}>
-                    <Carousel
-                        ref={isCarousel}
-                        data={SliderItems}
-                        renderItem={renderItem}
-                        sliderWidth={SLIDER_WIDTH}
-                        itemWidth={ITEM_WIDTH}
-                        onSnapToItem={index => setIndex(index)}
-                    />
-                    <Pagination
-                        dotsLength={SliderItems.length}
-                        activeDotIndex={index}
-                        carouselRef={isCarousel}
-                        dotStyle={{
-                            width: 10,
-                            height: 10,
-                            borderRadius: 5,
-                            marginHorizontal: 1,
-                            backgroundColor: COLORS.primary,
-                        }}
-                        inactiveDotStyle={{
-                            backgroundColor: COLORS.grey,
-                        }}
-                        tappableDots={true}
-                        inactiveDotOpacity={0.5}
-                        inactiveDotScale={1}
-                    />
-                </View>
 
 
-
-                {/* Room Information */}
-                <View style={customerStyles.section_container}>
-                    {/* Room NAME */}
-                    <JoyText style={customerStyles.page_title}>Deluxe room</JoyText>
-
-                    {/* Room PROPERTY */}
-                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
-                        <Ionicons name={"expand"} size={24} color={COLORS.subheading_text} />
-                        <JoyText style={styles.amenity}> 69 m2 </JoyText>
-                        <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
-                        <Ionicons name={"person"} size={24} color={COLORS.subheading_text} />
-                        <JoyText style={styles.amenity}> 2 People </JoyText>
-                        <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
-                        <Ionicons name={"bed-outline"} size={30} style={{ paddingTop: 4 }} color={COLORS.subheading_text} />
-                        <JoyText style={styles.amenity}> 1 Bed</JoyText>
-                    </View>
-
-
-                    {/* Room AMENITY */}
-                    <FlatList style={{ height: 120, marginTop: 8 }}
-                        horizontal data={facilities}
-
-                        renderItem={({ item }) => (
-                            <FacilityCard
-                                name={item}
-                            />
-                        )}
-                    >
-                    </FlatList>
-
-                    {/* Room DESCRIPTION */}
-
-                    <JoyText style={customerStyles.section_title}>Description</JoyText>
-                    <JoyText style={styles.description} numberOfLines={3}>Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna More ...</JoyText>
-                </View>
-
-                <View style={customerStyles.divider}></View>
-
-
-                {/* Payment Information */}
-                <View style={customerStyles.section_container}>
-                    <JoyText style={customerStyles.section_title}>Payment Information</JoyText>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <JoyText style={styles.text}>Per night</JoyText>
-                        <JoyText style={styles.text}>200.000 VND</JoyText>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <JoyText style={styles.text}>From</JoyText>
-                        <JoyText style={styles.text}>Thu, 4/6/2023</JoyText>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <JoyText style={styles.text}>To</JoyText>
-                        <JoyText style={styles.text}>Sat, 6/6/2023</JoyText>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <JoyText style={styles.text}>Total night</JoyText>
-                        <JoyText style={styles.text}>2 night</JoyText>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <JoyText style={styles.primary_text}>Total</JoyText>
-                        <JoyText style={styles.primary_text}>400.000 VND</JoyText>
+                    {/* Price - Book button */}
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <JoyText style={fixedBarStyle.bar_price}>{roomInfo && Number(roomInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)).toFixed(3)} VND</JoyText>
+                        <TouchableOpacity
+                            style={(roomInfo && roomInfo.status === 'full') ? fixedBarStyle.disable_book_button : fixedBarStyle.book_button}
+                            disabled={roomInfo && roomInfo.status === 'full'}
+                            onPress={bookHandler}>
+                            <JoyText style={fixedBarStyle.book_button_text}>Book</JoyText>
+                        </TouchableOpacity>
                     </View>
                 </View>
-
-                <View style={customerStyles.divider}></View>
-
-
-                {/* Cancellation Policy */}
-                <View style={customerStyles.section_container}>
-                    <JoyText style={customerStyles.section_title}>Cancellation Policy</JoyText>
-                    <JoyText style={styles.text}>Free cancellation 1 hour before check-in</JoyText>
-                </View>
-
-            </ScrollView>
-
-
-            {/* Fixed Booking Bar */}
-            <View style={fixedBarStyle.bar_container}>
-                {/* Choose Date */}
-                <TouchableOpacity
-                    style={fixedBarStyle.bar_calendar}
-                >
-                    <FontAwesome5Icon name={"calendar-alt"} size={28} color={COLORS.primary} />
-                    <JoyText style={fixedBarStyle.calendar_text}>Thu, 4/6/2023 - Sat, 6/6/2023</JoyText>
-                </TouchableOpacity>
-
-
-                {/* Price - Book button */}
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <JoyText style={fixedBarStyle.bar_price}>400.000 VND</JoyText>
-                    <TouchableOpacity
-                        style={fixedBarStyle.book_button}
-                        onPress={() => { navigation.navigate('PaymentPage') }}>
-                        <JoyText style={fixedBarStyle.book_button_text}>Book</JoyText>
-                    </TouchableOpacity>
-                </View>
+                <DatePickerModal
+                    locale="en"
+                    mode="range"
+                    visible={openDatePicker}
+                    onDismiss={onDismiss}
+                    startDate={dateRange.startDate}
+                    endDate={dateRange.endDate}
+                    onConfirm={onConfirm}
+                />
             </View>
+
+
+            {/* REMIND 'GUEST' USER TO LOGIN MODAL*/}
+            <Modal
+                animationType="none"
+                transparent={true}
+                visible={loginModal}
+            >
+                <View style={styles.modal_page}>
+                    <View style={styles.modal_container}>
+                        <View style={{ paddingHorizontal: 14, marginTop: 14, marginBottom: 8 }}>
+                            <TouchableOpacity
+                                onPress={closeLoginModalHandler}
+                                style={{ width: 46, marginBottom: 6 }}
+                            >
+                                <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
+                                    Close
+                                </JoyText>
+                            </TouchableOpacity>
+                            <JoyText style={{ fontSize: TEXTS.lg, fontWeight: '600', color: COLORS.heading_text, marginTop: 8, marginBottom: 16 }}>Please Log in to continue booking</JoyText>
+
+                            <TouchableOpacity
+                                style={{...fixedBarStyle.book_button, width: '100%'}}
+                                onPress={backToLoginHandler}>
+                                <JoyText style={fixedBarStyle.book_button_text}>Confirm</JoyText>
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
+                </View>
+            </Modal>
+
         </View>
     );
 }
@@ -212,6 +307,27 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         overflow: 'hidden',
     },
+
+    status_tag: {
+        position: 'absolute',
+        top: 24,
+        right: 36,
+        backgroundColor: '#EEB0AE',
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        borderRadius: 8,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    status_text: {
+        fontSize: TEXTS.xl,
+        color: COLORS.warning,
+        fontWeight: 'bold',
+        marginLeft: 4,
+    },
+
+
     amenity: {
         marginLeft: 4,
         fontSize: TEXTS.lg,
@@ -238,6 +354,20 @@ const styles = StyleSheet.create({
         fontWeight: '600',
 
         marginTop: 8,
+    },
+
+
+    modal_page: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modal_container: {
+        width: 360,
+        height: 168,
+        backgroundColor: 'white',
+        borderRadius: 16,
     },
 });
 
@@ -278,6 +408,14 @@ const fixedBarStyle = StyleSheet.create({
     },
     book_button: {
         backgroundColor: COLORS.primary,
+        height: 52,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 50,
+        width: '45%',
+    },
+    disable_book_button: {
+        backgroundColor: COLORS.disable,
         height: 52,
         alignItems: 'center',
         justifyContent: 'center',

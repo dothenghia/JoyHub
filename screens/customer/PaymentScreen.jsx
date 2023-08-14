@@ -1,18 +1,59 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { StyleSheet, TouchableOpacity, View, ImageBackground, ScrollView, Modal } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import JoyText from '../../components/general/JoyText'
+import formatDate from "../../models/customer/formatDate";
+import calculateDay from "../../models/customer/calculateDay";
+
+// Import Controller
+import CController from "../../controllers/customerController";
+// Import Context
+import { globalContext } from "../../contexts/GlobalContext";
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
 
 export default function PaymentScreen({ navigation, route }) {
+    const { dateRange } = useContext(globalContext)
     console.log('[Customer] PaymentScreen')
 
+    // ------ Data State
+    const notEnoughJoyCoin = false // Temporary
+    const [roomInfo, setRoomInfo] = useState(null)
     const [confirmModal, setConfirmModal] = useState(false)
 
+    // ------ Fetch Data at first render
+    useEffect(() => {
+        const fetchRoomInformation = async () => {
+            let data = await CController('GETROOMINFORMATION')
+            setRoomInfo(data)
+        }
+
+        fetchRoomInformation()
+    }, [])
+
+    // ------ Event Handlers
+    const backHandler = () => {
+        navigation.goBack()
+    }
+
+    const topupHandler = () => {
+        navigation.navigate('UserPage')
+    }
+
+    const showConfirmModalHandler = () => {
+        setConfirmModal(true)
+    }
+
+    const closeConfirmModalHandler = () => {
+        setConfirmModal(false)
+    }
+
+    const confirmBookingHandler = () => {
+        setConfirmModal(false)
+        navigation.navigate('AfterPaymentPage')
+    }
 
     return (
         <View style={customerStyles.page_container}>
@@ -24,9 +65,7 @@ export default function PaymentScreen({ navigation, route }) {
                     <View style={customerStyles.top_bar}>
                         <TouchableOpacity
                             style={customerStyles.top_bar_button}
-                            onPress={
-                                () => { navigation.goBack() }
-                            }
+                            onPress={backHandler}
                         >
                             <AntDesign name={"arrowleft"} size={18} color={COLORS.primary} />
                         </TouchableOpacity>
@@ -35,7 +74,7 @@ export default function PaymentScreen({ navigation, route }) {
 
 
 
-                    {/* Thumbnail Slider */}
+                    {/* Thumbnail Image */}
                     <View style={customerStyles.section_container_no_py}>
                         <ImageBackground
                             source={require('../../assets/customer/demo.jpg')}
@@ -48,9 +87,9 @@ export default function PaymentScreen({ navigation, route }) {
 
                     {/* Room Information */}
                     <View style={customerStyles.section_container}>
-                        <JoyText style={customerStyles.page_title}>Haley House</JoyText>
-                        <JoyText style={styles.room_name}>Deluxe Room</JoyText>
-                        <JoyText style={styles.location}>District 7, HCM</JoyText>
+                        <JoyText style={customerStyles.page_title}>{roomInfo ? roomInfo.hotel : 'Loading ...'}</JoyText>
+                        <JoyText style={styles.room_name}>{roomInfo && roomInfo.name}</JoyText>
+                        <JoyText style={styles.location}>{roomInfo && roomInfo.location}</JoyText>
                     </View>
 
                     <View style={customerStyles.divider}></View>
@@ -61,23 +100,23 @@ export default function PaymentScreen({ navigation, route }) {
                         <JoyText style={customerStyles.section_title}>Payment Information</JoyText>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.payment_text}>Per night</JoyText>
-                            <JoyText style={styles.payment_text}>200.000 VND</JoyText>
+                            <JoyText style={styles.payment_text}>{roomInfo && roomInfo.price} VND</JoyText>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.payment_text}>From</JoyText>
-                            <JoyText style={styles.payment_text}>Thu, 4/6/2023</JoyText>
+                            <JoyText style={styles.payment_text}>{formatDate(dateRange.startDate)}</JoyText>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.payment_text}>To</JoyText>
-                            <JoyText style={styles.payment_text}>Sat, 6/6/2023</JoyText>
+                            <JoyText style={styles.payment_text}>{formatDate(dateRange.endDate)}</JoyText>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.payment_text}>Total night</JoyText>
-                            <JoyText style={styles.payment_text}>2 night</JoyText>
+                            <JoyText style={styles.payment_text}>{calculateDay(dateRange.startDate, dateRange.endDate)} night</JoyText>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.payment_text_primary}>Total</JoyText>
-                            <JoyText style={styles.payment_text_primary}>400.000 VND</JoyText>
+                            <JoyText style={styles.payment_text_primary}>{roomInfo && Number(roomInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)).toFixed(3)} VND</JoyText>
                         </View>
                     </View>
 
@@ -85,11 +124,21 @@ export default function PaymentScreen({ navigation, route }) {
 
                     {/* JoyCoin checking */}
                     <View style={customerStyles.section_container}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
                             <JoyText style={customerStyles.section_title}>JoyCoin</JoyText>
                             <JoyText style={styles.joycoin}>200.000</JoyText>
                         </View>
-                        <JoyText style={styles.warning}>You don't have enough JoyCoin to make payment !</JoyText>
+                        {notEnoughJoyCoin && (
+                        <View>
+                            <JoyText style={styles.warning}>You don't have enough JoyCoin to make payment !</JoyText>
+                            <TouchableOpacity
+                                style={styles.topup_button}
+                                onPress={topupHandler}
+                            >
+                                <JoyText style={styles.topup_text}>Go to Top up JoyCoin</JoyText>
+                            </TouchableOpacity>
+                        </View>
+                        )}
                     </View>
 
                     <View style={customerStyles.divider}></View>
@@ -108,8 +157,9 @@ export default function PaymentScreen({ navigation, route }) {
                 <View style={fixedBarStyle.bar_container}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 28 }}>
                         <TouchableOpacity
-                            style={fixedBarStyle.book_button}
-                            onPress={() => { setConfirmModal(true) }}>
+                            style={notEnoughJoyCoin ? fixedBarStyle.disable_book_button : fixedBarStyle.book_button}
+                            disabled={notEnoughJoyCoin}
+                            onPress={showConfirmModalHandler}>
                             <JoyText style={fixedBarStyle.book_button_text}>Book</JoyText>
                         </TouchableOpacity>
                     </View>
@@ -117,7 +167,7 @@ export default function PaymentScreen({ navigation, route }) {
             </View>
 
 
-            {/* See all Review Modal */}
+            {/* Confirm Modal */}
             <Modal
                 animationType="none"
                 transparent={true}
@@ -126,17 +176,17 @@ export default function PaymentScreen({ navigation, route }) {
                 <View style={styles.modal_page}>
                     <View style={styles.modal_container}>
                         <TouchableOpacity
-                            onPress={() => setConfirmModal(false)}
+                            onPress={closeConfirmModalHandler}
                             style={{ width: 46, marginBottom: 6 }}
                         >
                             <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                                 Close
                             </JoyText>
                         </TouchableOpacity>
-                        <JoyText style={{fontSize: TEXTS.lg, fontWeight: '600', color: COLORS.heading_text, marginTop: 8, marginBottom: 16}}>Confirm this Booking Reservation ?</JoyText>
+                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: '600', color: COLORS.heading_text, marginTop: 8, marginBottom: 16 }}>Confirm this Booking Reservation ?</JoyText>
                         <TouchableOpacity
                             style={fixedBarStyle.book_button}
-                            onPress={() => { setConfirmModal(false) ; navigation.navigate('AfterPaymentPage') }}>
+                            onPress={confirmBookingHandler}>
                             <JoyText style={fixedBarStyle.book_button_text}>Confirm</JoyText>
                         </TouchableOpacity>
                     </View>
@@ -191,6 +241,18 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 8,
     },
+    topup_button: {
+        marginTop: 12,
+        backgroundColor: COLORS.primary,
+        height: 52,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 50,
+        width: '100%',
+    },
+    topup_text: {
+        color: COLORS.white, fontSize: TEXTS.lg, fontWeight: '600' , textAlign: 'center'
+    },
 
 
     modal_page: {
@@ -221,6 +283,14 @@ const fixedBarStyle = StyleSheet.create({
     },
     book_button: {
         backgroundColor: COLORS.primary,
+        height: 52,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 50,
+        width: '100%',
+    },
+    disable_book_button: {
+        backgroundColor: COLORS.disable,
         height: 52,
         alignItems: 'center',
         justifyContent: 'center',

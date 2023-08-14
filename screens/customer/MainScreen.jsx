@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { StyleSheet, View, Image, TextInput, ScrollView, TouchableOpacity } from "react-native";
+// Import Hook & Component
+import { useState, useEffect, useContext } from "react";
+import { StyleSheet, View, Image, TextInput, ScrollView, TouchableOpacity, BackHandler, Alert } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import SelectDropdown from 'react-native-select-dropdown'
 
@@ -13,10 +14,13 @@ import CController from "../../controllers/customerController";
 // Import Component
 import HotelCard from "../../components/customer/main/HotelCard";
 
-
+// Import Context
+import { globalContext } from "../../contexts/GlobalContext";
 
 export default function MainScreen({ navigation }) {
-    console.log('[Customer] MainScreen')
+    const { role, setRole } = useContext(globalContext)
+    console.log('[Customer] MainScreen :', role)
+
     // ------ Data State
     const [hotelList, setHotelList] = useState([])
     const [searchInput, setSearchInput] = useState('')
@@ -42,6 +46,38 @@ export default function MainScreen({ navigation }) {
         fetchLocationList()
     }, [])
 
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert('Hold on!', 'Are you sure you want to Log out?', [
+                {
+                    text: 'Cancel',
+                    onPress: () => null,
+                    style: 'cancel',
+                },
+                {
+                    text: 'YES', onPress: () => {
+                        setRole('guest')
+                        navigation.navigate('LoginPage')
+                    }
+                },
+            ]);
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction,
+        );
+
+        return () => backHandler.remove();
+    }, []);
+
+
+    // ------ Event Handlers
+    const searchHandler = () => {
+        console.log(searchInput)
+    }
+
     return (
         <ScrollView style={customerStyles.page_container}>
             {/* Logo JOY-HUB text */}
@@ -64,7 +100,7 @@ export default function MainScreen({ navigation }) {
                 />
                 <TouchableOpacity
                     style={styles.search_button}
-
+                    onPress={searchHandler}
                 >
                     <AntDesign name={"search1"} size={24} color={COLORS.subheading_text} />
                 </TouchableOpacity>

@@ -1,36 +1,37 @@
 import React, { useState } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
+import JoyText from "../../components/general/JoyText";
 import generalStyles from "../../styles/general";
 import { TopBar, ConfirmBar } from "../../components/admin/Bar";
-import { TEXTS } from "../../constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { DetailHotelStyles } from "../../styles/admin";
 import { useIsFocused } from "@react-navigation/native";
+import AController from "../../controllers/adminController";
 
 const HotelAddress = ({ address }) => (
     <View style={DetailHotelStyles.hotelDetailsContainer}>
-        <Text style={DetailHotelStyles.hotelDetailsTitle}>Address</Text>
-        <Text style={DetailHotelStyles.hotelDetails}>{address}</Text>
+        <JoyText style={DetailHotelStyles.hotelDetailsTitle}>Address</JoyText>
+        <JoyText style={DetailHotelStyles.hotelDetails}>{address}</JoyText>
     </View>
 );
 
 const HotelDescription = ({ description }) => (
     <View style={DetailHotelStyles.hotelDetailsContainer}>
-        <Text style={DetailHotelStyles.hotelDetailsTitle}>Description</Text>
-        <Text style={DetailHotelStyles.hotelDetails}>{description}</Text>
+        <JoyText style={DetailHotelStyles.hotelDetailsTitle}>Description</JoyText>
+        <JoyText style={DetailHotelStyles.hotelDetails}>{description}</JoyText>
     </View>
 );
 
 const HotelOwnerField = ({ label, value }) => (
     <View style={DetailHotelStyles.ownerField}>
-        <Text style={DetailHotelStyles.ownerTitle}>{label}:</Text>
-        <Text style={DetailHotelStyles.ownerDetails}>{value}</Text>
+        <JoyText style={DetailHotelStyles.ownerTitle}>{label}:</JoyText>
+        <JoyText style={DetailHotelStyles.ownerDetails}>{value}</JoyText>
     </View>
 );
 
 const HotelOwnerInformation = ({ name, username, phone, email }) => (
     <View style={DetailHotelStyles.hotelDetailsContainer}>
-        <Text style={DetailHotelStyles.hotelDetailsTitle}>Account</Text>
+        <JoyText style={DetailHotelStyles.hotelDetailsTitle}>Account</JoyText>
         <HotelOwnerField label="Owner's Name" value={name} />
         <HotelOwnerField label="Username" value={username} />
         <HotelOwnerField label="Phone" value={phone} />
@@ -38,17 +39,57 @@ const HotelOwnerInformation = ({ name, username, phone, email }) => (
     </View>
 );
 
+const updateLocalModerator = async (moderators, id) => {
+    moderators.forEach((moderator) => {
+        if (moderator.id === id) {
+            moderator.accept = true;
+        }
+    });
+    return moderators;
+};
+
+const updateModerator = async (id) => {
+    const result = await AController("UPDATEMODERATOR", id);
+    if (result.error) {
+        return false;
+    };
+    // update local data
+    return true;
+}
+
+const removeModerator = async (id) => {
+    const result = await AController("REMOVEMODERATOR", id);
+    if (result.error) {
+        return false;
+    };
+    return true;
+}
+
 const HotelDetails = ({ hotel }) => (
     <View>
         <View style={DetailHotelStyles.hotelNameContainer}>
             {/* Hotel Icon */}
             <Ionicons name="bed-outline" size={40} color="black" />
-            <Text style={DetailHotelStyles.hotelName}>
+            <JoyText style={DetailHotelStyles.hotelName}>
                 {hotel.name}
-            </Text>
+            </JoyText>
         </View>
         {/* Confirm Bar (Accept, Reject) */}
-        <ConfirmBar confirmText={"Accept"} cancelText={"Reject"} />
+        <ConfirmBar confirmText={"Accept"} cancelText={"Reject"} onConfirm={() => {
+            if (updateModerator(hotel.id)) {
+                alert("Accept successfully")
+            }
+            else {
+                alert("Accept failed")
+            }
+        }} onCancel={() => {
+            if (removeModerator(hotel.id)) {
+                alert("Reject successfully")
+            }
+            else {
+                alert("Reject failed")
+            }
+        }} />
         {/* Hotel Details Part */}
         <View style={DetailHotelStyles.hotelDetailsContainer}>
             {/* Hotel Address */}
@@ -70,19 +111,7 @@ export default function DetailHotelScreen({ route, navigation }) {
         }
     }, [isFocused]);
 
-    // const route = useRoute();
-    const { hotel_name } = route.params;
-    const hotel = {
-        name: hotel_name,
-        address: "123, ABC Street, DEF City, GHI Country",
-        description: "Veniam ipsum culpa velit consectetur sint ea excepteur eiusmod. Nulla dolore amet tempor veniam. Culpa est aliqua fugiat non amet adipisicing ex minim. Est anim eiusmod ullamco cupidatat dolor nulla ullamco excepteur ea qui pariatur ex labore aute. Labore duis nulla proident nostrud nulla ad est in aliquip minim reprehenderit eu. Nostrud ullamco enim id voluptate adipisicing esse aute enim. Qui ad velit aliqua anim aliquip eu incididunt aute.",
-        owner: {
-            name: "Chase Cummings",
-            username: "chase.cummings",
-            phone: "0123456789",
-            email: "tus@kep.bd"
-        }
-    }
+    const hotel = route.params.hotel;
     return (
         <ScrollView style={generalStyles.page_container} ref={scrollRef}>
             <TopBar Title={"Detail"} backIcon={true} navigation={navigation} />

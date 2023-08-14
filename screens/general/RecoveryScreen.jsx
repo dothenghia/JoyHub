@@ -107,6 +107,7 @@ export default function RecoveryScreen({ navigation }) {
                             placeholderTextColor={COLORS.subheading_text}
                             onChangeText={(e) => setOTP(e)}
                             autoCapitalize="none"
+                            keyboardType="numeric"
                         />
 
                         {/* Verify Code button */}
