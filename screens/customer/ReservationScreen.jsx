@@ -30,14 +30,16 @@ export default function ReservationScreen({ navigation }) {
 
 
     return (
-        <ScrollView style={customerStyles.page_container}>
-            <JoyText style={customerStyles.page_name}>Reservation</JoyText>
+        <View style={customerStyles.page_container}>
+            <View style={customerStyles.fixed_top_bar}>
+                <JoyText style={customerStyles.top_bar_title}>Reservation</JoyText>
+            </View>
 
-            <View>
+            <ScrollView style={{ flex: 1 , marginTop: 70-6}}>
                 {
                     reservationList.map((reservation) => (
                         <View key={reservation.id}>
-                            <View style={customerStyles.divider_reservation} />
+                            <View style={customerStyles.divider} />
                             <ReservationCard
                                 props={reservation}
                                 navigation={navigation}
@@ -45,9 +47,9 @@ export default function ReservationScreen({ navigation }) {
                         </View>
                     ))
                 }
-            </View>
+            </ScrollView>
 
-        </ScrollView>
+        </View>
     );
 }
 

@@ -2,10 +2,29 @@ import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import JoyText from "../../general/JoyText";
 
 // Import Style & Theme
-import { COLORS } from "../../../constants/theme";
+import { COLORS, TEXTS } from "../../../constants/theme";
 
 export default function ReservationCard({ props , navigation }) {
     console.log(props)
+
+    const tagMappind = {
+        Waiting: (
+            <View style={styles.tag_wrapper}>
+                <JoyText style={{...styles.tag_status, backgroundColor: COLORS.primary_50, color: COLORS.primary}}>Waiting</JoyText>
+            </View>
+        ),
+        Completed: (
+            <View style={styles.tag_wrapper}>
+                <JoyText style={{...styles.tag_status, backgroundColor: COLORS.success_bg, color: COLORS.success}}>Completed</JoyText>
+            </View>
+        ),
+        Cancelled: (
+            <View style={styles.tag_wrapper}>
+                <JoyText style={{...styles.tag_status, backgroundColor: COLORS.disable, color: COLORS.grey}}>Cancelled</JoyText>
+            </View>
+        ),
+    }
+
     return (
         <TouchableOpacity
             style={styles.card_container}
@@ -18,11 +37,11 @@ export default function ReservationCard({ props , navigation }) {
             </View>
 
             <View style={styles.text_container}>
-                <JoyText>{props.status}</JoyText>
-                <JoyText>{props.hotel_name}</JoyText>
-                <JoyText>{props.room_name}</JoyText>
-                <JoyText>{props.date}</JoyText>
-                <JoyText>{props.price}</JoyText>
+                {tagMappind[props.status]}
+                <JoyText style={styles.hotel_name}>{props.hotel_name}</JoyText>
+                <JoyText style={styles.room_name}>{props.room_name}</JoyText>
+                <JoyText style={styles.date}>{props.date}</JoyText>
+                <JoyText style={styles.price}>{props.price} VND</JoyText>
 
             </View>
         </TouchableOpacity>
@@ -35,6 +54,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 190,
         flexDirection: 'row',
+        backgroundColor: '#fff',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
@@ -43,9 +63,8 @@ const styles = StyleSheet.create({
         width: '30%',
         height: '88%',
         marginLeft: 12,
-        borderRadius: 20,
+        borderRadius: 8,
         overflow: 'hidden',
-        elevation: 8,
     },
     thumbnail_image: {
         width: '100%',
@@ -56,6 +75,39 @@ const styles = StyleSheet.create({
     text_container: {
         color: 'white',
         flex: 1,
-        paddingHorizontal: 8,
-    }
+        paddingLeft: 10,
+        paddingRight: 6,
+    },
+    tag_wrapper: {
+        flexDirection: 'row',
+    },
+    tag_status: {
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        borderRadius: 8,
+        fontSize: TEXTS.lg,
+        fontWeight: 'bold',
+    },
+    hotel_name: {
+        fontSize: TEXTS.xl,
+        fontWeight: '600',
+        color: COLORS.heading_text,
+        marginTop: 2,
+    },
+    room_name: {
+        fontSize: TEXTS.lg,
+        color: COLORS.subheading_text,
+        marginTop: 2,
+    },
+    date: {
+        fontSize: TEXTS.lg,
+        color: COLORS.subheading_text,
+        marginTop: 2,
+    },
+    price: {
+        fontSize: TEXTS.xl,
+        fontWeight: '900',
+        color: COLORS.primary,
+        marginTop: 2,
+    },
 });

@@ -178,7 +178,7 @@ export default function HotelScreen({ navigation, route }) {
                         >
                         </FlatList>
 
-                        <JoyText style={customerStyles.section_title}>Standard</JoyText>
+                        <JoyText style={customerStyles.section_title}>VIP</JoyText>
                         <FlatList style={{ height: 300, marginTop: 8 }}
                             horizontal data={hotelInfo && hotelInfo.roomList}
 
@@ -239,6 +239,8 @@ export default function HotelScreen({ navigation, route }) {
                 <DatePickerModal
                     locale="en"
                     mode="range"
+                    // disableStatusBar
+                    disableStatusBarPadding
                     visible={openDatePicker}
                     onDismiss={onDismiss}
                     startDate={dateRange.startDate}

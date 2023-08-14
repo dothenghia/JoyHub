@@ -3,6 +3,9 @@ const COLORS = {
     primary_50 : 'rgba(255, 100, 0, 0.2)',
     secondary: '#FB9F64',
     warning: '#D73B35',
+    warning_bg: '#EEB0AE',
+    success: '#41AF79',
+    success_bg: '#C7EDD9',
 
     heading_text : '#333333',
     subheading_text : '#888888',

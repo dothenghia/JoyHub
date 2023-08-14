@@ -76,6 +76,7 @@ export default function LoginScreen({ navigation }) {
     }
 
     const guestHandler = () => {
+        setRole('guest')
         navigation.navigate("CustomerMain")
     }
 
