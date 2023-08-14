@@ -16,6 +16,7 @@ export default function UserScreen({ navigation }) {
     const [editMode, setEditMode] = useState(false)
     const [description, setDescription] = useState(null)
     const [address, setAddress] = useState(null)
+    const [phone, setPhone] = useState(null)
     useEffect(() => {
         const fetchModInfo = async () => {
             let data = await MController('GETMODINFO')
@@ -23,6 +24,7 @@ export default function UserScreen({ navigation }) {
             setHotelName(data.hotelName)
             setDescription(data.description)
             setAddress(data.address)
+            setPhone(data.phone)
         }
         fetchModInfo()
     }, [])
@@ -105,9 +107,9 @@ export default function UserScreen({ navigation }) {
                             {
                                 (editMode === false)
                                 ?
-                                <JoyText style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888' }}>{modInfo ? modInfo.phone : "Loading ..."}</JoyText >
+                                <JoyText style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888' }}>{phone ? phone : "Loading ..."}</JoyText >
                                 :
-                                <TextInput style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888', borderWidth: 1, borderRadius: 10, padding: 5, }}>{modInfo ? modInfo.phone : "Loading ..."}</TextInput >
+                                <TextInput onChangeText={(text) => { setPhone(text) }} keyboardType="numeric" style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888', borderWidth: 1, borderRadius: 10, padding: 5, }}>{phone ? phone : "Loading ..."}</TextInput >
                             }
                         </View>
 
