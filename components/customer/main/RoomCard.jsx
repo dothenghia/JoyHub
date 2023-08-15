@@ -33,13 +33,13 @@ export default function RoomCard({ name, navigation }) {
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
                     <Ionicons name={"expand"} size={20} color={COLORS.subheading_text} />
-                    <JoyText style={styles.amenity}> 69 m2 </JoyText>
+                    <JoyText style={styles.amenity}> {name.area} m2 </JoyText>
                     <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
                     <Ionicons name={"person"} size={20} color={COLORS.subheading_text} />
-                    <JoyText style={styles.amenity}> 2 People </JoyText>
+                    <JoyText style={styles.amenity}> {name.capacity} People </JoyText>
                     <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
                     <Ionicons name={"bed-outline"} size={26} style={{ paddingTop: 4 }} color={COLORS.subheading_text} />
-                    <JoyText style={styles.amenity}> 1 Bed</JoyText>
+                    <JoyText style={styles.amenity}> {name.bed} Bed</JoyText>
                 </View>
             </View>
 

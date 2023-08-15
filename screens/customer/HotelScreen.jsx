@@ -149,7 +149,7 @@ export default function HotelScreen({ navigation, route }) {
                     <View style={customerStyles.section_container}>
                         <JoyText style={customerStyles.section_title}>Hotel amenities</JoyText>
                         <FlatList style={{ height: 120, marginTop: 8 }}
-                            horizontal data={hotelInfo && hotelInfo.facilities}
+                            horizontal data={hotelInfo && hotelInfo.amenities}
 
                             renderItem={({ item }) => (
                                 <FacilityCard
@@ -165,31 +165,27 @@ export default function HotelScreen({ navigation, route }) {
 
                     {/* Hotel Room List */}
                     <View style={customerStyles.section_container}>
-                        <JoyText style={customerStyles.section_title}>Standard</JoyText>
-                        <FlatList style={{ height: 300, marginTop: 8 }}
-                            horizontal data={hotelInfo && hotelInfo.roomList}
+                        {
+                            hotelInfo &&
+                            hotelInfo.rooms.map((room, index) => {
+                                return (
+                                    <View key={index}>
+                                        <JoyText style={customerStyles.section_title}>{room.room_type}</JoyText>
+                                        <FlatList style={{ height: 300, marginTop: 8 }}
+                                            horizontal data={room.room_list}
 
-                            renderItem={({ item }) => (
-                                <RoomCard
-                                    name={item}
-                                    navigation={navigation}
-                                />
-                            )}
-                        >
-                        </FlatList>
-
-                        <JoyText style={customerStyles.section_title}>VIP</JoyText>
-                        <FlatList style={{ height: 300, marginTop: 8 }}
-                            horizontal data={hotelInfo && hotelInfo.roomList}
-
-                            renderItem={({ item }) => (
-                                <RoomCard
-                                    name={item}
-                                    navigation={navigation}
-                                />
-                            )}
-                        >
-                        </FlatList>
+                                            renderItem={({ item }) => (
+                                                <RoomCard
+                                                    name={item}
+                                                    navigation={navigation}
+                                                />
+                                            )}
+                                        >
+                                        </FlatList>
+                                    </View>
+                                )
+                            })
+                        }
                     </View>
 
                     <View style={customerStyles.divider}></View>

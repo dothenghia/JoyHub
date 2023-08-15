@@ -10,9 +10,9 @@ export default function FacilityCard({ name }) {
     return (
         <View style={styles.card_container} >
             <View style={styles.image_wrapper}>
-                <JoyIcon name={name.f_icon} size={35}/>
+                <JoyIcon name={name.icon} size={35}/>
             </View>
-            <JoyText style={styles.text}>{name.f_name}</JoyText>
+            <JoyText style={styles.text}>{name.name}</JoyText>
         </View>
     );
 }

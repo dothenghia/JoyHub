@@ -20,14 +20,14 @@ export default function PaymentScreen({ navigation, route }) {
 
     // ------ Data State
     const notEnoughJoyCoin = false // Temporary
-    const [roomInfo, setRoomInfo] = useState(null)
+    const [paymentInfo, setPaymentInfo] = useState(null)
     const [confirmModal, setConfirmModal] = useState(false)
 
     // ------ Fetch Data at first render
     useEffect(() => {
         const fetchRoomInformation = async () => {
-            let data = await CController('GETROOMINFORMATION')
-            setRoomInfo(data)
+            let data = await CController('GETPAYMENTINFORMATION')
+            setPaymentInfo(data)
         }
 
         fetchRoomInformation()
@@ -87,9 +87,9 @@ export default function PaymentScreen({ navigation, route }) {
 
                     {/* Room Information */}
                     <View style={customerStyles.section_container}>
-                        <JoyText style={customerStyles.page_title}>{roomInfo ? roomInfo.hotel : 'Loading ...'}</JoyText>
-                        <JoyText style={styles.room_name}>{roomInfo && roomInfo.name}</JoyText>
-                        <JoyText style={styles.location}>{roomInfo && roomInfo.location}</JoyText>
+                        <JoyText style={customerStyles.page_title}>{paymentInfo ? paymentInfo.hotel_name : 'Loading ...'}</JoyText>
+                        <JoyText style={styles.room_name}>{paymentInfo && paymentInfo.room_name} ({paymentInfo && paymentInfo.room_type})</JoyText>
+                        <JoyText style={styles.location}>{paymentInfo && paymentInfo.location}</JoyText>
                     </View>
 
                     <View style={customerStyles.divider}></View>
@@ -100,7 +100,7 @@ export default function PaymentScreen({ navigation, route }) {
                         <JoyText style={customerStyles.section_title}>Payment Information</JoyText>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.payment_text}>Per night</JoyText>
-                            <JoyText style={styles.payment_text}>{roomInfo && roomInfo.price} VND</JoyText>
+                            <JoyText style={styles.payment_text}>{paymentInfo && paymentInfo.price} VND</JoyText>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.payment_text}>From</JoyText>
@@ -116,7 +116,7 @@ export default function PaymentScreen({ navigation, route }) {
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.payment_text_primary}>Total</JoyText>
-                            <JoyText style={styles.payment_text_primary}>{roomInfo && Number(roomInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)).toFixed(3)} VND</JoyText>
+                            <JoyText style={styles.payment_text_primary}>{paymentInfo && Number(paymentInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)).toFixed(3)} VND</JoyText>
                         </View>
                     </View>
 
@@ -126,7 +126,7 @@ export default function PaymentScreen({ navigation, route }) {
                     <View style={customerStyles.section_container}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
                             <JoyText style={customerStyles.section_title}>JoyCoin</JoyText>
-                            <JoyText style={styles.joycoin}>200.000</JoyText>
+                            <JoyText style={styles.joycoin}>{paymentInfo && paymentInfo.joycoin}</JoyText>
                         </View>
                         {notEnoughJoyCoin && (
                             <View>

@@ -11,7 +11,7 @@ export default function HotelCard({ props, navigation }) {
         <TouchableOpacity
             style={styles.card_container}
             onPress={
-                () => { navigation.navigate('HotelPage', { slug: props.slug }) }
+                () => { navigation.navigate('HotelPage') }
             }
         >
             <ImageBackground

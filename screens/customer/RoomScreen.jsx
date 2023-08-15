@@ -31,7 +31,7 @@ const renderItem = ({ item }) => {
     return (
         <ImageBackground
             source={{
-                uri: item.url,
+                uri: item.thumbnail,
             }}
             resizeMode="cover"
             style={styles.slider_image}
@@ -157,7 +157,7 @@ export default function RoomScreen({ navigation, route }) {
                     {/* Room Information */}
                     <View style={customerStyles.section_container}>
                         {/* Room NAME */}
-                        <JoyText style={customerStyles.page_title}>{roomInfo ? roomInfo.name : 'Loading ...'}</JoyText>
+                        <JoyText style={customerStyles.page_title}>{roomInfo ? roomInfo.room_name : 'Loading ...'} ({roomInfo && roomInfo.room_type})</JoyText>
 
                         {/* Room PROPERTY */}
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
@@ -174,7 +174,7 @@ export default function RoomScreen({ navigation, route }) {
 
                         {/* Room AMENITY */}
                         <FlatList style={{ height: 120, marginTop: 8 }}
-                            horizontal data={roomInfo && roomInfo.facilities}
+                            horizontal data={roomInfo && roomInfo.amenities}
 
                             renderItem={({ item }) => (
                                 <FacilityCard
