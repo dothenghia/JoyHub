@@ -39,8 +39,8 @@ export default function ReservationCard({ props , navigation }) {
             <View style={styles.text_container}>
                 {tagMappind[props.status]}
                 <JoyText style={styles.hotel_name}>{props.hotel_name}</JoyText>
-                <JoyText style={styles.room_name}>{props.room_name}</JoyText>
-                <JoyText style={styles.date}>{props.date}</JoyText>
+                <JoyText style={styles.room_name}>{props.room_name} ({props.room_type})</JoyText>
+                <JoyText style={styles.date}>{props.start_date} - {props.end_date}</JoyText>
                 <JoyText style={styles.price}>{props.price} VND</JoyText>
 
             </View>
