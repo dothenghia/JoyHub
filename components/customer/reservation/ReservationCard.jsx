@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     tag_status: {
+        marginTop: -6,
         paddingHorizontal: 12,
         paddingVertical: 8,
         borderRadius: 8,
@@ -89,10 +90,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     hotel_name: {
-        fontSize: TEXTS.xl,
+        fontSize: TEXTS.xxl,
         fontWeight: '600',
         color: COLORS.heading_text,
-        marginTop: 2,
+        marginTop: 4,
     },
     room_name: {
         fontSize: TEXTS.lg,
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
     },
     price: {
-        fontSize: TEXTS.xl,
+        fontSize: TEXTS.xxl,
         fontWeight: '900',
         color: COLORS.primary,
         marginTop: 2,

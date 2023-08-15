@@ -129,15 +129,15 @@ export default function PaymentScreen({ navigation, route }) {
                             <JoyText style={styles.joycoin}>200.000</JoyText>
                         </View>
                         {notEnoughJoyCoin && (
-                        <View>
-                            <JoyText style={styles.warning}>You don't have enough JoyCoin to make payment !</JoyText>
-                            <TouchableOpacity
-                                style={styles.topup_button}
-                                onPress={topupHandler}
-                            >
-                                <JoyText style={styles.topup_text}>Go to Top up JoyCoin</JoyText>
-                            </TouchableOpacity>
-                        </View>
+                            <View>
+                                <JoyText style={styles.warning}>You don't have enough JoyCoin to make payment !</JoyText>
+                                <TouchableOpacity
+                                    style={styles.topup_button}
+                                    onPress={topupHandler}
+                                >
+                                    <JoyText style={styles.topup_text}>Go to Top up JoyCoin</JoyText>
+                                </TouchableOpacity>
+                            </View>
                         )}
                     </View>
 
@@ -177,11 +177,10 @@ export default function PaymentScreen({ navigation, route }) {
                     <View style={styles.modal_container}>
                         <TouchableOpacity
                             onPress={closeConfirmModalHandler}
-                            style={{ width: 46, marginBottom: 6 }}
+                            style={{ width: 24, marginBottom: 6, borderWidth: 1, borderColor: COLORS.primary, borderRadius: 4 }}
                         >
-                            <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
-                                Close
-                            </JoyText>
+                            <AntDesign name={"close"} size={22} color={COLORS.primary} />
+
                         </TouchableOpacity>
                         <JoyText style={{ fontSize: TEXTS.lg, fontWeight: '600', color: COLORS.heading_text, marginTop: 8, marginBottom: 16 }}>Confirm this Booking Reservation ?</JoyText>
                         <TouchableOpacity
@@ -251,7 +250,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     topup_text: {
-        color: COLORS.white, fontSize: TEXTS.lg, fontWeight: '600' , textAlign: 'center'
+        color: COLORS.white, fontSize: TEXTS.lg, fontWeight: '600', textAlign: 'center'
     },
 
 

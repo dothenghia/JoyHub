@@ -32,10 +32,10 @@ export default function ReservationScreen({ navigation }) {
     return (
         <View style={customerStyles.page_container}>
             <View style={customerStyles.fixed_top_bar}>
-                <JoyText style={customerStyles.top_bar_title}>Reservation</JoyText>
+                <JoyText style={{...customerStyles.top_bar_title, top: 12}}>Reservation</JoyText>
             </View>
 
-            <ScrollView style={{ flex: 1 , marginTop: 70-6}}>
+            <ScrollView style={{ flex: 1 , marginTop: 60-6}}>
                 {
                     reservationList.map((reservation) => (
                         <View key={reservation.id}>

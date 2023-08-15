@@ -239,7 +239,7 @@ export default function HotelScreen({ navigation, route }) {
                 <DatePickerModal
                     locale="en"
                     mode="range"
-                    // disableStatusBar
+                    disableStatusBar
                     disableStatusBarPadding
                     visible={openDatePicker}
                     onDismiss={onDismiss}

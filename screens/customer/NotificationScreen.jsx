@@ -30,10 +30,12 @@ export default function NotificationScreen({ navigation }) {
 
 
     return (
-        <ScrollView style={customerStyles.page_container}>
-            <JoyText style={customerStyles.page_name}>Notification</JoyText>
+        <View style={customerStyles.page_container}>
+            <View style={customerStyles.fixed_top_bar}>
+                <JoyText style={{...customerStyles.top_bar_title, top: 12}}>Notification</JoyText>
+            </View>
 
-            <View>
+            <ScrollView style={{ flex: 1 , marginTop: 60}}>
                 {
                     notificationList.map((notification) => (
                         <View key={notification.id} style={styles.card_container}>
@@ -44,10 +46,10 @@ export default function NotificationScreen({ navigation }) {
                         </View>
                     ))
                 }
-            </View>
+            </ScrollView>
 
 
-        </ScrollView>
+        </View>
     );
 }
 

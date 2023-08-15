@@ -2,7 +2,7 @@ import { StyleSheet, View, Image } from "react-native";
 import JoyText from "../../general/JoyText";
 
 // Import Style & Theme
-import { COLORS } from "../../../constants/theme";
+import { COLORS, TEXTS } from "../../../constants/theme";
 
 export default function NotificationCard({ props , navigation }) {
     return (
@@ -17,7 +17,7 @@ export default function NotificationCard({ props , navigation }) {
             </View>
 
             <View style={styles.text_container}>
-                <JoyText>{props.message}</JoyText>
+                <JoyText numberOfLines={2} style={styles.message}>{props.message}</JoyText>
                 <JoyText style={{textAlign: 'right', color: COLORS.primary, fontWeight: '600'}}>{props.time}</JoyText>
             </View>
         </View>
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
         borderRadius: 20,
-        elevation: 20,
+        elevation: 10,
     },
 
     thumbnail_wrapper: {
@@ -50,9 +50,17 @@ const styles = StyleSheet.create({
     },
 
     text_container: {
-        color: 'white',
+        height: '100%',
         flex: 1,
         paddingLeft: 12,
         paddingRight: 16,
-    }
+        paddingVertical: 12,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    message: {
+        fontSize: TEXTS.xl,
+        fontWeight: '600',
+        color: COLORS.heading_text,
+    },
 });

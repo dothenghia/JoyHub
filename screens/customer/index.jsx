@@ -16,6 +16,7 @@ export default function CustomerMain() {
         <Tab.Navigator 
             initialRouteName="MainPage"
             screenOptions={{ headerShown: false }}
+            backBehavior="history"
         >
             <Tab.Screen name="MainPage" component={MainScreen} />
             <Tab.Screen name="ReservationPage" component={ReservationScreen} />

@@ -29,10 +29,9 @@ const customerStyles = StyleSheet.create({
         right: 0,
         top: 0,
         backgroundColor: '#fff',
-        height: 70,
-        elevation: 10,
+        height: 60,
+        elevation: 6,
         paddingHorizontal: 20,
-        paddingTop: 12,
         zIndex: 20,
     },
     top_bar_title: {

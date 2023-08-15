@@ -256,6 +256,8 @@ export default function RoomScreen({ navigation, route }) {
                 <DatePickerModal
                     locale="en"
                     mode="range"
+                    disableStatusBar
+                    disableStatusBarPadding
                     visible={openDatePicker}
                     onDismiss={onDismiss}
                     startDate={dateRange.startDate}
@@ -276,11 +278,13 @@ export default function RoomScreen({ navigation, route }) {
                         <View style={{ paddingHorizontal: 14, marginTop: 14, marginBottom: 8 }}>
                             <TouchableOpacity
                                 onPress={closeLoginModalHandler}
-                                style={{ width: 46, marginBottom: 6 }}
+                                style={{ width: 24, marginBottom: 6, borderWidth: 1, borderColor: COLORS.primary, borderRadius: 4 }}
                             >
-                                <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
+                                {/* <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
                                     Close
-                                </JoyText>
+                                </JoyText> */}
+                                <AntDesign name={"close"} size={22} color={COLORS.primary} />
+
                             </TouchableOpacity>
                             <JoyText style={{ fontSize: TEXTS.lg, fontWeight: '600', color: COLORS.heading_text, marginTop: 8, marginBottom: 16 }}>Please Log in to continue booking</JoyText>
 
