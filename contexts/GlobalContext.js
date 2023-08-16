@@ -16,10 +16,16 @@ function GlobalProvider ({ children }) {
     // Tạo ra các biến "global"
 	const [role, setRole] = useState('guest') // Biến này dùng để check role => nếu là guest thì bắt phải đăng nhập mới cho đặt phòng, ...
     const [dateRange, setDateRange] = useState({ startDate: today, endDate: tomorrow });
+    const [userName, setUserName] = useState('-')
+    const [userId, setUserId] = useState('-')
+    const [userJoycoin, setUserJoycoin] = useState(0)
 
     const globalData = {
         role, setRole,
         dateRange, setDateRange,
+        userName, setUserName,
+        userId, setUserId,
+        userJoycoin, setUserJoycoin,
     }
 
     return (

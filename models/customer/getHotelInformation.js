@@ -134,10 +134,5 @@ const hotelInformation = {
 
 
 export default async function getHotelInformation() {
-    return new Promise(resolve => {
-        setTimeout(function () {
-            resolve(hotelInformation)
-            console.log("[getHotelInformation.js] Finish")
-        }, 500)
-    })
+    return hotelInformation
 }

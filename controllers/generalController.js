@@ -1,9 +1,7 @@
-import checkLegit from "../models/general/checkLegit"
 import login from "../models/general/login"
 import register from "../models/general/register"
 
 const actions = {
-    CHECKLEGIT: checkLegit,
     LOGIN: loginUser,
     MODERATORREGISTER: registerModerator,
     CUSTOMERREGISTER: registerCustomer,

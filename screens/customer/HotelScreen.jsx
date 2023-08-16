@@ -242,6 +242,9 @@ export default function HotelScreen({ navigation, route }) {
                     startDate={dateRange.startDate}
                     endDate={dateRange.endDate}
                     onConfirm={onConfirm}
+                    validRange={{
+                        startDate: new Date()
+                    }}
                 />
             </View>
 

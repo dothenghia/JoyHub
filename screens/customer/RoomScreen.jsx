@@ -263,6 +263,9 @@ export default function RoomScreen({ navigation, route }) {
                     startDate={dateRange.startDate}
                     endDate={dateRange.endDate}
                     onConfirm={onConfirm}
+                    validRange={{
+                        startDate: new Date()
+                    }}
                 />
             </View>
 
@@ -289,7 +292,7 @@ export default function RoomScreen({ navigation, route }) {
                             <JoyText style={{ fontSize: TEXTS.lg, fontWeight: '600', color: COLORS.heading_text, marginTop: 8, marginBottom: 16 }}>Please Log in to continue booking</JoyText>
 
                             <TouchableOpacity
-                                style={{...fixedBarStyle.book_button, width: '100%'}}
+                                style={{ ...fixedBarStyle.book_button, width: '100%' }}
                                 onPress={backToLoginHandler}>
                                 <JoyText style={fixedBarStyle.book_button_text}>Confirm</JoyText>
                             </TouchableOpacity>

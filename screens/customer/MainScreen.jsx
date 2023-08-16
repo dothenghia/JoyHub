@@ -18,7 +18,7 @@ import HotelCard from "../../components/customer/main/HotelCard";
 import { globalContext } from "../../contexts/GlobalContext";
 
 export default function MainScreen({ navigation }) {
-    const { role, setRole } = useContext(globalContext)
+    const { role, setRole, setUserName, setUserId, setUserJoycoin } = useContext(globalContext)
     console.log('[Customer] MainScreen :', role)
 
     // ------ Data State
@@ -38,6 +38,17 @@ export default function MainScreen({ navigation }) {
     }, [])
 
     useEffect(() => {
+        const fetchUserInformation = async () => {
+            let data = await CController('GETUSERINFORMATION')
+            setUserId(data.id)
+            setUserName(data.name)
+            setUserJoycoin(data.joycoin)
+        }
+
+        fetchUserInformation()
+    }, [])
+
+    useEffect(() => {
         const fetchLocationList = async () => {
             const data = await CController('GETLOCATIONLIST')
             setLocationList(data)
@@ -46,31 +57,6 @@ export default function MainScreen({ navigation }) {
         fetchLocationList()
     }, [])
 
-    // useEffect(() => {
-    //     const backAction = () => {
-    //         Alert.alert('Hold on!', 'Are you sure you want to Log out?', [
-    //             {
-    //                 text: 'Cancel',
-    //                 onPress: () => null,
-    //                 style: 'cancel',
-    //             },
-    //             {
-    //                 text: 'YES', onPress: () => {
-    //                     setRole('guest')
-    //                     navigation.navigate('LoginPage')
-    //                 }
-    //             },
-    //         ]);
-    //         return true;
-    //     };
-
-    //     const backHandler = BackHandler.addEventListener(
-    //         'hardwareBackPress',
-    //         backAction,
-    //     );
-
-    //     return () => backHandler.remove();
-    // }, []);
 
 
     // ------ Event Handlers

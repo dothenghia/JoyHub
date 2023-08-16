@@ -1,10 +1,11 @@
 import getHotelList from "../models/customer/getHotelList";
 import getHotelInformation from "../models/customer/getHotelInformation";
 import getReservationList from "../models/customer/getReservationList";
-import getNotificationList from "../models/customer/getNotification";
+import getNotificationList from "../models/customer/getNotificationList";
 import getLocationList from "../models/customer/getLocationList";
 import getRoomInformation from "../models/customer/getRoomInformation";
 import getPaymentInformation from "../models/customer/getPaymentInformation";
+import getUserInformation from "../models/customer/getUserInformation";
 
 export default async function CController (type, ...payload) {
     switch (type) {
@@ -41,6 +42,11 @@ export default async function CController (type, ...payload) {
         case 'GETNOTIFICATIONLIST' : {
             const notificationList = await getNotificationList()
             return notificationList
+        }
+
+        case 'GETUSERINFORMATION' : {
+            const userInformation = await getUserInformation()
+            return userInformation
         }
 
 

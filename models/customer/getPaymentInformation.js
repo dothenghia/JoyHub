@@ -25,6 +25,6 @@ const paymentInformation = {
 }
 
 
-export default async function getHotelInformation() {
+export default async function getPaymentInformation() {
     return paymentInformation
 }
