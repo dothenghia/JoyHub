@@ -21,6 +21,9 @@ export default function CustomerMain() {
             initialRouteName="MainPage"
             screenOptions={{ headerShown: false }}
             backBehavior="history"
+            tabBarOptions={{
+                activeTintColor: COLORS.primary,
+            }}
         >
             <Tab.Screen name="MainPage" component={MainScreen}
                 options={{
@@ -34,7 +37,7 @@ export default function CustomerMain() {
                 options={{
                     tabBarLabel: 'Reservation',
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home" color={color} size={size} />
+                        <Ionicons name="calendar" color={color} size={size} />
                     ),
                 }}
             />
@@ -42,7 +45,7 @@ export default function CustomerMain() {
                 options={{
                     tabBarLabel: 'Notification',
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home" color={color} size={size} />
+                        <Ionicons name="notifications" color={color} size={size} />
                     ),
                 }}
             />
@@ -50,7 +53,7 @@ export default function CustomerMain() {
                 options={{
                     tabBarLabel: 'Profile',
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home" color={color} size={size} />
+                        <Ionicons name="person-circle" color={color} size={size} />
                     ),
                 }}
             />
