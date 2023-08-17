@@ -11,7 +11,7 @@ import customerStyles from '../../styles/customer'
 import { globalContext } from "../../contexts/GlobalContext";
 
 export default function UserScreen({ navigation }) {
-    const { setRole } = useContext(globalContext)
+    const { role, setRole } = useContext(globalContext)
     console.log('[Customer] UserScreen')
 
     const editInformationHandler = () => {
@@ -41,72 +41,91 @@ export default function UserScreen({ navigation }) {
                 <JoyText style={{ ...customerStyles.top_bar_title, top: 12 }}>Profile</JoyText>
             </View>
 
-            <ScrollView style={{ flex: 1, marginTop: 60 }}>
-                <View style={styles.info_container}>
-                    <View style={styles.icon_wrapper}>
-                        <FontAwesome5Icon name={"user-circle"} solid size={90} color={COLORS.primary} />
+            {
+                role === 'guest' && (
+                    <View style={{ flex: 1, marginTop: 60 - 6, alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+                        <JoyText style={{ fontSize: TEXTS.xl, color: COLORS.heading_text }}>Please </JoyText>
+                        <TouchableOpacity
+                            onPress={() => { navigation.navigate('LoginPage') }}
+                        >
+                            <JoyText style={{ fontSize: TEXTS.xl, color: COLORS.primary, fontWeight: '600' }}>Log in</JoyText>
+                        </TouchableOpacity>
+                        <JoyText style={{ fontSize: TEXTS.xl, color: COLORS.heading_text }}> to see your Profile</JoyText>
                     </View>
-                    <View style={styles.text_container}>
-                        <JoyText style={styles.username}>The Nghia</JoyText>
-                        <JoyText style={styles.joycoin}>JoyCoin : 200.000</JoyText>
-                    </View>
-                </View>
+                )
+            }
 
-                <View style={customerStyles.section_container}>
-                    <TouchableOpacity style={styles.button}
-                        onPress={editInformationHandler}
-                    >
-                        <JoyText style={styles.button_text}>
-                            Edit information
-                        </JoyText>
-                        <FontAwesome5Icon style={styles.button_icon} name={"user-edit"} solid size={24} color={COLORS.heading_text} />
-                    </TouchableOpacity>
+            {
+                role === 'customer' && (
+                    <ScrollView style={{ flex: 1, marginTop: 60 }}>
+                        <View style={styles.info_container}>
+                            <View style={styles.icon_wrapper}>
+                                <FontAwesome5Icon name={"user-circle"} solid size={90} color={COLORS.primary} />
+                            </View>
+                            <View style={styles.text_container}>
+                                <JoyText style={styles.username}>The Nghia</JoyText>
+                                <JoyText style={styles.joycoin}>JoyCoin : 200.000</JoyText>
+                            </View>
+                        </View>
 
-
-
-                    <TouchableOpacity style={styles.button}
-                        onPress={topupHandler}
-                    >
-                        <JoyText style={styles.button_text}>
-                            Top up JoyCoin
-                        </JoyText>
-                        <FontAwesome5Icon style={styles.button_icon} name={"coins"} solid size={24} color={COLORS.heading_text} />
-                    </TouchableOpacity>
-
-
-
-                    <TouchableOpacity style={styles.button}
-                        onPress={recentlyViewHandler}
-                    >
-                        <JoyText style={styles.button_text}>
-                            Recently view
-                        </JoyText>
-                        <FontAwesome5Icon style={styles.button_icon} name={"eye"} solid size={24} color={COLORS.heading_text} />
-                    </TouchableOpacity>
+                        <View style={customerStyles.section_container}>
+                            <TouchableOpacity style={styles.button}
+                                onPress={editInformationHandler}
+                            >
+                                <JoyText style={styles.button_text}>
+                                    Edit information
+                                </JoyText>
+                                <FontAwesome5Icon style={styles.button_icon} name={"user-edit"} solid size={24} color={COLORS.heading_text} />
+                            </TouchableOpacity>
 
 
 
-                    <TouchableOpacity style={styles.button}
-                        onPress={favoriteHandler}
-                    >
-                        <JoyText style={styles.button_text}>
-                            My favorite Hotel
-                        </JoyText>
-                        <FontAwesome5Icon style={styles.button_icon} name={"heart"} solid size={24} color={COLORS.heading_text} />
-                    </TouchableOpacity>
+                            <TouchableOpacity style={styles.button}
+                                onPress={topupHandler}
+                            >
+                                <JoyText style={styles.button_text}>
+                                    Top up JoyCoin
+                                </JoyText>
+                                <FontAwesome5Icon style={styles.button_icon} name={"coins"} solid size={24} color={COLORS.heading_text} />
+                            </TouchableOpacity>
 
 
 
-                    <TouchableOpacity style={styles.button}
-                        onPress={logoutHandler}
-                    >
-                        <JoyText style={styles.button_text}>
-                            Log out
-                        </JoyText>
-                        <FontAwesome5Icon style={styles.button_icon} name={"sign-out-alt"} solid size={24} color={COLORS.heading_text} />
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
+                            <TouchableOpacity style={styles.button}
+                                onPress={recentlyViewHandler}
+                            >
+                                <JoyText style={styles.button_text}>
+                                    Recently view
+                                </JoyText>
+                                <FontAwesome5Icon style={styles.button_icon} name={"eye"} solid size={24} color={COLORS.heading_text} />
+                            </TouchableOpacity>
+
+
+
+                            <TouchableOpacity style={styles.button}
+                                onPress={favoriteHandler}
+                            >
+                                <JoyText style={styles.button_text}>
+                                    My favorite Hotel
+                                </JoyText>
+                                <FontAwesome5Icon style={styles.button_icon} name={"heart"} solid size={24} color={COLORS.heading_text} />
+                            </TouchableOpacity>
+
+
+
+                            <TouchableOpacity style={styles.button}
+                                onPress={logoutHandler}
+                            >
+                                <JoyText style={styles.button_text}>
+                                    Log out
+                                </JoyText>
+                                <FontAwesome5Icon style={styles.button_icon} name={"sign-out-alt"} solid size={24} color={COLORS.heading_text} />
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                )
+            }
+
 
         </View>
     );
