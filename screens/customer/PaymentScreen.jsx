@@ -25,12 +25,12 @@ export default function PaymentScreen({ navigation, route }) {
 
     // ------ Fetch Data at first render
     useEffect(() => {
-        const fetchRoomInformation = async () => {
+        const fetchPaymentInformation = async () => {
             let data = await CController('GETPAYMENTINFORMATION')
             setPaymentInfo(data)
         }
 
-        fetchRoomInformation()
+        fetchPaymentInformation()
     }, [])
 
     // ------ Event Handlers

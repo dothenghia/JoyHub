@@ -5,9 +5,9 @@ import JoyText from "../../general/JoyText";
 import { COLORS, TEXTS } from "../../../constants/theme";
 
 export default function ReservationCard({ props , navigation }) {
-    console.log(props)
+    // console.log(props)
 
-    const tagMappind = {
+    const tagMapping = {
         Waiting: (
             <View style={styles.tag_wrapper}>
                 <JoyText style={{...styles.tag_status, backgroundColor: COLORS.primary_50, color: COLORS.primary}}>Waiting</JoyText>
@@ -28,6 +28,7 @@ export default function ReservationCard({ props , navigation }) {
     return (
         <TouchableOpacity
             style={styles.card_container}
+            onPress={() => {navigation.navigate('DetailReservationPage')}}
         >
             <View style={styles.thumbnail_wrapper}>
                 <Image
@@ -37,7 +38,7 @@ export default function ReservationCard({ props , navigation }) {
             </View>
 
             <View style={styles.text_container}>
-                {tagMappind[props.status]}
+                {tagMapping[props.status]}
                 <JoyText style={styles.hotel_name}>{props.hotel_name}</JoyText>
                 <JoyText style={styles.room_name}>{props.room_name} ({props.room_type})</JoyText>
                 <JoyText style={styles.date}>{props.start_date} - {props.end_date}</JoyText>

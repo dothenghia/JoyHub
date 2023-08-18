@@ -47,7 +47,7 @@ const customerStyles = StyleSheet.create({
     top_bar_button: {
         height: 40,
         width: 40,
-        padding: 10,
+        // padding: 10,
         backgroundColor: '#fff' ,
         borderRadius: 10,
         marginHorizontal: 24,

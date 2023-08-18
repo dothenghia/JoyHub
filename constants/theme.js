@@ -1,6 +1,8 @@
 const COLORS = {
     primary : '#FF6400',
     primary_50 : 'rgba(255, 100, 0, 0.2)',
+    primary_2 : '#FCDBC5',
+
     secondary: '#FB9F64',
     warning: '#D73B35',
     warning_bg: '#EEB0AE',
