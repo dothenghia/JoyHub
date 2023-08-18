@@ -14,7 +14,6 @@ import TopupScreen from "./TopupScreen";
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { COLORS } from "../../constants/theme";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,11 +21,19 @@ export default function CustomerMain() {
     return (
         <Tab.Navigator
             initialRouteName="MainPage"
-            screenOptions={{ headerShown: false }}
-            backBehavior="history"
-            tabBarOptions={{
-                activeTintColor: COLORS.primary,
+            screenOptions={{
+                headerShown: false,
+                tabBarActiveTintColor: "#FF6400",
+                tabBarStyle: [
+                    {
+                        "display": "flex",
+                        height: 58,
+                        paddingTop: 6,
+                        paddingBottom: 6,
+                    },
+                ]
             }}
+            backBehavior="history"
         >
             <Tab.Screen name="MainPage" component={MainScreen}
                 options={{
