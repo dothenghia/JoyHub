@@ -63,6 +63,7 @@ export default function RecoveryScreen({ navigation }) {
                     style={generalStyles.input_field}
                     placeholder='Enter Username'
                     placeholderTextColor={COLORS.subheading_text}
+                    allowFontScaling={false}
                     autoCapitalize="none"
                     onChangeText={(e) => setUsername(e)}
                 />
@@ -72,9 +73,9 @@ export default function RecoveryScreen({ navigation }) {
                 <View style={{ marginBottom: 50 }}>
                     <TouchableOpacity
                         onPress={sendCodeHandler}
-                        style={ generalStyles.button_1 }
+                        style={generalStyles.button_1}
                     >
-                        <JoyText style={ generalStyles.button_text_1 }>
+                        <JoyText style={generalStyles.button_text_1}>
                             Send Code
                         </JoyText>
                     </TouchableOpacity>
@@ -106,6 +107,7 @@ export default function RecoveryScreen({ navigation }) {
                             placeholder='Enter OTP Code'
                             placeholderTextColor={COLORS.subheading_text}
                             onChangeText={(e) => setOTP(e)}
+                            allowFontScaling={false}
                             autoCapitalize="none"
                             keyboardType="numeric"
                         />
@@ -114,9 +116,9 @@ export default function RecoveryScreen({ navigation }) {
                         <View style={{ marginBottom: 30 }}>
                             <TouchableOpacity
                                 onPress={verifyHandler}
-                                style={ generalStyles.button_1 }
+                                style={generalStyles.button_1}
                             >
-                                <JoyText style={ generalStyles.button_text_1 }>
+                                <JoyText style={generalStyles.button_text_1}>
                                     Verify
                                 </JoyText>
                             </TouchableOpacity>
@@ -129,7 +131,7 @@ export default function RecoveryScreen({ navigation }) {
 
                         {/* Resend code Line */}
                         <View style={styles.resendLine}>
-                            <JoyText style={{color: COLORS.text, fontSize: TEXTS.lg}}>
+                            <JoyText style={{ color: COLORS.text, fontSize: TEXTS.lg }}>
                                 Didn't received code?
                             </JoyText>
                             <TouchableOpacity
@@ -142,7 +144,7 @@ export default function RecoveryScreen({ navigation }) {
                         </View>
 
                         {/* Cancel button */}
-                        <View style={{ marginTop: 12, maxWidth: '20%'}}>
+                        <View style={{ marginTop: 12, maxWidth: '20%' }}>
                             <TouchableOpacity
                                 onPress={() => setModalVisibility(false)}
                             >

@@ -69,7 +69,7 @@ const generalStyles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 50,
 
-        fontSize: TEXTS.sm,
+        fontSize: TEXTS.lg,
         color: COLORS.text
     },
 

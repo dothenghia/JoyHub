@@ -9,6 +9,9 @@ import RoomScreen from "./RoomScreen";
 import PaymentScreen from "./PaymentScreen";
 import AfterPaymentScreen from "./AfterPaymentScreen";
 import DetailReservationScreen from "./DetailReservationScreen";
+import EditInformationScreen from "./EditInformationScreen";
+import TopupScreen from "./TopupScreen";
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { COLORS } from "../../constants/theme";
@@ -83,6 +86,18 @@ export default function CustomerMain() {
                 }}
             />
             <Tab.Screen name="DetailReservationPage" component={DetailReservationScreen}
+                options={{
+                    tabBarButton: (props) => (null),
+                    tabBarStyle: { display: 'none' }
+                }}
+            />
+            <Tab.Screen name="EditInformationPage" component={EditInformationScreen}
+                options={{
+                    tabBarButton: (props) => (null),
+                    tabBarStyle: { display: 'none' }
+                }}
+            />
+            <Tab.Screen name="TopupPage" component={TopupScreen}
                 options={{
                     tabBarButton: (props) => (null),
                     tabBarStyle: { display: 'none' }

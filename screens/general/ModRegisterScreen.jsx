@@ -61,6 +61,7 @@ export default function ModRegisterScreen({ navigation }) {
                 style={generalStyles.input_field}
                 placeholder='Enter Username'
                 placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
                 autoCapitalize="none"
                 onChangeText={(e) => setUsername(e)}
             />
@@ -70,6 +71,7 @@ export default function ModRegisterScreen({ navigation }) {
                 style={generalStyles.input_field}
                 placeholder='Enter Hotel Name'
                 placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
                 autoCapitalize="none"
                 onChangeText={(e) => setHotelname(e)}
             />
@@ -79,6 +81,7 @@ export default function ModRegisterScreen({ navigation }) {
                 style={generalStyles.input_field}
                 placeholder='Enter Email'
                 placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
                 autoCapitalize="none"
                 onChangeText={(e) => setEmail(e)}
             />
@@ -89,6 +92,7 @@ export default function ModRegisterScreen({ navigation }) {
                 placeholder='Enter Password'
                 placeholderTextColor={COLORS.subheading_text}
                 autoCapitalize="none"
+                allowFontScaling={false}
                 secureTextEntry={true}
                 onChangeText={(e) => setPassword(e)}
             />
@@ -99,6 +103,7 @@ export default function ModRegisterScreen({ navigation }) {
                 placeholder='Enter Confirm Password'
                 placeholderTextColor={COLORS.subheading_text}
                 autoCapitalize="none"
+                allowFontScaling={false}
                 secureTextEntry={true}
                 onChangeText={(e) => setConfirm(e)}
             />
@@ -108,6 +113,7 @@ export default function ModRegisterScreen({ navigation }) {
                 style={generalStyles.input_field}
                 placeholder='Enter Hotel Address'
                 placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
                 autoCapitalize="none"
                 onChangeText={(e) => setAddress(e)}
             />
@@ -119,6 +125,7 @@ export default function ModRegisterScreen({ navigation }) {
                 placeholderTextColor={COLORS.subheading_text}
                 autoCapitalize="none"
                 multiline={true}
+                allowFontScaling={false}
                 numberOfLines={8}
                 textAlignVertical={'top'}
                 onChangeText={(e) => setDescription(e)}
