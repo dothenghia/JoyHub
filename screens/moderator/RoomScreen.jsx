@@ -26,10 +26,11 @@ export default function RoomScreen({ navigation }) {
     // ------ Fetch Data at first render
     useEffect(() => {
         const fetchHotelInformation = async () => {
-            let data = await MController('GETHOTELINFO')
+            let data = await MController('GETROOMLIST')
             setHotelInfo(data)
-            setamenities(data.amenitiesList)
+            setamenities([{label: 'Air Conditioner', value: 'Air Conditioner'}])
             setRoomList(data.roomList)
+            console.log(roomList)
         }
 
         fetchHotelInformation()

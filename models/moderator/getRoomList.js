@@ -1,491 +1,84 @@
-const roomList = 
-[
-    { 
-        roomType: 'Standard' , 
-        roomList : 
-        [
-            {
-                name: 'Sweet Couple',
-                price: 190000,
-                info: [
-                    {
-                        label: "area",
-                        value: "50",
-                    },
-                    {
-                        label: "bed",
-                        value: "1",
-                    },
-                    {
-                        label: "capacity",
-                        value: "2",
-                    },
-                ],
-                amenities: [
-                    {
-                        label: "wifi",
-                        value: "Wifi",
-                    },
-                    {
-                        label: "pool",
-                        value: "Pool",
-                    },
-                    {
-                        label: "bathtub",
-                        value: "Bathtub",
-                    },
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },
-            {
-                name: 'Three Some',
-                price: 300000,
-                info: [
-                    {
-                        label: "area",
-                        value: "50",
-                    },
-              
-                    {
-                        label: "bed",
-                        value: "1",
-                    },
-                    {
-                        label: "capacity",
-                        value: "3",
-                    },
-                ],
-                amenities: [
-                    {
-                        label: "wifi",
-                        value: "Wifi",
-                    },
-                    {
-                        label: "pool",
-                        value: "Pool",
-                    },
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },
-            {
-                name: "Hand Some",
-                price: 84000,
-                info: [
-                    {
-                        label: "area",
-                        value: "15",
-                    },
-                    {
-                        label: "bed",
-                        value: "1",
-                    },
-                    {
-                        label: "capacity",
-                        value: "1",
-                    },
-                ],
-                amenities: [
-                    
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },{
-                name: "gangphank",
-                price: 520000,
-                info: [
-                    {
-                        label: "area",
-                        value: "35",
-                    },
-                    {
-                        label: "bed",
-                        value: "3",
-                    },
-                    {
-                        label: "capacity",
-                        value: "6",
-                    },
-                ],
-                amenities: [
-                    {
-                        label: "wifi",
-                        value: "Wifi",
-                    },
-                    {
-                        label: "bathtub",
-                        value: "Bathtub",
-                    },
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },{
-                name: "Normal Room",
-                price: 210000,
-                info: [
-                    {
-                        label: "area",
-                        value: "20",
-                    },
-                    {
-                        label: "bed",
-                        value: "1",
-                    },
-                    {
-                        label: "capacity",
-                        value: "1",
-                    },
-                ],
-                amenities: [
-                    {
-                        label: "wifi",
-                        value: "Wifi",
-                    },
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },
-        ]
-
-    },
-    
-    { 
-        roomType: 'Deluxe' , 
-        roomList : 
-        [
-            {
-                name: 'Sweet Couple',
-                price: 190000,
-                info: [
-                    {
-                        label: "area",
-                        value: "50",
-                    },
-                    {
-                        label: "bed",
-                        value: "1",
-                    },
-                    {
-                        label: "capacity",
-                        value: "2",
-                    },
-                ],
-                amenities: [
-                    {
-                        label: "wifi",
-                        value: "Wifi",
-                    },
-                    {
-                        label: "pool",
-                        value: "Pool",
-                    },
-                    {
-                        label: "bathtub",
-                        value: "Bathtub",
-                    },
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },
-            {
-                name: 'Three Some',
-                price: 300000,
-                info: [
-                    {
-                        label: "area",
-                        value: "50",
-                    },
-              
-                    {
-                        label: "bed",
-                        value: "1",
-                    },
-                    {
-                        label: "capacity",
-                        value: "3",
-                    },
-                ],
-                amenities: [
-                    {
-                        label: "wifi",
-                        value: "Wifi",
-                    },
-                    {
-                        label: "pool",
-                        value: "Pool",
-                    },
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },
-            {
-                name: "Hand Some",
-                price: 84000,
-                info: [
-                    {
-                        label: "area",
-                        value: "15",
-                    },
-                    {
-                        label: "bed",
-                        value: "1",
-                    },
-                    {
-                        label: "capacity",
-                        value: "1",
-                    },
-                ],
-                amenities: [
-                    
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },{
-                name: "gangphank",
-                price: 520000,
-                info: [
-                    {
-                        label: "area",
-                        value: "35",
-                    },
-                    {
-                        label: "bed",
-                        value: "3",
-                    },
-                    {
-                        label: "capacity",
-                        value: "6",
-                    },
-                ],
-                amenities: [
-                    {
-                        label: "wifi",
-                        value: "Wifi",
-                    },
-                    {
-                        label: "bathtub",
-                        value: "Bathtub",
-                    },
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },{
-                name: "Normal Room",
-                price: 210000,
-                info: [
-                    {
-                        label: "area",
-                        value: "20",
-                    },
-                    {
-                        label: "bed",
-                        value: "1",
-                    },
-                    {
-                        label: "capacity",
-                        value: "1",
-                    },
-                ],
-                amenities: [
-                    {
-                        label: "wifi",
-                        value: "Wifi",
-                    },
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },
-        ]
-
-    },
-    
-    { 
-        roomType: 'Luxury Dai Gia' , 
-        roomList : 
-        [
-            {
-                name: 'Sweet Couple',
-                price: 190000,
-                info: [
-                    {
-                        label: "area",
-                        value: "50",
-                    },
-                    {
-                        label: "bed",
-                        value: "1",
-                    },
-                    {
-                        label: "capacity",
-                        value: "2",
-                    },
-                ],
-                amenities: [
-                    {
-                        label: "wifi",
-                        value: "Wifi",
-                    },
-                    {
-                        label: "pool",
-                        value: "Pool",
-                    },
-                    {
-                        label: "bathtub",
-                        value: "Bathtub",
-                    },
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },
-            {
-                name: 'Three Some',
-                price: 300000,
-                info: [
-                    {
-                        label: "area",
-                        value: "50",
-                    },
-              
-                    {
-                        label: "bed",
-                        value: "1",
-                    },
-                    {
-                        label: "capacity",
-                        value: "3",
-                    },
-                ],
-                amenities: [
-                    {
-                        label: "wifi",
-                        value: "Wifi",
-                    },
-                    {
-                        label: "pool",
-                        value: "Pool",
-                    },
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },
-            {
-                name: "Hand Some",
-                price: 84000,
-                info: [
-                    {
-                        label: "area",
-                        value: "15",
-                    },
-                    {
-                        label: "bed",
-                        value: "1",
-                    },
-                    {
-                        label: "capacity",
-                        value: "1",
-                    },
-                ],
-                amenities: [
-                    
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },{
-                name: "gangphank",
-                price: 520000,
-                info: [
-                    {
-                        label: "area",
-                        value: "35",
-                    },
-                    {
-                        label: "bed",
-                        value: "3",
-                    },
-                    {
-                        label: "capacity",
-                        value: "6",
-                    },
-                ],
-                amenities: [
-                    {
-                        label: "wifi",
-                        value: "Wifi",
-                    },
-                    {
-                        label: "bathtub",
-                        value: "Bathtub",
-                    },
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },{
-                name: "Normal Room",
-                price: 210000,
-                info: [
-                    {
-                        label: "area",
-                        value: "20",
-                    },
-                    {
-                        label: "bed",
-                        value: "1",
-                    },
-                    {
-                        label: "capacity",
-                        value: "1",
-                    },
-                ],
-                amenities: [
-                    {
-                        label: "wifi",
-                        value: "Wifi",
-                    },
-                    {
-                        label: "ac",
-                        value: "Air Conditioner",
-                    },
-                ],
-            },
-        ]
-
-    },
-    
-];
-
-
-
+import axiosInstance from "../configs";
 
 export default async function getRoomList() {
+    let res = null;
+    try {
+
+        res = await axiosInstance.get("/mod/hotel/room_list");
+        //console.log(`Message: ${res.data.message}- Role: ${res.data.role}`);
+        //console.log(JSON.stringify(res.data, null, 2));
+
+        //axiosInstance.defaults.headers.common["auth-token"] = res.headers["auth-token"];
+      
+    }
+    catch (err) {
+        if (err.response) {
+            console.log(err.response.data.message);
+            return { error: err.response.data.message };
+        }
+    }
+    let roomList = []
+    if(res!=null)
+    {
+      
+        let message = res.data.message
+        console.log(message)
+        let roomType = new Map()
+        let count = 0
+        for( let i = 0 ; i<message.length ; i++ )
+        {
+            console.log("iiiir:",message[i])
+            console.log("MAP:",message[i]["room_type"])
+            if(roomType.has(message[i]["room_type"]) == false)
+            {
+                
+                roomType.set(message[i]["room_type"],count);
+                ++count;
+            }
+        }
+        roomType.forEach((key,value) => {
+            roomList.push(
+                {
+                    roomType: value,
+                    roomList: []
+                }
+            )
+        });
+
+        
+        for( let i = 0 ; i<message.length ; i++ )
+        {
+            
+            roomList[roomType.get(message[i]["room_type"])].roomList.push(
+                {
+                    name:message[i]["name"],
+                    price: message[i]["price"],
+                    info: [
+                            {
+                                label: "area",
+                                value: message[i]["area"],
+                            },
+                            {
+                                label: "bed",
+                                value: message[i]["bedroom"],
+                            },
+                            {
+                                label: "capacity",
+                                value: message[i]["guest"],
+                            },
+                    ],
+                    amenities: 
+                    [
+                        {
+                            label: "wifi",
+                            value: "Wifi",
+                        },
+                    ],
+                    description: message[i]["description"]
+                }
+            );
+        }
+    }
     
-    return roomList
+    return {roomList: roomList}
 }

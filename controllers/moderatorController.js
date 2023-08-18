@@ -11,8 +11,20 @@ export default async function MController (type, ...payload)
     switch (type) 
     {
         case 'GETHOTELINFO':
-            const hotelInfo = await getHotelInfo()
-            return hotelInfo
+            try
+            {
+                const hotelInfo = await getHotelInfo()
+                return hotelInfo
+            }
+            catch (error)
+            {
+                console.log(error)
+                return { 
+                    roomList : [],
+                    amenitiesList : []
+                }
+            }            
+            
         case 'GETROOMLIST':
             const roomList = await getRoomList()
             return roomList
