@@ -23,7 +23,7 @@ export default function UserScreen({ navigation }) {
     }
 
     const recentlyViewHandler = () => {
-
+        navigation.navigate('RecentlyViewPage')
     }
 
     const favoriteHandler = () => {

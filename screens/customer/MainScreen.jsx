@@ -17,6 +17,9 @@ import HotelCard from "../../components/customer/main/HotelCard";
 // Import Context
 import { globalContext } from "../../contexts/GlobalContext";
 
+// Import Loading Modal
+import LoadingModal from '../../components/general/LoadingModal'
+
 export default function MainScreen({ navigation }) {
     const { role, setRole, setUserName, setUserId, setUserJoycoin } = useContext(globalContext)
     console.log('[Customer] MainScreen :', role)
@@ -26,6 +29,7 @@ export default function MainScreen({ navigation }) {
     const [searchInput, setSearchInput] = useState('')
     const [locationList, setLocationList] = useState([])
     const [city, setCity] = useState({})
+    const [loading, setLoading] = useState(false)
 
     // Refresh Control
     const [refreshing, setRefreshing] = useState(false);
@@ -45,8 +49,10 @@ export default function MainScreen({ navigation }) {
     // ------ Fetch Data at first render
     useEffect(() => {
         const fetchHotelList = async () => {
+            setLoading(true);
             let data = await CController('GETHOTELLIST')
             setHotelList(data)
+            setLoading(false);
         }
 
         fetchHotelList()
@@ -82,10 +88,18 @@ export default function MainScreen({ navigation }) {
     return (
         <ScrollView
             style={customerStyles.page_container}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            refreshControl={ // DÙNG ĐỂ VUỐT XUỐNG RELOAD TRANG
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    colors={['#FF6400']}
+                />
             }
         >
+
+            {/* ------ LOADING MODAL ------ */}
+            <LoadingModal isLoading={loading} />
+
             {/* Logo JOY-HUB text */}
             <View style={styles.logo}>
                 <Image

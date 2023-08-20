@@ -35,7 +35,7 @@ export default function HotelCard({ props, navigation }) {
                         <JoyText style={styles.hotel_location} numberOfLines={1} ellipsizeMode='head'>{props.address}</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                        <JoyText style={styles.hotel_price}>{props.smallest_price} VND</JoyText>
+                        <JoyText style={styles.hotel_price}>{props.smallest_price} JC</JoyText>
                         <JoyText>/night</JoyText>
                     </View>
                 </View>
