@@ -27,7 +27,7 @@ export default function UserScreen({ navigation }) {
     }
 
     const favoriteHandler = () => {
-
+        navigation.navigate('FavoriteHotelPage')
     }
 
     const logoutHandler = () => {

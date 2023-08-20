@@ -7,18 +7,30 @@ import JoyText from '../../components/general/JoyText'
 import customerStyles from '../../styles/customer'
 import { COLORS, TEXTS } from '../../constants/theme'
 
-// Import Context
-import { globalContext } from "../../contexts/GlobalContext";
+// Import Controller
+import CController from "../../controllers/customerController";
 
+export default function FavoriteHotelScreen({ navigation }) {
+    console.log('[Customer] FavoriteHotelScreen')
 
-export default function RecentlyViewScreen({ navigation }) {
-    const { recentlyViewList } = useContext(globalContext)
-    console.log('[Customer] RecentlyViewScreen')
+    // ------ Data State
+    const [favoriteList, setFavoriteList] = useState([])
+
+    // ------ Fetch Data at first render
+    useEffect(() => {
+        const fetchFavoriteList = async () => {
+            let data = await CController('GETFAVORITELIST')
+            setFavoriteList(data)
+        }
+
+        fetchFavoriteList()
+    }, [])
 
     // ------ Event Handlers
     const backHandler = () => {
         navigation.goBack()
     }
+
 
     return (
         <View style={customerStyles.page_container}>
@@ -30,34 +42,33 @@ export default function RecentlyViewScreen({ navigation }) {
                 >
                     <AntDesign name={"arrowleft"} size={18} color={COLORS.primary} />
                 </TouchableOpacity>
-                <JoyText style={customerStyles.top_bar_title}>Recently View</JoyText>
+                <JoyText style={customerStyles.top_bar_title}>My Favorite</JoyText>
             </View>
 
-
             {
-                recentlyViewList && recentlyViewList.length === 0 && (
+                favoriteList && favoriteList.length === 0 && (
                     <View style={{ flex: 1, marginBottom: 100, alignItems: 'center', justifyContent: 'center' }}>
-                        <JoyText style={{ fontSize: TEXTS.xxl, color: COLORS.heading_text }}>You have not viewed any room</JoyText>
+                        <JoyText style={{ fontSize: TEXTS.xxl, color: COLORS.heading_text }}>You have not saved any favorite hotel</JoyText>
 
                         <TouchableOpacity style={{ marginTop: 12 }}
                             onPress={() => { navigation.navigate('MainPage') }}
                         >
-                            <JoyText style={{ fontSize: TEXTS.xxl, color: COLORS.primary, fontWeight: '600' }}>Explore rooms</JoyText>
+                            <JoyText style={{ fontSize: TEXTS.xxl, color: COLORS.primary, fontWeight: '600' }}>Explore hotels</JoyText>
                         </TouchableOpacity>
                     </View>
                 )
             }
 
             {
-                recentlyViewList && recentlyViewList.length > 0 && (
+                favoriteList && favoriteList.length > 0 && (
                     <ScrollView>
                         {
-                            recentlyViewList.map((hotel, index) => (
+                            favoriteList.map((hotel, index) => (
                                 <View>
                                     <TouchableOpacity
                                         key={index}
                                         style={styles.card_container}
-                                    // onPress={() => {navigation.navigate('RoomPage', )}}
+                                    // onPress={() => {navigation.navigate('HotelPage', )}}
                                     >
                                         <View style={styles.thumbnail_wrapper}>
                                             <Image
@@ -68,7 +79,7 @@ export default function RecentlyViewScreen({ navigation }) {
 
                                         <View style={styles.text_container}>
                                             <JoyText style={styles.hotel_name}>{hotel.hotel_name}</JoyText>
-                                            <JoyText style={styles.room_name}>{hotel.room_name} ({hotel.room_type})</JoyText>
+                                            <JoyText style={styles.location}>{hotel.address}</JoyText>
                                             <JoyText style={styles.price}>{hotel.price} Joycoin</JoyText>
                                         </View>
                                     </TouchableOpacity>
@@ -123,7 +134,7 @@ const styles = StyleSheet.create({
         color: COLORS.heading_text,
         marginTop: 4,
     },
-    room_name: {
+    location: {
         fontSize: TEXTS.lg,
         color: COLORS.subheading_text,
         marginTop: 2,

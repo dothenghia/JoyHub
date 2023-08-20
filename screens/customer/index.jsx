@@ -12,6 +12,7 @@ import DetailReservationScreen from "./DetailReservationScreen";
 import EditInformationScreen from "./EditInformationScreen";
 import TopupScreen from "./TopupScreen";
 import RecentlyViewScreen from "./RecentlyViewScreen";
+import FavoriteHotelScreen from "./FavoriteHotelScreen";
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -112,6 +113,12 @@ export default function CustomerMain() {
                 }}
             />
             <Tab.Screen name="RecentlyViewPage" component={RecentlyViewScreen}
+                options={{
+                    tabBarButton: (props) => (null),
+                    tabBarStyle: { display: 'none' }
+                }}
+            />
+            <Tab.Screen name="FavoriteHotelPage" component={FavoriteHotelScreen}
                 options={{
                     tabBarButton: (props) => (null),
                     tabBarStyle: { display: 'none' }
