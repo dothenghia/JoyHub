@@ -1,6 +1,6 @@
 // Import Hook & Component
-import { useState, useEffect, useContext } from "react";
-import { StyleSheet, View, Image, TextInput, ScrollView, TouchableOpacity, BackHandler, Alert } from "react-native";
+import { useState, useEffect, useContext, useCallback } from "react";
+import { StyleSheet, RefreshControl, View, Image, TextInput, ScrollView, TouchableOpacity, BackHandler, Alert } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import SelectDropdown from 'react-native-select-dropdown'
 
@@ -26,6 +26,21 @@ export default function MainScreen({ navigation }) {
     const [searchInput, setSearchInput] = useState('')
     const [locationList, setLocationList] = useState([])
     const [city, setCity] = useState({})
+
+    // Refresh Control
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+        const fetchHotelList = async () => {
+            setRefreshing(true);
+            let data = await CController('GETHOTELLIST')
+            setHotelList(data)
+            console.log('Again')
+            setRefreshing(false);
+        }
+
+        fetchHotelList()
+    }, []);
 
     // ------ Fetch Data at first render
     useEffect(() => {
@@ -65,7 +80,12 @@ export default function MainScreen({ navigation }) {
     }
 
     return (
-        <ScrollView style={customerStyles.page_container}>
+        <ScrollView
+            style={customerStyles.page_container}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             {/* Logo JOY-HUB text */}
             <View style={styles.logo}>
                 <Image
@@ -142,9 +162,9 @@ export default function MainScreen({ navigation }) {
 
             {/* Hotel List */}
             <View style={customerStyles.section_container}>
-                {
-                    hotelList.map((hotel) => {
-                        return (<HotelCard key={hotel.id} props={hotel} navigation={navigation} />)
+                {hotelList &&
+                    hotelList.map((hotel, index) => {
+                        return (<HotelCard key={index} props={hotel} navigation={navigation} />)
                     })
                 }
             </View>

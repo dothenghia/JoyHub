@@ -22,7 +22,7 @@ export default function HotelCard({ props, navigation }) {
 
             <View style={styles.text_container}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                    <JoyText style={styles.hotel_name}>{props.name}</JoyText>
+                    <JoyText style={styles.hotel_name}>{props.hotel_name}</JoyText>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                         <FontAwesome5Icon name={"star"} solid size={18} color='#FFCA18' />
 
@@ -30,12 +30,12 @@ export default function HotelCard({ props, navigation }) {
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 2 }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '48%'}}>
                         <FontAwesome5Icon name={"map-marker-alt"} solid size={18} color={COLORS.subheading_text} />
-                        <JoyText style={styles.hotel_location}>{props.location}</JoyText>
+                        <JoyText style={styles.hotel_location} numberOfLines={1} ellipsizeMode='head'>{props.address}</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                        <JoyText style={styles.hotel_price}>{props.price} VND</JoyText>
+                        <JoyText style={styles.hotel_price}>{props.smallest_price} VND</JoyText>
                         <JoyText>/night</JoyText>
                     </View>
                 </View>
