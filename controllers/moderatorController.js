@@ -4,8 +4,9 @@ import getHotelInfo from "../models/moderator/getHotelInfo"
 import modMainScreen from "../models/moderator/ModMainScreen"
 import getNotifications from "../models/moderator/getNotifications"
 import getModInfo from "../models/moderator/getModInfo"
-
-
+import getAllTypes from "../models/moderator/getAllTypes"
+import addRoom from "../models/moderator/addRoom"
+import removeRoom from "../models/moderator/removeRoom"
 export default async function MController (type, ...payload) 
 {
     switch (type) 
@@ -24,7 +25,9 @@ export default async function MController (type, ...payload)
                     amenitiesList : []
                 }
             }            
-            
+        case 'GETALLTYPES':
+            const typeList = await getAllTypes()
+            return typeList     
         case 'GETROOMLIST':
             const roomList = await getRoomList()
             return roomList
@@ -40,6 +43,13 @@ export default async function MController (type, ...payload)
         case 'GETMODINFO':
             const modInfo = await getModInfo()
             return modInfo
+        case 'ADDROOM':
+            const addRes = await addRoom(...payload)
+            return addRes
+        case 'REMOVEROOM':
+            const removeRes = await removeRoom(...payload)
+            console.log(removeRes)
+            return removeRes
         default:
             return null
     }

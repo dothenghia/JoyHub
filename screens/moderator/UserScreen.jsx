@@ -4,6 +4,8 @@ import JoyText from '../../components/general/JoyText'
 import { TEXTS, COLORS } from "../../constants/theme";
 import modStyles from "../../styles/mod";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import axios from 'axios';
+import * as ImagePicker from 'expo-image-picker';
 
 //CONTROLLER
 import MController from "../../controllers/moderatorController";
@@ -34,6 +36,91 @@ export default function UserScreen({ navigation }) {
     const changeHotelName = (newName) => {
         setHotelName(newName);
     }
+
+
+
+    const convertImageToBase64 = async uri => {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const base64data = reader.result.split(',')[1]; // Extract only the base64 data
+                resolve(base64data);
+            };
+            reader.onerror = error => {
+                reject(error);
+            };
+            reader.readAsDataURL(blob);
+        });
+    };
+
+    const CLIENT_ID = '842256555618eb5';
+    const [imageData, setImageData] = useState(null);
+
+    const pickImage = async () => {
+        console.log('Picking image');
+        let result = null;
+        try {
+            result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: false,
+                aspect: [4, 3],
+                quality: 1,
+            });
+            
+        }
+        catch (error) {
+            console.log("error: ", error)
+        }
+        if (!result.cancelled) {
+
+            const base64 = await convertImageToBase64(result.uri);
+            setImageData(base64);
+            console.log(imageData)
+        }
+    };
+
+    const uploadImageToImgur = async () => {
+        let base64 = imageData
+        console.log("BASE",base64)
+        try {
+            const response = await axios.post(
+              'https://api.imgur.com/3/image',
+              { image: base64 },
+              {
+                headers: {
+                  Authorization: 'Client-ID ' + CLIENT_ID,
+                  'Content-Type': 'application/json',
+                },
+              }
+            );
+    
+            if (response.status === 200 && response.data.data && response.data.data.link) {
+              console.log('Image uploaded successfully:', response.data.data.link);
+            } else {
+              console.log('Image upload failed');
+            }
+          } catch (error) {
+            console.error('Error uploading image:', error);
+          }
+        }
+    
+
+
+
+
+
+
+
+    //////////////
+
+
+
+
+
+
 
 
 
@@ -102,14 +189,14 @@ export default function UserScreen({ navigation }) {
 
                         <View style={{ flexDirection: 'row', marginTop: 15 }}>
                             <Image style={{ flex: 2, height: 30, width: 30, marginTop: -5 }} source={require('../../assets/mod/phone.png')} />
-                            
+
                             <JoyText style={{ marginLeft: 10, flex: 6, fontSize: TEXTS.lg }}>{'Phone:'}</JoyText >
                             {
                                 (editMode === false)
-                                ?
-                                <JoyText style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888' }}>{phone ? phone : "Loading ..."}</JoyText >
-                                :
-                                <TextInput onChangeText={(text) => { setPhone(text) }} keyboardType="numeric" style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888', borderWidth: 1, borderRadius: 10, padding: 5, }}>{phone ? phone : "Loading ..."}</TextInput >
+                                    ?
+                                    <JoyText style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888' }}>{phone ? phone : "Loading ..."}</JoyText >
+                                    :
+                                    <TextInput onChangeText={(text) => { setPhone(text) }} keyboardType="numeric" style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888', borderWidth: 1, borderRadius: 10, padding: 5, }}>{phone ? phone : "Loading ..."}</TextInput >
                             }
                         </View>
 
@@ -144,7 +231,7 @@ export default function UserScreen({ navigation }) {
                             <JoyText style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888' }}>{modInfo ? modInfo.username : "Loading ..."}</JoyText >
                         </View>
 
-                        
+
 
                         <View style={{ flexDirection: 'row', marginTop: 0, marginBottom: 10 }}>
                             <JoyText style={{ marginLeft: 0, flex: 6, fontSize: TEXTS.lg }}>{'Email:'}</JoyText >
@@ -159,7 +246,7 @@ export default function UserScreen({ navigation }) {
                     </View>
 
                     <View style={{ height: 15, backgroundColor: 'transparent' }} />
-                    
+
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
                         <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Chỉnh sửa thông tin cá nhân'}</JoyText >
                     </TouchableOpacity>
@@ -180,8 +267,12 @@ export default function UserScreen({ navigation }) {
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
 
-                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { navigation.navigate('AddRoomPage') }} >
-                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'TEST BTN'}</JoyText >
+                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { pickImage() }} >
+                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Pick'}</JoyText >
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { uploadImageToImgur() }} >
+                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Send'}</JoyText >
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
 
@@ -192,6 +283,7 @@ export default function UserScreen({ navigation }) {
 
         </ScrollView>
     );
+
 }
 
 

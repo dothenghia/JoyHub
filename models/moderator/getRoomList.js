@@ -22,13 +22,13 @@ export default async function getRoomList() {
     {
       
         let message = res.data.message
-        console.log(message)
+        //console.log(message)
         let roomType = new Map()
         let count = 0
         for( let i = 0 ; i<message.length ; i++ )
         {
-            console.log("iiiir:",message[i])
-            console.log("MAP:",message[i]["room_type"])
+            // console.log("message:",message[i])
+            // console.log("MAP:",message[i]["room_type"])
             if(roomType.has(message[i]["room_type"]) == false)
             {
                 
@@ -51,6 +51,7 @@ export default async function getRoomList() {
             
             roomList[roomType.get(message[i]["room_type"])].roomList.push(
                 {
+                    id : message[i]["_id"],
                     name:message[i]["name"],
                     price: message[i]["price"],
                     info: [
