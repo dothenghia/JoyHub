@@ -55,11 +55,11 @@ export default function ReviewCard({ props }) {
     return (
         <View style={styles.review_container}>
             <View style={{ flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between' }}>
-                <JoyText style={styles.review_name}>{props.user_name}</JoyText>
-                {starsMapping[props.review_star]}
+                <JoyText style={styles.review_name}>{props.customer[0].full_name}</JoyText>
+                {starsMapping[props.star]}
             </View>
 
-            <JoyText style={styles.review_comment}>{props.review_comment}</JoyText>
+            <JoyText style={styles.review_comment}>{props.comment}</JoyText>
         </View>
     );
 }

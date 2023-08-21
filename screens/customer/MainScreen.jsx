@@ -52,31 +52,24 @@ export default function MainScreen({ navigation }) {
             setLoading(true);
             let data = await CController('GETHOTELLIST')
             setHotelList(data)
+            const locationData = await CController('GETLOCATIONLIST')
+            setLocationList(locationData)
             setLoading(false);
         }
 
         fetchHotelList()
     }, [])
 
-    useEffect(() => {
-        const fetchUserInformation = async () => {
-            let data = await CController('GETUSERINFORMATION')
-            setUserId(data.id)
-            setUserName(data.name)
-            setUserJoycoin(data.joycoin)
-        }
+    // useEffect(() => {
+    //     const fetchUserInformation = async () => {
+    //         let data = await CController('GETUSERINFORMATION')
+    //         setUserId(data.id)
+    //         setUserName(data.name)
+    //         setUserJoycoin(data.joycoin)
+    //     }
 
-        fetchUserInformation()
-    }, [])
-
-    useEffect(() => {
-        const fetchLocationList = async () => {
-            const data = await CController('GETLOCATIONLIST')
-            setLocationList(data)
-        }
-
-        fetchLocationList()
-    }, [])
+    //     fetchUserInformation()
+    // }, [])
 
 
 

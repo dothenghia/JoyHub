@@ -22,6 +22,9 @@ import CController from "../../controllers/customerController";
 // Import Context
 import { globalContext } from "../../contexts/GlobalContext";
 
+// Import Loading Modal
+import LoadingModal from '../../components/general/LoadingModal'
+
 
 export default function HotelScreen({ navigation, route }) {
     const { role, dateRange, setDateRange } = useContext(globalContext)
@@ -32,6 +35,7 @@ export default function HotelScreen({ navigation, route }) {
     const [hotelInfo, setHotelInfo] = useState(null)
     const [openDatePicker, setOpenDatePicker] = useState(false);
     const [seeAllComments, setSeeAllComments] = useState(false)
+    const [loading, setLoading] = useState(false)
 
 
     // Date Picker Handlers
@@ -48,12 +52,14 @@ export default function HotelScreen({ navigation, route }) {
     // ------ Fetch Data at first render
     useEffect(() => {
         const fetchHotelInformation = async () => {
-            let data = await CController('GETHOTELINFORMATION')
+            setLoading(true);
+            let data = await CController('GETHOTELINFORMATION', route.params, dateRange)
             setHotelInfo(data)
+            setLoading(false);
         }
 
         fetchHotelInformation()
-    }, [])
+    }, [route.params, dateRange])
 
     // ------ Event Handlers
     const backHandler = () => {
@@ -90,10 +96,14 @@ export default function HotelScreen({ navigation, route }) {
             <View style={{ flex: 1 }}>
                 {/* Hotel Screen Scroll View */}
                 <ScrollView style={{ flex: 1, marginBottom: 80 }}>
+                    {/* ------ LOADING MODAL ------ */}
+                    <LoadingModal isLoading={loading} />
+
+
                     {/* Thumbnail Hotel Image */}
                     <View style={styles.thumbnail_wrapper}>
                         <ImageBackground
-                            source={require('../../assets/customer/demo.jpg')}
+                            source={require('../../assets/customer/demo.jpg')} // @ Chờ Hình
                             resizeMode="cover"
                             style={styles.thumbnail_image}
                         >
@@ -123,18 +133,18 @@ export default function HotelScreen({ navigation, route }) {
                     <View style={customerStyles.section_container}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <JoyText style={customerStyles.page_title}>
-                                {hotelInfo ? hotelInfo.name : 'Loading ...'}
+                                {hotelInfo ? hotelInfo.hotel_name : 'Loading ...'}
                             </JoyText>
                             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                                 <FontAwesome5Icon name={"star"} solid size={18} color='#FFCA18' />
 
                                 <JoyText style={styles.rating}> {hotelInfo && hotelInfo.star}</JoyText>
-                                <JoyText style={styles.review}> ({hotelInfo && hotelInfo.review})</JoyText>
+                                <JoyText style={styles.review}> ({hotelInfo && hotelInfo.reviews.length})</JoyText>
                             </View>
 
                         </View>
                         <JoyText style={styles.location}>
-                            {hotelInfo && hotelInfo.location}
+                            {hotelInfo && hotelInfo.address}
                         </JoyText>
                         <JoyText style={styles.description} numberOfLines={3}>
                             {hotelInfo && hotelInfo.description}
@@ -166,8 +176,8 @@ export default function HotelScreen({ navigation, route }) {
                     {/* Hotel Room List */}
                     <View style={customerStyles.section_container}>
                         {
-                            hotelInfo &&
-                            hotelInfo.rooms.map((room, index) => {
+                            hotelInfo && hotelInfo.rooms_list &&
+                            hotelInfo.rooms_list.map((room, index) => {
                                 return (
                                     <View key={index}>
                                         <JoyText style={customerStyles.section_title}>{room.room_type}</JoyText>
@@ -193,11 +203,14 @@ export default function HotelScreen({ navigation, route }) {
 
                     {/* Hotel Review */}
                     <View style={{ ...customerStyles.section_container_no_py, paddingTop: 10, marginBottom: -2 }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 0 }}>
                             {/* Rating Statistic */}
                             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                                <JoyText style={{ fontSize: 32, fontWeight: '600' }}>{hotelInfo && hotelInfo.star}</JoyText>
-                                <JoyText style={{ fontSize: 16, color: COLORS.subheading_text }}> ({hotelInfo && hotelInfo.review} reviews)</JoyText>
+                                <JoyText style={{ fontSize: 52, fontWeight: '600' }}>{hotelInfo && hotelInfo.star}</JoyText>
+                                <View style={{ alignSelf: 'center' }}>
+                                    <JoyText style={{ fontSize: 18, fontWeight: '600', color: COLORS.heading_text, marginBottom: -4 }}> Rating</JoyText>
+                                    <JoyText style={{ fontSize: 16, color: COLORS.subheading_text }}> ({hotelInfo && hotelInfo.reviews.length} reviews)</JoyText>
+                                </View>
                             </View>
 
                             {/* See all Reviews Button */}
@@ -213,10 +226,10 @@ export default function HotelScreen({ navigation, route }) {
 
                         </View>
 
-                        {(hotelInfo && hotelInfo.reviews.length === 0) && (<JoyText>No review</JoyText>)}
-                        {(hotelInfo && hotelInfo.reviews.length === 1) && (<ReviewCard props={hotelInfo.reviews[0]} />)}
-                        {(hotelInfo && hotelInfo.reviews.length >= 2) && (<ReviewCard props={hotelInfo.reviews[0]} />)}
-                        {(hotelInfo && hotelInfo.reviews.length >= 2) && (<ReviewCard props={hotelInfo.reviews[1]} />)}
+                        {(hotelInfo && hotelInfo.reviews && hotelInfo.reviews.length === 0) && (<JoyText>No review</JoyText>)}
+                        {(hotelInfo && hotelInfo.reviews && hotelInfo.reviews.length === 1) && (<ReviewCard props={hotelInfo.reviews[0]} />)}
+                        {(hotelInfo && hotelInfo.reviews && hotelInfo.reviews.length >= 2) && (<ReviewCard props={hotelInfo.reviews[0]} />)}
+                        {(hotelInfo && hotelInfo.reviews && hotelInfo.reviews.length >= 2) && (<ReviewCard props={hotelInfo.reviews[1]} />)}
                     </View>
                 </ScrollView>
 
@@ -267,10 +280,10 @@ export default function HotelScreen({ navigation, route }) {
                                     Close
                                 </JoyText>
                             </TouchableOpacity>
-                            <JoyText style={customerStyles.section_title}>All comments ({hotelInfo && hotelInfo.review})</JoyText>
+                            <JoyText style={customerStyles.section_title}>All comments ({hotelInfo && hotelInfo.reviews.length})</JoyText>
                         </View>
                         <ScrollView>
-                            {hotelInfo &&
+                            {hotelInfo && hotelInfo.reviews &&
                                 hotelInfo.reviews.map((review, index) => (
                                     <ReviewCard
                                         props={review}

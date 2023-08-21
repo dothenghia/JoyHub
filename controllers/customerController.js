@@ -10,6 +10,8 @@ import getDetailReservation from "../models/customer/getDetailReservation";
 import getFavoriteList from "../models/customer/getFavoriteList";
 
 export default async function CController (type, ...payload) {
+    // console.log('[payload]' , payload)
+
     switch (type) {
         case 'GETHOTELLIST' : {
             const hotelList = await getHotelList()
@@ -22,7 +24,7 @@ export default async function CController (type, ...payload) {
         }
 
         case 'GETHOTELINFORMATION' : {
-            const hotelInformation = await getHotelInformation()
+            const hotelInformation = await getHotelInformation(payload)
             return hotelInformation
         }
 
