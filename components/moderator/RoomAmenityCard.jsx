@@ -17,9 +17,7 @@ const Icons = {
 
 
 
-export default function RoomAmenityCard({ amenities, pressable = false }) {
-
-
+export default function RoomAmenityCard({ amenities, pressable = false, chosen, setChosen }) {
 
     const n = amenities.length;
 
@@ -30,8 +28,8 @@ export default function RoomAmenityCard({ amenities, pressable = false }) {
             <FlatList style={{ height: 120, marginTop: 8 }}
                 horizontal data={amenities}
 
-                renderItem={({ item }) => (
-                    <ChangeColorButton pressable={pressable} item = {item}>
+                renderItem={({ item, index }) => (
+                    <ChangeColorButton pressable={pressable} item = {item} chosen = {chosen} setChosen={setChosen} index = {index}>
                  
                     </ChangeColorButton>
                 )}
@@ -47,27 +45,33 @@ export default function RoomAmenityCard({ amenities, pressable = false }) {
 }
 
 
-function ChangeColorButton({pressable, item }) {
-    
+function ChangeColorButton({pressable, item, chosen, setChosen , index }) {
+    tmp = chosen
     const [cardStyle,setCardStyle] = useState(styles.card_container) 
     const [iconColor, setIconColor] = useState('#000000')
+    console.log("ITEM:",item)
     return (
         <TouchableOpacity style={cardStyle} disabled={!pressable} onPress={() => {
-            if(cardStyle === styles.card_container)
+            if(chosen[index] == false)
             {
                 setCardStyle(styles.card_container_pressed)
                 setIconColor('#FFFFFF')
+                tmp[index] = true
+                setChosen(tmp)
             }    
             else 
             {
                 setCardStyle(styles.card_container)
                 setIconColor('#000000')
+                tmp[index] = false
+                setChosen(tmp)
             }
+          
         }}>
             <View style={styles.image_wrapper}>
-                <JoyIcon name={item.label} size={35} color ={iconColor} />
+                <JoyIcon name={item["amenity_id"]} size={35} color ={iconColor} />
             </View>
-            <JoyText style={{...styles.text, color : iconColor }} textColor >{item.value}</JoyText>
+            <JoyText style={{...styles.text, color : iconColor }} textColor >{item["name"]}</JoyText>
         </TouchableOpacity>
     )
 }
