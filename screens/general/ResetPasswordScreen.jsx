@@ -40,13 +40,14 @@ export default function ResetPasswordScreen({ navigation }) {
             <JoyText style={generalStyles.heading_1}>Create New Password</JoyText>
             <JoyText style={generalStyles.subheading_2}>Your new password must be unique from those previously used</JoyText>
 
-            
+
             {/* ====== Input ====== */}
             <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 20 }}>New Password</JoyText>
             <TextInput
                 style={generalStyles.input_field}
                 placeholder='Enter New Password'
                 placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
                 autoCapitalize="none"
                 secureTextEntry={true}
                 onChangeText={(e) => setPassword(e)}
@@ -57,6 +58,7 @@ export default function ResetPasswordScreen({ navigation }) {
                 style={generalStyles.input_field}
                 placeholder='Enter Confirm New Password'
                 placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
                 autoCapitalize="none"
                 secureTextEntry={true}
                 onChangeText={(e) => setConfirm(e)}
@@ -66,9 +68,9 @@ export default function ResetPasswordScreen({ navigation }) {
             <View>
                 <TouchableOpacity
                     onPress={submitHandler}
-                    style={ generalStyles.button_1 }
+                    style={generalStyles.button_1}
                 >
-                    <JoyText style={ generalStyles.button_text_1 }>
+                    <JoyText style={generalStyles.button_text_1}>
                         Reset Password
                     </JoyText>
                 </TouchableOpacity>

@@ -14,10 +14,6 @@ export default function LoadingModal(props) {
             statusBarTranslucent={true}
         >
             <View style={styles.modal_page}>
-                {/* <View style={styles.modal_container}>
-                    <ActivityIndicator size="large" color={COLORS.primary} />
-                </View> */}
-
                 <ActivityIndicator size="large" color={COLORS.primary} />
 
             </View>
@@ -29,15 +25,7 @@ export default function LoadingModal(props) {
 const styles = StyleSheet.create({
     modal_page: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modal_container: {
-        width: 80,
-        height: 70,
-        backgroundColor: 'white',
-        borderRadius: 16,
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
         justifyContent: 'center',
         alignItems: 'center',
     },

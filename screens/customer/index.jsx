@@ -9,9 +9,13 @@ import RoomScreen from "./RoomScreen";
 import PaymentScreen from "./PaymentScreen";
 import AfterPaymentScreen from "./AfterPaymentScreen";
 import DetailReservationScreen from "./DetailReservationScreen";
+import EditInformationScreen from "./EditInformationScreen";
+import TopupScreen from "./TopupScreen";
+import RecentlyViewScreen from "./RecentlyViewScreen";
+import FavoriteHotelScreen from "./FavoriteHotelScreen";
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { COLORS } from "../../constants/theme";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,11 +23,19 @@ export default function CustomerMain() {
     return (
         <Tab.Navigator
             initialRouteName="MainPage"
-            screenOptions={{ headerShown: false }}
-            backBehavior="history"
-            tabBarOptions={{
-                activeTintColor: COLORS.primary,
+            screenOptions={{
+                headerShown: false,
+                tabBarActiveTintColor: "#FF6400",
+                tabBarStyle: [
+                    {
+                        "display": "flex",
+                        height: 58,
+                        paddingTop: 6,
+                        paddingBottom: 6,
+                    },
+                ]
             }}
+            backBehavior="history"
         >
             <Tab.Screen name="MainPage" component={MainScreen}
                 options={{
@@ -83,6 +95,30 @@ export default function CustomerMain() {
                 }}
             />
             <Tab.Screen name="DetailReservationPage" component={DetailReservationScreen}
+                options={{
+                    tabBarButton: (props) => (null),
+                    tabBarStyle: { display: 'none' }
+                }}
+            />
+            <Tab.Screen name="EditInformationPage" component={EditInformationScreen}
+                options={{
+                    tabBarButton: (props) => (null),
+                    tabBarStyle: { display: 'none' }
+                }}
+            />
+            <Tab.Screen name="TopupPage" component={TopupScreen}
+                options={{
+                    tabBarButton: (props) => (null),
+                    tabBarStyle: { display: 'none' }
+                }}
+            />
+            <Tab.Screen name="RecentlyViewPage" component={RecentlyViewScreen}
+                options={{
+                    tabBarButton: (props) => (null),
+                    tabBarStyle: { display: 'none' }
+                }}
+            />
+            <Tab.Screen name="FavoriteHotelPage" component={FavoriteHotelScreen}
                 options={{
                     tabBarButton: (props) => (null),
                     tabBarStyle: { display: 'none' }

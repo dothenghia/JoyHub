@@ -59,6 +59,7 @@ export default function CusRegisterScreen({ navigation }) {
                 style={generalStyles.input_field}
                 placeholder='Enter Username'
                 placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
                 autoCapitalize="none"
                 onChangeText={(e) => setUsername(e)}
             />
@@ -68,6 +69,7 @@ export default function CusRegisterScreen({ navigation }) {
                 style={generalStyles.input_field}
                 placeholder='Enter Full Name'
                 placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
                 autoCapitalize="none"
                 onChangeText={(e) => setFullname(e)}
             />
@@ -77,6 +79,7 @@ export default function CusRegisterScreen({ navigation }) {
                 style={generalStyles.input_field}
                 placeholder='Enter Email'
                 placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
                 autoCapitalize="none"
                 onChangeText={(e) => setEmail(e)}
             />
@@ -86,6 +89,7 @@ export default function CusRegisterScreen({ navigation }) {
                 style={generalStyles.input_field}
                 placeholder='Enter Password'
                 placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
                 autoCapitalize="none"
                 secureTextEntry={true}
                 onChangeText={(e) => setPassword(e)}
@@ -96,6 +100,7 @@ export default function CusRegisterScreen({ navigation }) {
                 style={generalStyles.input_field}
                 placeholder='Enter Confirm Password'
                 placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
                 autoCapitalize="none"
                 secureTextEntry={true}
                 onChangeText={(e) => setConfirm(e)}

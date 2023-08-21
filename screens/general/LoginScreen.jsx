@@ -114,6 +114,7 @@ export default function LoginScreen({ navigation }) {
                 style={generalStyles.input_field}
                 placeholder='Enter Username'
                 placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
                 autoCapitalize="none"
                 onChangeText={(e) => setUsername(e)}
             />
@@ -125,6 +126,7 @@ export default function LoginScreen({ navigation }) {
                 placeholder='Enter Password'
                 placeholderTextColor={COLORS.subheading_text}
                 autoCapitalize="none"
+                allowFontScaling={false}
                 secureTextEntry={true}
                 onChangeText={(e) => setPassword(e)}
             />

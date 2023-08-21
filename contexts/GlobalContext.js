@@ -9,16 +9,66 @@ import { useState, createContext } from 'react';
 // TÍNH ĐẶT LÀ userContext nhưng sợ tụi bây lộn với cái hook useContext
 const globalContext = createContext()
 
+const hotelList = [
+    {
+        id: 1, // Id of the hotel
+        hotel_name: 'Haley House', // Name of the hotel
+        room_name: 'Room 1', // Room name
+        room_type: 'Deluxe',
+        thumbnail: 'LINK HÌNH',
+        price: '123.000', // Smallest Price of the hotel
+    },
+    {
+        id: 2,
+        hotel_name: 'Bixcuit',
+        room_name: 'Room 1',
+        room_type: 'Deluxe',
+        thumbnail: 'LINK HÌNH',
+        price: '100.000',
+    },
+    {
+        id: 3,
+        hotel_name: 'Anis',
+        room_name: 'Room 1',
+        room_type: 'Deluxe',
+        thumbnail: 'LINK HÌNH',
+        price: '150.000',
+    },
+    {
+        id: 4,
+        hotel_name: 'Zed',
+        room_name: 'Room 1',
+        room_type: 'Deluxe',
+        thumbnail: 'LINK HÌNH',
+        price: '110.000',
+    },
+    {
+        id: 4,
+        hotel_name: 'Zed',
+        room_name: 'Room 1',
+        room_type: 'Deluxe',
+        thumbnail: 'LINK HÌNH',
+        price: '110.000',
+    },
+]
+
 function GlobalProvider ({ children }) {
-    const today = new Date()
-    const tomorrow = new Date(today)
-    tomorrow.setDate(tomorrow.getDate() + 1)
-    // Tạo ra các biến "global"
-	const [role, setRole] = useState('guest') // Biến này dùng để check role => nếu là guest thì bắt phải đăng nhập mới cho đặt phòng, ...
-    const [dateRange, setDateRange] = useState({ startDate: today, endDate: tomorrow });
+    // ---------- Tạo ra các biến "global"
+    
+    // Biến này dùng để check role => nếu là guest thì bắt phải đăng nhập mới cho đặt phòng, ...
+	const [role, setRole] = useState('guest')
     const [userName, setUserName] = useState('-')
     const [userId, setUserId] = useState('-')
     const [userJoycoin, setUserJoycoin] = useState(0)
+    
+    // Set sẵn mặc định ngày bắt đầu là hôm nay, và ngày kết thúc là ngày hôm sau
+    const today = new Date()
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    const [dateRange, setDateRange] = useState({ startDate: today, endDate: tomorrow });
+    
+    // Biến session global dùng để lưu lịch sử xem phòng
+    const [recentlyViewList, setRecentlyViewList] = useState(hotelList)
 
     const globalData = {
         role, setRole,
@@ -26,6 +76,7 @@ function GlobalProvider ({ children }) {
         userName, setUserName,
         userId, setUserId,
         userJoycoin, setUserJoycoin,
+        recentlyViewList, setRecentlyViewList,
     }
 
     return (

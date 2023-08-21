@@ -15,19 +15,19 @@ export default function UserScreen({ navigation }) {
     console.log('[Customer] UserScreen')
 
     const editInformationHandler = () => {
-
+        navigation.navigate('EditInformationPage')
     }
 
     const topupHandler = () => {
-
+        navigation.navigate('TopupPage')
     }
 
     const recentlyViewHandler = () => {
-
+        navigation.navigate('RecentlyViewPage')
     }
 
     const favoriteHandler = () => {
-
+        navigation.navigate('FavoriteHotelPage')
     }
 
     const logoutHandler = () => {
