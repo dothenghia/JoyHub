@@ -138,7 +138,7 @@ export default function HotelScreen({ navigation, route }) {
                             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                                 <FontAwesome5Icon name={"star"} solid size={18} color='#FFCA18' />
 
-                                <JoyText style={styles.rating}> {hotelInfo && hotelInfo.star}</JoyText>
+                                <JoyText style={styles.rating}> {hotelInfo && hotelInfo.star.toFixed(1)}</JoyText>
                                 <JoyText style={styles.review}> ({hotelInfo && hotelInfo.reviews.length})</JoyText>
                             </View>
 
@@ -202,11 +202,11 @@ export default function HotelScreen({ navigation, route }) {
 
 
                     {/* Hotel Review */}
-                    <View style={{ ...customerStyles.section_container_no_py, paddingTop: 10, marginBottom: -2 }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 0 }}>
+                    <View style={{ paddingTop: 10, marginBottom: -2 }}>
+                        <View style={{...customerStyles.section_container_no_py, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 0 }}>
                             {/* Rating Statistic */}
                             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                                <JoyText style={{ fontSize: 52, fontWeight: '600' }}>{hotelInfo && hotelInfo.star}</JoyText>
+                                <JoyText style={{ fontSize: 52, fontWeight: '600' }}>{hotelInfo && hotelInfo.star.toFixed(1)}</JoyText>
                                 <View style={{ alignSelf: 'center' }}>
                                     <JoyText style={{ fontSize: 18, fontWeight: '600', color: COLORS.heading_text, marginBottom: -4 }}> Rating</JoyText>
                                     <JoyText style={{ fontSize: 16, color: COLORS.subheading_text }}> ({hotelInfo && hotelInfo.reviews.length} reviews)</JoyText>

@@ -8,12 +8,11 @@ import Feather from "react-native-vector-icons/Feather";
 import { COLORS, TEXTS } from "../../../constants/theme";
 
 export default function RoomCard({ name, navigation }) {
-    // console.log(name)
     return (
         <TouchableOpacity
             style={styles.card_container}
             onPress={
-                () => { navigation.navigate('RoomPage') }
+                () => { navigation.navigate('RoomPage' , { slug : name._id }) }
             }
         >
             <ImageBackground

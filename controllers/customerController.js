@@ -29,7 +29,7 @@ export default async function CController (type, ...payload) {
         }
 
         case 'GETROOMINFORMATION' : {
-            const roomInformation = await getRoomInformation()
+            const roomInformation = await getRoomInformation(payload)
             return roomInformation
         }
 

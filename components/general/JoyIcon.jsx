@@ -14,6 +14,9 @@ export default function JoyIcon({ name, ...props }) {
         'Shampoo': <FontAwesome5Icon name={"pump-soap"} {...props} />,
         'Towel': <MaterialCommunityIcons name={"checkbox-multiple-blank"} {...props} />,
         'Electronic Safe/Lock': <Octicons name={"shield-lock"} {...props} />,
+        'Mini Fridge': <MaterialCommunityIcons name={"fridge-outline"} {...props} />,
+
+
         pool: <MaterialIcons name={"pool"} {...props} />,
         bathtub: <FontAwesome name={"bathtub"} {...props} />,
         ac: <FontAwesome name={"snowflake-o"} {...props} />,
