@@ -34,7 +34,7 @@ export default async function CController (type, ...payload) {
         }
 
         case 'GETPAYMENTINFORMATION' : {
-            const paymentInformation = await getPaymentInformation()
+            const paymentInformation = await getPaymentInformation(payload)
             return paymentInformation
         }
 

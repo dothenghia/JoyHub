@@ -1,30 +1,38 @@
+import axiosInstance from "../configs";
 
-// request =
-// {
-//     id, // Id of the hotel => Lấy thông tin
-//     start_date , // Ngày Đến (MUỐN T GỬI NGÀY DẠNG GÌ ??)
-//     // {day; month; year} hay dạng j
-//     end_date , // Ngày Đi => 2 cái này dùng để truy vấn tình trạng phòng
-// }
+export default async function getPaymentInformation(payload) {
 
-// respone =
-// {
-const paymentInformation = {
-    id_hotel: 1, // Id of the hotel
-    hotel_name: 'Haley House', // Name of the hotel
-    room_type: 'Queen Room', // Tên của LOẠI PHÒNG ĐÓ
-    id_room: 11, // Id of the room
-    room_name: 'Room 1', // Tên phòng đó ???
+    let roomId = payload[0].slug
 
-    thumbnail: 'LINK HÌNH', // Image URL
-    location: 'District 7, HCM', // Location of the hotel
+    let res = null;
 
-    price: '123.000', // Giá 1 đêm
-    
-    joycoin: '200.000', // Joycoin of this user
-}
+    try {
+        res = await axiosInstance.get(`/customer/getPreBill/${roomId}`);
 
+        roomInfo = res.data.message.room[0]
+        userInfo = res.data.message.user[0]
 
-export default async function getPaymentInformation() {
-    return paymentInformation
+        let result = {}
+        result['hotel_name'] = roomInfo.hotel[0].hotel_name
+        result['room_name'] = roomInfo.name
+        result['room_type'] = roomInfo.room_type
+        result['address'] = roomInfo.hotel[0].address
+        result['price'] = roomInfo.price
+
+        result['full_name'] = userInfo.full_name
+        result['joycoin'] = userInfo.account[0].wallet
+        result['phone'] = userInfo.account[0].phone
+
+        console.log(result)
+
+        return result
+    }
+
+    catch (err) {
+        if (err.response) {
+            console.log(err.response.data.message);
+            return { error: err.response.data.message };
+        }
+    }
+
 }

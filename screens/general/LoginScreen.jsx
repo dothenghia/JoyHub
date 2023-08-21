@@ -51,6 +51,7 @@ export default function LoginScreen({ navigation }) {
             else {
                 switch (role) {
                     case 'customer':
+                        setRole('customer')
                         navigation.navigate('CustomerMain');
                         ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
                         break;

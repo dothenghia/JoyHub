@@ -77,7 +77,7 @@ export default function RoomScreen({ navigation, route }) {
             setLoginModal(true)
         }
         else if (role === 'customer') {
-            navigation.navigate('PaymentPage')
+            navigation.navigate('PaymentPage' , { slug : roomInfo._id })
         }
     }
 

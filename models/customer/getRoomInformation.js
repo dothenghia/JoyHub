@@ -53,7 +53,7 @@ export default async function getRoomInformation(payload) {
         // Temp Thumbnail
         res['thumbnails'] = thumbnails
 
-        console.log(res)
+        // console.log('[getRoomInf] :', res.name, `(${res._id})`)
         return res
     }
 
