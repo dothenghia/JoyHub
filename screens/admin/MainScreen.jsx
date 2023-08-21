@@ -1,46 +1,36 @@
-import React, { useState, Suspense, useEffect, } from "react";
-import { useIsFocused } from "@react-navigation/native";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import React, {useState, Suspense, useEffect,} from "react";
+import {useIsFocused} from "@react-navigation/native";
+import {FlatList, Text, TouchableOpacity, View} from "react-native";
 import generalStyles from "../../styles/general";
-import { SearchBar, TopBar } from "../../components/admin/Bar";
-import { AvatarCard } from "../../components/admin/Card";
-import { TEXTS } from "../../constants/theme";
+import {SearchBar, TopBar} from "../../components/admin/Bar";
+import {AvatarCard} from "../../components/admin/Card";
+import {TEXTS} from "../../constants/theme";
 import AController from "../../controllers/adminController";
 
-const LazyLoadScreen = (Component) => (props) =>
-(
-    <Suspense fallback={<Text>Loading...</Text>}>
+const LazyLoadScreen = (Component) => (props) => (<Suspense fallback={<Text>Loading...</Text>}>
         <Component {...props} />
-    </Suspense>
-);
+    </Suspense>);
 // Component
-export const ModeratorItem = ({ item, navigation }) => (
-    <TouchableOpacity
+export const ModeratorItem = ({item, navigation}) => (<TouchableOpacity
         onPress={() => {
-            navigation.navigate("AdminDetailHotel", { hotel: item });
+            navigation.navigate("AdminDetailHotel", {hotel: item});
         }}>
         <AvatarCard
             Title={item.name}
             ImageUri={"https://unsplash.com/photos/M7GddPqJowg"}
             Address={item.address}
         />
-    </TouchableOpacity>
-)
+    </TouchableOpacity>)
 
 const LazyModeratorItem = LazyLoadScreen(ModeratorItem);
 
-const ModeratorList = ({ data, navigation }) => (
-    <FlatList
+const ModeratorList = ({data, navigation}) => (<FlatList
         data={data}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-            <LazyModeratorItem item={item} navigation={navigation} />
-        )}
-    />
-);
+        renderItem={({item}) => (<LazyModeratorItem item={item} navigation={navigation}/>)}
+    />);
 
-const SearchAndHeader = ({ searchQuery, handleSearch }) => (
-    <View>
+const SearchAndHeader = ({searchQuery, handleSearch}) => (<View>
         <TopBar
             Title={"Moderator Control"}
         />
@@ -49,11 +39,10 @@ const SearchAndHeader = ({ searchQuery, handleSearch }) => (
             onChangeText={handleSearch}
             value={searchQuery}
         />
-        <Text style={{ fontSize: TEXTS.xl, fontWeight: "900" }}>
+        <Text style={{fontSize: TEXTS.xl, fontWeight: "900"}}>
             Waiting for accept
         </Text>
-    </View>
-);
+    </View>);
 
 // ------------------------------
 
@@ -73,7 +62,7 @@ const filterData = (data, text) => {
     });
 };
 
-const MainScreen = ({ navigation }) => {
+const MainScreen = ({navigation}) => {
     const isFocused = useIsFocused();
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredData, setFilteredData] = useState([]);
@@ -95,15 +84,16 @@ const MainScreen = ({ navigation }) => {
         setFilteredData(filtered);
     };
 
-    return (
-        <View style={generalStyles.page_container}>
+    return (<View style={generalStyles.page_container}>
             <SearchAndHeader
                 searchQuery={searchQuery}
                 handleSearch={handleSearch}
             />
-            <ModeratorList data={filteredData} navigation={navigation} />
-        </View>
-    );
+            {/*if data is null, display a string*/}
+            {filteredData.length === 0 ? (<Text style={{fontSize: TEXTS.xxl, fontWeight: "900", textAlign: "center", textAlignVertical: "center", height: "70%"}}>
+                    THERE IS NO MODERATOR
+                </Text>) : (<ModeratorList data={filteredData} navigation={navigation}/>)}
+        </View>);
 };
 
 export default MainScreen;

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
+import React from "react";
+import { Image, ScrollView, View } from "react-native";
 import JoyText from "../../components/general/JoyText";
 import generalStyles from "../../styles/general";
 import { TopBar, ConfirmBar } from "../../components/admin/Bar";
@@ -39,30 +39,14 @@ const HotelOwnerInformation = ({ name, username, phone, email }) => (
     </View>
 );
 
-const updateLocalModerator = async (moderators, id) => {
-    moderators.forEach((moderator) => {
-        if (moderator.id === id) {
-            moderator.accept = true;
-        }
-    });
-    return moderators;
-};
-
 const updateModerator = async (id) => {
     const result = await AController("UPDATEMODERATOR", id);
-    if (result.error) {
-        return false;
-    };
-    // update local data
-    return true;
+    return !result.error;
 }
 
 const removeModerator = async (id) => {
     const result = await AController("REMOVEMODERATOR", id);
-    if (result.error) {
-        return false;
-    };
-    return true;
+    return !result.error;
 }
 
 const HotelDetails = ({ hotel }) => (
@@ -75,18 +59,17 @@ const HotelDetails = ({ hotel }) => (
             </JoyText>
         </View>
         {/* Confirm Bar (Accept, Reject) */}
-        <ConfirmBar confirmText={"Accept"} cancelText={"Reject"} onConfirm={() => {
-            if (updateModerator(hotel.id)) {
+        <ConfirmBar confirmText={"Accept"} cancelText={"Reject"} onConfirm={async () => {
+            console.log(`[DetailHotel] hotel.id : ${hotel.id}`);
+            if (await updateModerator(hotel.id)) {
                 alert("Accept successfully")
-            }
-            else {
+            } else {
                 alert("Accept failed")
             }
-        }} onCancel={() => {
-            if (removeModerator(hotel.id)) {
+        }} onCancel={async () => {
+            if (await removeModerator(hotel.id)) {
                 alert("Reject successfully")
-            }
-            else {
+            } else {
                 alert("Reject failed")
             }
         }} />
