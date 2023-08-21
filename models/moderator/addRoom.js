@@ -23,7 +23,7 @@ import axios from 'axios'
 const uploadImageToImgur = async (imageData) => {
     //console.log("BASE", imageData)
     let base64 = await convertImageToBase64(imageData);
-    console.log("BASE64 : ", base64)
+    //console.log("BASE64 : ", base64)
     try {
         const response = await axios.post(
             'https://api.imgur.com/3/image',
@@ -54,15 +54,17 @@ const uploadImageToImgur = async (imageData) => {
 
 
 export default async function addRoom(...payload) {
-    let res = null;
+
     let send = payload[0];
-    console.log("send init: ", send)
-    console.log("image init: ", send["image"])
+    // console.log("send init: ", send)
+    // console.log("image init: ", send["image"])
+
+
 
 
     let imageList = [];
     for (i = 0; i < send["image"].length; ++i) {
-        console.log("IMG I: " + send["image"][i])
+        //console.log("IMG I: " + send["image"][i])
         try {
             let link = await uploadImageToImgur(send["image"][i])
             if (link)
@@ -75,12 +77,12 @@ export default async function addRoom(...payload) {
 
     await sendRequest(send,imageList)
     
-
 }
 
 
 async function sendRequest(sendData, imageList)
 {
+    let res =  null
     sendData["image"] = imageList
     console.log("SEND: ", sendData)
     try {

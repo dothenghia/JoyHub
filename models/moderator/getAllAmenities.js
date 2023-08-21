@@ -32,7 +32,7 @@ export default async function getAllAmenities() {
         //console.log(JSON.stringify(res.data, null, 2));
 
         //axiosInstance.defaults.headers.common["auth-token"] = res.headers["auth-token"];
-      
+        return res.data.message;
     }
     catch (err) {
         if (err.response) {
@@ -40,6 +40,6 @@ export default async function getAllAmenities() {
             return { error: err.response.data.message };
         }
     }
-    console.log(res.data)
-    return amenitiesr;
+ 
+    return [];
 }

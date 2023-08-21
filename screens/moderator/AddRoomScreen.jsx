@@ -34,6 +34,8 @@ const renderItem = ({ item }) => {
 
 export default function AddRoomScreen({ navigation, route }) {
     const [amenities, setAmenities] = useState([])
+    
+    const [chosenAmenities, setChosenAmenities] = useState([])
 
     const [name, setName] = useState("")
     const [des, setDes] = useState("")
@@ -48,37 +50,19 @@ export default function AddRoomScreen({ navigation, route }) {
     const [enableAddImage, setEnableAddImage] = useState(false);
 
     const [imageData, setImageData] = useState([]);
+    
+    
+
     useEffect(() => {
         const fetchAmenities = async () => {
             let data = await MController('GETALLAMENITIES')
             setAmenities(data)
+            setChosenAmenities(new Array(amenities.length).fill(false))
         }
         fetchAmenities()
     }, [])
 
-    ////////////////////////   PICK AND SEND IMAGE     /////////////////////////////////////////////////////////////////////////////
-    const CLIENT_ID = '842256555618eb5';
-
-
-
-    const convertImageToBase64 = async uri => {
-        const response = await fetch(uri);
-        const blob = await response.blob();
-
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const base64data = reader.result.split(',')[1]; // Extract only the base64 data
-                resolve(base64data);
-            };
-            reader.onerror = error => {
-                reject(error);
-            };
-            reader.readAsDataURL(blob);
-        });
-    };
-
-
+    ////////////////////////   PICK IMAGE    //////////////////////////
 
     const pickImage = async () => {
         console.log('Picking image');
@@ -107,36 +91,10 @@ export default function AddRoomScreen({ navigation, route }) {
         }
     };
 
-    const uploadImageToImgur = async () => {
-        let base64 = imageData
-        console.log("BASE", base64)
-        try {
-            const response = await axios.post(
-                'https://api.imgur.com/3/image',
-                { image: base64 },
-                {
-                    headers: {
-                        Authorization: 'Client-ID ' + CLIENT_ID,
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-
-            if (response.status === 200 && response.data.data && response.data.data.link) {
-                console.log('Image uploaded successfully:', response.data.data.link);
-            } else {
-                console.log('Image upload failed');
-            }
-        } catch (error) {
-            console.error('Error uploading image:', error);
-        }
-    }
-
-
-
+    
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+ 
     return (
         <ScrollView >
             <View style={generalStyles.page_container}>
@@ -195,7 +153,7 @@ export default function AddRoomScreen({ navigation, route }) {
 
             }
             <View style={generalStyles.page_container}>
-                <RoomAmentityCard pressable={true} amenities={amenities} />
+                <RoomAmentityCard pressable={true} amenities={amenities} chosen ={chosenAmenities} setChosen={setChosenAmenities} />
 
                 <View>
                     <JoyText style={{ fontSize: TEXTS["4xl"], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Room Type</JoyText >
@@ -235,6 +193,14 @@ export default function AddRoomScreen({ navigation, route }) {
                 <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 25 }}>
                     <TouchableOpacity style={{ height: 50, flex: 1, borderRadius: 20, marginLeft: 10, backgroundColor: '#FF6400' }} onPress={() => {
                         {
+                            let sendAmenities = []
+
+                            for (let i = 0 ;i < amenities.length; ++i)
+                            {
+                                if(chosenAmenities[i] == true)
+                                    sendAmenities.push(amenities[i])
+                            }
+
                             MController("ADDROOM", {
                                 name: name,
                                 room_type: type,
@@ -246,7 +212,8 @@ export default function AddRoomScreen({ navigation, route }) {
                                 isBooked: false,
                                 price: price,
                                 guest: people,
-                                image: imageData
+                                image: imageData,
+                                chosenAmenities: sendAmenities,
                             }); 
                             navigation.navigate("RoomPage")
                         }

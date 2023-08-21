@@ -20,8 +20,8 @@ export default function LoginScreen({ navigation }) {
     console.log('[Login] role :', role)
 
     // ------ Data State
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('hotel1');
+    const [password, setPassword] = useState('123456');
 
     // ------ Event Handlers
     // Function called when the user presses Login button
