@@ -24,7 +24,7 @@ export default function RoomAmenityCard({ amenities, pressable = false, chosen, 
 
     const res = (
         <View style={modStyles.section_container}>
-            <JoyText style={{ fontSize: TEXTS["4xl"], fontWeight: 'bold', marginTop: 20 }}>Hotel facilities</JoyText>
+            <JoyText style={{ fontSize: TEXTS["4xl"], fontWeight: 'bold', marginTop: 20 }}>Amenities</JoyText>
             <FlatList style={{ height: 120, marginTop: 8 }}
                 horizontal data={amenities}
 
@@ -49,7 +49,7 @@ function ChangeColorButton({pressable, item, chosen, setChosen , index }) {
     tmp = chosen
     const [cardStyle,setCardStyle] = useState(styles.card_container) 
     const [iconColor, setIconColor] = useState('#000000')
-    console.log("ITEM:",item)
+
     return (
         <TouchableOpacity style={cardStyle} disabled={!pressable} onPress={() => {
             if(chosen[index] == false)

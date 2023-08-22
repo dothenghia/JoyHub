@@ -30,7 +30,7 @@ export default function RoomScreen({ navigation }) {
         const fetchHotelInformation = async () => {
             let data = await MController('GETROOMLIST')
             setHotelInfo(data)
-            setamenities([{ label: 'Air Conditioner', value: 'Air Conditioner' }])
+            setamenities(data.amenities)
             setRoomList(data.roomList)
             
         }

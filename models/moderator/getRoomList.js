@@ -17,7 +17,11 @@ export default async function getRoomList() {
             return { error: err.response.data.message };
         }
     }
+
     let roomList = []
+    let amenitiesName = new Set()
+    let amenities = []
+
     if(res!=null)
     {
       
@@ -45,7 +49,7 @@ export default async function getRoomList() {
             )
         });
 
-        
+
         for( let i = 0 ; i<message.length ; i++ )
         {
             console.log(message[i][""])
@@ -73,8 +77,17 @@ export default async function getRoomList() {
                     amenities: message[i]["amenities"],
                 }
             );
+
+            for (a of message[i]["amenities"])
+            {
+                if(amenitiesName.has(a["name"]) == false)
+                {
+                    amenitiesName.add(a["name"])
+                    amenities.push(a)
+                }
+            }
         }
     }
     
-    return {roomList: roomList}
+    return {roomList: roomList, amenities : amenities}
 }
