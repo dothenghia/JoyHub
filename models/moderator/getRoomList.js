@@ -48,7 +48,7 @@ export default async function getRoomList() {
         
         for( let i = 0 ; i<message.length ; i++ )
         {
-            console.log(message[i]["image"])
+            console.log(message[i][""])
             roomList[roomType.get(message[i]["room_type"])].roomList.push(
                 {
                     id : message[i]["_id"],

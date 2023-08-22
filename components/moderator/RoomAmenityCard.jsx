@@ -69,7 +69,7 @@ function ChangeColorButton({pressable, item, chosen, setChosen , index }) {
           
         }}>
             <View style={styles.image_wrapper}>
-                <JoyIcon name={item["amenity_id"]} size={35} color ={iconColor} />
+                <JoyIcon name={item["name"]} size={35} color ={iconColor} />
             </View>
             <JoyText style={{...styles.text, color : iconColor }} textColor >{item["name"]}</JoyText>
         </TouchableOpacity>
