@@ -8,7 +8,6 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import JoyText from '../../components/general/JoyText'
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { DatePickerModal } from 'react-native-paper-dates';
 import formatDate from "../../models/customer/formatDate";
 import calculateDay from "../../models/customer/calculateDay";
 
@@ -23,6 +22,9 @@ import CController from "../../controllers/customerController";
 
 // Import Context
 import { globalContext } from "../../contexts/GlobalContext";
+
+// Import Loading Modal
+import LoadingModal from '../../components/general/LoadingModal'
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.88);
@@ -41,52 +43,41 @@ const renderItem = ({ item }) => {
 };
 
 export default function RoomScreen({ navigation, route }) {
-    const { role, dateRange, setDateRange } = useContext(globalContext)
+    const { role, dateRange } = useContext(globalContext)
     console.log('[Customer] RoomScreen')
 
     // ------ Data State
     const [roomInfo, setRoomInfo] = useState(null)
     const [loginModal, setLoginModal] = useState(false)
-    const [openDatePicker, setOpenDatePicker] = useState(false);
     const [currentThumbnail, setCurrentThumnail] = useState(0);
     const carouselRef = useRef(null);
-
-    // Date Picker Handlers
-    const onDismiss = useCallback(() => {
-        setOpenDatePicker(false);
-    }, [setOpenDatePicker]);
-
-    const onConfirm = useCallback(({ startDate, endDate }) => {
-        setOpenDatePicker(false);
-        setDateRange({ startDate, endDate });
-    }, [setOpenDatePicker, setDateRange]);
+    const [loading, setLoading] = useState(false)
 
 
     // ------ Fetch Data at first render
     useEffect(() => {
         const fetchRoomInformation = async () => {
-            let data = await CController('GETROOMINFORMATION')
+            setLoading(true);
+            let data = await CController('GETROOMINFORMATION', route.params)
             setRoomInfo(data)
+            setLoading(false);
         }
 
         fetchRoomInformation()
-    }, [])
+    }, [route.params])
 
     // ------ Event Handlers
     const backHandler = () => {
         navigation.goBack()
     }
 
-    const pickDateHandler = () => {
-        setOpenDatePicker(true)
-    }
 
     const bookHandler = () => {
         if (role === 'guest') {
             setLoginModal(true)
         }
         else if (role === 'customer') {
-            navigation.navigate('PaymentPage')
+            navigation.navigate('PaymentPage' , { slug : roomInfo._id })
         }
     }
 
@@ -106,7 +97,11 @@ export default function RoomScreen({ navigation, route }) {
             <View style={{ flex: 1 }}>
 
                 {/* Room Screen Scroll View */}
-                <ScrollView style={{ flex: 1, marginBottom: 140 }}>
+                <ScrollView style={{ flex: 1, marginBottom: 70 }}>
+
+                    {/* ------ LOADING MODAL ------ */}
+                    <LoadingModal isLoading={loading} />
+
                     {/* Top Bar */}
                     <View style={customerStyles.top_bar}>
                         <TouchableOpacity
@@ -122,14 +117,14 @@ export default function RoomScreen({ navigation, route }) {
                     <View style={{ marginTop: 12, marginBottom: -32 }}>
                         <Carousel
                             ref={carouselRef}
-                            data={roomInfo ? roomInfo.thumbnails : []}
+                            data={(roomInfo && roomInfo.thumbnails) ? roomInfo.thumbnails : []}
                             renderItem={renderItem}
                             sliderWidth={SLIDER_WIDTH}
                             itemWidth={ITEM_WIDTH}
                             onSnapToItem={currentThumbnail => setCurrentThumnail(currentThumbnail)}
                         />
                         <Pagination
-                            dotsLength={roomInfo ? roomInfo.thumbnails.length : 0}
+                            dotsLength={(roomInfo && roomInfo.thumbnails) ? roomInfo.thumbnails.length : 0}
                             activeDotIndex={currentThumbnail}
                             carouselRef={carouselRef}
                             dotStyle={{
@@ -146,7 +141,7 @@ export default function RoomScreen({ navigation, route }) {
                             inactiveDotOpacity={0.5}
                             inactiveDotScale={1}
                         />
-                        {roomInfo && roomInfo.status === 'full' && (<View style={styles.status_tag}>
+                        {roomInfo && roomInfo.isBooked === true && (<View style={styles.status_tag}>
                             <Feather name={"x-circle"} size={26} color={COLORS.warning} />
                             <JoyText style={styles.status_text}>Full</JoyText>
                         </View>)}
@@ -157,7 +152,7 @@ export default function RoomScreen({ navigation, route }) {
                     {/* Room Information */}
                     <View style={customerStyles.section_container}>
                         {/* Room NAME */}
-                        <JoyText style={customerStyles.page_title}>{roomInfo ? roomInfo.room_name : 'Loading ...'} ({roomInfo && roomInfo.room_type})</JoyText>
+                        <JoyText style={customerStyles.page_title}>{roomInfo ? roomInfo.name : 'Loading ...'} ({roomInfo && roomInfo.room_type})</JoyText>
 
                         {/* Room PROPERTY */}
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
@@ -165,10 +160,10 @@ export default function RoomScreen({ navigation, route }) {
                             <JoyText style={styles.amenity}> {roomInfo && roomInfo.area} m2 </JoyText>
                             <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
                             <Ionicons name={"person"} size={24} color={COLORS.subheading_text} />
-                            <JoyText style={styles.amenity}> {roomInfo && roomInfo.capacity} People </JoyText>
+                            <JoyText style={styles.amenity}> {roomInfo && roomInfo.guest} People </JoyText>
                             <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
                             <Ionicons name={"bed-outline"} size={30} style={{ paddingTop: 4 }} color={COLORS.subheading_text} />
-                            <JoyText style={styles.amenity}> {roomInfo && roomInfo.bed} Bed</JoyText>
+                            <JoyText style={styles.amenity}> {roomInfo && roomInfo.bedroom} Bed</JoyText>
                         </View>
 
 
@@ -187,7 +182,7 @@ export default function RoomScreen({ navigation, route }) {
                         {/* Room DESCRIPTION */}
 
                         <JoyText style={customerStyles.section_title}>Description</JoyText>
-                        <JoyText style={styles.description} numberOfLines={3}>{roomInfo && roomInfo.description}</JoyText>
+                        <JoyText style={styles.description} >{roomInfo && roomInfo.description}</JoyText>
                     </View>
 
                     <View style={customerStyles.divider}></View>
@@ -198,7 +193,7 @@ export default function RoomScreen({ navigation, route }) {
                         <JoyText style={customerStyles.section_title}>Payment Information</JoyText>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.text}>Per night</JoyText>
-                            <JoyText style={styles.text}>{roomInfo && roomInfo.price} VND</JoyText>
+                            <JoyText style={styles.text}>{roomInfo && roomInfo.price} JoyCoin</JoyText>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.text}>From</JoyText>
@@ -214,7 +209,7 @@ export default function RoomScreen({ navigation, route }) {
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.primary_text}>Total</JoyText>
-                            <JoyText style={styles.primary_text}>{roomInfo && Number(roomInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)).toFixed(3)} VND</JoyText>
+                            <JoyText style={styles.primary_text}>{roomInfo && Number(roomInfo.price * calculateDay(dateRange.startDate, dateRange.endDate))} JoyCoin</JoyText>
                         </View>
                     </View>
 
@@ -232,41 +227,18 @@ export default function RoomScreen({ navigation, route }) {
 
                 {/* Fixed Booking Bar */}
                 <View style={fixedBarStyle.bar_container}>
-                    {/* Choose Date */}
-                    <TouchableOpacity
-                        style={fixedBarStyle.bar_calendar}
-                        onPress={pickDateHandler}
-                    >
-                        <FontAwesome5Icon name={"calendar-alt"} size={28} color={COLORS.primary} />
-                        <JoyText style={fixedBarStyle.calendar_text}>{formatDate(dateRange.startDate)} - {formatDate(dateRange.endDate)}</JoyText>
-                    </TouchableOpacity>
-
-
                     {/* Price - Book button */}
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <JoyText style={fixedBarStyle.bar_price}>{roomInfo && Number(roomInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)).toFixed(3)} VND</JoyText>
+                        <JoyText style={fixedBarStyle.bar_price}>{roomInfo && Number(roomInfo.price * calculateDay(dateRange.startDate, dateRange.endDate))} JoyCoin</JoyText>
                         <TouchableOpacity
-                            style={(roomInfo && roomInfo.status === 'full') ? fixedBarStyle.disable_book_button : fixedBarStyle.book_button}
-                            disabled={roomInfo && roomInfo.status === 'full'}
+                            style={(roomInfo && roomInfo.isBooked === true) ? fixedBarStyle.disable_book_button : fixedBarStyle.book_button}
+                            disabled={roomInfo && roomInfo.isBooked === true}
                             onPress={bookHandler}>
                             <JoyText style={fixedBarStyle.book_button_text}>Book</JoyText>
                         </TouchableOpacity>
                     </View>
                 </View>
-                <DatePickerModal
-                    locale="en"
-                    mode="range"
-                    disableStatusBar
-                    disableStatusBarPadding
-                    visible={openDatePicker}
-                    onDismiss={onDismiss}
-                    startDate={dateRange.startDate}
-                    endDate={dateRange.endDate}
-                    onConfirm={onConfirm}
-                    validRange={{
-                        startDate: new Date()
-                    }}
-                />
+
             </View>
 
 
@@ -385,11 +357,11 @@ const fixedBarStyle = StyleSheet.create({
         right: 0,
         bottom: 0,
         backgroundColor: '#fff',
-        height: 140,
+        height: 70,
         elevation: 20,
         // justifyContent: 'center',
         paddingHorizontal: 20,
-        paddingTop: 12,
+        // paddingTop: 12,
     },
     bar_calendar: {
         height: 52,

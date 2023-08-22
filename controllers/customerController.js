@@ -9,7 +9,11 @@ import getUserInformation from "../models/customer/getUserInformation";
 import getDetailReservation from "../models/customer/getDetailReservation";
 import getFavoriteList from "../models/customer/getFavoriteList";
 
+import sendPayment from "../models/customer/sendPayment";
+
 export default async function CController (type, ...payload) {
+    // console.log('[payload]' , payload)
+
     switch (type) {
         case 'GETHOTELLIST' : {
             const hotelList = await getHotelList()
@@ -22,18 +26,22 @@ export default async function CController (type, ...payload) {
         }
 
         case 'GETHOTELINFORMATION' : {
-            const hotelInformation = await getHotelInformation()
+            const hotelInformation = await getHotelInformation(payload)
             return hotelInformation
         }
 
         case 'GETROOMINFORMATION' : {
-            const roomInformation = await getRoomInformation()
+            const roomInformation = await getRoomInformation(payload)
             return roomInformation
         }
 
         case 'GETPAYMENTINFORMATION' : {
-            const paymentInformation = await getPaymentInformation()
+            const paymentInformation = await getPaymentInformation(payload)
             return paymentInformation
+        }
+        case 'SENDPAYMENT' : {
+            const payment = await sendPayment(payload)
+            return payment
         }
 
         case 'GETRESERVATIONLIST' : {

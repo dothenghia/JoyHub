@@ -22,19 +22,23 @@ export default async function getHotelList() {
                 average_star = 0
             }
 
-            if (hotel.rooms) {
+            if (hotel.rooms && hotel.rooms.length !== 0) {
                 hotel.rooms.forEach((room) => {
                     if (smallest_price > room.price) {
                         smallest_price = room.price
                     }
                 })
             } else {
-                smallest_price = 0
+                if (hotel.rooms.length === 0) {
+                    smallest_price = 0
+                }
             }
 
             hotel['star'] = average_star
             hotel['smallest_price'] = smallest_price
         });
+
+        // console.log(res)
 
         return res
     }

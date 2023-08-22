@@ -58,7 +58,6 @@ export const AvatarCardStyles = StyleSheet.create({
         flexDirection : 'column',
         alignContent : 'center',
         justifyContent : 'flex-start',
-        // alignItems : 'center',
         width: "50%",
         marginLeft: 10,
         marginBottom: "auto",
@@ -115,7 +114,6 @@ export const HotelCardStyles = StyleSheet.create({
         bottom: 0,
         flexDirection : 'column',
         alignContent : 'center',
-        // alignItems : 'center',
         width: "70%",
         marginBottom: "auto",
         marginTop: "auto",
@@ -164,7 +162,6 @@ export const HotelCardStyles = StyleSheet.create({
         alignContent: "center",
         alignItems: "center",
         justifyContent: "center",
-        textAlignVertical: "middle",
     },
     waitingText:{
         fontSize: TEXTS.lg,
@@ -233,7 +230,7 @@ export const DetailHotelStyles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
-        alginVertical: "center",
+        alignVertical: "center",
         marginBottom: 10,
         marginTop: 10,
         gap: 12
@@ -334,12 +331,18 @@ export const RoomStyles = StyleSheet.create({
         alignItems: "center",
         marginBottom: 17,
         padding: 20,
-        gap: 10,
         width: "100%",
         height: 200,
         borderColor: COLORS.input_border,
         borderWidth: 1,
         borderRadius: 10,
+    },
+    description: {
+        fontSize: TEXTS.lg,
+        // fontWeight: "bold",
+    },
+    descriptionContainer: {
+        flexDirection: "row",
     },
     image: {
         height: 168,
@@ -347,8 +350,10 @@ export const RoomStyles = StyleSheet.create({
         resizeMode: "cover",
         borderRadius: 7,
     },
-    descriptionContainer: {
-        flexDirection: "row",
+    price: {
+        fontSize: TEXTS.lg,
+        fontWeight: "bold",
+        // color: COLORS.text,
     },
     textContainer: {
         flexDirection: "column",
@@ -362,15 +367,6 @@ export const RoomStyles = StyleSheet.create({
         fontSize: TEXTS.xl,
         fontWeight: "bold",
         color: COLORS.primary,
-    },
-    price: {
-        fontSize: TEXTS.lg,
-        fontWeight: "bold",
-        // color: COLORS.text,
-    },
-    description: {
-        fontSize: TEXTS.lg,
-        // fontWeight: "bold",
     }
 });
 
@@ -413,7 +409,6 @@ export const DetailRoomStyles = StyleSheet.create({
         fontSize: TEXTS.md,
         fontWeight: "600",
         color: COLORS.heading_text,
-        justifyContent: "flex-start",
         // borderWidth: 1,
         borderColor: COLORS.input_border,
         borderRadius: 3,

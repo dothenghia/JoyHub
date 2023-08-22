@@ -8,12 +8,11 @@ import Feather from "react-native-vector-icons/Feather";
 import { COLORS, TEXTS } from "../../../constants/theme";
 
 export default function RoomCard({ name, navigation }) {
-    // console.log(name)
     return (
         <TouchableOpacity
             style={styles.card_container}
             onPress={
-                () => { navigation.navigate('RoomPage') }
+                () => { navigation.navigate('RoomPage' , { slug : name._id }) }
             }
         >
             <ImageBackground
@@ -27,7 +26,7 @@ export default function RoomCard({ name, navigation }) {
                     <JoyText style={styles.name}>{name.name}</JoyText>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                         <JoyText style={styles.price}>{name.price}</JoyText>
-                        <JoyText> VND/night</JoyText>
+                        <JoyText> JoyCoin/night</JoyText>
                     </View>
 
                 </View>
@@ -36,14 +35,14 @@ export default function RoomCard({ name, navigation }) {
                     <JoyText style={styles.amenity}> {name.area} m2 </JoyText>
                     <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
                     <Ionicons name={"person"} size={20} color={COLORS.subheading_text} />
-                    <JoyText style={styles.amenity}> {name.capacity} People </JoyText>
+                    <JoyText style={styles.amenity}> {name.guest} People </JoyText>
                     <FontAwesome name={"circle"} size={6} style={{ alignSelf: 'center', marginHorizontal: 6 }} color={COLORS.subheading_text} />
                     <Ionicons name={"bed-outline"} size={26} style={{ paddingTop: 4 }} color={COLORS.subheading_text} />
-                    <JoyText style={styles.amenity}> {name.bed} Bed</JoyText>
+                    <JoyText style={styles.amenity}> {name.bedroom} Bed</JoyText>
                 </View>
             </View>
 
-            {name.status === 'full' && (<View style={styles.status_tag}>
+            {name.isBooked === true && (<View style={styles.status_tag}>
                 <Feather name={"x-circle"} size={26} color={COLORS.warning} />
                 <JoyText style={styles.status_text}>Full</JoyText>
             </View>)}

@@ -14,24 +14,29 @@ import { globalContext } from "../../contexts/GlobalContext";
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
 
+// Import Loading Modal
+import LoadingModal from '../../components/general/LoadingModal'
+
 export default function PaymentScreen({ navigation, route }) {
     const { dateRange } = useContext(globalContext)
     console.log('[Customer] PaymentScreen')
 
     // ------ Data State
-    const notEnoughJoyCoin = false // Temporary
     const [paymentInfo, setPaymentInfo] = useState(null)
     const [confirmModal, setConfirmModal] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     // ------ Fetch Data at first render
     useEffect(() => {
         const fetchPaymentInformation = async () => {
-            let data = await CController('GETPAYMENTINFORMATION')
+            setLoading(true);
+            let data = await CController('GETPAYMENTINFORMATION', route.params, dateRange)
             setPaymentInfo(data)
+            setLoading(false);
         }
 
         fetchPaymentInformation()
-    }, [])
+    }, [route.params])
 
     // ------ Event Handlers
     const backHandler = () => {
@@ -51,8 +56,15 @@ export default function PaymentScreen({ navigation, route }) {
     }
 
     const confirmBookingHandler = () => {
-        setConfirmModal(false)
-        navigation.navigate('AfterPaymentPage')
+        const sendPayment = async () => {
+            setLoading(true);
+            let data = await CController('SENDPAYMENT', paymentInfo, dateRange)
+            setConfirmModal(false)
+            setLoading(false);
+            navigation.navigate('AfterPaymentPage')
+        }
+
+        sendPayment()
     }
 
     return (
@@ -61,6 +73,11 @@ export default function PaymentScreen({ navigation, route }) {
 
                 {/* Payment Screen Scroll View */}
                 <ScrollView style={{ flex: 1, marginBottom: 80 }}>
+
+                    {/* ------ LOADING MODAL ------ */}
+                    <LoadingModal isLoading={loading} />
+
+
                     {/* Top Bar */}
                     <View style={customerStyles.top_bar}>
                         <TouchableOpacity
@@ -89,7 +106,7 @@ export default function PaymentScreen({ navigation, route }) {
                     <View style={customerStyles.section_container}>
                         <JoyText style={customerStyles.page_title}>{paymentInfo ? paymentInfo.hotel_name : 'Loading ...'}</JoyText>
                         <JoyText style={styles.room_name}>{paymentInfo && paymentInfo.room_name} ({paymentInfo && paymentInfo.room_type})</JoyText>
-                        <JoyText style={styles.location}>{paymentInfo && paymentInfo.location}</JoyText>
+                        <JoyText style={styles.location}>{paymentInfo && paymentInfo.address}</JoyText>
                     </View>
 
                     <View style={customerStyles.divider}></View>
@@ -100,7 +117,7 @@ export default function PaymentScreen({ navigation, route }) {
                         <JoyText style={customerStyles.section_title}>Payment Information</JoyText>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.payment_text}>Per night</JoyText>
-                            <JoyText style={styles.payment_text}>{paymentInfo && paymentInfo.price} VND</JoyText>
+                            <JoyText style={styles.payment_text}>{paymentInfo && paymentInfo.price} JoyCoin</JoyText>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.payment_text}>From</JoyText>
@@ -116,7 +133,22 @@ export default function PaymentScreen({ navigation, route }) {
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <JoyText style={styles.payment_text_primary}>Total</JoyText>
-                            <JoyText style={styles.payment_text_primary}>{paymentInfo && Number(paymentInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)).toFixed(3)} VND</JoyText>
+                            <JoyText style={styles.payment_text_primary}>{paymentInfo && Number(paymentInfo.price * calculateDay(dateRange.startDate, dateRange.endDate))} JoyCoin</JoyText>
+                        </View>
+                    </View>
+
+                    <View style={customerStyles.divider}></View>
+
+                    {/* User Information */}
+                    <View style={customerStyles.section_container}>
+                        <JoyText style={customerStyles.section_title}>User Information</JoyText>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <JoyText style={styles.payment_text}>Name</JoyText>
+                            <JoyText style={styles.payment_text}>{paymentInfo && paymentInfo.full_name}</JoyText>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <JoyText style={styles.payment_text}>Phone</JoyText>
+                            <JoyText style={styles.payment_text}>{paymentInfo && paymentInfo.phone}</JoyText>
                         </View>
                     </View>
 
@@ -128,17 +160,19 @@ export default function PaymentScreen({ navigation, route }) {
                             <JoyText style={customerStyles.section_title}>JoyCoin</JoyText>
                             <JoyText style={styles.joycoin}>{paymentInfo && paymentInfo.joycoin}</JoyText>
                         </View>
-                        {notEnoughJoyCoin && (
-                            <View>
-                                <JoyText style={styles.warning}>You don't have enough JoyCoin to make payment !</JoyText>
-                                <TouchableOpacity
-                                    style={styles.topup_button}
-                                    onPress={topupHandler}
-                                >
-                                    <JoyText style={styles.topup_text}>Go to Top up JoyCoin</JoyText>
-                                </TouchableOpacity>
-                            </View>
-                        )}
+                        {
+                            paymentInfo && (Number(paymentInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)) > paymentInfo.joycoin)
+                            && (
+                                <View>
+                                    <JoyText style={styles.warning}>You don't have enough JoyCoin to make payment !</JoyText>
+                                    <TouchableOpacity
+                                        style={styles.topup_button}
+                                        onPress={topupHandler}
+                                    >
+                                        <JoyText style={styles.topup_text}>Go to Top up JoyCoin</JoyText>
+                                    </TouchableOpacity>
+                                </View>
+                            )}
                     </View>
 
                     <View style={customerStyles.divider}></View>
@@ -157,8 +191,8 @@ export default function PaymentScreen({ navigation, route }) {
                 <View style={fixedBarStyle.bar_container}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 28 }}>
                         <TouchableOpacity
-                            style={notEnoughJoyCoin ? fixedBarStyle.disable_book_button : fixedBarStyle.book_button}
-                            disabled={notEnoughJoyCoin}
+                            style={(paymentInfo && (Number(paymentInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)) > paymentInfo.joycoin)) ? fixedBarStyle.disable_book_button : fixedBarStyle.book_button}
+                            disabled={paymentInfo && (Number(paymentInfo.price * calculateDay(dateRange.startDate, dateRange.endDate)) > paymentInfo.joycoin)}
                             onPress={showConfirmModalHandler}>
                             <JoyText style={fixedBarStyle.book_button_text}>Book</JoyText>
                         </TouchableOpacity>
@@ -233,6 +267,7 @@ const styles = StyleSheet.create({
     joycoin: {
         color: COLORS.subheading_text,
         fontSize: TEXTS.lg,
+        fontWeight: '600',
     },
     warning: {
         color: COLORS.warning,

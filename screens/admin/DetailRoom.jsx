@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
+import React, {useEffect, useRef, useState} from "react";
+import {Image, ScrollView, Text, View} from "react-native";
 import generalStyles from "../../styles/general";
-import { TopBar, ConfirmBar } from "../../components/admin/Bar";
-import { Ionicons } from "@expo/vector-icons";
-import { DetailRoomStyles } from "../../styles/admin";
-import { useIsFocused } from "@react-navigation/native";
-import { FlatList } from "react-native";
+import {TopBar, ConfirmBar} from "../../components/admin/Bar";
+import {Ionicons} from "@expo/vector-icons";
+import {DetailRoomStyles} from "../../styles/admin";
+import {useIsFocused} from "@react-navigation/native";
+import {FlatList} from "react-native";
+import AController from "../../controllers/adminController";
 
 const Icons = {
     area: "expand",
@@ -16,12 +17,12 @@ const Icons = {
     air_conditioner: "snow-outline",
 };
 
-const RoomAmenities = ({ amenities }) => (
+const RoomAmenities = ({amenities}) => (
     <View style={DetailRoomStyles.roomAmenContainer}>
         <FlatList
             data={amenities}
             horizontal={true}
-            renderItem={({ item }) => (
+            renderItem={({item}) => (
                 <View style={DetailRoomStyles.roomAmenField}>
                     <Ionicons
                         style={DetailRoomStyles.roomAmenIcon}
@@ -37,12 +38,12 @@ const RoomAmenities = ({ amenities }) => (
     </View>
 );
 
-const RoomInfo = ({ info }) => (
+const RoomInfo = ({info}) => (
     <View style={DetailRoomStyles.roomInfoContainer}>
         <FlatList
             data={info}
             horizontal={true}
-            renderItem={({ item }) => (
+            renderItem={({item}) => (
                 <View style={DetailRoomStyles.roomInfoField}>
                     <Ionicons
                         style={DetailRoomStyles.roomInfoIcon}
@@ -58,36 +59,54 @@ const RoomInfo = ({ info }) => (
     </View>
 );
 
-const RoomDetailsField = ({ label, value }) => (
+const RoomDetailsField = ({label, value}) => (
     <View style={DetailRoomStyles.roomFieldContainer}>
         <Text style={DetailRoomStyles.roomFieldLabel}>{label}:</Text>
         <Text style={DetailRoomStyles.roomField}>{value}</Text>
     </View>
 );
 
-const RoomDetails = ({ room }) => (
+const RoomDetails = ({room, navigation}) => (
     <View>
         <View style={DetailRoomStyles.roomNameContainer}>
             {/* Room name */}
             <Text style={DetailRoomStyles.roomName}>{room.name}</Text>
             {/* Room price */}
             <Text style={DetailRoomStyles.roomPrice}>
-                {room.price.toString() + " VND/night"}
+                {room.price.toString() + " JC/night"}
             </Text>
         </View>
         {/* Confirm Bar */}
-        <ConfirmBar confirmText={"Accept"} cancelText={"Reject"} />
+        <ConfirmBar confirmText={"Accept"} cancelText={"Reject"} onConfirm={
+            async () => {
+                if (await AController("ACTIVE_ROOM", room.id)) {
+                    alert("Active successfully");
+                    navigation.goBack();
+                } else {
+                    alert("Active failed")
+                }
+            }
+        } onCancel={
+            async () => {
+                if (await AController("REMOVE_ROOM", room.id)) {
+                    alert("Delete successfully");
+                    navigation.goBack();
+                }
+                else {
+                    alert("Delete failed")
+                }
+            }
+        }/>
         {/* Room Details Part */}
         <View style={DetailRoomStyles.roomDetailsContainer}>
             {/* Room info */}
-            <RoomInfo info={room.info} />
+            <RoomInfo info={room.info}/>
             {/* Room amenities */}
-            <RoomAmenities amenities={room.amenities} />
+            <RoomAmenities amenities={room.amenities}/>
             {/* Room description */}
             <RoomDetailsField
                 label="Description"
-                value="Ut consequat pariatur excepteur esse elit fugiat ex nisi labore. Lorem qui proident culpa proident voluptate quis fugiat sint exercitation id. Dolore tempor eu consequat aliquip aliquip sit occaecat amet voluptate qui pariatur enim eu nostrud. Sunt aliqua nisi pariatur et excepteur Lorem non consectetur commodo aliquip ipsum.
-                Duis esse pariatur pariatur et et sit aliquip ullamco. Irure ipsum aute cupidatat officia. Ut proident sint anim laboris nisi enim ex velit ea aliquip sunt incididunt. Fugiat est nulla reprehenderit eiusmod ea sunt esse eiusmod do eu. Id in sint irure occaecat exercitation dolor non est sit sunt in veniam enim excepteur."
+                value={room.description}
             />
             {/* Cancellation policy */}
             <RoomDetailsField
@@ -98,33 +117,51 @@ const RoomDetails = ({ room }) => (
     </View>
 );
 
-export default function DetailHotelScreen({ route, navigation }) {
-    const scrollRef = React.useRef(null);
+// ------------------ Function ------------------
+const fetchRoom = async (setRooms, room_id) => {
+    try {
+        const rooms = await AController("GET_ROOM_DETAIL", room_id);
+        setRooms(rooms);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export default function DetailHotelScreen({route, navigation}) {
+    const scrollRef = useRef(null);
     const isFocused = useIsFocused();
-    React.useEffect(() => {
+    const [rooms, setRooms] = useState([]);
+
+    useEffect(() => {
         if (!isFocused) {
-            scrollRef.current?.scrollTo({ x: 0, y: 0, animated: true });
+            scrollRef.current?.scrollTo({x: 0, y: 0, animated: true});
+            setRooms([]);
+        } else {
+            fetchRoom(setRooms, route.params.room_id);
+            console.log(rooms.image);
         }
     }, [isFocused]);
 
     // const route = useRoute();
-    const { room_name, room_price } = route.params;
+    const {room_name, room_price} = route.params;
     const room = {
+        id: rooms._id,
         name: room_name,
         price: room_price,
         info: [
             {
                 label: "area",
-                value: "20m2",
+                value: rooms.area + " m2",
             },
             {
                 label: "bed",
-                value: "1 Bed",
+                value: rooms.bedroom + " bed",
             },
             {
                 label: "capacity",
-                value: "4 People",
+                value: rooms.guest + " people",
             },
+
         ],
         amenities: [
             {
@@ -140,13 +177,17 @@ export default function DetailHotelScreen({ route, navigation }) {
                 value: "Air Conditioner",
             },
         ],
+        description: rooms.description,
+        // if image is available, use this
+        image: (rooms.image && rooms.image.length > 0) ? rooms.image[0] : null,
+        // image: require("../../assets/admin/hotel.jpg")
     };
     return (
         <ScrollView style={generalStyles.page_container} ref={scrollRef}>
-            <TopBar Title={"Detail"} backIcon={true} navigation={navigation} />
+            <TopBar Title={"Detail"} backIcon={true} navigation={navigation}/>
             {/* Hotel Image */}
             <Image
-                source={require("../../assets/admin/hotel.jpg")}
+                source={{uri: room.image}}
                 style={{
                     width: "100%",
                     resizeMode: "cover",
@@ -156,7 +197,7 @@ export default function DetailHotelScreen({ route, navigation }) {
                 }}
             />
             {/* Room Details */}
-            <RoomDetails room={room} />
+            <RoomDetails room={room} navigation={navigation}/>
         </ScrollView>
     );
 }

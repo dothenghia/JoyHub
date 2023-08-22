@@ -4,35 +4,65 @@ import JoyText from "../../general/JoyText";
 // Import Style & Theme
 import { COLORS, TEXTS } from "../../../constants/theme";
 
-export default function ReservationCard({ props , navigation }) {
-    // console.log(props)
+export default function ReservationCard({ props, navigation }) {
 
     const tagMapping = {
-        Waiting: (
+        'waiting': (
             <View style={styles.tag_wrapper}>
-                <JoyText style={{...styles.tag_status, backgroundColor: COLORS.primary_50, color: COLORS.primary}}>Waiting</JoyText>
+                <JoyText style={{ ...styles.tag_status, backgroundColor: COLORS.primary_50, color: COLORS.primary }}>Waiting</JoyText>
             </View>
         ),
-        Completed: (
+        "completed": (
             <View style={styles.tag_wrapper}>
-                <JoyText style={{...styles.tag_status, backgroundColor: COLORS.success_bg, color: COLORS.success}}>Completed</JoyText>
+                <JoyText style={{ ...styles.tag_status, backgroundColor: COLORS.success_bg, color: COLORS.success }}>Completed</JoyText>
             </View>
         ),
-        Cancelled: (
+        'cancelled': (
             <View style={styles.tag_wrapper}>
-                <JoyText style={{...styles.tag_status, backgroundColor: COLORS.disable, color: COLORS.grey}}>Cancelled</JoyText>
+                <JoyText style={{ ...styles.tag_status, backgroundColor: COLORS.disable, color: COLORS.grey }}>Cancelled</JoyText>
             </View>
         ),
+    }
+
+    function formatDate(inputDate) {
+        const dateObject = new Date(inputDate);
+
+        const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        const dayOfWeek = daysOfWeek[dateObject.getDay()];
+
+        const day = dateObject.getDate();
+        const month = dateObject.getMonth() + 1;
+        const year = dateObject.getFullYear();
+
+        const resultString = `${dayOfWeek},${day}/${month}/${year}`;
+
+        return resultString
+    }
+
+    function calculateTotalPrice(start, end, price) {
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+
+        if (startDate && endDate) {
+            return Number(price * Math.floor((endDate - startDate)/ (1000 * 60 * 60 * 24)))
+        }
+        return 0
     }
 
     return (
         <TouchableOpacity
             style={styles.card_container}
-            onPress={() => {navigation.navigate('DetailReservationPage')}}
+            onPress={() => { navigation.navigate('DetailReservationPage') }}
         >
             <View style={styles.thumbnail_wrapper}>
                 <Image
-                    source={require('../../../assets/customer/demo.jpg')}
+                    source={{
+                        uri: (props.thumbnail === '' ?
+                            "https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/367406960_664373515340090_1351908202508283342_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=Hnila9NAyiUAX987pq3&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdRwqgDt75E3oGTzxdHAmADWpRNFSL9xtvgLW930Hr6-DQ&oe=650BA8A3"
+                            : props.thumbnail
+                        ),
+                    }}
                     style={styles.thumbnail_image}
                 />
             </View>
@@ -41,9 +71,8 @@ export default function ReservationCard({ props , navigation }) {
                 {tagMapping[props.status]}
                 <JoyText style={styles.hotel_name}>{props.hotel_name}</JoyText>
                 <JoyText style={styles.room_name}>{props.room_name} ({props.room_type})</JoyText>
-                <JoyText style={styles.date}>{props.start_date} - {props.end_date}</JoyText>
-                <JoyText style={styles.price}>{props.price} VND</JoyText>
-
+                <JoyText style={styles.date}>{formatDate(props.check_in)} - {formatDate(props.check_out)}</JoyText>
+                <JoyText style={styles.price}>{calculateTotalPrice(props.check_in, props.check_out, props.room_price)} JoyCoin</JoyText>
             </View>
         </TouchableOpacity>
 
@@ -61,7 +90,7 @@ const styles = StyleSheet.create({
     },
 
     thumbnail_wrapper: {
-        width: '30%',
+        width: '25%',
         height: '88%',
         marginLeft: 12,
         borderRadius: 8,

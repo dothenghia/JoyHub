@@ -7,11 +7,12 @@ import { COLORS, TEXTS } from "../../../constants/theme";
 
 export default function HotelCard({ props, navigation }) {
     // console.log(props)
+
     return (
         <TouchableOpacity
             style={styles.card_container}
             onPress={
-                () => { navigation.navigate('HotelPage') }
+                () => { navigation.navigate('HotelPage' , { slug: props._id }) }
             }
         >
             <ImageBackground
