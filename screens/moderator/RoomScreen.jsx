@@ -32,7 +32,7 @@ export default function RoomScreen({ navigation }) {
             setHotelInfo(data)
             setamenities([{ label: 'Air Conditioner', value: 'Air Conditioner' }])
             setRoomList(data.roomList)
-            console.log(roomList)
+            
         }
 
         fetchHotelInformation()
@@ -96,7 +96,7 @@ function RoomArea({ roomList, navigation, removeMode }) {
     for (let i = 0; i < roomList.length; i++) {
         listOfType.push(roomList[i].roomType)
     }
-
+    
     res = []
     for (let i = 0; i < n; ++i) {
         res.push(
@@ -105,7 +105,7 @@ function RoomArea({ roomList, navigation, removeMode }) {
                 <FlatList style={{ height: 370 }}
                     horizontal data={roomList[i].roomList}
                     renderItem={({ item }) => (
-                        <RoomCard img={require("../../assets/mod/demoHotel.jpg")} room={item} navigation={navigation} removeMode={removeMode} />
+                        <RoomCard img={(item["image"]) && (item["image"][0])} room={item} navigation={navigation} removeMode={removeMode} />
                     )}
                 ></FlatList>
             </View>
@@ -117,7 +117,7 @@ function RoomArea({ roomList, navigation, removeMode }) {
 
 
 function RoomCard({ img, room, navigation, removeMode }) {
-
+    
     const [popup, setPopup] = useState(false)
     const showPopup = useCallback(() => { setPopup(true);  }, [popup])
     const closePopup = useCallback(() => { setPopup(false); }, [popup])
@@ -134,7 +134,7 @@ function RoomCard({ img, room, navigation, removeMode }) {
                         </View>
                     </TouchableOpacity>
                 ) : <View />}
-                <Image style={{ height: 250, width: 320, borderRadius: 15 }} source={img} />
+                <Image style={{ height: 250, width: 320, borderRadius: 15 }} source={ {uri : img} } />
             </TouchableOpacity>
             <View style={{ flex: 1.1, marginTop: -35, backgroundColor: 'white', borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }}>
                 <JoyText style={{ flex: 1.3, fontSize: TEXTS.xxl, fontWeight: 'bold', marginLeft: 15, marginTop: 3 }}>{room.name}</JoyText >
@@ -148,7 +148,7 @@ function RoomCard({ img, room, navigation, removeMode }) {
                     <View style={{ flexDirection: 'row' }}>
                         <Image style={{ height: 25, width: 25 }} source={require("../../assets/mod/area.png")} />
                         <JoyText style={{ marginTop: 3, marginLeft: 7 }}>{room.info[0].value + " m"}</JoyText >
-                        <JoyText style={{ marginTop: 3, baselineShift: -6, fontSize: TEXTS.xxs }}>{"2"}</JoyText >
+                        <JoyText style={{ marginTop: 3, fontSize: TEXTS.xxs }} baselineShift={-6} >{"2"}</JoyText >
                     </View>
                     <Image style={{ marginTop: 10, marginLeft: 10, marginRight: 10, height: 5, width: 5 }} source={require("../../assets/mod/1dot.png")} />
                     <View style={{ flexDirection: 'row' }}>

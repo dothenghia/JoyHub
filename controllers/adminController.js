@@ -1,18 +1,39 @@
 import getModerator from "../models/admin/getModerator";
 import updateModerator from "../models/admin/updateModerator";
 import removeModerator from "../models/admin/removeModerator";
+import {getInactiveRoomCount, getInactiveRoomList, getRoomDetail} from "../models/admin/getRoomList";
+import activeRoom from "../models/admin/activeRoom";
+import removeRoom from "../models/admin/removeRoom";
 
 const actions = {
     GETMODERATOR: async () => {
-        const result = await getModerator();
         // console.log(`[INFO] Get moderator result: ${JSON.stringify(result)}`);
-        return result;
+        return await getModerator();
     },
-    UPDATEMODERATOR: async (username) => {
-        return await updateModerator(username);
+    UPDATEMODERATOR: async (id) => {
+        return await updateModerator(id);
     },
-    REMOVEMODERATOR: async (username) => {
-        return await removeModerator(username);
+    REMOVEMODERATOR: async (id) => {
+        return await removeModerator(id);
+    },
+    GET_INACTIVE_ROOM_COUNT: async () => {
+        return await getInactiveRoomCount();
+    },
+    GET_INACTIVE_ROOM_LIST: async (id) => {
+        // get inactive room list of a hotel by id
+        return await getInactiveRoomList(id);
+    },
+    GET_ROOM_DETAIL: async (id) => {
+        // get inactive room list of a hotel by id
+        return await getRoomDetail(id);
+    },
+    ACTIVE_ROOM: async (id) => {
+        // get inactive room list of a hotel by id
+        return await activeRoom(id);
+    },
+    REMOVE_ROOM: async (id) => {
+        // get inactive room list of a hotel by id
+        return await removeRoom(id);
     }
 }
 

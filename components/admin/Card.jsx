@@ -1,5 +1,5 @@
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { Image, View, Text, Dimensions } from "react-native";
+import { Image, View, Text} from "react-native";
 import JoyText from "../../components/general/JoyText";
 import { AvatarCardStyles, HotelCardStyles, ReportCardStyles, RoomStyles, ReportDetailStyles } from "../../styles/admin";
 // import { Easing } from "react-native";
@@ -8,45 +8,7 @@ import { TEXTS } from "../../constants/theme";
 
 const hotelImage = require("../../assets/admin/hotel.jpg");
 
-const toShort = (string, len) => {
-    if (string.length <= len) return string;
-    return string.slice(0, len) + "...";
-}
 // crop string to width
-class CropString {
-    state = {
-        charWidth: 0,
-        maxChar: 0,
-    }
-    constructor(string, width, size) {
-        this.string = string;
-        this.width = width;
-        this.size = size;
-        // this.charWidth = getCharWidth(string[0], size);
-        // this.maxChar = Math.floor(width / this.charWidth);
-    }
-    async componentDidMount() {
-        const windowWidth = Dimensions.get("window").width;
-        const size = await rnTextSize.measure({
-            text: this.string,
-            width: windowWidth,
-            fontSize: this.size
-        });
-        this.charWidth = size.width;
-        this.maxChar = Math.floor(this.width / this.charWidth);
-        this.setState({
-            charWidth: this.charWidth,
-            maxChar: this.maxChar,
-        });
-    }
-    crop() {
-        const { charWidth, maxChar } = this.state;
-        if (this.string.length <= maxChar) return this.string;
-        console.log(charWidth, maxChar)
-        return this.string.slice(0, maxChar) + "...";
-    }
-}
-
 export const AvatarCard = ({ Title, ImageUri, Address }) => {
     return (
         <View style={AvatarCardStyles.container}>
@@ -84,7 +46,7 @@ export const HotelCard = ({ Title, ImageUri, Address, WaitingAmount = 0 }) => {
             }
             {/* Information part */}
             <View style={HotelCardStyles.textContainer}>
-                <JoyText style={HotelCardStyles.title}>{Title}</JoyText>
+                <JoyText style={HotelCardStyles.title} numberOfLines={1}>{Title}</JoyText>
                 <View style={HotelCardStyles.descriptionContainer}>
                     <Icon name="map-marker-outline" style={HotelCardStyles.iconStyle} />
                     <JoyText style={HotelCardStyles.description} numberOfLines={1}>{Address}</JoyText>
@@ -112,7 +74,7 @@ export const ReportCard = ({ hotel, title, date, isRead }) => {
                 {/* Unread icon */}
                 {!isRead && <Icon name="circle" style={ReportCardStyles.icon} />}
             </View>
-            {/* Date of report*/}
+            {/* Date of a report*/}
             <Text style={ReportCardStyles.date}>{date}</Text>
         </View>
     );
@@ -121,11 +83,11 @@ export const ReportCard = ({ hotel, title, date, isRead }) => {
 export const RoomCard = ({ Title, ImageUri, Price }) => {
     return (
         <View style={RoomStyles.container}>
-            <Image source={hotelImage} style={RoomStyles.image} />
+            <Image source={{uri: ImageUri}} style={RoomStyles.image} />
             <View style={RoomStyles.textContainer}>
-                <Text style={RoomStyles.title}>{toShort(Title, 13)}</Text>
+                <Text style={RoomStyles.title} numberOfLines={1}>{Title}</Text>
                 <View style={RoomStyles.descriptionContainer}>
-                    <JoyText style={RoomStyles.price}>{Price + " VND"}</JoyText>
+                    <JoyText style={RoomStyles.price}>{Price + " JC"}</JoyText>
                     <JoyText style={RoomStyles.description}>/night</JoyText>
                 </View>
             </View>
