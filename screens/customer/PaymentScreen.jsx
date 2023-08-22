@@ -56,8 +56,15 @@ export default function PaymentScreen({ navigation, route }) {
     }
 
     const confirmBookingHandler = () => {
-        setConfirmModal(false)
-        navigation.navigate('AfterPaymentPage')
+        const sendPayment = async () => {
+            setLoading(true);
+            let data = await CController('SENDPAYMENT', paymentInfo, dateRange)
+            setConfirmModal(false)
+            setLoading(false);
+            navigation.navigate('AfterPaymentPage')
+        }
+
+        sendPayment()
     }
 
     return (

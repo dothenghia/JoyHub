@@ -13,6 +13,9 @@ import GController from "../../controllers/generalController";
 // Import Context
 import { globalContext } from "../../contexts/GlobalContext";
 
+// Import Loading Modal
+import LoadingModal from '../../components/general/LoadingModal'
+
 
 export default function LoginScreen({ navigation }) {
     // Get Context value (Global Variables)
@@ -22,6 +25,7 @@ export default function LoginScreen({ navigation }) {
     // ------ Data State
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false)
 
     // ------ Event Handlers
     // Function called when the user presses Login button
@@ -44,7 +48,9 @@ export default function LoginScreen({ navigation }) {
         }
         // for testing server
         else {
+            setLoading(true);
             const { error, role } = await GController('LOGIN', username, password);
+            setLoading(false);
             if (error) {
                 alert(error);
             }
@@ -89,6 +95,9 @@ export default function LoginScreen({ navigation }) {
     // ------ UI Renderer
     return (
         <View style={generalStyles.page_container}>
+
+            {/* ------ LOADING MODAL ------ */}
+            <LoadingModal isLoading={loading} />
 
             {/* Logo HOME */}
             <View style={styles.logo1}>

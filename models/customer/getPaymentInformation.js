@@ -23,7 +23,9 @@ export default async function getPaymentInformation(payload) {
         result['joycoin'] = userInfo.account[0].wallet
         result['phone'] = userInfo.account[0].phone
 
-        console.log(result)
+        result['hotel_obj_id'] = roomInfo.hotel[0]['_id']
+        result['hotel_id'] = roomInfo.hotel_id
+        result['room_id'] = roomInfo._id
 
         return result
     }
