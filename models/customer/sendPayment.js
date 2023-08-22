@@ -8,7 +8,7 @@ export default async function sendPayment(payload) {
     let s_date = payload[1].startDate.toISOString()
     let e_date = payload[1].endDate.toISOString()
 
-    console.log(roomId, s_date, e_date)
+    console.log(`[Send Info]\nRoom ID : ${roomId}\nDate : ${s_date} -> ${e_date}`)
 
     try {
         res = await axiosInstance.post(`/booking/room`, {
@@ -20,7 +20,7 @@ export default async function sendPayment(payload) {
 
         res = res.data.message
 
-        console.log(res);
+        console.log('[Send status] :', res);
         
         return res
     }
