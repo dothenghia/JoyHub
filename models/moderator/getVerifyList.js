@@ -49,7 +49,7 @@ export default async function getVerifyList()
         //console.log(JSON.stringify(res.data, null, 2));
 
         //axiosInstance.defaults.headers.common["auth-token"] = res.headers["auth-token"];
-        console.log("VERIFY DATA:", res.data.message);
+        //console.log("VERIFY DATA:", res.data.message);
 
         let verifyList = [];
         for (i of res.data.message)
