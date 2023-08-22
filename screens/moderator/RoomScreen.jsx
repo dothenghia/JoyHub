@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-import { StyleSheet, TextInput, Modal, TouchableOpacity, View, ImageBackground, Image, ScrollView, FlatList } from "react-native";
+import { StyleSheet, ToastAndroid, Modal, TouchableOpacity, View, ImageBackground, Image, ScrollView, FlatList, RefreshControl } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import { COLORS, TEXTS } from '../../constants/theme'
 import modStyles from '../../styles/mod'
 import JoyText from '../../components/general/JoyText'
-
+import LoadingModal from '../../components/general/LoadingModal'
 import RoomAmenityCard from "../../components/moderator/RoomAmenityCard";
 
 //CONTROLLER
@@ -18,7 +18,7 @@ export default function RoomScreen({ navigation }) {
 
     const listOfAmenities = ['Air Conditioner', 'Fasdfsa', 'Wifi', 'TV', 'Shampoo', 'Towel', 'Slippers', 'CD/DVD Player', 'Electronic Safe', 'Mini Frigde', 'Coffee Maker'];
 
-
+   
     // ------ Data State
     const [hotelInfo, setHotelInfo] = useState(null)
     const [amenities, setamenities] = useState([])
@@ -28,20 +28,55 @@ export default function RoomScreen({ navigation }) {
     // ------ Fetch Data at first render
     useEffect(() => {
         const fetchHotelInformation = async () => {
+            setLoading(true);
             let data = await MController('GETROOMLIST')
             setHotelInfo(data)
             setamenities(data.amenities)
             setRoomList(data.roomList)
-            
+            setLoading(false);
         }
 
         fetchHotelInformation()
     }, [])
 
+    
+    const [refreshing, setRefreshing] = useState(false);
+    const [loading, setLoading] = useState(false)
+
+    const onRefresh = useCallback(() => {
+        const fetchHotelList = async () => {
+            setRefreshing(true);
+            let data = await MController('GETROOMLIST')
+            setHotelInfo(data)
+            setamenities(data.amenities)
+            setRoomList(data.roomList)
+            setRefreshing(false);
+        }
+        fetchHotelList()
+    }, []);
+
+    const autoRefresh = useCallback(() => {
+        const fetchHotelList = async () => {
+            setLoading(true);
+            let data = await MController('GETROOMLIST')
+            setHotelInfo(data)
+            setamenities(data.amenities)
+            setRoomList(data.roomList)
+            setLoading(false);
+        }
+        fetchHotelList()
+    }, []);
 
     return (
-        <ScrollView style={modStyles.page_container}>
-
+        <ScrollView style={modStyles.page_container} 
+            refreshControl={ // DÙNG ĐỂ VUỐT XUỐNG RELOAD TRANG
+            <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={['#FF6400']}
+            />
+        }>
+            <LoadingModal isLoading={loading} />
             <View style={styles.thumbnail_wrapper}>
                 <ImageBackground
                     source={require('../../assets/mod/demoHotel.jpg')}
@@ -66,7 +101,7 @@ export default function RoomScreen({ navigation }) {
             <View style={{ marginTop: 10, height: 7, backgroundColor: '#E7E7E7' }} />
             <View style={{ ...modStyles.page_padding, flexDirection: 'row' }}>
                 <View style={{ marginTop: 30, width: 170, height: 50, borderRadius: 10, borderWidth: 1 }}>
-                    <TouchableOpacity onPress={() => { navigation.navigate("AddRoomPage", route = { listOfAmenities }) }} style={{ flexDirection: 'row', width: 100, height: 50 }}>
+                    <TouchableOpacity onPress={() => { navigation.navigate("AddRoomPage", route = { listOfAmenities }) ; onRefresh }} style={{ flexDirection: 'row', width: 100, height: 50 }}>
                         <Ionicons name="add-circle-outline" style={{ marginLeft: 10, marginTop: 4 }} size={40} color="black" />
                         <JoyText style={{ marginTop: 14, marginLeft: 10, width: 100, fontSize: TEXTS.md }}>Add room</JoyText >
                     </TouchableOpacity>
@@ -79,13 +114,13 @@ export default function RoomScreen({ navigation }) {
                     </TouchableOpacity>
                 </View>
             </View>
-            <RoomArea roomList={roomList} navigation={navigation} removeMode={removeMode} />
+            <RoomArea roomList={roomList} navigation={navigation} removeMode={removeMode} fetch={autoRefresh}/>
 
         </ScrollView>
     );
 }
 
-function RoomArea({ roomList, navigation, removeMode }) {
+function RoomArea({ roomList, navigation, removeMode, fetch}) {
 
     if(!roomList)
         return (<View/>)
@@ -105,7 +140,7 @@ function RoomArea({ roomList, navigation, removeMode }) {
                 <FlatList style={{ height: 370 }}
                     horizontal data={roomList[i].roomList}
                     renderItem={({ item }) => (
-                        <RoomCard img={(item["image"]) && (item["image"][0])} room={item} navigation={navigation} removeMode={removeMode} />
+                        <RoomCard img={(item["image"]) && (item["image"][0])} room={item} navigation={navigation} removeMode={removeMode} fetch={fetch} />
                     )}
                 ></FlatList>
             </View>
@@ -116,7 +151,7 @@ function RoomArea({ roomList, navigation, removeMode }) {
 }
 
 
-function RoomCard({ img, room, navigation, removeMode }) {
+function RoomCard({ img, room, navigation, removeMode, fetch }) {
     
     const [popup, setPopup] = useState(false)
     const showPopup = useCallback(() => { setPopup(true);  }, [popup])
@@ -184,7 +219,8 @@ function RoomCard({ img, room, navigation, removeMode }) {
                                         MController("REMOVEROOM",{
                                             room_id : room["id"],                                                                                                                              
                                         })
-
+                                        fetch()
+                                        ToastAndroid.show('Remove successfully', ToastAndroid.SHORT)
                                         closePopup()
                                     }}
                                 >
@@ -202,46 +238,6 @@ function RoomCard({ img, room, navigation, removeMode }) {
 }
 
 
-function ConfirmRemove({ visible }) {
-    <Modal
-        animationType="none"
-        transparent={true}
-        visible={visible}
-    >
-        <View style={styles.modal_page}>
-            <View style={styles.modal_container}>
-                <View style={{ paddingHorizontal: 14, marginTop: 14, marginBottom: 8 }}>
-                    <TouchableOpacity
-                        onPress={() => setTopupPopUp(false)}
-                        style={{ width: 46, marginBottom: 6 }}
-                    >
-                        <JoyText style={{ color: COLORS.primary, fontSize: TEXTS.lg, fontWeight: '600' }}>
-                            Close
-                        </JoyText>
-                    </TouchableOpacity>
-                    <View>
-                        <JoyText style={{ color: COLORS.heading_text, fontSize: TEXTS.xxl, fontWeight: '600', }}>Nap tien</JoyText>
-                        <TextInput
-                            style={{ marginTop: 30, padding: 10, fontSize: TEXTS.lg, height: 60, borderWidth: 1, borderRadius: 10 }}
-                            placeholder="Enter amount of money"
-                            onChangeText={(value) => { setMoney(parseInt(value)) }}
-                            keyboardType="numeric"
-                        />
-                        <TouchableOpacity style={{ alignSelf: 'flex-end', backgroundColor: "#FF6400", width: 70, height: 45, marginRight: 20, marginTop: 30, borderRadius: 10, }}
-                            onPress={() => {
-
-                            }}
-                        >
-                            <JoyText style={{ fontSize: TEXTS.xl, color: 'white', textAlign: 'center', paddingTop: 7, fontWeight: 'bold' }}> OK </JoyText>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-            </View>
-        </View>
-    </Modal>
-}
-
 
 const styles = StyleSheet.create({
     thumbnail_wrapper: {
@@ -253,40 +249,3 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
-
-
-function newRoom({ rname, rprice }) {
-    const room = {
-        name: rname,
-        price: rprice,
-        info: [
-            {
-                label: "area",
-                value: "20",
-            },
-            {
-                label: "bed",
-                value: "2",
-            },
-            {
-                label: "capacity",
-                value: "4",
-            },
-        ],
-        amenities: [
-            {
-                label: "wifi",
-                value: "Wifi",
-            },
-            {
-                label: "bathtub",
-                value: "Bathtub",
-            },
-            {
-                label: "ac",
-                value: "Air Conditioner",
-            },
-        ],
-    };
-    return room
-}

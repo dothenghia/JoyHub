@@ -9,7 +9,7 @@ import JoyText from '../../components/general/JoyText'
 import { TEXTS, COLORS } from "../../constants/theme";
 
 const renderItem = ({ item }) => {
-
+  
     return (
 
         <ImageBackground
@@ -32,12 +32,13 @@ export default function DetailedRoomScreen({ navigation, route }) {
     const [currentThumbnail, setCurrentThumnail] = useState(0);
     const [imageData, setImageData] = useState([]);
     room = route.params.room
-    console.log(route)
+
     const carouselRef = useRef(null);
     useEffect(() => {
-        setImageData(route.params.room.image)
-     
-    }, [])
+        console.log(route.params.room)
+        setImageData(route.params.room["image"])
+        setCurrentThumnail(0)
+    }, [route.params])
     console.log("ROOM",room)
     return (
         <ScrollView >
@@ -85,7 +86,7 @@ export default function DetailedRoomScreen({ navigation, route }) {
 
                 <View>
                     <JoyText style={{ fontSize: TEXTS['3xl'], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Description</JoyText >
-                    <JoyText style={{ fontSize: TEXTS.lg, marginBottom: 30 }} multiline={true} > Khach san nay co cai phong nay dep nhat tren the gioi co tich</JoyText>
+                    <JoyText style={{ fontSize: TEXTS.lg, marginBottom: 30 }} multiline={true} > {room["description"]}</JoyText>
                 </View>
 
                 <JoyText style={{ fontSize: TEXTS['3xl'], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Room Information</JoyText >

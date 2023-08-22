@@ -48,7 +48,6 @@ export default async function MController (type, ...payload)
             return addRes
         case 'REMOVEROOM':
             const removeRes = await removeRoom(...payload)
-            console.log(removeRes)
             return removeRes
         default:
             return null

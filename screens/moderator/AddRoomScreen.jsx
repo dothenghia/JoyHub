@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect, useContext } from "react";
-import { StyleSheet, ImageBackground, TextInput, View, Image, ScrollView, TouchableOpacity, Dimensions } from "react-native";
+import { StyleSheet, ToastAndroid, ImageBackground, TextInput, View, Image, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import generalStyles from "../../styles/general";
 import TopBar from "../../components/moderator/TopBar";
 import RoomAmentityCard from "../../components/moderator/RoomAmenityCard";
@@ -9,9 +9,8 @@ import * as ImagePicker from 'expo-image-picker';
 import MController from "../../controllers/moderatorController";
 import { Pagination, Carousel } from 'react-native-snap-carousel';
 import { DatePickerModal } from 'react-native-paper-dates';
-import formatDate from "../../models/customer/formatDate";
-import calculateDay from "../../models/customer/calculateDay";
 
+import LoadingModal from '../../components/general/LoadingModal'
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.88);
@@ -90,13 +89,17 @@ export default function AddRoomScreen({ navigation, route }) {
 
         }
     };
+ 
+    const [loading, setLoading] = useState(false)
 
+    
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
  
     return (
         <ScrollView >
+            <LoadingModal isLoading={loading} />
             <View style={generalStyles.page_container}>
 
                 <TopBar Title={"Add A Room"} navigation={navigation} />
@@ -191,30 +194,40 @@ export default function AddRoomScreen({ navigation, route }) {
                     <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30 }} multiline={true} keyboardType="numeric" placeholder="Enter price" onChangeText={(text) => { setPrice(Math.max(0, parseInt(text))) }} />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 25 }}>
-                    <TouchableOpacity style={{ height: 50, flex: 1, borderRadius: 20, marginLeft: 10, backgroundColor: '#FF6400' }} onPress={() => {
+                    <TouchableOpacity style={{ height: 50, flex: 1, borderRadius: 20, marginLeft: 10, backgroundColor: '#FF6400' }} onPress={async () => {
                         {
                             let sendAmenities = []
-
+                            
                             for (let i = 0 ;i < amenities.length; ++i)
                             {
                                 if(chosenAmenities[i] == true)
                                     sendAmenities.push(amenities[i])
                             }
+                            setLoading(true)
+                            try{
 
-                            MController("ADDROOM", {
-                                name: name,
-                                room_type: type,
-                                bedroom: bed,
-                                area: area,
-                                description: des,
-                                bathroom: 1,
-                                isAccepted: false,
-                                isBooked: false,
-                                price: price,
-                                guest: people,
-                                image: imageData,
-                                chosenAmenities: sendAmenities,
-                            }); 
+                                e = await MController("ADDROOM", {
+                                    name: name,
+                                    room_type: type,
+                                    bedroom: bed,
+                                    area: area,
+                                    description: des,
+                                    bathroom: 1,
+                                    isAccepted: false,
+                                    isBooked: false,
+                                    price: price,
+                                    guest: people,
+                                    image: imageData,
+                                    chosenAmenities: sendAmenities,
+                                }); 
+                                ToastAndroid.show('Add successfully', ToastAndroid.SHORT)
+                            }
+                            catch(error)
+                            {
+                                ToastAndroid.show('Failed please try again', ToastAndroid.SHORT)
+
+                            }
+                            setLoading(false)
                             navigation.navigate("RoomPage")
                         }
                     }} >
