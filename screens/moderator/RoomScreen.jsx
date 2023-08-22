@@ -16,9 +16,7 @@ import MController from "../../controllers/moderatorController";
 export default function RoomScreen({ navigation }) {
 
 
-    const listOfAmenities = ['Air Conditioner', 'Fasdfsa', 'Wifi', 'TV', 'Shampoo', 'Towel', 'Slippers', 'CD/DVD Player', 'Electronic Safe', 'Mini Frigde', 'Coffee Maker'];
-
-   
+    
     // ------ Data State
     const [hotelInfo, setHotelInfo] = useState(null)
     const [amenities, setamenities] = useState([])
@@ -101,7 +99,7 @@ export default function RoomScreen({ navigation }) {
             <View style={{ marginTop: 10, height: 7, backgroundColor: '#E7E7E7' }} />
             <View style={{ ...modStyles.page_padding, flexDirection: 'row' }}>
                 <View style={{ marginTop: 30, width: 170, height: 50, borderRadius: 10, borderWidth: 1 }}>
-                    <TouchableOpacity onPress={() => { navigation.navigate("AddRoomPage", route = { listOfAmenities }) ; onRefresh }} style={{ flexDirection: 'row', width: 100, height: 50 }}>
+                    <TouchableOpacity onPress={() => { navigation.navigate("AddRoomPage", route = { autoRefresh : autoRefresh }) ; }} style={{ flexDirection: 'row', width: 100, height: 50 }}>
                         <Ionicons name="add-circle-outline" style={{ marginLeft: 10, marginTop: 4 }} size={40} color="black" />
                         <JoyText style={{ marginTop: 14, marginLeft: 10, width: 100, fontSize: TEXTS.md }}>Add room</JoyText >
                     </TouchableOpacity>

@@ -267,12 +267,9 @@ export default function UserScreen({ navigation }) {
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
 
-                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { pickImage() }} >
-                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Pick'}</JoyText >
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { uploadImageToImgur() }} >
-                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Send'}</JoyText >
+                
+                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { MController('GETVERIFY') }} >
+                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'verify'}</JoyText >
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
 

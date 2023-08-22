@@ -1,11 +1,14 @@
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, Image, StyleSheet, ToastAndroid } from 'react-native'
 import JoyText from '../../components/general/JoyText'
 import { TEXTS } from "../../constants/theme";
 import React from 'react'
-
+import MController from '../../controllers/moderatorController';
+import { useState } from 'react';
 export default function VerifyWaitingCard({ bookingInfo }) {
+    const [invisible,setInvisible] = useState(false)
+    
+    if(!invisible)
     return (
-
         <View style={styles.card}>
             <View style={{ flexDirection: 'row' }}>
                 <Image style={styles.icon} source={require('../../assets/mod/people_black.png')} />
@@ -24,7 +27,7 @@ export default function VerifyWaitingCard({ bookingInfo }) {
                         <JoyText  style={styles.date}> {'Check out :  ' + bookingInfo.checkout} </JoyText >
                     </View>
                     <View style={{flexDirection:'row'}}>
-                        <TouchableOpacity style={{ height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginLeft: 10,backgroundColor:'#FF6400'  }}>
+                        <TouchableOpacity style={{ height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginLeft: 10,backgroundColor:'#FF6400'  }} onPress={async ()=>{await MController("ACCEPTVERIFY", bookingInfo["id"]) ; ToastAndroid.show('Accepted', ToastAndroid.SHORT) ; setInvisible(true) }}>
                             <JoyText  style={{ textAlign: 'center', paddingTop: 10, color:'white', fontWeight:'bold', fontSize: TEXTS.md }}> Accept </JoyText >
                         </TouchableOpacity>
                         <TouchableOpacity style={{ height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginLeft: 10,backgroundColor:'#888888'  }}>
@@ -37,6 +40,7 @@ export default function VerifyWaitingCard({ bookingInfo }) {
         </View>
 
     )
+    else return (<View/>)
 }
 
 

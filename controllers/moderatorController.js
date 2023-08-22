@@ -7,6 +7,8 @@ import getModInfo from "../models/moderator/getModInfo"
 import getAllTypes from "../models/moderator/getAllTypes"
 import addRoom from "../models/moderator/addRoom"
 import removeRoom from "../models/moderator/removeRoom"
+import getVerify from "../models/moderator/getVerifyList"
+import acceptVerify from "../models/moderator/acceptVerify"
 export default async function MController (type, ...payload) 
 {
     switch (type) 
@@ -49,6 +51,12 @@ export default async function MController (type, ...payload)
         case 'REMOVEROOM':
             const removeRes = await removeRoom(...payload)
             return removeRes
+        case 'GETVERIFY':
+            const verify = await getVerify()
+            return verify
+        case 'ACCEPTVERIFY':
+            const res = await acceptVerify(...payload)
+            return res
         default:
             return null
     }

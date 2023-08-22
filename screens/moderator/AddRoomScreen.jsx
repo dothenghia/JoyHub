@@ -229,6 +229,7 @@ export default function AddRoomScreen({ navigation, route }) {
                             }
                             setLoading(false)
                             navigation.navigate("RoomPage")
+                            route.params.onLoading()
                         }
                     }} >
                         <JoyText style={{ textAlign: 'center', paddingTop: 12, color: 'white', fontWeight: 'bold', fontSize: TEXTS.lg }}> {"CREATE"} </JoyText >

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, RefreshControl } from "react-native";
 import TopBar from "../../components/moderator/TopBar";
 import SearchBar from "../../components/moderator/SearchBar";
 import VerifyWaitingCard from "../../components/moderator/VerifyWaitingCard";
@@ -8,6 +8,7 @@ import CheckoutCard from "../../components/moderator/CheckoutCard";
 import modStyles from "../../styles/mod"
 import JoyText from '../../components/general/JoyText'
 import MController from "../../controllers/moderatorController";
+import LoadingModal from '../../components/general/LoadingModal'
 
 export default function MainScreen({ navigation }) {
 
@@ -19,17 +20,38 @@ export default function MainScreen({ navigation }) {
     const [verifyList, setVerifyList] = useState([])
     const [checkinList, setCheckinList] = useState([])
     const [checkoutList, setCheckoutList] = useState([])
+    
+    const [refreshing, setRefreshing] = useState(false);
+    const [loading, setLoading] = useState(false)
+
 
     useEffect(() => {
         const fetchMainScreenInfo = async () => {
+            setLoading(true)
             let data = await MController('MODMAINSCREEN')
             setVerifyList(data.verifyList)
             setCheckinList(data.checkinList)
             setCheckoutList(data.checkoutList)
-
+            setLoading(false)
         }
         fetchMainScreenInfo()
     }, [])
+
+    
+
+    const onRefresh = useCallback(() => {
+        const fetchMainScreenInfo = async () => {
+            setLoading(true)
+            let data = await MController('MODMAINSCREEN')
+            setVerifyList(data.verifyList)
+            setCheckinList(data.checkinList)
+            setCheckoutList(data.checkoutList)
+            setLoading(false)
+        }
+        fetchMainScreenInfo()
+    }, []);
+
+
     const setButtonColor = page => {
 
         setVerifyColor('#888888')
@@ -46,8 +68,9 @@ export default function MainScreen({ navigation }) {
 
     return (
         <View style={{ ...modStyles.page_container }}>
+            <LoadingModal isLoading={loading} />
             <View style={modStyles.page_padding}>
-                <TopBar Title={"Hotel Name"} navigation={navigation} />
+                <TopBar Title={""} navigation={navigation} />
                 <SearchBar />
 
                 <View style={{ flexDirection: 'row', marginBottom: 10 }}>
@@ -65,12 +88,18 @@ export default function MainScreen({ navigation }) {
                     </TouchableOpacity>
                 </View>
             </View>
-            <ScrollView>
-
+            <ScrollView refreshControl={ // DÙNG ĐỂ VUỐT XUỐNG RELOAD TRANG
+            <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={['#FF6400']}
+            />
+            }>
+                
                 {
 
                     (page === 'verify') && (
-                        <VerifyArea verifyList={verifyList} />
+                        <VerifyArea verifyList={verifyList}/>
                     )
                 }
                 {
