@@ -59,8 +59,7 @@ export default function ReservationCard({ props, navigation }) {
                 <Image
                     source={{
                         uri: (props.thumbnail === '' ?
-                            "https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/367406960_664373515340090_1351908202508283342_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=Hnila9NAyiUAX987pq3&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdRwqgDt75E3oGTzxdHAmADWpRNFSL9xtvgLW930Hr6-DQ&oe=650BA8A3"
-                            : props.thumbnail
+                        "https://i.imgur.com/TMfTk0F.jpg" : props.thumbnail
                         ),
                     }}
                     style={styles.thumbnail_image}

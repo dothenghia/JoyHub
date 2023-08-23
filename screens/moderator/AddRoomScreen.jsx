@@ -118,7 +118,7 @@ export default function AddRoomScreen({ navigation, route }) {
                             <TouchableOpacity disabled = {currentThumbnail < imageData.length} onPress={pickImage}>
                                 <Carousel
                                     ref={carouselRef}
-                                    data={imageData ? [...imageData, "@../../assets/mod/selectImg.png"] : []}
+                                    data={imageData ? [...imageData, "https://i.imgur.com/phk6mxL.png"] : []}
                                     renderItem={renderItem}
                                     sliderWidth={SLIDER_WIDTH}
                                     itemWidth={ITEM_WIDTH}

@@ -9,6 +9,7 @@ import addRoom from "../models/moderator/addRoom"
 import removeRoom from "../models/moderator/removeRoom"
 import getVerify from "../models/moderator/getVerifyList"
 import acceptVerify from "../models/moderator/acceptVerify"
+import removeVerify from "../models/moderator/removeVerify"
 export default async function MController (type, ...payload) 
 {
     switch (type) 
@@ -55,8 +56,11 @@ export default async function MController (type, ...payload)
             const verify = await getVerify()
             return verify
         case 'ACCEPTVERIFY':
-            const res = await acceptVerify(...payload)
-            return res
+            const acceptV = await acceptVerify(...payload)
+            return acceptV
+        case 'REMOVEVERIFY':
+            const removeV = await removeVerify(...payload)
+            return removeV
         default:
             return null
     }

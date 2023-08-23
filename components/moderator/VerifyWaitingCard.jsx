@@ -6,7 +6,7 @@ import MController from '../../controllers/moderatorController';
 import { useState } from 'react';
 export default function VerifyWaitingCard({ bookingInfo }) {
     const [invisible,setInvisible] = useState(false)
-    
+
     if(!invisible)
     return (
         <View style={styles.card}>
@@ -19,7 +19,7 @@ export default function VerifyWaitingCard({ bookingInfo }) {
                 <JoyText  style={{ marginLeft: 10, justifyContent: 'center', marginTop: 5, fontSize: TEXTS.lg, fontWeight:'bold' }}> {bookingInfo.phone} </JoyText >
             </View>
             <View style={{ flexDirection: 'row', padding: 10, marginTop:7 }}>
-                <Image style={{ flex: 2.5, height: 'auto', minHeight:150, borderRadius: 15, borderWidth: 1, }} source={require('../../assets/mod/demoHotel.jpg')} />
+                <Image style={{ flex: 2.5, height: 'auto', minHeight:150, borderRadius: 15, borderWidth: 1, }} source={{uri : bookingInfo.image}} />
                 <View style={{ flex: 5, }}>
                     <JoyText  style={{ marginLeft: 10, justifyContent: 'center', marginTop: 0, fontSize: TEXTS.xl, fontWeight:'bold', color:'#FF6400' }}> {bookingInfo.room} </JoyText >
                     <View style={{ marginTop: 10 }}>
@@ -30,7 +30,7 @@ export default function VerifyWaitingCard({ bookingInfo }) {
                         <TouchableOpacity style={{ height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginLeft: 10,backgroundColor:'#FF6400'  }} onPress={async ()=>{await MController("ACCEPTVERIFY", bookingInfo["id"]) ; ToastAndroid.show('Accepted', ToastAndroid.SHORT) ; setInvisible(true) }}>
                             <JoyText  style={{ textAlign: 'center', paddingTop: 10, color:'white', fontWeight:'bold', fontSize: TEXTS.md }}> Accept </JoyText >
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginLeft: 10,backgroundColor:'#888888'  }}>
+                        <TouchableOpacity style={{ height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginLeft: 10,backgroundColor:'#888888'  }} onPress={async ()=>{await MController("REMOVEVERIFY", bookingInfo["id"]); ToastAndroid.show('Removed', ToastAndroid.SHORT) ; setInvisible(true) }}> 
                             <JoyText  style={{ textAlign: 'center', paddingTop: 10, color:'white', fontWeight:'bold', fontSize: TEXTS.md}}> Decline </JoyText >
                         </TouchableOpacity>
                     </View>

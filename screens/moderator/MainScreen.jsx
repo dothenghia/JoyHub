@@ -23,7 +23,7 @@ export default function MainScreen({ navigation }) {
     
     const [refreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(false)
-
+    
 
     useEffect(() => {
         const fetchMainScreenInfo = async () => {

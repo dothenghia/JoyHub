@@ -138,7 +138,7 @@ function RoomArea({ roomList, navigation, removeMode, fetch}) {
                 <FlatList style={{ height: 370 }}
                     horizontal data={roomList[i].roomList}
                     renderItem={({ item }) => (
-                        <RoomCard img={(item["image"]) && (item["image"][0])} room={item} navigation={navigation} removeMode={removeMode} fetch={fetch} />
+                        <RoomCard img={(item["image"]) ? (item["image"][0]) : "https://i.imgur.com/TMfTk0F.jpg"} room={item} navigation={navigation} removeMode={removeMode} fetch={fetch} />
                     )}
                 ></FlatList>
             </View>
@@ -155,7 +155,7 @@ function RoomCard({ img, room, navigation, removeMode, fetch }) {
     const showPopup = useCallback(() => { setPopup(true);  }, [popup])
     const closePopup = useCallback(() => { setPopup(false); }, [popup])
     return (
-        <View style={{ height: 350, width: 320, borderRadius: 15, marginRight: 10, marginLeft: 3, elevation: 3, backgroundColor: '#E7E7E7' }}>
+        <View style={{ height: 340, width: 320, borderRadius: 15, marginRight: 10, marginLeft: 3, elevation: 3, backgroundColor: '#E7E7E7' }}>
 
             <TouchableOpacity onPress={() => { navigation.navigate("DetailedRoomPage", route = { room }) }} style={{ flex: 3, height: 250, width: 320, borderRadius: 15 }}>
                 {(removeMode == true) ? (

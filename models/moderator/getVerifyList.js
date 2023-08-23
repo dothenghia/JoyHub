@@ -54,7 +54,13 @@ export default async function getVerifyList()
         let verifyList = [];
         for (i of res.data.message)
         {
-   
+            console.log("I NE",i["image"])
+            let img = i["image"][0]
+            if(!img)
+            {
+                img = ["https://i.imgur.com/TMfTk0F.jpg"]
+            }
+                
             verifyList.push(
                 {   
                     id: i["_id"],
@@ -70,7 +76,8 @@ export default async function getVerifyList()
                         year: 'numeric',
                       }),
                     phone: i["phone"],
-                    customer: i["customer"]
+                    customer: i["customer"],
+                    image: img[0]
                 }
             )
         }
