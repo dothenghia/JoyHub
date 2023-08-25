@@ -12,6 +12,9 @@ export default async function getPaymentInformation(payload) {
         roomInfo = res.data.message.room[0]
         userInfo = res.data.message.user[0]
 
+        console.log('PreBill :', roomInfo)
+        console.log(userInfo)
+
         let result = {}
         result['hotel_name'] = roomInfo.hotel[0].hotel_name
         result['room_name'] = roomInfo.name

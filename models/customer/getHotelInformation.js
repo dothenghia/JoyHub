@@ -9,6 +9,8 @@ export default async function getHotelInformation(payload) {
     let s_date = payload[1].startDate.toISOString()
     let e_date = payload[1].endDate.toISOString()
 
+    // console.log('Req :', hotelId, s_date, e_date)
+
     let res = null;
 
     try {
@@ -26,6 +28,10 @@ export default async function getHotelInformation(payload) {
                 average_star += review.star
             })
             average_star = average_star / res.reviews.length
+
+            if (res.reviews.length == 0) {
+                average_star = 0
+            }
         } else {
             average_star = 0
         }
@@ -37,11 +43,15 @@ export default async function getHotelInformation(payload) {
         res.rooms.forEach((room) => {
             room.amenity_list.forEach((amen) => {
                 if (amen_list.includes(amen.amenity.name) == false) {
-                    amen_list.push({ name: amen.amenity.name })
+                    amen_list.push(amen.amenity.name)
                 }
             })
         })
-        res['amenities'] = amen_list
+        let amen_obj_list = []
+        amen_list.forEach((amen) => {
+            amen_obj_list.push({name :amen})
+        })
+        res['amenities'] = amen_obj_list
 
 
         // SPLIT ROOM BY TYPE
@@ -58,7 +68,7 @@ export default async function getHotelInformation(payload) {
         });
         res['rooms_list'] = Object.values(room_list);
 
-        // console.log(res)
+        console.log('Hotel :', res)
         return res
 
     }

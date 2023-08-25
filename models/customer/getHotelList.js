@@ -18,6 +18,10 @@ export default async function getHotelList() {
                     average_star += review.star
                 })
                 average_star = average_star / hotel.reviews.length
+
+                if (hotel.reviews.length == 0) {
+                    average_star = 0
+                }
             } else {
                 average_star = 0
             }
@@ -28,17 +32,18 @@ export default async function getHotelList() {
                         smallest_price = room.price
                     }
                 })
-            } else {
-                if (hotel.rooms.length === 0) {
+                if (hotel.rooms.length == 0) {
                     smallest_price = 0
                 }
+            } else {
+                smallest_price = 0
             }
 
             hotel['star'] = average_star
             hotel['smallest_price'] = smallest_price
         });
 
-        // console.log(res)
+        console.log('List :', res)
 
         return res
     }

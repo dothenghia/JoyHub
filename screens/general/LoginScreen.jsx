@@ -23,7 +23,7 @@ export default function LoginScreen({ navigation }) {
     console.log('[Login] role :', role)
 
     // ------ Data State
-    const [username, setUsername] = useState('hotel1');
+    const [username, setUsername] = useState('caokhoi2702');
     const [password, setPassword] = useState('123456');
     const [loading, setLoading] = useState(false)
 
@@ -31,48 +31,30 @@ export default function LoginScreen({ navigation }) {
     // Function called when the user presses Login button
     const loginHandler = async () => {
         // for testing UI
-        if (username === 'c') {
-            navigation.navigate('CustomerMain')
-            ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
-            setRole('customer')
+        setLoading(true);
+        const { error, role } = await GController('LOGIN', username, password);
+        setLoading(false);
+        if (error) {
+            alert(error);
         }
-        else if (username === 'm') {
-            navigation.navigate('ModeratorMain')
-            ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
-            setRole('moderator')
-        }
-        else if (username === 'a') {
-            navigation.navigate('AdminMain')
-            ToastAndroid.show('Login to ADMIN successfully', ToastAndroid.SHORT)
-            setRole('admin')
-        }
-        // for testing server
         else {
-            setLoading(true);
-            const { error, role } = await GController('LOGIN', username, password);
-            setLoading(false);
-            if (error) {
-                alert(error);
-            }
-            else {
-                switch (role) {
-                    case 'customer':
-                        setRole('customer')
-                        navigation.navigate('CustomerMain');
-                        ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
-                        break;
-                    case 'moderator':
-                        navigation.navigate('ModeratorMain');
-                        ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
-                        break;
-                    case 'admin':
-                        navigation.navigate('AdminMain');
-                        ToastAndroid.show('Login to ADMIN successfully', ToastAndroid.SHORT)
-                        break;
-                    default:
-                        alert('Invalid role');
-                        break;
-                }
+            switch (role) {
+                case 'customer':
+                    setRole('customer')
+                    navigation.navigate('CustomerMain');
+                    ToastAndroid.show('Login to CUSTOMER successfully', ToastAndroid.SHORT)
+                    break;
+                case 'moderator':
+                    navigation.navigate('ModeratorMain');
+                    ToastAndroid.show('Login to MODERATOR successfully', ToastAndroid.SHORT)
+                    break;
+                case 'admin':
+                    navigation.navigate('AdminMain');
+                    ToastAndroid.show('Login to ADMIN successfully', ToastAndroid.SHORT)
+                    break;
+                default:
+                    alert('Invalid role');
+                    break;
             }
         }
     }

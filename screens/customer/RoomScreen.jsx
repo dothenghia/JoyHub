@@ -33,7 +33,7 @@ const renderItem = ({ item }) => {
     return (
         <ImageBackground
             source={{
-                uri: item.thumbnail,
+                uri: item,
             }}
             resizeMode="cover"
             style={styles.slider_image}
@@ -114,7 +114,7 @@ export default function RoomScreen({ navigation, route }) {
                     </View>
 
                     {/* Thumbnail Slider */}
-                    <View style={{ marginTop: 12, marginBottom: -32 }}>
+                    <View style={{ marginTop: 12, marginBottom: ((roomInfo && roomInfo.thumbnails && roomInfo.thumbnails.length == 1) ? 0 : -32)}}>
                         <Carousel
                             ref={carouselRef}
                             data={(roomInfo && roomInfo.thumbnails) ? roomInfo.thumbnails : []}
