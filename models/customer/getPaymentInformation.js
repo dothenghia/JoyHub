@@ -21,6 +21,7 @@ export default async function getPaymentInformation(payload) {
         result['room_type'] = roomInfo.room_type
         result['address'] = roomInfo.hotel[0].address
         result['price'] = roomInfo.price
+        result['thumbnail'] = (roomInfo.image && roomInfo.image.length > 0) ? roomInfo.image[0] : "https://i.imgur.com/TMfTk0F.jpg"
 
         result['full_name'] = userInfo.full_name
         result['joycoin'] = userInfo.account[0].wallet

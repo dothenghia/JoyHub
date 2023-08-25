@@ -17,7 +17,7 @@ export default function HotelCard({ props, navigation }) {
         >
             <ImageBackground
                 source={{
-                    uri: props.image,
+                    uri: (props.image ? props.image : 'https://i.imgur.com/TMfTk0F.jpg'),
                 }}
                 resizeMode="cover"
                 style={styles.bg_image}

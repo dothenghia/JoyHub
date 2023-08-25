@@ -168,16 +168,18 @@ export default function RoomScreen({ navigation, route }) {
 
 
                         {/* Room AMENITY */}
-                        <FlatList style={{ height: 120, marginTop: 8 }}
-                            horizontal data={roomInfo && roomInfo.amenities}
+                        {roomInfo && roomInfo.amenities && roomInfo.amenities.length > 0 && (
+                            <FlatList style={{ height: 120, marginTop: 8 }}
+                                horizontal data={roomInfo && roomInfo.amenities}
 
-                            renderItem={({ item }) => (
-                                <FacilityCard
-                                    name={item}
-                                />
-                            )}
-                        >
-                        </FlatList>
+                                renderItem={({ item }) => (
+                                    <FacilityCard
+                                        name={item}
+                                    />
+                                )}
+                            >
+                            </FlatList>
+                        )}
 
                         {/* Room DESCRIPTION */}
 

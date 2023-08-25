@@ -94,7 +94,9 @@ export default function PaymentScreen({ navigation, route }) {
                     {/* Thumbnail Image */}
                     <View style={customerStyles.section_container_no_py}>
                         <ImageBackground
-                            source={require('../../assets/customer/demo.jpg')}
+                            source={{
+                                uri: (paymentInfo && paymentInfo.thumbnail),
+                            }}
                             resizeMode="cover"
                             style={styles.thumbnail_slider}
                         >
