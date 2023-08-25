@@ -10,6 +10,7 @@ import getDetailReservation from "../models/customer/getDetailReservation";
 import getFavoriteList from "../models/customer/getFavoriteList";
 
 import sendPayment from "../models/customer/sendPayment";
+import sendRating from "../models/customer/sendRating";
 
 export default async function CController (type, ...payload) {
     // console.log('[payload]' , payload)
@@ -48,11 +49,14 @@ export default async function CController (type, ...payload) {
             const reservationList = await getReservationList()
             return reservationList
         }
-        
-        case 'GETDETAILRESERVATION' : {
-            const reservationInformation = await getDetailReservation()
-            return reservationInformation
+        case 'SENDRATING' : {
+            const rating = await sendRating(payload)
+            return rating
         }
+        // case 'GETDETAILRESERVATION' : {
+        //     const reservationInformation = await getDetailReservation()
+        //     return reservationInformation
+        // }
 
         case 'GETNOTIFICATIONLIST' : {
             const notificationList = await getNotificationList()
