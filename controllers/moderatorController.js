@@ -9,7 +9,13 @@ import addRoom from "../models/moderator/addRoom"
 import removeRoom from "../models/moderator/removeRoom"
 import getVerify from "../models/moderator/getVerifyList"
 import acceptVerify from "../models/moderator/acceptVerify"
-import removeVerify from "../models/moderator/removeVerify"
+import declineVerify from "../models/moderator/declineVerify"
+import getCheckinList from "../models/moderator/getCheckinList"
+import checkin from "../models/moderator/checkin"
+import getCheckoutList from "../models/moderator/getCheckoutList"
+import checkout from "../models/moderator/checkout"
+import editInfo from "../models/moderator/editInfo"
+
 export default async function MController (type, ...payload) 
 {
     switch (type) 
@@ -59,8 +65,23 @@ export default async function MController (type, ...payload)
             const acceptV = await acceptVerify(...payload)
             return acceptV
         case 'REMOVEVERIFY':
-            const removeV = await removeVerify(...payload)
+            const removeV = await declineVerify(...payload)
             return removeV
+        case 'GETCHECKIN':
+            const checkinList = await getCheckinList()
+            return checkinList
+        case 'CHECKIN':
+            const ci = await checkin(...payload)
+            return ci
+        case 'GETCHECKOUT':
+            const checkoutList = await getCheckoutList()
+            return checkoutList
+        case 'CHECKOUT':
+            const co = await checkout(...payload)
+            return co    
+        case 'EDITINFO':
+            const ei = await editInfo(...payload)
+            return ei
         default:
             return null
     }

@@ -19,6 +19,9 @@ export default function UserScreen({ navigation }) {
     const [description, setDescription] = useState(null)
     const [address, setAddress] = useState(null)
     const [phone, setPhone] = useState(null)
+    const [image, setImage] = useState(null)
+    const [showImage, setShowImage] = useState(null)
+    const [newImage, setNewImage] = useState(null)
     useEffect(() => {
         const fetchModInfo = async () => {
             let data = await MController('GETMODINFO')
@@ -27,6 +30,8 @@ export default function UserScreen({ navigation }) {
             setDescription(data.description)
             setAddress(data.address)
             setPhone(data.phone)
+            setImage(data.image)
+            setShowImage(data.image)
         }
         fetchModInfo()
     }, [])
@@ -39,22 +44,7 @@ export default function UserScreen({ navigation }) {
 
 
 
-    const convertImageToBase64 = async uri => {
-        const response = await fetch(uri);
-        const blob = await response.blob();
-
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const base64data = reader.result.split(',')[1]; // Extract only the base64 data
-                resolve(base64data);
-            };
-            reader.onerror = error => {
-                reject(error);
-            };
-            reader.readAsDataURL(blob);
-        });
-    };
+    
 
     const CLIENT_ID = '842256555618eb5';
     const [imageData, setImageData] = useState(null);
@@ -69,86 +59,47 @@ export default function UserScreen({ navigation }) {
                 aspect: [4, 3],
                 quality: 1,
             });
-            
+
         }
         catch (error) {
             console.log("error: ", error)
         }
         if (!result.cancelled) {
-
-            const base64 = await convertImageToBase64(result.uri);
-            setImageData(base64);
-            console.log(imageData)
+            setNewImage(result.uri)
+   
         }
     };
-
-    const uploadImageToImgur = async () => {
-        let base64 = imageData
-        console.log("BASE",base64)
-        try {
-            const response = await axios.post(
-              'https://api.imgur.com/3/image',
-              { image: base64 },
-              {
-                headers: {
-                  Authorization: 'Client-ID ' + CLIENT_ID,
-                  'Content-Type': 'application/json',
-                },
-              }
-            );
-    
-            if (response.status === 200 && response.data.data && response.data.data.link) {
-              console.log('Image uploaded successfully:', response.data.data.link);
-            } else {
-              console.log('Image upload failed');
-            }
-          } catch (error) {
-            console.error('Error uploading image:', error);
-          }
-        }
-    
-
-
-
-
-
-
-
-    //////////////
-
-
-
-
-
-
-
 
 
     return (
         <ScrollView style={modStyles.page_container}>
 
-            <View style={{ width: '100%', height: 250 }}>
-                <ImageBackground
-                    source={require('../../assets/mod/demoHotel.jpg')}
-                    resizeMode="cover"
-                    style={{ flex: 1, justifyContent: 'center', }}
-                >
-                    <TouchableOpacity
-                        style={modStyles.top_bar_button}
-                        onPress={
-                            () => { navigation.goBack() }
-                        }
+            <View style={{ width: '100%', height: 270 }}>
+                <TouchableOpacity disabled={!editMode} style={{ flex: 1, justifyContent: 'center', }} onPress={async ()=>{
+                    await pickImage()
+                }}>
+                    <ImageBackground
+                        source={{ uri: showImage }}
+                        resizeMode="cover"
+                        style={{ flex: 1, justifyContent: 'center', }}
                     >
-                        <FontAwesome5Icon name={"arrow-left"} size={18} color={COLORS.primary} />
-                    </TouchableOpacity>
-                </ImageBackground>
+                        <TouchableOpacity
+                            style={modStyles.top_bar_button}
+                            onPress={
+                                () => { navigation.goBack() }
+                            }
+                        >
+                            <FontAwesome5Icon name={"arrow-left"} size={18} color={COLORS.primary} />
+                        </TouchableOpacity>
+                    </ImageBackground>
+                </TouchableOpacity>
             </View>
 
             <View style={{
                 flex: 2,
-                marginTop: -50,
+                marginTop: -15,
                 backgroundColor: '#E7E7E7',
-                borderTopLeftRadius: 25, borderTopRightRadius: 25
+                borderTopLeftRadius: 20, borderTopRightRadius: 20
             }}>
 
                 <View style={{ borderTopLeftRadius: 25, borderTopRightRadius: 25 }}>
@@ -159,10 +110,27 @@ export default function UserScreen({ navigation }) {
                                     (<TextInput onChangeText={changeHotelName} style={{ flex: 7, fontSize: 31, fontWeight: 'bold', borderWidth: 1, borderRadius: 10, paddingLeft: 10 }}>{hotelName ? hotelName : ""}</TextInput>)
                             }
 
-                            <TouchableOpacity onPress={() => {
-                                if (editMode === true)
+                            <TouchableOpacity onPress={async () => {
+                                if (editMode === true) {
+                                    if(newImage)
+                                        setShowImage(newImage)
+                                    else 
+                                        setShowImage(image)
+                                    newInfo = {
+                                        "hotel_name": hotelName,
+                                        "phone": phone,
+                                        "description": description,
+                                        "image": newImage,
+                                        "address": address,
+                                        "newImage": (newImage ? true : false)
+                                    }
+                                    await MController("EDITINFO", newInfo)
                                     setEditMode(false)
+                                    setNewImage(null)
+                                }
                                 else {
+
+                                    setShowImage("https://i.imgur.com/phk6mxL.png")
                                     setEditMode(true)
                                     /*and request for changing */
                                 }
@@ -187,7 +155,7 @@ export default function UserScreen({ navigation }) {
 
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                        <View style={{ flexDirection: 'row', marginTop: 25, marginBottom: 30 }}>
                             <Image style={{ flex: 2, height: 30, width: 30, marginTop: -5 }} source={require('../../assets/mod/phone.png')} />
 
                             <JoyText style={{ marginLeft: 10, flex: 6, fontSize: TEXTS.lg }}>{'Phone:'}</JoyText >
@@ -200,12 +168,7 @@ export default function UserScreen({ navigation }) {
                             }
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 30 }}>
-                            <Image style={{ flex: 2, height: 30, width: 30, marginTop: -5 }} source={require('../../assets/mod/star.png')} />
 
-                            <JoyText style={{ marginLeft: 10, flex: 6, fontSize: TEXTS.lg }}>{'Rating:'}</JoyText >
-                            <JoyText style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888' }}>{modInfo ? modInfo.rating : "Loading ..."}</JoyText >
-                        </View>
 
                     </View>
 
@@ -267,7 +230,7 @@ export default function UserScreen({ navigation }) {
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
 
-                
+
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { MController('GETVERIFY') }} >
                         <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'verify'}</JoyText >
                     </TouchableOpacity>

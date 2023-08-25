@@ -1,13 +1,12 @@
 import axiosInstance from "../configs";
 
 
-export default async function acceptVerify(...payload) {
+export default async function checkout(...payload) {
     let res = null;
     let id = payload[0]
-    
     try {
 
-        res = await axiosInstance.put(`/mod/verify/accept/${id}`);
+        res = await axiosInstance.put(`/mod/checkout/checkout/${id}`);
         //console.log(`Message: ${res.data.message}- Role: ${res.data.role}`);
         //console.log(JSON.stringify(res.data, null, 2));
 

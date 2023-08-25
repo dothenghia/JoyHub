@@ -75,15 +75,35 @@ export default function MainScreen({ navigation }) {
 
                 <View style={{ flexDirection: 'row', marginBottom: 10 }}>
                     <TouchableOpacity style={{ backgroundColor: verifyColor, height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginRight: 10 }}
-                        onPress={() => { setPage('verify'); setButtonColor('verify'); }}>
+                        onPress={async () => { 
+                            setLoading(true); 
+                            setPage('verify'); 
+                            setButtonColor('verify'); 
+                            list = await MController('GETVERIFY'); 
+                            setVerifyList(list); 
+                            setLoading(false) }}>
                         <JoyText style={{ textAlign: 'center', paddingTop: 10, color: 'white', fontWeight: 'bold' }}> Verify </JoyText >
                     </TouchableOpacity>
                     <TouchableOpacity style={{ backgroundColor: checkinColor, height: 40, flex: 1, borderRadius: 20, marginTop: 15, margin: 0 }}
-                        onPress={() => { setPage('checkin'); setButtonColor('checkin'); }}>
+                        onPress={async () => {
+                            setLoading(true) 
+                            setPage('checkin'); 
+                            setButtonColor('checkin'); 
+                            list = await MController('GETCHECKIN'); 
+                            setCheckinList(list)
+                            setLoading(false)
+                            }}>
                         <JoyText style={{ textAlign: 'center', paddingTop: 10, color: 'white', fontWeight: 'bold' }}> Check In </JoyText >
                     </TouchableOpacity>
                     <TouchableOpacity style={{ backgroundColor: checkoutColor, height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginLeft: 10 }}
-                        onPress={() => { setPage('checkout'); setButtonColor('checkout'); }}>
+                        onPress={async () => { 
+                            setLoading(true) 
+                            setPage('checkout'); 
+                            setButtonColor('checkout'); 
+                            list = await MController('GETCHECKOUT'); 
+                            setCheckoutList(list)
+                            setLoading(false)
+                             }}>
                         <JoyText style={{ textAlign: 'center', paddingTop: 10, color: 'white', fontWeight: 'bold' }}> Check Out </JoyText >
                     </TouchableOpacity>
                 </View>
@@ -127,7 +147,7 @@ function VerifyArea({ verifyList }) {
 
     for (let i = 0; i < verifyList.length; ++i) {
         res.push(
-            <VerifyWaitingCard bookingInfo={verifyList[i]} />
+            <VerifyWaitingCard key={i} bookingInfo={verifyList[i]} />
         )
     }
 
@@ -145,7 +165,7 @@ function CheckinArea({ checkinList }) {
 
     for (let i = 0; i < checkinList.length; ++i) {
         res.push(
-            <CheckinCard bookingInfo={checkinList[i]} />
+            <CheckinCard key={i} bookingInfo={checkinList[i]} />
         )
     }
 
@@ -162,7 +182,7 @@ function CheckoutArea({ checkoutList }) {
 
     for (let i = 0; i < checkoutList.length; ++i) {
         res.push(
-            <CheckoutCard bookingInfo={checkoutList[i]} />
+            <CheckoutCard key={i} bookingInfo={checkoutList[i]} />
         )
     }
 

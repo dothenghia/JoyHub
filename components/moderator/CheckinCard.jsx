@@ -1,15 +1,19 @@
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
+import { useState } from 'react';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ToastAndroid } from 'react-native'
 import JoyText from '../../components/general/JoyText'
 import { TEXTS } from "../../constants/theme";
 import React from 'react'
+import MController from '../../controllers/moderatorController';
 
 export default function CheckinCard({ bookingInfo }) {
+    const [invisible,setInvisible] = useState(false)
+    
+    if(!invisible)
     return (
-
         <View style={styles.card}>
 
             <View style={{ flexDirection: 'row', padding: 10, marginTop: 7 }}>
-                <Image style={{ flex: 3.5, height: 'auto', minHeight: 170, borderRadius: 15, borderWidth: 1, }} source={require('../../assets/mod/demoHotel.jpg')} />
+                <Image style={{ flex: 3.5, height: 'auto', minHeight: 170, borderRadius: 15, borderWidth: 1, }} source={{uri : bookingInfo.image}} />
                 <View style={{ flex: 5, }}>
                     <JoyText  style={{ marginLeft: 10, justifyContent: 'center', marginTop: 0, fontSize: TEXTS.xl, fontWeight: 'bold', color: '#FF6400' }}> {bookingInfo.room} </JoyText >
 
@@ -33,7 +37,13 @@ export default function CheckinCard({ bookingInfo }) {
                     
 
                     <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <TouchableOpacity style={{ height: 40, flex: 1, borderRadius: 20, marginLeft: 10, backgroundColor: '#FF6400' }}>
+                        <TouchableOpacity style={{ height: 40, flex: 1, borderRadius: 20, marginLeft: 10, backgroundColor: '#FF6400' }} onPress={
+                            async () => { 
+                                await MController("CHECKIN", bookingInfo["id"])
+                                ToastAndroid.show('Check in successfully', ToastAndroid.SHORT) 
+                                setInvisible(true) 
+                            }
+                        }>
                             <JoyText  style={{ textAlign: 'center', paddingTop: 7, color: 'white', fontWeight: 'bold', fontSize: TEXTS.lg }}> {"Check In"} </JoyText >
                         </TouchableOpacity>
 
