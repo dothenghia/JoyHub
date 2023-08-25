@@ -1,13 +1,10 @@
-import React, { useState } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
+import React, {Suspense, useEffect} from "react";
+import {useIsFocused} from "@react-navigation/native";
+import {FlatList, Text, View} from "react-native";
 import generalStyles from "../../styles/general";
-import { TopBar, RemoveBar } from "../../components/admin/Bar";
-import { TEXTS } from "../../constants/theme";
-import { Ionicons } from "@expo/vector-icons";
-import { DetailHotelStyles } from "../../styles/admin";
-import { useIsFocused } from "@react-navigation/native";
-import { FlatList } from "react-native";
-import { ReportDetailCard } from "../../components/admin/Card";
+import {RemoveBar, TopBar} from "../../components/admin/Bar";
+import {ReportDetailCard} from "../../components/admin/Card";
+import AController from "../../controllers/adminController";
 
 const data = [
     {
@@ -36,23 +33,60 @@ const data = [
     },
 ];
 
-export default function DetaiReportScreen({ route, navigation }) {
-    const { hotel_name } = route.params;
+const LazyLoadScreen = (Component) => (props) =>
+    (
+        <Suspense fallback={<Text>Loading...</Text>}>
+            <Component {...props} />
+        </Suspense>
+    );
+const ReportItem = ({ item }) => {
+    return (
+        <ReportDetailCard
+            IdBooking={item.booking_id}
+            Date={item.date}
+            Title={item.title}
+            Description={item.content}
+        />
+    )
+}
+const LazyReportItem = LazyLoadScreen(ReportItem);
+
+const ReportList = ({ data }) => (
+    <FlatList
+        data={data}
+        keyExtractor={(item) => item.booking_id}
+        renderItem={({ item }) => (
+            <LazyReportItem item={item} />
+        )}
+    />
+);
+
+// --------------- Function ---------------
+const fetchReport = async (setReports, hotel_id) => {
+    try {
+        const response = await AController("GET_REPORT_OF_HOTEL", hotel_id);
+        setReports(response);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export default function DetailReportScreen({ route, navigation }) {
+    const { hotel_name, hotel_id } = route.params;
+    const isFocused = useIsFocused();
+    const [reports, setReports] = React.useState([]);
+
+    useEffect(() => {
+        if (isFocused) {
+            fetchReport(setReports, hotel_id);
+        }
+    }, [isFocused]);
+
+
     return (
         <View style={generalStyles.page_container}>
-            <TopBar Title={hotel_name + " (" + data.length + ")"}backIcon={true} navigation={navigation} />
-            <FlatList
-                data={data}
-                keyExtractor={(item) => item.bookingId}
-                renderItem={({ item }) => (
-                    <ReportDetailCard
-                        IdBooking={item.bookingId}
-                        Date={item.date}
-                        Title={item.title}
-                        Description={item.description}
-                    />
-                )}
-            />
+            <TopBar Title={hotel_name + " (" + reports.length + ")"} backIcon={true} navigation={navigation} />
+            <ReportList data={reports} />
             <RemoveBar contactText={"Contact"} removeText={"REMOVE THIS ACCOUNT"} />
         </View>
     );

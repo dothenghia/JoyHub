@@ -4,6 +4,7 @@ import removeModerator from "../models/admin/removeModerator";
 import {getInactiveRoomCount, getInactiveRoomList, getRoomDetail} from "../models/admin/getRoomList";
 import activeRoom from "../models/admin/activeRoom";
 import removeRoom from "../models/admin/removeRoom";
+import { getReportList, getReportOfHotel, updateReadingStatus } from "../models/admin/report";
 
 const actions = {
     GETMODERATOR: async () => {
@@ -34,6 +35,15 @@ const actions = {
     REMOVE_ROOM: async (id) => {
         // get inactive room list of a hotel by id
         return await removeRoom(id);
+    },
+    GET_REPORT_LIST: async () => {
+        return await getReportList();
+    },
+    GET_REPORT_OF_HOTEL: async (id) => {
+        return await getReportOfHotel(id);
+    },
+    MARK_AS_READ: async (hotel_id) => {
+        return await updateReadingStatus(hotel_id);
     }
 }
 

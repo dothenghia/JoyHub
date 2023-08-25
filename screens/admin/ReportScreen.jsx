@@ -1,76 +1,116 @@
-import React, { useMemo, useState } from "react";
+import React, {Suspense, useEffect, useState} from "react";
 import { FlatList, Text, View, TouchableOpacity } from "react-native";
 import generalStyles from "../../styles/general";
-import { searchStyles } from "../../styles/admin";
 import { TopBar, SearchBar } from "../../components/admin/Bar";
-import { AvatarCard, ReportCard } from "../../components/admin/Card";
-import { TEXTS } from "../../constants/theme";
+import { ReportCard } from "../../components/admin/Card";
+import {useIsFocused} from "@react-navigation/native";
+import AController from "../../controllers/adminController";
 
-const data = [
-    { id: "1", name: "Ramekin", title: "There is a mouse", isRead: false },
-    { id: "2", name: "Leonine", title: "Bad service", isRead: true },
-    { id: "3", name: "Ebullition", title: "Scam", isRead: false },
-    { id: "4", name: "Atwitter", title: "Scam", isRead: false },
-];
+const LazyLoadScreen = (Component) => (props) =>
+    (
+        <Suspense fallback={<Text>Loading...</Text>}>
+            <Component {...props} />
+        </Suspense>
+    );
+
+const ReportItem = ({ item, navigation }) => {
+    return (
+            (item) ?
+            <TouchableOpacity onPress={
+                async () => {
+                    if (!item.isRead) {
+                        await AController("MARK_AS_READ", item.hotel_id);
+                    }
+                    navigation.navigate("AdminDetailReport", { hotel_name: item.hotel.name, hotel_id: item.hotel_id });
+                }
+            }>
+                <ReportCard
+                    hotel={(item.hotel)? item.hotel.name : "No hotel"}
+                    title={(item.latest_report) ? item.latest_report.title : "No title"}
+                    isRead={item.isRead}
+                    date={item.date}
+                />
+            </TouchableOpacity> : <Text>Empty</Text>
+    )
+}
+
+const LazyReportItem = LazyLoadScreen(ReportItem);
+
+const ReportList = ({ data, navigation, markAsRead }) => (
+    <FlatList
+        data={data}
+        keyExtractor={(item) => item.hotel_id}
+        renderItem={({ item }) => (
+            <LazyReportItem item={item} navigation={navigation} markAsRead={markAsRead}/>
+        )}
+    />
+);
+
+const SearchAndHeader = ({ searchQuery, handleSearch }) => (
+    <View>
+        <TopBar Title={"Report Control"} />
+        <SearchBar
+            placeholder={"Type here..."}
+            onChangeText={handleSearch}
+            value={searchQuery}
+        />
+    </View>
+);
+
+// --------------- Function ---------------
+const fetchReport = async (setReports) => {
+    try {
+        const response = await AController("GET_REPORT_LIST");
+        setReports(response);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+const filterReport = (data, text) => {
+    return data.filter((item) => {
+        return item.name.toLowerCase().includes(text.toLowerCase());
+    });
+}
 
 export default function ReportScreen({ navigation }) {
+    const isFocused = useIsFocused();
     const [searchQuery, setSearchQuery] = useState("");
-    const [filteredData, setFilteredData] = useState(data);
+    const [filteredData, setFilteredData] = useState([]);
+    const [reports, setReports] = useState([]);
+
+    useEffect(() => {
+        if (isFocused) {
+            fetchReport(setReports);
+        }
+    }, [isFocused]);
+
+    useEffect(() => {
+        setFilteredData(reports);
+    }, [reports]);
 
     const handleSearch = (text) => {
         setSearchQuery(text);
         // Filter data
-        const filtered = data.filter((item) => {
-            return item.name.toLowerCase().includes(text.toLowerCase());
-        });
+        const filtered = filterReport(reports, text);
         setFilteredData(filtered);
     };
 
     const markAsRead = (id) => {
-        const updatedData = data.map((item) => {
-            if (item.id === id) {
-                item.isRead = true;
+        const updatedData = filteredData.map(async (item) => {
+            console.log(item.hotel_id);
+            if (item.hotel_id === id) {
+                await AController("MARK_AS_READ", item.hotel_id);
             }
             return item;
         });
         setFilteredData(updatedData);
-    };
+    }
 
     return (
         <View style={generalStyles.page_container}>
-            <TopBar
-                Title={"Report Control"}
-                backIcon={true}
-                navigation={navigation}
-            />
-
-            <SearchBar
-                placeholder={"Type here..."}
-                onChangeText={handleSearch}
-                value={searchQuery}
-            />
-
-            <FlatList
-                data={filteredData}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                    <TouchableOpacity onPress={
-                        () => {
-                            if (!item.isRead) {
-                                markAsRead(item.id);
-                            }
-                            navigation.navigate("AdminDetailReport", { hotel_name: item.name })
-                        }
-                    }>
-                        <ReportCard
-                            hotel={item.name}
-                            title={item.title}
-                            isRead={item.isRead}
-                            date={"2021-05-20"}
-                        />
-                    </TouchableOpacity>
-                )}
-            />
+            <SearchAndHeader searchQuery={searchQuery} handleSearch={handleSearch} />
+            <ReportList data={filteredData} navigation={navigation} markAsRead={markAsRead}/>
         </View>
     );
 }

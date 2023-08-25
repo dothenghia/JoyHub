@@ -209,7 +209,7 @@ export const ReportCardStyles = StyleSheet.create({
         fontSize: TEXTS.xxl
     },
     title: {
-        flex: 1,
+        flex: 5,
         fontSize: TEXTS.md,
         fontWeight: "700",
         color: COLORS.text,

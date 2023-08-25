@@ -70,7 +70,7 @@ export const ReportCard = ({ hotel, title, date, isRead }) => {
             <Text style={hotelStyle}>{hotel}</Text>
             {/* Title of report */}
             <View style={ReportCardStyles.titleContainer}>
-                <Text style={titleStyle}>{title.toUpperCase()}</Text>
+                <Text style={titleStyle} numberOfLines={1}>{title}</Text>
                 {/* Unread icon */}
                 {!isRead && <Icon name="circle" style={ReportCardStyles.icon} />}
             </View>
@@ -100,7 +100,7 @@ export const ReportDetailCard = ({ IdBooking, Date, Title, Description }) => {
         <View style={ReportDetailStyles.container}>
             <View style={ReportDetailStyles.idContainer}>
                 {/* Id booking */}
-                <JoyText style={ReportDetailStyles.idText}>{IdBooking}</JoyText>
+                {/*<JoyText style={ReportDetailStyles.idText}>{IdBooking}</JoyText>*/}
                 <JoyText style={ReportDetailStyles.date}>{Date}</JoyText>
                 {/* Date */}
             </View>
