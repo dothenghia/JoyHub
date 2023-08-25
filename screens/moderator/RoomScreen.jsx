@@ -15,8 +15,6 @@ import MController from "../../controllers/moderatorController";
 
 export default function RoomScreen({ navigation }) {
 
-
-    
     // ------ Data State
     const [hotelInfo, setHotelInfo] = useState(null)
     const [amenities, setamenities] = useState([])
@@ -37,7 +35,7 @@ export default function RoomScreen({ navigation }) {
         fetchHotelInformation()
     }, [])
 
-    
+
     const [refreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(false)
 
@@ -66,7 +64,7 @@ export default function RoomScreen({ navigation }) {
     }, []);
 
     return (
-        <ScrollView style={modStyles.page_container} 
+        <ScrollView style={modStyles.page_container}
             refreshControl={ // DÙNG ĐỂ VUỐT XUỐNG RELOAD TRANG
             <RefreshControl
                 refreshing={refreshing}
@@ -129,16 +127,22 @@ function RoomArea({ roomList, navigation, removeMode, fetch}) {
     for (let i = 0; i < roomList.length; i++) {
         listOfType.push(roomList[i].roomType)
     }
-    
+
     res = []
     for (let i = 0; i < n; ++i) {
         res.push(
             <View key={i} style={modStyles.page_padding}>
                 <JoyText style={{ fontSize: TEXTS['5xl'], marginBottom: 20, marginTop: 20, fontWeight: 'bold' }}>{listOfType[i]}</JoyText >
                 <FlatList style={{ height: 370 }}
-                    horizontal data={roomList[i].roomList}
+                    horizontal
+                    data={roomList[i].roomList}
+                    keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <RoomCard img={(item["image"]) ? (item["image"][0]) : "https://i.imgur.com/TMfTk0F.jpg"} room={item} navigation={navigation} removeMode={removeMode} fetch={fetch} />
+                        <RoomCard img={(item["image"]) ? (item["image"][0]) : "https://i.imgur.com/TMfTk0F.jpg"}
+                        room={item}
+                        navigation={navigation}
+                        removeMode={removeMode}
+                        fetch={fetch} />
                     )}
                 ></FlatList>
             </View>
@@ -150,7 +154,7 @@ function RoomArea({ roomList, navigation, removeMode, fetch}) {
 
 
 function RoomCard({ img, room, navigation, removeMode, fetch }) {
-    
+
     const [popup, setPopup] = useState(false)
     const showPopup = useCallback(() => { setPopup(true);  }, [popup])
     const closePopup = useCallback(() => { setPopup(false); }, [popup])
@@ -209,12 +213,12 @@ function RoomCard({ img, room, navigation, removeMode, fetch }) {
                             </TouchableOpacity>
                             <View>
                                 <JoyText style={{ color: COLORS.heading_text, fontSize: TEXTS.xxl, fontWeight: '600', }}>Are You Sure ?</JoyText>
-                                
+
                                 <TouchableOpacity style={{ alignSelf: 'flex-end', backgroundColor: "#FF6400", width: 70, height: 45, marginRight: 20, marginTop: 30, borderRadius: 10, }}
                                     onPress={() => {
 
                                         MController("REMOVEROOM",{
-                                            room_id : room["id"],                                                                                                                              
+                                            room_id : room["id"],
                                         })
                                         fetch()
                                         ToastAndroid.show('Remove successfully', ToastAndroid.SHORT)

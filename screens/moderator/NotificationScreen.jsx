@@ -4,14 +4,14 @@ import { StyleSheet, Text, View, ScrollView, StatusBar, RefreshControl } from "r
 import TopBar from "../../components/moderator/TopBar";
 import NotificationCard from "../../components/moderator/NotificationCard";
 import modStyles from "../../styles/mod"
-import JoyText from '../../components/general/JoyText'
 import MController from "../../controllers/moderatorController";
+import { FlatList } from "react-native";
 import LoadingModal from '../../components/general/LoadingModal'
 
 
-export default function NotificationScreen({navigation}) {
-    
-    const [notifications,setNotifications] = useState([])
+export default function NotificationScreen({ navigation }) {
+
+    const [notifications, setNotifications] = useState([])
 
     const [refreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(false)
@@ -42,35 +42,31 @@ export default function NotificationScreen({navigation}) {
         <View style={modStyles.page_container}>
             <LoadingModal isLoading={loading} />
             <ScrollView refreshControl={ // DÙNG ĐỂ VUỐT XUỐNG RELOAD TRANG
-            <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                colors={['#FF6400']}
-            />
-        }>
-                
-                <TopBar Title = "Notification" Style={modStyles.page_padding} navigation={navigation}/>
-                <NotificationArea notifications={notifications}/>
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    colors={['#FF6400']}
+                />
+            }>
+
+                <TopBar Title="Notification" Style={modStyles.page_padding} navigation={navigation} />
+                <NotificationArea notifications={notifications} />
             </ScrollView>
         </View >
     );
 }
 
 
-function NotificationArea({notifications})
-{
+function NotificationArea({ notifications }) {
     res = []
-    for (let i = 0;i<notifications.length;++i)
-    {
+    for (let i = 0; i < notifications.length; ++i) {
         res.push(
-            <NotificationCard key={i} notification={notifications[i]}/>
+            <NotificationCard key={i} notification={notifications[i]} />
         )
     }
     return (
-        <View style={{marginTop:50, ...modStyles.page_padding}}>
+        <View style={{ marginTop: 50, ...modStyles.page_padding }}>
             {res}
         </View>
     )
 }
-
-const styles = StyleSheet.create({});

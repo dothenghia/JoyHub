@@ -6,7 +6,7 @@
 //         content: 'Bao\' Dong^. Do?, Anh Nho\' Em',
 //         date: '21/12/2022',
 //         type: 'warning',
-        
+
 //     },
 //     {
 //         id: 'ID1234',
@@ -78,10 +78,10 @@ export default async function getNotifications()
 
         for (i of res.data.message)
         {
-           
-                
+
+
             notifications.push(
-                {   
+                {
                     id: i["_id"],
                     title : i["title"],
                     content: i["content"],
@@ -90,8 +90,8 @@ export default async function getNotifications()
                 }
             )
         }
-   
-        
+
+
         return notifications
     }
     catch (err) {
@@ -99,7 +99,7 @@ export default async function getNotifications()
             console.log(err.response.data.message);
             return { error: err.response.data.message };
         }
-    }   
+    }
     return [];
-    
+
 }

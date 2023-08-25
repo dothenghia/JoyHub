@@ -60,6 +60,7 @@ export default function UserScreen({ navigation }) {
                 quality: 1,
             });
 
+
         }
         catch (error) {
             console.log("error: ", error)
@@ -67,10 +68,9 @@ export default function UserScreen({ navigation }) {
         if (!result.canceled) {
             setNewImage(result.assets[0].uri)
             setShowImage(result.assets[0].uri)
-   
+
         }
     };
-
 
     return (
         <ScrollView style={modStyles.page_container}>
@@ -116,7 +116,7 @@ export default function UserScreen({ navigation }) {
                                     setLoading(true)
                                     if(newImage)
                                         setShowImage(newImage)
-                                    else 
+                                    else
                                         setShowImage(image)
                                     newInfo = {
                                         "hotel_name": hotelName,
@@ -232,6 +232,7 @@ export default function UserScreen({ navigation }) {
                         <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Đăng xuất'}</JoyText >
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
+
 
 
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { MController('GETVERIFY') }} >

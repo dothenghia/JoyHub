@@ -11,8 +11,6 @@ import axiosInstance from "../configs";
 //     email: "harleyiuem@gmail.com",
 //     username: "harleyharley"
 // }
-
-
 export default async function getModInfo() {
     let res = null;
     try {
@@ -28,9 +26,9 @@ export default async function getModInfo() {
         {
             img = "https://i.imgur.com/TMfTk0F.jpg"
         }
-  
-            
-        
+
+
+
         let modInfo = {
             hotelName : res.data.message[0]["hotel_name"],
             address: res.data.message[0]["address"],
@@ -42,7 +40,7 @@ export default async function getModInfo() {
             username: res.data.message[0]["username"][0],
             image : img
         }
-     
+
         return modInfo;
     }
     catch (err) {
@@ -50,6 +48,6 @@ export default async function getModInfo() {
             console.log(err.response.data.message);
             return { error: err.response.data.message };
         }
-    }   
+    }
     return [];
 }

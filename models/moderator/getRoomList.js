@@ -7,9 +7,9 @@ export default async function getRoomList() {
         res = await axiosInstance.get("/mod/hotel/room_list");
         //console.log(`Message: ${res.data.message}- Role: ${res.data.role}`);
         //console.log(JSON.stringify(res.data, null, 2));
-   
+
         //axiosInstance.defaults.headers.common["auth-token"] = res.headers["auth-token"];
-      
+
     }
     catch (err) {
         if (err.response) {
@@ -24,7 +24,7 @@ export default async function getRoomList() {
 
     if(res!=null)
     {
-      
+
         let message = res.data.message
         //console.log(message)
         let roomType = new Map()
@@ -35,7 +35,7 @@ export default async function getRoomList() {
             // console.log("MAP:",message[i]["room_type"])
             if(roomType.has(message[i]["room_type"]) == false)
             {
-                
+
                 roomType.set(message[i]["room_type"],count);
                 ++count;
             }
@@ -88,6 +88,6 @@ export default async function getRoomList() {
             }
         }
     }
-    
+    // console.log(`[INFO] Get room list result: ${JSON.stringify(roomList, null, 2)}`);
     return {roomList: roomList, amenities : amenities}
 }

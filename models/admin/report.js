@@ -3,7 +3,7 @@ import axiosInstance from "../configs";
 export async function getReportList(){
     try {
         const res = await axiosInstance.get(`admin/report`);
-        console.log(`[INFO] Get report list result: ${JSON.stringify(res.data.message, null, 2)}`);
+        // console.log(`[INFO] Get report list result: ${JSON.stringify(res.data.message, null, 2)}`);
         res.data.message.forEach(report => {
             report.date = convertTime(report.latest_report.updated_at);
         });
@@ -43,7 +43,7 @@ function convertTime(isoString) {
 export async function getReportOfHotel(id) {
     try {
         const res = await axiosInstance.get(`admin/report/${id}`);
-        console.log(`[INFO] Get report hotel result: ${JSON.stringify(res.data.message, null, 2)}`);
+        // console.log(`[INFO] Get report hotel result: ${JSON.stringify(res.data.message, null, 2)}`);
         // convert iso string date to date object
         res.data.message.forEach(report => {
             report.date = convertTime(report.updated_at);
@@ -61,7 +61,7 @@ export async function getReportOfHotel(id) {
 export async function updateReadingStatus(hotel_id) {
     try {
         const res = await axiosInstance.put(`admin/report/${hotel_id}`);
-        console.log(`[INFO] Update reading status result: ${JSON.stringify(res.data.message, null, 2)}`);
+        // console.log(`[INFO] Update reading status result: ${JSON.stringify(res.data.message, null, 2)}`);
         return res.data.message;
     }
     catch (err) {

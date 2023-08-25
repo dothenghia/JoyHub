@@ -27,7 +27,7 @@ const RoomItem = ({item, navigation}) => (
     )}>
         <RoomCard
             Title={item.name}
-            ImageUri={item.image[0]}
+            ImageUri={(item.image) ? item.image[0] : null}
             Price={item.price}
         />
     </TouchableOpacity>
