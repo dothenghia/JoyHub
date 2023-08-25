@@ -92,7 +92,7 @@ async function sendRequest(sendData, imageList)
         //console.log(JSON.stringify(res.data, null, 2));
 
         //axiosInstance.defaults.headers.common["auth-token"] = res.headers["auth-token"];
-        console.log("SEND RESPONSE:",res.data.message);
+
     }
     catch (err) {
         if (err.response) {

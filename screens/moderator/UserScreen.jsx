@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TextInput, View, Image, ImageBackground, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TextInput, View, Image, ImageBackground, ScrollView, TouchableOpacity, RefreshControl } from "react-native";
 import JoyText from '../../components/general/JoyText'
 import { TEXTS, COLORS } from "../../constants/theme";
 import modStyles from "../../styles/mod";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
-
+import LoadingModal from '../../components/general/LoadingModal'
 //CONTROLLER
 import MController from "../../controllers/moderatorController";
 
@@ -22,8 +22,12 @@ export default function UserScreen({ navigation }) {
     const [image, setImage] = useState(null)
     const [showImage, setShowImage] = useState(null)
     const [newImage, setNewImage] = useState(null)
+
+    const [loading, setLoading] = useState(false)
+
     useEffect(() => {
         const fetchModInfo = async () => {
+            setLoading(true)
             let data = await MController('GETMODINFO')
             setModInfo(data)
             setHotelName(data.hotelName)
@@ -32,22 +36,18 @@ export default function UserScreen({ navigation }) {
             setPhone(data.phone)
             setImage(data.image)
             setShowImage(data.image)
+            setLoading(false)
         }
         fetchModInfo()
     }, [])
-
 
 
     const changeHotelName = (newName) => {
         setHotelName(newName);
     }
 
-
-
-    
-
     const CLIENT_ID = '842256555618eb5';
-    const [imageData, setImageData] = useState(null);
+
 
     const pickImage = async () => {
         console.log('Picking image');
@@ -64,8 +64,9 @@ export default function UserScreen({ navigation }) {
         catch (error) {
             console.log("error: ", error)
         }
-        if (!result.cancelled) {
-            setNewImage(result.uri)
+        if (!result.canceled) {
+            setNewImage(result.assets[0].uri)
+            setShowImage(result.assets[0].uri)
    
         }
     };
@@ -73,7 +74,7 @@ export default function UserScreen({ navigation }) {
 
     return (
         <ScrollView style={modStyles.page_container}>
-
+            <LoadingModal isLoading={loading} />
             <View style={{ width: '100%', height: 270 }}>
                 <TouchableOpacity disabled={!editMode} style={{ flex: 1, justifyContent: 'center', }} onPress={async ()=>{
                     await pickImage()
@@ -112,6 +113,7 @@ export default function UserScreen({ navigation }) {
 
                             <TouchableOpacity onPress={async () => {
                                 if (editMode === true) {
+                                    setLoading(true)
                                     if(newImage)
                                         setShowImage(newImage)
                                     else 
@@ -127,6 +129,7 @@ export default function UserScreen({ navigation }) {
                                     await MController("EDITINFO", newInfo)
                                     setEditMode(false)
                                     setNewImage(null)
+                                    setLoading(false)
                                 }
                                 else {
 

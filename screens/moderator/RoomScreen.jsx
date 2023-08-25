@@ -133,7 +133,7 @@ function RoomArea({ roomList, navigation, removeMode, fetch}) {
     res = []
     for (let i = 0; i < n; ++i) {
         res.push(
-            <View style={modStyles.page_padding}>
+            <View key={i} style={modStyles.page_padding}>
                 <JoyText style={{ fontSize: TEXTS['5xl'], marginBottom: 20, marginTop: 20, fontWeight: 'bold' }}>{listOfType[i]}</JoyText >
                 <FlatList style={{ height: 370 }}
                     horizontal data={roomList[i].roomList}
@@ -213,7 +213,6 @@ function RoomCard({ img, room, navigation, removeMode, fetch }) {
                                 <TouchableOpacity style={{ alignSelf: 'flex-end', backgroundColor: "#FF6400", width: 70, height: 45, marginRight: 20, marginTop: 30, borderRadius: 10, }}
                                     onPress={() => {
 
-                                        //console.log("ROOM",room)
                                         MController("REMOVEROOM",{
                                             room_id : room["id"],                                                                                                                              
                                         })

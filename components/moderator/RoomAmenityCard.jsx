@@ -52,7 +52,7 @@ function ChangeColorButton({pressable, item, chosen, setChosen , index }) {
 
     return (
         <TouchableOpacity style={cardStyle} disabled={!pressable} onPress={() => {
-            if(chosen[index] == false)
+            if(chosen[index] == false || chosen[index] === undefined)
             {
                 setCardStyle(styles.card_container_pressed)
                 setIconColor('#FFFFFF')

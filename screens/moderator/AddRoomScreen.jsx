@@ -50,13 +50,14 @@ export default function AddRoomScreen({ navigation, route }) {
 
     const [imageData, setImageData] = useState([]);
     
-    
 
     useEffect(() => {
         const fetchAmenities = async () => {
             let data = await MController('GETALLAMENITIES')
             setAmenities(data)
             setChosenAmenities(new Array(amenities.length).fill(false))
+           
+
         }
         fetchAmenities()
     }, [])
@@ -64,7 +65,7 @@ export default function AddRoomScreen({ navigation, route }) {
     ////////////////////////   PICK IMAGE    //////////////////////////
 
     const pickImage = async () => {
-        console.log('Picking image');
+    
         let result = null;
         try {
             result = await ImagePicker.launchImageLibraryAsync({
@@ -78,14 +79,14 @@ export default function AddRoomScreen({ navigation, route }) {
         catch (error) {
             console.log("error: ", error)
         }
-        if (!result.cancelled) {
+        if (!result.canceled) {
 
             //const base64 = await convertImageToBase64(result.uri);
             setCurrentThumnail(imageData.length - 1)
             if (!imageData)
                 setImageData([result.uri])
             else
-                setImageData(data => [...data, result.uri]);
+                setImageData(data => [...data, result.assets[0].uri]);
 
         }
     };
@@ -108,7 +109,7 @@ export default function AddRoomScreen({ navigation, route }) {
                 (!imageData || imageData.length == 0)
                     ?
                     (
-                        <TouchableOpacity onPress={() => { pickImage(); console.log("IMG", imageData) }}>
+                        <TouchableOpacity onPress={() => { pickImage();}}>
                             <Image style={{ marginTop: 25, height: 250, width: 'auto', borderRadius: 15 }} source={require('../../assets/mod/selectImg.png')} />
                         </TouchableOpacity>
                     )
@@ -196,14 +197,20 @@ export default function AddRoomScreen({ navigation, route }) {
                 <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 25 }}>
                     <TouchableOpacity style={{ height: 50, flex: 1, borderRadius: 20, marginLeft: 10, backgroundColor: '#FF6400' }} onPress={async () => {
                         {
+                            setLoading(true)
                             let sendAmenities = []
-                            
+                            if(!name || !type || !bed || !des || !area || !price || !imageData)
+                            {
+                                ToastAndroid.show('Please fill all fields !', ToastAndroid.SHORT)
+                                setLoading(false)
+                                return
+                               
+                            }
                             for (let i = 0 ;i < amenities.length; ++i)
                             {
                                 if(chosenAmenities[i] == true)
                                     sendAmenities.push(amenities[i])
                             }
-                            setLoading(true)
                             try{
 
                                 e = await MController("ADDROOM", {
@@ -220,6 +227,7 @@ export default function AddRoomScreen({ navigation, route }) {
                                     image: imageData,
                                     chosenAmenities: sendAmenities,
                                 }); 
+                                
                                 ToastAndroid.show('Add successfully', ToastAndroid.SHORT)
                             }
                             catch(error)
