@@ -59,7 +59,7 @@ export default function ReviewCard({ props }) {
                 {starsMapping[props.star]}
             </View>
 
-            <JoyText style={styles.review_comment}>{props.comment}</JoyText>
+            <JoyText style={styles.review_comment}>{props.content}</JoyText>
         </View>
     );
 }

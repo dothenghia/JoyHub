@@ -22,6 +22,11 @@ export default function ReservationCard({ props, navigation }) {
                 <JoyText style={{ ...styles.tag_status, backgroundColor: COLORS.success_bg, color: COLORS.success }}>Completed</JoyText>
             </View>
         ),
+        "approved": (
+            <View style={styles.tag_wrapper}>
+                <JoyText style={{ ...styles.tag_status, backgroundColor: COLORS.success_bg, color: COLORS.success }}>Approved</JoyText>
+            </View>
+        ),
         'cancelled': (
             <View style={styles.tag_wrapper}>
                 <JoyText style={{ ...styles.tag_status, backgroundColor: COLORS.disable, color: COLORS.grey }}>Cancelled</JoyText>

@@ -175,6 +175,12 @@ export default function DetailReservationScreen({ navigation, route }) {
                 <JoyText style={{ ...styles.status_text, color: COLORS.success }}>Completed</JoyText>
             </View>
         ),
+        'approved': (
+            <View style={{ ...styles.status_tag, backgroundColor: COLORS.success_bg }}>
+                <Octicons name={"check-circle"} size={25} color={COLORS.success} />
+                <JoyText style={{ ...styles.status_text, color: COLORS.success }}>Approved</JoyText>
+            </View>
+        ),
         'cancelled': (
             <View style={{ ...styles.status_tag, backgroundColor: COLORS.disable }}>
                 <MaterialCommunityIcons name={"cancel"} size={26} color={COLORS.grey} />

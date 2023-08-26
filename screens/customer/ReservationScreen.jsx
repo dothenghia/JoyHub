@@ -30,15 +30,17 @@ export default function ReservationScreen({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
 
     const onRefresh = useCallback(() => {
-        const fetchReservationList = async () => {
-            setRefreshing(true);
-            let data = await CController('GETRESERVATIONLIST')
-            setReservationList(data)
-            console.log('Again')
-            setRefreshing(false);
-        }
+        if (role === 'customer') {
+            const fetchReservationList = async () => {
+                setRefreshing(true);
+                let data = await CController('GETRESERVATIONLIST')
+                setReservationList(data)
+                console.log('Again')
+                setRefreshing(false);
+            }
 
-        fetchReservationList()
+            fetchReservationList()
+        }
     }, []);
 
     // ------ Fetch Data at first render

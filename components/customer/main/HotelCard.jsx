@@ -29,7 +29,7 @@ export default function HotelCard({ props, navigation }) {
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                         <FontAwesome5Icon name={"star"} solid size={18} color='#FFCA18' />
 
-                        <JoyText style={styles.hotel_star}>{props.star}</JoyText>
+                        <JoyText style={styles.hotel_star}>{props.star.toFixed(1)}</JoyText>
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 2 }}>
