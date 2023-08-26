@@ -19,6 +19,7 @@ export default function ModRegisterScreen({ navigation }) {
     const [confirm, setConfirm] = useState('');
     const [address, setAddress] = useState('');
     const [owner, setOwner] = useState('');
+    const [phone, setPhone] = useState('');
     const [description, setDescription] = useState('');
     const [isChecked, setChecked] = useState(false);
 
@@ -34,7 +35,7 @@ export default function ModRegisterScreen({ navigation }) {
             alert('Please accept the Terms of Service');
         }
         else {
-            const { res, error } = await GController('MODERATORREGISTER', username, password, email, "moderator", hotelname, address, description, owner);
+            const { res, error } = await GController('MODERATORREGISTER', username, password, email, "moderator", hotelname, address, description, owner, phone);
             if (error) {
                 alert(error);
             }
@@ -136,6 +137,15 @@ export default function ModRegisterScreen({ navigation }) {
                 onChangeText={(e) => setOwner(e)}
             />
 
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Phone</JoyText>
+            <TextInput
+                style={generalStyles.input_field}
+                placeholder='Enter Phone number'
+                placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
+                autoCapitalize="none"
+                onChangeText={(e) => setPhone(e)}
+            />
 
             <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Hotel Address</JoyText>
             <TextInput

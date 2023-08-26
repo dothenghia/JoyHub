@@ -14,6 +14,7 @@ export default function CusRegisterScreen({ navigation }) {
     // ------ Data State
     const [username, setUsername] = useState('');
     const [fullname, setFullname] = useState('');
+    const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
@@ -31,7 +32,7 @@ export default function CusRegisterScreen({ navigation }) {
             alert('Please accept the Terms of Service');
         }
         else {
-            const { res, error } = await GController('CUSTOMERREGISTER', username, password, email, "customer", fullname);
+            const { res, error } = await GController('CUSTOMERREGISTER', username, password, email, "customer", fullname, phone);
             if (error) {
                 alert(error);
             }
@@ -100,6 +101,17 @@ export default function CusRegisterScreen({ navigation }) {
                 autoCapitalize="none"
                 onChangeText={(e) => setEmail(e)}
             />
+
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 2 }}>Phone</JoyText>
+            <TextInput
+                style={generalStyles.input_field}
+                placeholder='Enter Phone number'
+                placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
+                autoCapitalize="none"
+                onChangeText={(e) => setPhone(e)}
+            />
+
 
             <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 2 }}>Password</JoyText>
             <TextInput

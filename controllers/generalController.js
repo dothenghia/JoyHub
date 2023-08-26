@@ -17,13 +17,13 @@ async function loginUser(payload) {
 }
 
 async function registerModerator(payload) {
-    const [username, password, email, role, hotel_name, address, description, owner_name] = payload;
-    return await register({username, password, email, role, hotel_name, address, description, owner_name});
+    const [username, password, email, role, hotel_name, address, description, owner_name, phone] = payload;
+    return await register({username, password, email, role, hotel_name, address, description, owner_name, phone});
 }
 
 async function registerCustomer(payload) {
-    const [username, password, email, role, full_name] = payload;
-    return await register({username, password, email, role, full_name});
+    const [username, password, email, role, full_name, phone] = payload;
+    return await register({username, password, email, role, full_name, phone});
 }
 
 export default async function GController (type, ...payload) {
