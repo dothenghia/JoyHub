@@ -69,6 +69,7 @@ export default async function MController (type, ...payload)
             const acceptV = await acceptVerify(...payload)
             return acceptV
         case 'REMOVEVERIFY':
+            console.log("VERIFY REMOVED")
             const removeV = await declineVerify(...payload)
             return removeV
         case 'GETCHECKIN':
