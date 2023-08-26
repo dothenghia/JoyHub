@@ -31,6 +31,8 @@ export default function MainScreen({ navigation }) {
     const [city, setCity] = useState({})
     const [loading, setLoading] = useState(false)
 
+    //Showing list 
+    const [showHotelList, setShowHotelList] = useState([])
     // Refresh Control
     const [refreshing, setRefreshing] = useState(false);
 
@@ -39,6 +41,7 @@ export default function MainScreen({ navigation }) {
             setRefreshing(true);
             let data = await CController('GETHOTELLIST')
             setHotelList(data)
+            setShowHotelList(data)
             console.log('Again')
             setRefreshing(false);
         }
@@ -52,6 +55,7 @@ export default function MainScreen({ navigation }) {
             setLoading(true);
             let data = await CController('GETHOTELLIST')
             setHotelList(data)
+            setShowHotelList(data)
             const locationData = await CController('GETLOCATIONLIST')
             setLocationList(locationData)
             setLoading(false);
@@ -130,8 +134,11 @@ export default function MainScreen({ navigation }) {
                     selectedRowStyle={{ backgroundColor: COLORS.primary }}
                     selectedRowTextStyle={{ color: 'white' }}
                     defaultButtonText="Select City"
-                    onSelect={(city, index) => {
+                    onSelect={async (city, index) => {
                         setCity(city)
+                        
+                        setShowHotelList(await CController("FILTER",{hotelList: hotelList, city: city.name, district: ""}))
+                        
                     }}
                     buttonTextAfterSelection={(city, index) => {
                         // console.log(city.name)
@@ -151,9 +158,9 @@ export default function MainScreen({ navigation }) {
                     selectedRowStyle={{ backgroundColor: COLORS.primary }}
                     selectedRowTextStyle={{ color: 'white' }}
                     defaultButtonText="Select District"
-                    // onSelect={(district, index) => {
-                    //     console.log(district, index)
-                    // }}
+                    onSelect={async (district, index) => {
+                        setShowHotelList(await CController("FILTER",{hotelList: hotelList, city: city.name, district: district.name}))
+                    }}
                     buttonTextAfterSelection={(district, index) => {
                         // console.log(district.name)
                         return district.name
@@ -169,8 +176,8 @@ export default function MainScreen({ navigation }) {
 
             {/* Hotel List */}
             <View style={customerStyles.section_container}>
-                {hotelList &&
-                    hotelList.map((hotel, index) => {
+                {showHotelList &&
+                    showHotelList.map((hotel, index) => {
                         return (<HotelCard key={index} props={hotel} navigation={navigation} />)
                     })
                 }
