@@ -38,6 +38,7 @@ export default async function getModInfo() {
             phone: res.data.message[0]["phone"][0],
             email: res.data.message[0]["email"][0],
             username: res.data.message[0]["username"][0],
+            wallet: res.data.message[0]["wallet"][0],
             image : img
         }
 
