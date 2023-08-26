@@ -39,6 +39,11 @@ export default function DetailedRoomScreen({ navigation, route }) {
     const [bed, setBed] = useState(0)
     const [people,setPeople] = useState(0)
     const [des,setDes] = useState("")
+    
+    const [area1, setArea1] = useState(0)
+    const [bed1, setBed1] = useState(0)
+    const [people1,setPeople1] = useState(0)
+    const [des1,setDes1] = useState("")
 
     room = route.params.room
 
@@ -51,6 +56,10 @@ export default function DetailedRoomScreen({ navigation, route }) {
         setBed(room.info[1].value)
         setPeople(room.info[2].value)
         setDes(room.description)
+        setArea1(room.info[0].value)
+        setBed1(room.info[1].value)
+        setPeople1(room.info[2].value)
+        setDes1(room.description)
     }, [route.params])
 
     return (
@@ -100,7 +109,7 @@ export default function DetailedRoomScreen({ navigation, route }) {
                 <View>
                     <JoyText style={{ fontSize: TEXTS['3xl'], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Description</JoyText >
                     {editMode?
-                    (<TextInput onChangeText={(text) => { if(text) setDes(text); else setDes("")}} style={{ fontSize: TEXTS.lg, padding: 10, marginBottom: 30, borderRadius: 10, borderWidth: 1, width: '100%', minHeight: 100 }} multiline={true}> {des} </TextInput>)
+                    (<TextInput onChangeText={(text) => { if(text) setDes1(text); else setDes1("")}} style={{ fontSize: TEXTS.lg, padding: 10, marginBottom: 30, borderRadius: 10, borderWidth: 1, width: '100%', minHeight: 100 }} multiline={true}> {des1} </TextInput>)
                     :
                     <JoyText style={{ fontSize: TEXTS.lg, marginBottom: 30 }} multiline={true} > {des}</JoyText>
                     }
@@ -111,7 +120,7 @@ export default function DetailedRoomScreen({ navigation, route }) {
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <Image style={{ height: 40, width: 40, borderRadius: 5 }} source={require('../../assets/mod/bed.png')} />
                         {editMode ?
-                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setBed(Math.max(1,Math.abs(parseInt(text)))); else setBed(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {bed?bed:1} </TextInput>)
+                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setBed1(Math.max(1,Math.abs(parseInt(text)))); else setBed1(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {bed1?bed1:1} </TextInput>)
                         :
                         <JoyText style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20 }} multiline={true}> {bed + " Beds"} </JoyText>
                         }
@@ -119,7 +128,7 @@ export default function DetailedRoomScreen({ navigation, route }) {
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <Image style={{ height: 40, width: 40, borderRadius: 5 }} source={require('../../assets/mod/area.png')} />
                         {editMode ? 
-                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setArea(Math.max(1,Math.abs(parseInt(text)))); else setArea(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {area?area:1} </TextInput>)
+                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setArea1(Math.max(1,Math.abs(parseInt(text)))); else setArea1(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {area1?area1:1} </TextInput>)
                         :
                         (<View style={{ flexDirection: 'row' }}>
                             <JoyText style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20 }} multiline={true}> {area + " m"} </JoyText>
@@ -130,7 +139,7 @@ export default function DetailedRoomScreen({ navigation, route }) {
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <Image style={{ height: 40, width: 40, borderRadius: 5 }} source={require('../../assets/mod/people_black.png')} />
                         {editMode ? 
-                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setPeople(Math.max(1,Math.abs(parseInt(text)))); else setPeople(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {people?people:1} </TextInput>)
+                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setPeople1(Math.max(1,Math.abs(parseInt(text)))); else setPeople1(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {people1?people1:1} </TextInput>)
                         :
                         <JoyText style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20 }} multiline={true}> {people + " People"} </JoyText>
 
@@ -143,25 +152,45 @@ export default function DetailedRoomScreen({ navigation, route }) {
                             {
                                 data = {
                                     id : room.id,
-                                    bed : bed,
-                                    people : people,
-                                    area : area,
-                                    description : des
+                                    bed : bed1,
+                                    people : people1,
+                                    area : area1,
+                                    description : des1
                                 }
                                 MController('UPDATEROOM',data)
                                 ToastAndroid.show('Update successfully !', ToastAndroid.SHORT)
+                                setArea(area1)
+                                setBed(bed1)
+                                setPeople(people1)
+                                setDes(des1)
                                 setEditMode(false)
                             }
                             else 
                             {
                                 setEditMode(true)
-
+                                
                             }
                         }} style = {{borderRadius:35 , backgroundColor: "#FF6400", alignItems:'center'}}>
-                            <JoyText style={{color:'white', fontWeight:'bold', paddingTop:10 , fontSize: TEXTS.xxl, marginTop: 3, marginBottom: 20 }} multiline={true}> {editMode ? "DONE" : "EDIT ROOM INFORMATION"} </JoyText>
+                            <JoyText style={{color:'white', fontWeight:'bold', paddingTop:10 , fontSize: TEXTS.xl, marginTop: 3, marginBottom: 20 }} multiline={true}> {editMode ? "DONE" : "EDIT ROOM INFORMATION"} </JoyText>
 
                         </TouchableOpacity>
                     </View>
+                    {(editMode ? <View style={{marginBottom: 20}}>
+                        <TouchableOpacity onPress = {() => {
+                            ToastAndroid.show('Cancel updating !', ToastAndroid.SHORT)
+                            setEditMode(false)
+                            setArea1(area)
+                            setBed1(bed)
+                            setPeople1(people)
+                            setDes1(des)
+                            }} 
+
+                            style = {{borderRadius:35 , backgroundColor: "#E7E7E7", alignItems:'center'}}>
+                            <JoyText style={{color:'white', fontWeight:'bold', paddingTop:10 , fontSize: TEXTS.xl, marginTop: 3, marginBottom: 20 }} multiline={true}> {"CANCEL EDITING"} </JoyText>
+
+                        </TouchableOpacity>
+                    </View> : 
+                    <View/>)}
                 </View>
 
 
