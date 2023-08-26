@@ -61,7 +61,7 @@ export default function PaymentScreen({ navigation, route }) {
             let data = await CController('SENDPAYMENT', paymentInfo, dateRange)
             setConfirmModal(false)
             setLoading(false);
-            navigation.navigate('AfterPaymentPage')
+            navigation.navigate('AfterPaymentPage', { hotel_name: paymentInfo.hotel_name })
         }
 
         sendPayment()

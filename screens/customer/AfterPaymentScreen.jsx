@@ -6,7 +6,7 @@ import JoyText from '../../components/general/JoyText'
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
 
-export default function AfterPaymentScreen({ navigation, route, parentSlug }) {
+export default function AfterPaymentScreen({ navigation, route }) {
     console.log('[Customer] AfterPaymentScreen')
 
     return (
@@ -39,7 +39,7 @@ export default function AfterPaymentScreen({ navigation, route, parentSlug }) {
                 <View style={customerStyles.section_container}>
                     <JoyText style={styles.text_1}>Booking successfully</JoyText>
                     <JoyText style={styles.text_2}>Congratulations on your successful booking at</JoyText>
-                    <JoyText style={styles.hotel_name}>Haley House</JoyText>
+                    <JoyText style={styles.hotel_name}>{route.params && route.params.hotel_name}</JoyText>
                 </View>
             </ScrollView>
 
