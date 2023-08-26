@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, ToastAndroid, View, TextInput, TouchableOpacity } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import JoyText from '../../components/general/JoyText'
 import SelectDropdown from 'react-native-select-dropdown'
@@ -6,7 +6,14 @@ import SelectDropdown from 'react-native-select-dropdown'
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// Import Controller
+import CController from "../../controllers/customerController";
+
+// Import Loading Modal
+import LoadingModal from '../../components/general/LoadingModal'
+
 
 const bankList = [
     {
@@ -21,13 +28,16 @@ const bankList = [
 
 ]
 
-export default function TopupScreen({ navigation }) {
+export default function TopupScreen({ navigation, route }) {
     console.log('[Customer] TopupScreen')
 
+    // ------ Data State
+    const [loading, setLoading] = useState(false)
 
     const [bank, setBank] = useState()
     const [credit, setCredit] = useState()
     const [coinInput, setCoinInput] = useState('0')
+
 
 
     // ------ Event Handlers
@@ -36,11 +46,23 @@ export default function TopupScreen({ navigation }) {
     }
 
     const submitTopupHandler = () => {
+        const sendTopup = async () => {
+            setLoading(true);
+            let data = await CController('SENDTOPUP', route.params.info, coinInput)
+            ToastAndroid.show('Top up successfully', ToastAndroid.SHORT)
+            navigation.navigate('UserPage')
+            setLoading(false);
+        }
 
+        sendTopup()
     }
 
     return (
         <View style={customerStyles.page_container}>
+
+            {/* ------ LOADING MODAL ------ */}
+            <LoadingModal isLoading={loading} />
+
             <View style={{ ...customerStyles.top_bar, justifyContent: 'space-between' }}>
                 <TouchableOpacity
                     style={customerStyles.top_bar_button}
@@ -55,7 +77,7 @@ export default function TopupScreen({ navigation }) {
 
             <View style={customerStyles.section_container}>
                 <JoyText style={styles.input_label}>Select Bank</JoyText>
-                
+
                 <SelectDropdown
                     data={bankList}
                     buttonStyle={styles.dropdown}

@@ -62,7 +62,7 @@ export default function UserScreen({ navigation }) {
     }
 
     const topupHandler = () => {
-        navigation.navigate('TopupPage')
+        navigation.navigate('TopupPage', { info: userInfo })
     }
 
     const recentlyViewHandler = () => {

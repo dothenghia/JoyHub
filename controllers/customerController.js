@@ -14,6 +14,7 @@ import sendRating from "../models/customer/sendRating";
 import sendCancel from "../models/customer/sendCancel";
 import sendReport from "../models/customer/sendReport";
 import sendEdit from "../models/customer/sendEdit";
+import sendTopup from "../models/customer/sendTopup";
 
 export default async function CController (type, ...payload) {
     // console.log('[payload]' , payload)
@@ -81,6 +82,10 @@ export default async function CController (type, ...payload) {
         case 'SENDEDIT' : {
             const edit = await sendEdit(payload)
             return edit
+        }
+        case 'SENDTOPUP' : {
+            const topup = await sendTopup(payload)
+            return topup
         }
 
         case 'GETFAVORITELIST' : {
