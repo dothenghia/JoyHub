@@ -37,8 +37,14 @@ function cityUnify(address)
     return address
 }
 
+function isNumeric(str) {
+    if (typeof str != "string") return false // we only process strings!  
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+           !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+  }
+
 export default async function filterHotel(data) {
-    console.log("FILTERDATA",data)
+
     data = data[0]
     let showList = []
    
@@ -47,9 +53,9 @@ export default async function filterHotel(data) {
     
     
     districtFind = districtUnify(toFilterFormat(data["district"]))
+    if(isNumeric(districtFind))
+        districtFind = 'q'+districtFind 
     let hotelList = data["hotelList"]
-    
-    console.log("CITY",cityFind,districtFind)
 
 
     for (hotel of hotelList)
@@ -63,6 +69,5 @@ export default async function filterHotel(data) {
 
     }
 
-    console.log("SHOW",showList)
     return showList
 }

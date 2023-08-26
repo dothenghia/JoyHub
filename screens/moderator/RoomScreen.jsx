@@ -20,16 +20,19 @@ export default function RoomScreen({ navigation }) {
     const [amenities, setamenities] = useState([])
     const [roomList, setRoomList] = useState([])
     const [removeMode, setRemoveMode] = useState(false)
-
+    const [background, setBackground] = useState("https://i.imgur.com/TMfTk0F.jpg")
     // ------ Fetch Data at first render
     useEffect(() => {
         const fetchHotelInformation = async () => {
             setLoading(true);
             let data = await MController('GETROOMLIST')
+            let img = await MController('GETMODINFO')
             setHotelInfo(data)
             setamenities(data.amenities)
             setRoomList(data.roomList)
             setLoading(false);
+            if(img.image)
+                setBackground(img.image)
         }
 
         fetchHotelInformation()
@@ -55,6 +58,8 @@ export default function RoomScreen({ navigation }) {
         const fetchHotelList = async () => {
             setLoading(true);
             let data = await MController('GETROOMLIST')
+            let info = await MController('GETMODINFO')
+
             setHotelInfo(data)
             setamenities(data.amenities)
             setRoomList(data.roomList)
@@ -75,7 +80,7 @@ export default function RoomScreen({ navigation }) {
             <LoadingModal isLoading={loading} />
             <View style={styles.thumbnail_wrapper}>
                 <ImageBackground
-                    source={require('../../assets/mod/demoHotel.jpg')}
+                    source={{uri : background}}
                     resizeMode="cover"
                     style={styles.thumbnail_image}
                 >
@@ -97,7 +102,7 @@ export default function RoomScreen({ navigation }) {
             <View style={{ marginTop: 10, height: 7, backgroundColor: '#E7E7E7' }} />
             <View style={{ ...modStyles.page_padding, flexDirection: 'row' }}>
                 <View style={{ marginTop: 30, width: 170, height: 50, borderRadius: 10, borderWidth: 1 }}>
-                    <TouchableOpacity onPress={() => { navigation.navigate("AddRoomPage", route = { autoRefresh : autoRefresh }) ; }} style={{ flexDirection: 'row', width: 100, height: 50 }}>
+                    <TouchableOpacity onPress={() => { navigation.navigate("AddRoomPage", route = roomList.length) ; }} style={{ flexDirection: 'row', width: 100, height: 50 }}>
                         <Ionicons name="add-circle-outline" style={{ marginLeft: 10, marginTop: 4 }} size={40} color="black" />
                         <JoyText style={{ marginTop: 14, marginLeft: 10, width: 100, fontSize: TEXTS.md }}>Add room</JoyText >
                     </TouchableOpacity>
@@ -175,7 +180,7 @@ function RoomCard({ img, room, navigation, removeMode, fetch }) {
             </TouchableOpacity>
             <View style={{ flex: 1.1, marginTop: -35, backgroundColor: 'white', borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }}>
                 <JoyText style={{ flex: 1.3, fontSize: TEXTS.xxl, fontWeight: 'bold', marginLeft: 15, marginTop: 3 }}>{room.name}</JoyText >
-                <JoyText style={{ flex: 1, fontSize: TEXTS.xxl, fontWeight: 'bold', marginRight: 15, marginTop: -15, textAlign: 'right', color: '#ff6400', marginRight: 20 }}>{room.price + " VND"}</JoyText >
+                <JoyText style={{ flex: 1, fontSize: TEXTS.xxl, fontWeight: 'bold', marginRight: 15, marginTop: -15, textAlign: 'right', color: '#ff6400', marginRight: 20 }}>{room.price + " JC"}</JoyText >
                 <View style={{ flexDirection: 'row', flex: 1, marginLeft: 15 }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Image style={{ height: 25, width: 25 }} source={require("../../assets/mod/bed.png")} />

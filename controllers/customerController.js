@@ -87,7 +87,6 @@ export default async function CController (type, ...payload) {
         /// FILTER 
         case 'FILTER' : {
             const showHotelList = await filterHotel(payload)
-            console.log("IN CONTROL",showHotelList)
             return showHotelList
         }
 

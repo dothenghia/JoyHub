@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect, useContext } from "react";
-import { StyleSheet, ToastAndroid, ImageBackground, TextInput, View, Image, ScrollView, TouchableOpacity, Dimensions } from "react-native";
+import { StyleSheet, ToastAndroid, ImageBackground, TextInput, View, Image, ScrollView, RefreshControl, TouchableOpacity, Dimensions } from "react-native";
 import generalStyles from "../../styles/general";
 import TopBar from "../../components/moderator/TopBar";
 import RoomAmentityCard from "../../components/moderator/RoomAmenityCard";
@@ -56,11 +56,46 @@ export default function AddRoomScreen({ navigation, route }) {
             let data = await MController('GETALLAMENITIES')
             setAmenities(data)
             setChosenAmenities(new Array(amenities.length).fill(false))
-           
-
+            setName("")
+            setDes("")
+            setArea(0)
+            setPeople(0)
+            setBed(0)
+            setPrice(0)
+            setType("")
+            setCurrentThumnail(0)
         }
         fetchAmenities()
-    }, [])
+    }, [route.params.roomList])
+    const onRefresh = useCallback(() => {
+        const fetchHotelList = async () => {
+            setChosenAmenities(new Array(amenities.length).fill(false))
+            setName("")
+            setDes("")
+            setArea(0)
+            setPeople(0)
+            setBed(0)
+            setPrice(0)
+            setType("")
+            setCurrentThumnail(0)
+            setImageData([])
+        }
+        fetchHotelList()
+    }, []);
+    const autoRefresh = useCallback(() => {
+        const fetchHotelList = async () => {
+            setChosenAmenities(new Array(amenities.length).fill(false))
+            setName("")
+            setDes("")
+            setArea(0)
+            setPeople(0)
+            setBed(0)
+            setPrice(0)
+            setType("")
+            setCurrentThumnail(0)
+        }
+        fetchHotelList()
+    }, [route.params]);
 
     ////////////////////////   PICK IMAGE    //////////////////////////
 
@@ -92,14 +127,20 @@ export default function AddRoomScreen({ navigation, route }) {
     };
  
     const [loading, setLoading] = useState(false)
-
+    const [refreshing, setRefreshing] = useState(false);
     
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
  
     return (
-        <ScrollView >
+        <ScrollView refreshControl={ // DÙNG ĐỂ VUỐT XUỐNG RELOAD TRANG
+            <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={['#FF6400']}
+            />
+        }>
             <LoadingModal isLoading={loading} />
             <View style={generalStyles.page_container}>
 
@@ -161,17 +202,17 @@ export default function AddRoomScreen({ navigation, route }) {
 
                 <View>
                     <JoyText style={{ fontSize: TEXTS["4xl"], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Room Type</JoyText >
-                    <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30 }} multiline={true} placeholder="Enter room type" onChangeText={(text) => { setType(text) }} />
+                    <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30 }} multiline={true} placeholder="Enter room type" onChangeText={(text) => { setType(text) }} > </TextInput>
                 </View>
 
                 <View>
                     <JoyText style={{ fontSize: TEXTS["4xl"], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Room Name</JoyText >
-                    <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30 }} multiline={true} placeholder="Enter room name" onChangeText={(text) => { setName(text) }} />
+                    <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30 }} multiline={true} placeholder="Enter room name" onChangeText={(text) => { setName(text) }} > </TextInput>
                 </View>
 
                 <View>
                     <JoyText style={{ fontSize: TEXTS["4xl"], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Description</JoyText >
-                    <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30 }} multiline={true} placeholder="Enter description" onChangeText={(text) => { setDes(text) }} />
+                    <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30 }} multiline={true} placeholder="Enter description" onChangeText={(text) => { setDes(text) }} > </TextInput>
                 </View>
 
                 <JoyText style={{ fontSize: TEXTS["4xl"], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Room Information</JoyText >
@@ -229,15 +270,17 @@ export default function AddRoomScreen({ navigation, route }) {
                                 }); 
                                 
                                 ToastAndroid.show('Add successfully', ToastAndroid.SHORT)
+                            
                             }
                             catch(error)
                             {
                                 ToastAndroid.show('Failed please try again', ToastAndroid.SHORT)
 
                             }
+                          
                             setLoading(false)
                             navigation.navigate("RoomPage")
-                            route.params.onLoading()
+                      
                         }
                     }} >
                         <JoyText style={{ textAlign: 'center', paddingTop: 12, color: 'white', fontWeight: 'bold', fontSize: TEXTS.lg }}> {"CREATE"} </JoyText >
