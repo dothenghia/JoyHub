@@ -5,6 +5,8 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Octicons from "react-native-vector-icons/Octicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Fontisto from "react-native-vector-icons/Fontisto";
+import Feather from "react-native-vector-icons/Feather";
 
 export default function JoyIcon({ name, ...props }) {
     const iconMapping = {
@@ -15,12 +17,13 @@ export default function JoyIcon({ name, ...props }) {
         'Towel': <MaterialCommunityIcons name={"checkbox-multiple-blank"} {...props} />,
         'Electronic Safe/Lock': <Octicons name={"shield-lock"} {...props} />,
         'Mini Fridge': <MaterialCommunityIcons name={"fridge-outline"} {...props} />,
+        'Slippers': <Fontisto name={"beach-slipper"} {...props} />,
+        'Air conditioner': <FontAwesome name={"snowflake-o"} {...props} />,
+        'Coffee Maker': <Feather name={"coffee"} {...props} />,
+        'Pool': <MaterialCommunityIcons name={"pool"} {...props} />,
+        'River': <MaterialCommunityIcons name={"waterfall"} {...props} />,
 
 
-        pool: <MaterialIcons name={"pool"} {...props} />,
-        bathtub: <FontAwesome name={"bathtub"} {...props} />,
-        ac: <FontAwesome name={"snowflake-o"} {...props} />,
-        meal: <MaterialCommunityIcons name={"food-fork-drink"} {...props} />,
     };
 
     return iconMapping[name] || (<AntDesign name={"question"} {...props} />);
