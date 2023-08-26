@@ -16,6 +16,8 @@ import sendReport from "../models/customer/sendReport";
 import sendEdit from "../models/customer/sendEdit";
 import sendTopup from "../models/customer/sendTopup";
 
+import filterHotel from "../models/customer/filterHotel";
+
 export default async function CController (type, ...payload) {
     // console.log('[payload]' , payload)
 
@@ -92,7 +94,11 @@ export default async function CController (type, ...payload) {
             const favoriteList = await getFavoriteList()
             return favoriteList
         }
-
+        /// FILTER 
+        case 'FILTER' : {
+            const showHotelList = await filterHotel(payload)
+            return showHotelList
+        }
 
         default : {
             

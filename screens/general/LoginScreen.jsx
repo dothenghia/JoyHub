@@ -23,8 +23,8 @@ export default function LoginScreen({ navigation }) {
     console.log('[Login] role :', role)
 
     // ------ Data State
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('caokhoi2702');
+    const [password, setPassword] = useState('123456');
     const [loading, setLoading] = useState(false)
 
     // ------ Event Handlers
@@ -32,6 +32,11 @@ export default function LoginScreen({ navigation }) {
     const loginHandler = async () => {
         // for testing UI
         setLoading(true);
+        if (username === '' || password === '') {
+            alert('Please fill in username and password');
+            setLoading(false);
+            return;
+        }
         const { error, role } = await GController('LOGIN', username, password);
         setLoading(false);
         if (error) {

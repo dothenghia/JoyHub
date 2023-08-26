@@ -31,6 +31,8 @@ export default function MainScreen({ navigation }) {
     const [city, setCity] = useState({})
     const [loading, setLoading] = useState(false)
 
+    //Showing list 
+    const [showHotelList, setShowHotelList] = useState([])
     // Refresh Control
     const [refreshing, setRefreshing] = useState(false);
 
@@ -39,6 +41,7 @@ export default function MainScreen({ navigation }) {
             setRefreshing(true);
             let data = await CController('GETHOTELLIST')
             setHotelList(data)
+            setShowHotelList(data)
             console.log('Again')
             setRefreshing(false);
         }
@@ -52,6 +55,7 @@ export default function MainScreen({ navigation }) {
             setLoading(true);
             let data = await CController('GETHOTELLIST')
             setHotelList(data)
+            setShowHotelList(data)
             const locationData = await CController('GETLOCATIONLIST')
             setLocationList(locationData)
             setLoading(false);
@@ -64,7 +68,20 @@ export default function MainScreen({ navigation }) {
 
     // ------ Event Handlers
     const searchHandler = () => {
-        console.log(searchInput)
+        let keyword = toFilterFormat(searchInput)
+        setShowHotelList([]) //
+        let list = []
+        
+        for (let i of hotelList) 
+        {
+            hotelName = toFilterFormat(i.hotel_name)
+            console.log("HOTEL:",hotelName)
+            if(hotelName.includes(keyword))
+                list.push(i)
+        }
+
+        setShowHotelList(list)
+
     }
 
     return (
@@ -119,8 +136,11 @@ export default function MainScreen({ navigation }) {
                     selectedRowStyle={{ backgroundColor: COLORS.primary }}
                     selectedRowTextStyle={{ color: 'white' }}
                     defaultButtonText="Select City"
-                    onSelect={(city, index) => {
+                    onSelect={async (city, index) => {
                         setCity(city)
+                        
+                        setShowHotelList(await CController("FILTER",{hotelList: hotelList, city: city.name, district: ""}))
+                        
                     }}
                     buttonTextAfterSelection={(city, index) => {
                         // console.log(city.name)
@@ -140,9 +160,9 @@ export default function MainScreen({ navigation }) {
                     selectedRowStyle={{ backgroundColor: COLORS.primary }}
                     selectedRowTextStyle={{ color: 'white' }}
                     defaultButtonText="Select District"
-                    // onSelect={(district, index) => {
-                    //     console.log(district, index)
-                    // }}
+                    onSelect={async (district, index) => {
+                        setShowHotelList(await CController("FILTER",{hotelList: hotelList, city: city.name, district: district.name}))
+                    }}
                     buttonTextAfterSelection={(district, index) => {
                         // console.log(district.name)
                         return district.name
@@ -158,8 +178,8 @@ export default function MainScreen({ navigation }) {
 
             {/* Hotel List */}
             <View style={customerStyles.section_container}>
-                {hotelList &&
-                    hotelList.map((hotel, index) => {
+                {showHotelList &&
+                    showHotelList.map((hotel, index) => {
                         return (<HotelCard key={index} props={hotel} navigation={navigation} />)
                     })
                 }
@@ -234,3 +254,24 @@ const styles = StyleSheet.create({
 
     },
 });
+
+
+
+
+function toFilterFormat(str) {
+    str = str.toLowerCase();
+
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    
+    str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); 
+    str = str.replace(/\u02C6|\u0306|\u031B/g, ""); 
+
+    str = str.replace(" ","")
+    return str;
+}

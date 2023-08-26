@@ -167,7 +167,7 @@ export default function UserScreen({ navigation }) {
                                     ?
                                     <JoyText style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888' }}>{phone ? phone : "Loading ..."}</JoyText >
                                     :
-                                    <TextInput onChangeText={(text) => { setPhone(text) }} keyboardType="numeric" style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888', borderWidth: 1, borderRadius: 10, padding: 5, }}>{phone ? phone : "Loading ..."}</TextInput >
+                                    <TextInput onChangeText={(text) => { setPhone(text) }} keyboardType="numeric" style={{ marginLeft: 10, flex: 15, fontSize: TEXTS.lg, color: '#888888', borderWidth: 1, borderRadius: 10, padding: 5, }}>{""}</TextInput >
                             }
                         </View>
 
@@ -220,10 +220,7 @@ export default function UserScreen({ navigation }) {
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
 
-                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'History'}</JoyText >
-                    </TouchableOpacity>
-                    <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
+                   
 
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { navigation.navigate('LoginPage') }}>
                         <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Logout'}</JoyText >

@@ -11,7 +11,7 @@ export default async function getVerifyList()
         //console.log(JSON.stringify(res.data, null, 2));
 
         //axiosInstance.defaults.headers.common["auth-token"] = res.headers["auth-token"];
-        //console.log("VERIFY DATA:", res.data.message);
+       
 
         let verifyList = [];
         for (i of res.data.message)
@@ -39,12 +39,14 @@ export default async function getVerifyList()
                       }),
                     phone: i["phone"],
                     customer: i["customer"],
-                    image: img[0]
+                    image: img[0],
+                    customer_id: i["customer_id"],
+                    room_id: i["room_id"][0],
                 }
             )
         }
         
-
+     
         return verifyList;
     }
     catch (err) {
@@ -53,5 +55,6 @@ export default async function getVerifyList()
             return { error: err.response.data.message };
         }
     }   
+
     return [];
 }

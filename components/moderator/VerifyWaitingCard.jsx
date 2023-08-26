@@ -27,10 +27,10 @@ export default function VerifyWaitingCard({ bookingInfo }) {
                         <JoyText  style={styles.date}> {'Check out :  ' + bookingInfo.checkout} </JoyText >
                     </View>
                     <View style={{flexDirection:'row'}}>
-                        <TouchableOpacity style={{ height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginLeft: 10,backgroundColor:'#FF6400'  }} onPress={async ()=>{await MController("ACCEPTVERIFY", bookingInfo["id"]) ; ToastAndroid.show('Accepted', ToastAndroid.SHORT) ; setInvisible(true) }}>
+                        <TouchableOpacity style={{ height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginLeft: 10,backgroundColor:'#FF6400'  }} onPress={async ()=>{await MController("ACCEPTVERIFY", {id: bookingInfo["id"] , customer_id: bookingInfo["customer_id"], room_id : bookingInfo["room_id"]}) ; ToastAndroid.show('Accepted', ToastAndroid.SHORT) ; setInvisible(true) }}>
                             <JoyText  style={{ textAlign: 'center', paddingTop: 10, color:'white', fontWeight:'bold', fontSize: TEXTS.md }}> Accept </JoyText >
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginLeft: 10,backgroundColor:'#888888'  }} onPress={async ()=>{await MController("REMOVEVERIFY", bookingInfo["id"]); ToastAndroid.show('Removed', ToastAndroid.SHORT) ; setInvisible(true) }}> 
+                        <TouchableOpacity style={{ height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginLeft: 10,backgroundColor:'#888888'  }} onPress={async ()=>{await MController("REMOVEVERIFY", {id: bookingInfo["id"] , customer_id: bookingInfo["customer_id"], room_id : bookingInfo["room_id"]}); ToastAndroid.show('Removed', ToastAndroid.SHORT) ; setInvisible(true) }}> 
                             <JoyText  style={{ textAlign: 'center', paddingTop: 10, color:'white', fontWeight:'bold', fontSize: TEXTS.md}}> Decline </JoyText >
                         </TouchableOpacity>
                     </View>
