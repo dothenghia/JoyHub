@@ -1,9 +1,9 @@
 import { createBottomTabNavigator, useIsFocused } from "@react-navigation/bottom-tabs";
-import React, { lazy, Suspense} from "react";
+import React, { lazy, Suspense } from "react";
 import { Text, Image } from "react-native";
 import { COLORS } from "../../constants/theme";
 import HomeLogo from "../../assets/general/logo.svg";
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const LazyLoadScreen = (Component) => (props) =>
 (
     <Suspense fallback={<Text>Loading...</Text>}>
@@ -33,17 +33,29 @@ export default function AdminMain() {
                 name="MainPage"
                 component={MainScreen}
                 options={{
-                    tabBarIcon: ({ focused, size }) => (
-                        <HomeLogo
-                            width={size}
-                            height={size}
-                            fill={focused ? COLORS.primary : COLORS.disable}
-                        />
+                    tabBarLabel: 'Main',
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="home" color={color} size={size} />
                     ),
                 }}
             />
-            <tab.Screen name="HotelPage" component={HotelScreen} />
-            <tab.Screen name="ReportPage" component={ReportScreen} />
+            <tab.Screen name="HotelPage" component={HotelScreen}
+                options={{
+                    tabBarLabel: 'Hotel',
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="business" color={color} size={size} />
+                    ),
+                }}
+
+            />
+            <tab.Screen name="ReportPage" component={ReportScreen}
+                options={{
+                    tabBarLabel: 'Report',
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="newspaper" color={color} size={size} />
+                    ),
+                }}
+            />
             {/* Hidden screen */}
             <tab.Screen
                 name="AdminDetailHotel"
