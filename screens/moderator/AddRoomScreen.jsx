@@ -219,28 +219,43 @@ export default function AddRoomScreen({ navigation, route }) {
                 <View>
                     <View style={{ flexDirection: 'row' }}>
                         <Image style={{ height: 30, width: 30, borderRadius: 5 }} source={require('../../assets/mod/area.png')} />
-                        <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30, marginLeft: 20 }} keyboardType="numeric" multiline={true} placeholder="Enter Area" onChangeText={(text) => { setArea(Math.max(0, parseInt(text))) }} />
+                        <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30, marginLeft: 20 }} keyboardType="numeric" multiline={true} placeholder="Enter Area" onChangeText={(text) => { setArea( parseInt(text)) }} />
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <Image style={{ height: 30, width: 30, borderRadius: 5 }} source={require('../../assets/mod/bed.png')} />
-                        <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30, marginLeft: 20 }} keyboardType="numeric" multiline={true} placeholder="Enter Number Of Beds" onChangeText={(text) => { setBed(Math.max(0, parseInt(text))) }} />
+                        <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30, marginLeft: 20 }} keyboardType="numeric" multiline={true} placeholder="Enter Number Of Beds" onChangeText={(text) => { setBed(parseInt(text)) }} />
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <Image style={{ height: 30, width: 30, borderRadius: 5 }} source={require('../../assets/mod/people_black.png')} />
-                        <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30, marginLeft: 20 }} keyboardType="numeric" multiline={true} placeholder="Enter Number Of People" onChangeText={(text) => { setPeople(Math.max(0, parseInt(text))) }} />
+                        <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30, marginLeft: 20 }} keyboardType="numeric" multiline={true} placeholder="Enter Number Of People" onChangeText={(text) => { setPeople(parseInt(text)) }} />
                     </View>
 
                 </View>
                 <View>
                     <JoyText style={{ fontSize: TEXTS["4xl"], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Price Per Night</JoyText >
-                    <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30 }} multiline={true} keyboardType="numeric" placeholder="Enter price" onChangeText={(text) => { setPrice(Math.max(0, parseInt(text))) }} />
+                    <TextInput style={{ fontSize: TEXTS.md, marginBottom: 30 }} multiline={true} keyboardType="numeric" placeholder="Enter price" onChangeText={(text) => { setPrice(parseInt(text)) }} />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 25 }}>
                     <TouchableOpacity style={{ height: 50, flex: 1, borderRadius: 20, marginLeft: 10, backgroundColor: '#FF6400' }} onPress={async () => {
                         {
                             setLoading(true)
                             let sendAmenities = []
-                            if(!name || !type || !bed || !des || !area || !price || !imageData)
+                            console.log("PRICE",price)
+                            if(price < 0)
+                            {
+                                ToastAndroid.show('Invalid price !', ToastAndroid.SHORT)
+                                setLoading(false)
+                                return
+                               
+                            }
+                            if(bed < 0 || area < 0 || people < 0)
+                            {
+                                ToastAndroid.show('Invalid room information !', ToastAndroid.SHORT)
+                                setLoading(false)
+                                return
+                               
+                            }
+                            if(!name || !type || !bed || !des || !area || !price || !imageData || !people)
                             {
                                 ToastAndroid.show('Please fill all fields !', ToastAndroid.SHORT)
                                 setLoading(false)
