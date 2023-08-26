@@ -71,7 +71,7 @@ export default function MainScreen({ navigation }) {
             <LoadingModal isLoading={loading} />
             <View style={modStyles.page_padding}>
                 <TopBar Title={""} navigation={navigation} />
-                <SearchBar />
+                
 
                 <View style={{ flexDirection: 'row', marginBottom: 10 }}>
                     <TouchableOpacity style={{ backgroundColor: verifyColor, height: 40, flex: 1, borderRadius: 20, marginTop: 15, marginRight: 10 }}

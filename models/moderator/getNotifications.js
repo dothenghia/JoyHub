@@ -91,8 +91,9 @@ export default async function getNotifications()
             )
         }
 
-
-        return notifications
+        notifications_sorted = notifications.sort((a,b) => new Date(b.date) - new Date(a.date))
+        
+        return notifications_sorted
     }
     catch (err) {
         if (err.response) {

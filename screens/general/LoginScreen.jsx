@@ -23,8 +23,8 @@ export default function LoginScreen({ navigation }) {
     console.log('[Login] role :', role)
 
     // ------ Data State
-    const [username, setUsername] = useState('caokhoi2702');
-    const [password, setPassword] = useState('123456');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false)
 
     // ------ Event Handlers
