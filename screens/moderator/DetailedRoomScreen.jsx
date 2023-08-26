@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { StyleSheet, Text, TextInput, View, Image, ScrollView, TouchableOpacity, ImageBackground, Dimensions } from "react-native";
+import { StyleSheet, Text, TextInput, View, Image, ScrollView, TouchableOpacity, ImageBackground, Dimensions, ToastAndroid } from "react-native";
 import { Pagination, Carousel } from 'react-native-snap-carousel';
 import generalStyles from "../../styles/general";
 import TopBar from "../../components/moderator/TopBar";
@@ -111,7 +111,7 @@ export default function DetailedRoomScreen({ navigation, route }) {
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <Image style={{ height: 40, width: 40, borderRadius: 5 }} source={require('../../assets/mod/bed.png')} />
                         {editMode ?
-                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setBed(Math.max(1,Math.abs(parseInt(text)))); else setBed(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {bed} </TextInput>)
+                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setBed(Math.max(1,Math.abs(parseInt(text)))); else setBed(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {bed?bed:1} </TextInput>)
                         :
                         <JoyText style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20 }} multiline={true}> {bed + " Beds"} </JoyText>
                         }
@@ -119,7 +119,7 @@ export default function DetailedRoomScreen({ navigation, route }) {
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <Image style={{ height: 40, width: 40, borderRadius: 5 }} source={require('../../assets/mod/area.png')} />
                         {editMode ? 
-                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setArea(Math.max(1,Math.abs(parseInt(text)))); else setArea(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {area} </TextInput>)
+                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setArea(Math.max(1,Math.abs(parseInt(text)))); else setArea(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {area?area:1} </TextInput>)
                         :
                         (<View style={{ flexDirection: 'row' }}>
                             <JoyText style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20 }} multiline={true}> {area + " m"} </JoyText>
@@ -130,7 +130,7 @@ export default function DetailedRoomScreen({ navigation, route }) {
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <Image style={{ height: 40, width: 40, borderRadius: 5 }} source={require('../../assets/mod/people_black.png')} />
                         {editMode ? 
-                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setPeople(Math.max(1,Math.abs(parseInt(text)))); else setPeople(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {people} </TextInput>)
+                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setPeople(Math.max(1,Math.abs(parseInt(text)))); else setPeople(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {people?people:1} </TextInput>)
                         :
                         <JoyText style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20 }} multiline={true}> {people + " People"} </JoyText>
 
@@ -149,6 +149,7 @@ export default function DetailedRoomScreen({ navigation, route }) {
                                     description : des
                                 }
                                 MController('UPDATEROOM',data)
+                                ToastAndroid.show('Update successfully !', ToastAndroid.SHORT)
                                 setEditMode(false)
                             }
                             else 
