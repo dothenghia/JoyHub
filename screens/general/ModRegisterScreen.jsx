@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StyleSheet, ToastAndroid, View, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
 import Checkbox from 'expo-checkbox';
 import JoyText from '../../components/general/JoyText'
-
+import GController from '../../controllers/generalController'
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
@@ -18,13 +18,31 @@ export default function ModRegisterScreen({ navigation }) {
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
     const [address, setAddress] = useState('');
+    const [owner, setOwner] = useState('');
     const [description, setDescription] = useState('');
     const [isChecked, setChecked] = useState(false);
 
     // ------ Event Handlers
-    const submitHandler = () => {
-        navigation.navigate("LoginPage")
-        ToastAndroid.show('Register successfully', ToastAndroid.SHORT)
+    const submitHandler = async () => {
+        if (username === '' || hotelname === '' || email === '' || password === '' || confirm === '' || address === '') {
+            alert('Please fill in all fields');
+        }
+        else if (password !== confirm) {
+            alert('Passwords do not match');
+        }
+        else if (!isChecked) {
+            alert('Please accept the Terms of Service');
+        }
+        else {
+            const { res, error } = await GController('MODERATORREGISTER', username, password, email, "moderator", hotelname, address, description, owner);
+            if (error) {
+                alert(error);
+            }
+            else if (res) {
+                alert('Register successfully');
+                navigation.navigate('LoginPage');
+            }
+        }
     }
 
 
@@ -107,6 +125,17 @@ export default function ModRegisterScreen({ navigation }) {
                 secureTextEntry={true}
                 onChangeText={(e) => setConfirm(e)}
             />
+
+            <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Owner</JoyText>
+            <TextInput
+                style={generalStyles.input_field}
+                placeholder='Enter Full name'
+                placeholderTextColor={COLORS.subheading_text}
+                allowFontScaling={false}
+                autoCapitalize="none"
+                onChangeText={(e) => setOwner(e)}
+            />
+
 
             <JoyText style={{ ...generalStyles.input_label, fontWeight: 'bold', marginTop: 4 }}>Hotel Address</JoyText>
             <TextInput
