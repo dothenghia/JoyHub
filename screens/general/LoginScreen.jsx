@@ -32,6 +32,11 @@ export default function LoginScreen({ navigation }) {
     const loginHandler = async () => {
         // for testing UI
         setLoading(true);
+        if (username === '' || password === '') {
+            alert('Please fill in username and password');
+            setLoading(false);
+            return;
+        }
         const { error, role } = await GController('LOGIN', username, password);
         setLoading(false);
         if (error) {
