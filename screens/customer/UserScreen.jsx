@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { StyleSheet, View, ScrollView, TouchableOpacity } from "react-native";
+import { useContext, useState, useEffect, useCallback } from "react";
+import { StyleSheet, RefreshControl, View, ScrollView, TouchableOpacity } from "react-native";
 import JoyText from '../../components/general/JoyText'
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
@@ -7,15 +7,58 @@ import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
 
+// Import Controller
+import CController from "../../controllers/customerController";
+
 // Import Context
 import { globalContext } from "../../contexts/GlobalContext";
+
+// Import Loading Modal
+import LoadingModal from '../../components/general/LoadingModal'
 
 export default function UserScreen({ navigation }) {
     const { role, setRole } = useContext(globalContext)
     console.log('[Customer] UserScreen')
 
+    // ------ Data State
+    const [userInfo, setUserInfo] = useState(null)
+    const [loading, setLoading] = useState(false)
+
+
+    // Refresh Control
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+        if (role === 'customer') {
+            const fetchUserInformation = async () => {
+                setRefreshing(true);
+                let data = await CController('GETUSERINFORMATION')
+                setUserInfo(data)
+                setRefreshing(false);
+            }
+
+            fetchUserInformation()
+        }
+    }, []);
+
+    // ------ Fetch Data at first render
+    useEffect(() => {
+        if (role === 'customer') {
+            const fetchUserInformation = async () => {
+                setLoading(true);
+                let data = await CController('GETUSERINFORMATION')
+                setUserInfo(data)
+                setLoading(false);
+            }
+
+            fetchUserInformation()
+        }
+    }, [])
+
+
+    // ------ Event Handlers
     const editInformationHandler = () => {
-        navigation.navigate('EditInformationPage')
+        navigation.navigate('EditInformationPage', { info: userInfo })
     }
 
     const topupHandler = () => {
@@ -36,14 +79,26 @@ export default function UserScreen({ navigation }) {
     }
 
     return (
-        <View style={customerStyles.page_container}>
+        <ScrollView
+            style={customerStyles.page_container}
+            refreshControl={ // DÙNG ĐỂ VUỐT XUỐNG RELOAD TRANG
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    colors={['#FF6400']}
+                />
+            }
+        >
             <View style={customerStyles.fixed_top_bar}>
                 <JoyText style={{ ...customerStyles.top_bar_title, top: 12 }}>Profile</JoyText>
             </View>
 
+            {/* ------ LOADING MODAL ------ */}
+            <LoadingModal isLoading={loading} />
+
             {
                 role === 'guest' && (
-                    <View style={{ flex: 1, marginTop: 60 - 6, alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+                    <View style={{ flex: 1, marginTop: 400 - 6, alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
                         <JoyText style={{ fontSize: TEXTS.xl, color: COLORS.heading_text }}>Please </JoyText>
                         <TouchableOpacity
                             onPress={() => { navigation.navigate('LoginPage') }}
@@ -56,15 +111,15 @@ export default function UserScreen({ navigation }) {
             }
 
             {
-                role === 'customer' && (
+                role === 'customer' && userInfo && (
                     <ScrollView style={{ flex: 1, marginTop: 60 }}>
                         <View style={styles.info_container}>
                             <View style={styles.icon_wrapper}>
                                 <FontAwesome5Icon name={"user-circle"} solid size={90} color={COLORS.primary} />
                             </View>
                             <View style={styles.text_container}>
-                                <JoyText style={styles.username}>The Nghia</JoyText>
-                                <JoyText style={styles.joycoin}>JoyCoin : 200.000</JoyText>
+                                <JoyText style={styles.username}>{userInfo.full_name}</JoyText>
+                                <JoyText style={styles.joycoin}>JoyCoin : {userInfo.wallet}</JoyText>
                             </View>
                         </View>
 
@@ -127,7 +182,7 @@ export default function UserScreen({ navigation }) {
             }
 
 
-        </View>
+        </ScrollView>
     );
 }
 

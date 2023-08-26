@@ -57,9 +57,9 @@ function GlobalProvider ({ children }) {
     
     // Biến này dùng để check role => nếu là guest thì bắt phải đăng nhập mới cho đặt phòng, ...
 	const [role, setRole] = useState('guest')
-    const [userName, setUserName] = useState('-')
-    const [userId, setUserId] = useState('-')
-    const [userJoycoin, setUserJoycoin] = useState(0)
+    // const [userName, setUserName] = useState('-')
+    // const [userId, setUserId] = useState('-')
+    // const [userJoycoin, setUserJoycoin] = useState(0)
     
     // Set sẵn mặc định ngày bắt đầu là hôm nay, và ngày kết thúc là ngày hôm sau
     const today = new Date()
@@ -73,9 +73,9 @@ function GlobalProvider ({ children }) {
     const globalData = {
         role, setRole,
         dateRange, setDateRange,
-        userName, setUserName,
-        userId, setUserId,
-        userJoycoin, setUserJoycoin,
+        // userName, setUserName,
+        // userId, setUserId,
+        // userJoycoin, setUserJoycoin,
         recentlyViewList, setRecentlyViewList,
     }
 

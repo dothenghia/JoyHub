@@ -90,7 +90,7 @@ export default function ReservationCard({ props, navigation }) {
                 {tagMapping[props.status]}
                 <JoyText style={styles.hotel_name}>{props.hotel_name}</JoyText>
                 <JoyText style={styles.room_name}>{props.room_name} ({props.room_type})</JoyText>
-                <JoyText style={styles.date}>{formatDate(props.check_in)} - {formatDate(props.check_out)}</JoyText>
+                <JoyText style={styles.date}>{props.check_in && formatDate(props.check_in)} - {formatDate(props.check_out)}</JoyText>
                 <JoyText style={styles.price}>{calculateTotalPrice(props.check_in, props.check_out, props.room_price)} JoyCoin</JoyText>
             </View>
         </TouchableOpacity>

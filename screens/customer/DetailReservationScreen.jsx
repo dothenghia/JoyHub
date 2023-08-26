@@ -155,6 +155,17 @@ export default function DetailReservationScreen({ navigation, route }) {
         return 0
     }
 
+    function calculateDay(start, end) {
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+
+        if (startDate && endDate) {
+            return Math.floor((endDate - startDate)/ (1000 * 60 * 60 * 24))
+        }
+        return 0
+    }
+    
+
 
     const tagMapping = {
         'waiting': (
@@ -276,7 +287,7 @@ export default function DetailReservationScreen({ navigation, route }) {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.payment_text}>Total night</JoyText>
-                        <JoyText style={styles.payment_text}>2 night</JoyText>
+                        <JoyText style={styles.payment_text}>{reservationInfo && calculateDay(reservationInfo.check_in, reservationInfo.check_out)} night</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.payment_text_primary}>Total</JoyText>

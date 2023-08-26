@@ -21,7 +21,7 @@ import { globalContext } from "../../contexts/GlobalContext";
 import LoadingModal from '../../components/general/LoadingModal'
 
 export default function MainScreen({ navigation }) {
-    const { role, setRole, setUserName, setUserId, setUserJoycoin } = useContext(globalContext)
+    const { role, setRole } = useContext(globalContext)
     console.log('[Customer] MainScreen :', role)
 
     // ------ Data State
@@ -59,18 +59,7 @@ export default function MainScreen({ navigation }) {
 
         fetchHotelList()
     }, [])
-
-    // useEffect(() => {
-    //     const fetchUserInformation = async () => {
-    //         let data = await CController('GETUSERINFORMATION')
-    //         setUserId(data.id)
-    //         setUserName(data.name)
-    //         setUserJoycoin(data.joycoin)
-    //     }
-
-    //     fetchUserInformation()
-    // }, [])
-
+    
 
 
     // ------ Event Handlers

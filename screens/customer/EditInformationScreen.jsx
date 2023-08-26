@@ -1,20 +1,37 @@
-import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, ToastAndroid, View, TextInput, TouchableOpacity } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import JoyText from '../../components/general/JoyText'
 
 // Import Style & Theme
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
+// Import Controller
+import CController from "../../controllers/customerController";
 
-export default function EditInformationScreen({ navigation }) {
+// Import Loading Modal
+import LoadingModal from '../../components/general/LoadingModal'
+
+export default function EditInformationScreen({ navigation, route }) {
     console.log('[Customer] EditInformationScreen')
 
 
-    const [username, setUsername] = useState('The Nghia')
-    const [phone, setPhone] = useState('19001234')
-    const [email, setEmail] = useState('timemtrongbongdamn@gmail.com')
+    // ------ Data State
+    const [loading, setLoading] = useState(false)
+
+    const [username, setUsername] = useState(null)
+    const [phone, setPhone] = useState(null)
+    const [email, setEmail] = useState(null)
+
+    // ------ Fetch Data at first render
+    useEffect(() => {
+        console.log('Edit :', route.params.info)
+        setUsername(route.params.info.full_name)
+        setPhone(route.params.info.phone)
+        setEmail(route.params.info.email)
+    }, [route.params])
+
 
     // ------ Event Handlers
     const backHandler = () => {
@@ -22,11 +39,23 @@ export default function EditInformationScreen({ navigation }) {
     }
 
     const submitEditHandler = () => {
+        const sendEdit = async () => {
+            setLoading(true);
+            let data = await CController('SENDEDIT', email, phone, username)
+            ToastAndroid.show('Edit successfully', ToastAndroid.SHORT)
+            navigation.navigate('UserPage')
+            setLoading(false);
+        }
 
+        sendEdit()
     }
 
     return (
         <View style={customerStyles.page_container}>
+
+            {/* ------ LOADING MODAL ------ */}
+            <LoadingModal isLoading={loading} />
+
             <View style={{ ...customerStyles.top_bar, justifyContent: 'space-between' }}>
                 <TouchableOpacity
                     style={customerStyles.top_bar_button}

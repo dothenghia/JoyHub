@@ -13,6 +13,7 @@ import sendPayment from "../models/customer/sendPayment";
 import sendRating from "../models/customer/sendRating";
 import sendCancel from "../models/customer/sendCancel";
 import sendReport from "../models/customer/sendReport";
+import sendEdit from "../models/customer/sendEdit";
 
 export default async function CController (type, ...payload) {
     // console.log('[payload]' , payload)
@@ -76,6 +77,10 @@ export default async function CController (type, ...payload) {
         case 'GETUSERINFORMATION' : {
             const userInformation = await getUserInformation()
             return userInformation
+        }
+        case 'SENDEDIT' : {
+            const edit = await sendEdit(payload)
+            return edit
         }
 
         case 'GETFAVORITELIST' : {
