@@ -9,7 +9,7 @@ export default async function getReservationList() {
 
         res = res.data.message
 
-        // console.log(res);
+        console.log('Reser :', res);
 
         return res
     }

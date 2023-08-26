@@ -103,7 +103,11 @@ export default function HotelScreen({ navigation, route }) {
                     {/* Thumbnail Hotel Image */}
                     <View style={styles.thumbnail_wrapper}>
                         <ImageBackground
-                            source={require('../../assets/customer/demo.jpg')} // @ Chờ Hình
+                            source={{
+                                uri: (hotelInfo ? hotelInfo.image :
+                                    "https://i.imgur.com/TMfTk0F.jpg" 
+                                ),
+                            }}
                             resizeMode="cover"
                             style={styles.thumbnail_image}
                         >
@@ -203,7 +207,7 @@ export default function HotelScreen({ navigation, route }) {
 
                     {/* Hotel Review */}
                     <View style={{ paddingTop: 10, marginBottom: -2 }}>
-                        <View style={{...customerStyles.section_container_no_py, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 0 }}>
+                        <View style={{ ...customerStyles.section_container_no_py, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 0 }}>
                             {/* Rating Statistic */}
                             <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                                 <JoyText style={{ fontSize: 52, fontWeight: '600' }}>{hotelInfo && hotelInfo.star.toFixed(1)}</JoyText>
@@ -226,7 +230,7 @@ export default function HotelScreen({ navigation, route }) {
 
                         </View>
 
-                        {(hotelInfo && hotelInfo.reviews && hotelInfo.reviews.length === 0) && (<JoyText>No review</JoyText>)}
+                        {(hotelInfo && hotelInfo.reviews && hotelInfo.reviews.length === 0) && (<JoyText style={{ textAlign: 'center', fontSize: TEXTS.xl, marginBottom: 24 }}>No review</JoyText>)}
                         {(hotelInfo && hotelInfo.reviews && hotelInfo.reviews.length === 1) && (<ReviewCard props={hotelInfo.reviews[0]} />)}
                         {(hotelInfo && hotelInfo.reviews && hotelInfo.reviews.length >= 2) && (<ReviewCard props={hotelInfo.reviews[0]} />)}
                         {(hotelInfo && hotelInfo.reviews && hotelInfo.reviews.length >= 2) && (<ReviewCard props={hotelInfo.reviews[1]} />)}

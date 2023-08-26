@@ -12,6 +12,11 @@ export default function ReservationCard({ props, navigation }) {
                 <JoyText style={{ ...styles.tag_status, backgroundColor: COLORS.primary_50, color: COLORS.primary }}>Waiting</JoyText>
             </View>
         ),
+        'staying': (
+            <View style={styles.tag_wrapper}>
+                <JoyText style={{ ...styles.tag_status, backgroundColor: COLORS.primary_50, color: COLORS.primary }}>Staying</JoyText>
+            </View>
+        ),
         "completed": (
             <View style={styles.tag_wrapper}>
                 <JoyText style={{ ...styles.tag_status, backgroundColor: COLORS.success_bg, color: COLORS.success }}>Completed</JoyText>
@@ -20,6 +25,16 @@ export default function ReservationCard({ props, navigation }) {
         'cancelled': (
             <View style={styles.tag_wrapper}>
                 <JoyText style={{ ...styles.tag_status, backgroundColor: COLORS.disable, color: COLORS.grey }}>Cancelled</JoyText>
+            </View>
+        ),
+        'canceled': (
+            <View style={styles.tag_wrapper}>
+                <JoyText style={{ ...styles.tag_status, backgroundColor: COLORS.disable, color: COLORS.grey }}>Cancelled</JoyText>
+            </View>
+        ),
+        'rejected': (
+            <View style={styles.tag_wrapper}>
+                <JoyText style={{ ...styles.tag_status, backgroundColor: COLORS.disable, color: COLORS.grey }}>Rejected</JoyText>
             </View>
         ),
     }
@@ -53,7 +68,7 @@ export default function ReservationCard({ props, navigation }) {
     return (
         <TouchableOpacity
             style={styles.card_container}
-            onPress={() => { navigation.navigate('DetailReservationPage') }}
+            onPress={() => { navigation.navigate('DetailReservationPage', {reservationData : props}) }}
         >
             <View style={styles.thumbnail_wrapper}>
                 <Image

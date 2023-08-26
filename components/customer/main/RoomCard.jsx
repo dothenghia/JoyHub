@@ -12,11 +12,13 @@ export default function RoomCard({ name, navigation }) {
         <TouchableOpacity
             style={styles.card_container}
             onPress={
-                () => { navigation.navigate('RoomPage' , { slug : name._id }) }
+                () => { navigation.navigate('RoomPage', { slug: name._id }) }
             }
         >
             <ImageBackground
-                source={require('../../../assets/customer/demo.jpg')}
+                source={{
+                    uri: ((name.image && name.image.length > 0) ? name.image[0] : "https://i.imgur.com/TMfTk0F.jpg" ),
+                }}
                 resizeMode="cover"
                 style={styles.bg_image}
             ></ImageBackground>

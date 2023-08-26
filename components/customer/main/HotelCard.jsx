@@ -16,7 +16,9 @@ export default function HotelCard({ props, navigation }) {
             }
         >
             <ImageBackground
-                source={require('../../../assets/customer/demo.jpg')}
+                source={{
+                    uri: (props.image ? props.image : 'https://i.imgur.com/TMfTk0F.jpg'),
+                }}
                 resizeMode="cover"
                 style={styles.bg_image}
             ></ImageBackground>
@@ -31,9 +33,9 @@ export default function HotelCard({ props, navigation }) {
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 2 }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '48%'}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '60%'}}>
                         <FontAwesome5Icon name={"map-marker-alt"} solid size={18} color={COLORS.subheading_text} />
-                        <JoyText style={styles.hotel_location} numberOfLines={1} ellipsizeMode='head'>{props.address}</JoyText>
+                        <JoyText style={styles.hotel_location} numberOfLines={1} ellipsizeMode='tail'>{props.address}</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
                         <JoyText style={styles.hotel_price}>{props.smallest_price} JC</JoyText>

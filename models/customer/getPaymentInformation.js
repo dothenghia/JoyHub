@@ -12,12 +12,16 @@ export default async function getPaymentInformation(payload) {
         roomInfo = res.data.message.room[0]
         userInfo = res.data.message.user[0]
 
+        console.log('PreBill :', roomInfo)
+        console.log(userInfo)
+
         let result = {}
         result['hotel_name'] = roomInfo.hotel[0].hotel_name
         result['room_name'] = roomInfo.name
         result['room_type'] = roomInfo.room_type
         result['address'] = roomInfo.hotel[0].address
         result['price'] = roomInfo.price
+        result['thumbnail'] = (roomInfo.image && roomInfo.image.length > 0) ? roomInfo.image[0] : "https://i.imgur.com/TMfTk0F.jpg"
 
         result['full_name'] = userInfo.full_name
         result['joycoin'] = userInfo.account[0].wallet

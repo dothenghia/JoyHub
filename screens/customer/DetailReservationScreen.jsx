@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, TouchableOpacity, View, ImageBackground, Modal, TextInput } from "react-native";
+import { StyleSheet, ToastAndroid, TouchableOpacity, View, ImageBackground, Modal, TextInput } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -15,11 +15,16 @@ import CController from "../../controllers/customerController";
 import { COLORS, TEXTS } from '../../constants/theme'
 import customerStyles from '../../styles/customer'
 
+// Import Loading Modal
+import LoadingModal from '../../components/general/LoadingModal'
+
 export default function DetailReservationScreen({ navigation, route }) {
     console.log('[Customer] DetailReservationScreen')
 
     // ------ Data State
     const [reservationInfo, setReservationInfo] = useState(null)
+    const [loading, setLoading] = useState(false)
+
     const [reportModal, setReportModal] = useState(false)
     const [reportTitle, setReportTitle] = useState('')
     const [reportContent, setReportContent] = useState('')
@@ -32,19 +37,17 @@ export default function DetailReservationScreen({ navigation, route }) {
 
     // ------ Fetch Data at first render
     useEffect(() => {
-        const fetchReservationInformation = async () => {
-            let data = await CController('GETDETAILRESERVATION')
-            setReservationInfo(data)
-        }
-
-        fetchReservationInformation()
-    }, [])
+        setReservationInfo(route.params.reservationData)
+        console.log('Detail :', route.params.reservationData)
+        setReportTitle(route.params.reservationData._id)
+    }, [route.params])
 
     // ------ Event Handlers
     const backHandler = () => {
         navigation.goBack()
     }
 
+    // REPORT
     const openReportHandler = () => {
         setReportModal(true)
     }
@@ -52,11 +55,19 @@ export default function DetailReservationScreen({ navigation, route }) {
         setReportModal(false)
     }
     const submitReportHandler = () => {
-        console.log(reportTitle)
-        console.log(reportContent)
+        const sendReport = async () => {
+            setLoading(true);
+            let data = await CController('SENDREPORT', route.params.reservationData, reportContent)
+            setReportModal(false)
+            setLoading(false);
+            ToastAndroid.show('Report successfully', ToastAndroid.SHORT)
+        }
+
+        sendReport()
     }
 
 
+    // RATING
     const openRatingHandler = () => {
         setRatingModal(true)
     }
@@ -74,11 +85,19 @@ export default function DetailReservationScreen({ navigation, route }) {
         }
     }
     const submitRatingHandler = () => {
-        console.log(ratingStar)
-        console.log(ratingContent)
+        const sendRating = async () => {
+            setLoading(true);
+            let data = await CController('SENDRATING', route.params.reservationData, ratingStar, ratingContent)
+            setRatingModal(false)
+            setLoading(false);
+            ToastAndroid.show('Rating successfully', ToastAndroid.SHORT)
+        }
+
+        sendRating()
     }
 
 
+    // CANCEL
     const openCancelHandler = () => {
         setCancelModal(true)
     }
@@ -86,33 +105,101 @@ export default function DetailReservationScreen({ navigation, route }) {
         setCancelModal(false)
     }
     const submitCancelHandler = () => {
+        const sendCancel = async () => {
+            setLoading(true);
+            let data = await CController('SENDCANCEL', route.params.reservationData)
+            setCancelModal(false)
+            setLoading(false);
+            ToastAndroid.show('Cancel successfully', ToastAndroid.SHORT)
+        }
 
+        sendCancel()
+    }
+
+
+    function formatDate(inputDate) {
+        const dateObject = new Date(inputDate);
+
+        const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        const dayOfWeek = daysOfWeek[dateObject.getDay()];
+
+        const day = dateObject.getDate();
+        const month = dateObject.getMonth() + 1;
+        const year = dateObject.getFullYear();
+
+        const resultString = `${dayOfWeek},${day}/${month}/${year}`;
+
+        return resultString
+    }
+
+    function getTime(inputDate) {
+        const dateObject = new Date(inputDate);
+
+        const h = dateObject.getHours()
+        const m = dateObject.getMinutes()
+        const s = dateObject.getSeconds()
+
+        const resultString = `${h}:${m}:${s} `;
+
+        return resultString
+    }
+
+    function calculateTotalPrice(start, end, price) {
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+
+        if (startDate && endDate) {
+            return Number(price * Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)))
+        }
+        return 0
     }
 
 
     const tagMapping = {
-        Waiting: (
+        'waiting': (
             <View style={{ ...styles.status_tag, backgroundColor: COLORS.primary_2 }}>
                 <Feather name={"clock"} size={26} color={COLORS.primary} />
                 <JoyText style={{ ...styles.status_text, color: COLORS.primary }}>Waiting</JoyText>
             </View>
         ),
-        Completed: (
+        'staying': (
+            <View style={{ ...styles.status_tag, backgroundColor: COLORS.primary_2 }}>
+                <Feather name={"clock"} size={26} color={COLORS.primary} />
+                <JoyText style={{ ...styles.status_text, color: COLORS.primary }}>Staying</JoyText>
+            </View>
+        ),
+        'completed': (
             <View style={{ ...styles.status_tag, backgroundColor: COLORS.success_bg }}>
                 <Octicons name={"check-circle"} size={25} color={COLORS.success} />
                 <JoyText style={{ ...styles.status_text, color: COLORS.success }}>Completed</JoyText>
             </View>
         ),
-        Cancelled: (
+        'cancelled': (
             <View style={{ ...styles.status_tag, backgroundColor: COLORS.disable }}>
                 <MaterialCommunityIcons name={"cancel"} size={26} color={COLORS.grey} />
                 <JoyText style={{ ...styles.status_text, color: COLORS.grey }}>Cancelled</JoyText>
+            </View>
+        ),
+        'canceled': (
+            <View style={{ ...styles.status_tag, backgroundColor: COLORS.disable }}>
+                <MaterialCommunityIcons name={"cancel"} size={26} color={COLORS.grey} />
+                <JoyText style={{ ...styles.status_text, color: COLORS.grey }}>Cancelled</JoyText>
+            </View>
+        ),
+        'rejected': (
+            <View style={{ ...styles.status_tag, backgroundColor: COLORS.disable }}>
+                <MaterialCommunityIcons name={"cancel"} size={26} color={COLORS.grey} />
+                <JoyText style={{ ...styles.status_text, color: COLORS.grey }}>Rejected</JoyText>
             </View>
         ),
     }
 
     return (
         <View style={customerStyles.page_container}>
+
+            {/* ------ LOADING MODAL ------ */}
+            <LoadingModal isLoading={loading} />
 
             {/* Detail Reservation Screen Scroll View */}
             <View style={{ flex: 1 }}>
@@ -127,7 +214,7 @@ export default function DetailReservationScreen({ navigation, route }) {
                     <JoyText style={customerStyles.top_bar_title}>Detail Reservation</JoyText>
 
                     {
-                        reservationInfo && reservationInfo.status === 'Completed' && (
+                        reservationInfo && reservationInfo.status === 'completed' && (
                             <TouchableOpacity
                                 style={customerStyles.top_bar_button}
                                 onPress={openReportHandler}
@@ -143,7 +230,9 @@ export default function DetailReservationScreen({ navigation, route }) {
                 {/* Thumbnail Image */}
                 <View style={customerStyles.section_container_no_py}>
                     <ImageBackground
-                        source={require('../../assets/customer/demo.jpg')}
+                        source={{
+                            uri: ((reservationInfo && reservationInfo.thumbnail != '') ? reservationInfo.thumbnail : "https://i.imgur.com/TMfTk0F.jpg"),
+                        }}
                         resizeMode="cover"
                         style={styles.thumbnail_slider}
                     >
@@ -158,7 +247,7 @@ export default function DetailReservationScreen({ navigation, route }) {
                 <View style={customerStyles.section_container}>
                     <JoyText style={customerStyles.page_title}>{reservationInfo ? reservationInfo.hotel_name : 'Loading ...'}</JoyText>
                     <JoyText style={styles.room_name}>{reservationInfo && reservationInfo.room_name} ({reservationInfo && reservationInfo.room_type})</JoyText>
-                    <JoyText style={styles.location}>{reservationInfo && reservationInfo.location}</JoyText>
+                    <JoyText style={styles.location}>{reservationInfo && reservationInfo.address}</JoyText>
                 </View>
 
                 <View style={customerStyles.divider}></View>
@@ -168,12 +257,16 @@ export default function DetailReservationScreen({ navigation, route }) {
                 <View style={customerStyles.section_container}>
                     <JoyText style={customerStyles.section_title}>Payment Information</JoyText>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <JoyText style={styles.payment_text}>Book at</JoyText>
+                        <JoyText style={styles.payment_text}>{reservationInfo && getTime(reservationInfo.updated_at) + formatDate(reservationInfo.updated_at)}</JoyText>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.payment_text}>From</JoyText>
-                        <JoyText style={styles.payment_text}>{reservationInfo && reservationInfo.start_date}</JoyText>
+                        <JoyText style={styles.payment_text}>{reservationInfo && formatDate(reservationInfo.check_in)}</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.payment_text}>To</JoyText>
-                        <JoyText style={styles.payment_text}>{reservationInfo && reservationInfo.end_date}</JoyText>
+                        <JoyText style={styles.payment_text}>{reservationInfo && formatDate(reservationInfo.check_out)}</JoyText>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.payment_text}>Total night</JoyText>
@@ -181,14 +274,14 @@ export default function DetailReservationScreen({ navigation, route }) {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <JoyText style={styles.payment_text_primary}>Total</JoyText>
-                        <JoyText style={styles.payment_text_primary}>{reservationInfo && reservationInfo.price}VND</JoyText>
+                        <JoyText style={styles.payment_text_primary}>{reservationInfo && calculateTotalPrice(reservationInfo.check_in, reservationInfo.check_out, reservationInfo.room_price)} Joycoin</JoyText>
                     </View>
                 </View>
 
                 <View style={customerStyles.divider}></View>
 
 
-                {reservationInfo && reservationInfo.status === 'Completed' &&
+                {reservationInfo && reservationInfo.status === 'completed' &&
                     (<View style={customerStyles.section_container}>
                         <TouchableOpacity
                             style={styles.bottom_button}
@@ -199,7 +292,7 @@ export default function DetailReservationScreen({ navigation, route }) {
                     </View>)
                 }
 
-                {reservationInfo && reservationInfo.status === 'Waiting' &&
+                {reservationInfo && reservationInfo.status === 'waiting' &&
                     (<View style={customerStyles.section_container}>
                         <TouchableOpacity
                             style={styles.bottom_button}
@@ -233,13 +326,15 @@ export default function DetailReservationScreen({ navigation, route }) {
 
 
                         {/* ====== Input ====== */}
-                        <JoyText style={styles.input_label}>Title</JoyText>
+                        <JoyText style={styles.input_label}>Booking ID</JoyText>
                         <TextInput
                             style={styles.input}
-                            placeholder='Enter Title of Report'
+                            // placeholder={reportTitle}
                             allowFontScaling={false}
+                            value={reportTitle}
+                            editable={false}
                             placeholderTextColor={COLORS.subheading_text}
-                            onChangeText={(e) => setReportTitle(e)}
+                        // onChangeText={(e) => setReportTitle(e)}
                         />
 
                         <JoyText style={styles.input_label}>Content</JoyText>
@@ -285,7 +380,7 @@ export default function DetailReservationScreen({ navigation, route }) {
                             <JoyText style={{ ...customerStyles.top_bar_title, top: 6 }}>Rating</JoyText>
                         </View>
 
-                        <View style={{ flexDirection: 'row' , alignItems: 'center'}}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <JoyText style={styles.input_label}>Give star :</JoyText>
                             <TouchableOpacity
                                 style={{ ...customerStyles.top_bar_button, marginTop: 0, marginHorizontal: 0, marginLeft: 6, height: 32, width: 32 }}
@@ -295,7 +390,7 @@ export default function DetailReservationScreen({ navigation, route }) {
                             </TouchableOpacity>
                             <JoyText style={styles.input_label}>{ratingStar} </JoyText>
 
-                            <FontAwesome5Icon name={"star"} solid size={16} color='#FFCA18' style={{alignItems: 'flex-start'}} />
+                            <FontAwesome5Icon name={"star"} solid size={16} color='#FFCA18' style={{ alignItems: 'flex-start' }} />
 
                             <TouchableOpacity
                                 style={{ ...customerStyles.top_bar_button, marginTop: 0, marginHorizontal: 0, marginLeft: 6, height: 32, width: 32 }}
