@@ -213,32 +213,24 @@ export default function UserScreen({ navigation }) {
 
                     <View style={{ height: 15, backgroundColor: 'transparent' }} />
 
-                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Chỉnh sửa thông tin cá nhân'}</JoyText >
-                    </TouchableOpacity>
-                    <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
+               
 
-                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { navigation.navigate('WalletPage') }}>
-                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Nạp/Rút'}</JoyText >
+                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { navigation.navigate('WalletPage',modInfo) }}>
+                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Wallet'}</JoyText >
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
 
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Lịch sử và thống kê'}</JoyText >
+                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'History'}</JoyText >
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
 
                     <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { navigation.navigate('LoginPage') }}>
-                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Đăng xuất'}</JoyText >
+                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Logout'}</JoyText >
                     </TouchableOpacity>
                     <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
 
 
-
-                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }} onPress={() => { MController('GETVERIFY') }} >
-                        <JoyText style={{ fontSize: TEXTS.lg, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'verify'}</JoyText >
-                    </TouchableOpacity>
-                    <View style={{ height: 5, backgroundColor: '#E7E7E7' }} />
 
 
                 </View>

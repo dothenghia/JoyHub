@@ -7,6 +7,7 @@ import RoomAmentityCard from "../../components/moderator/RoomAmenityCard";
 import JoyText from '../../components/general/JoyText'
 
 import { TEXTS, COLORS } from "../../constants/theme";
+import MController from "../../controllers/moderatorController";
 
 const renderItem = ({ item }) => {
   
@@ -31,15 +32,27 @@ const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.88);
 export default function DetailedRoomScreen({ navigation, route }) {
     const [currentThumbnail, setCurrentThumnail] = useState(0);
     const [imageData, setImageData] = useState([]);
+
+    const [editMode, setEditMode] = useState(false)
+
+    const [area, setArea] = useState(0)
+    const [bed, setBed] = useState(0)
+    const [people,setPeople] = useState(0)
+    const [des,setDes] = useState("")
+
     room = route.params.room
 
     const carouselRef = useRef(null);
     useEffect(() => {
-        console.log(route.params.room)
+
         setImageData(route.params.room["image"])
         setCurrentThumnail(0)
+        setArea(room.info[0].value)
+        setBed(room.info[1].value)
+        setPeople(room.info[2].value)
+        setDes(room.description)
     }, [route.params])
-    console.log("ROOM",room)
+
     return (
         <ScrollView >
             <View style={generalStyles.page_container}>
@@ -86,23 +99,67 @@ export default function DetailedRoomScreen({ navigation, route }) {
 
                 <View>
                     <JoyText style={{ fontSize: TEXTS['3xl'], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Description</JoyText >
-                    <JoyText style={{ fontSize: TEXTS.lg, marginBottom: 30 }} multiline={true} > {room["description"]}</JoyText>
+                    {editMode?
+                    (<TextInput onChangeText={(text) => { if(text) setDes(text); else setDes("")}} style={{ fontSize: TEXTS.lg, padding: 10, marginBottom: 30, borderRadius: 10, borderWidth: 1, width: '100%', minHeight: 100 }} multiline={true}> {des} </TextInput>)
+                    :
+                    <JoyText style={{ fontSize: TEXTS.lg, marginBottom: 30 }} multiline={true} > {des}</JoyText>
+                    }
                 </View>
 
                 <JoyText style={{ fontSize: TEXTS['3xl'], fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Room Information</JoyText >
                 <View>
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                        <Image style={{ height: 40, width: 40, borderRadius: 5 }} source={require('../../assets/mod/area.png')} />
-                        <JoyText style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20 }} multiline={true}> {room.info[1].value + " Beds"} </JoyText>
+                        <Image style={{ height: 40, width: 40, borderRadius: 5 }} source={require('../../assets/mod/bed.png')} />
+                        {editMode ?
+                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setBed(Math.max(1,Math.abs(parseInt(text)))); else setBed(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {bed} </TextInput>)
+                        :
+                        <JoyText style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20 }} multiline={true}> {bed + " Beds"} </JoyText>
+                        }
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                        <Image style={{ height: 40, width: 40, borderRadius: 5 }} source={require('../../assets/mod/bed.png')} />
-                        <JoyText style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20 }} multiline={true}> {room.info[0].value + " m"} </JoyText>
-                        <JoyText style={{ marginTop: 3, fontSize: TEXTS.xxs }}  baselineShift = {-6} >{"2"}</JoyText >
+                        <Image style={{ height: 40, width: 40, borderRadius: 5 }} source={require('../../assets/mod/area.png')} />
+                        {editMode ? 
+                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setArea(Math.max(1,Math.abs(parseInt(text)))); else setArea(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {area} </TextInput>)
+                        :
+                        (<View style={{ flexDirection: 'row' }}>
+                            <JoyText style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20 }} multiline={true}> {area + " m"} </JoyText>
+                            <JoyText style={{ marginTop: 3, fontSize: TEXTS.xxs }}  baselineShift = {-6} >{"2"}</JoyText >
+                        </View>)
+                        }
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <Image style={{ height: 40, width: 40, borderRadius: 5 }} source={require('../../assets/mod/people_black.png')} />
-                        <JoyText style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20 }} multiline={true}> {room.info[2].value + " People"} </JoyText>
+                        {editMode ? 
+                        (<TextInput keyboardType="numeric" onChangeText={(text) => { if(text) setPeople(Math.max(1,Math.abs(parseInt(text)))); else setPeople(1)}} style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20, borderRadius: 10, borderWidth: 1, width: '80%', height: 40 }} multiline={true}> {people} </TextInput>)
+                        :
+                        <JoyText style={{ fontSize: TEXTS.lg, marginTop: 3, marginBottom: 30, marginLeft: 20 }} multiline={true}> {people + " People"} </JoyText>
+
+                    }
+                    </View>
+
+                    <View style={{ marginTop: 20 , marginBottom: 20}}>
+                        <TouchableOpacity onPress = {() => {
+                            if(editMode)
+                            {
+                                data = {
+                                    id : room.id,
+                                    bed : bed,
+                                    people : people,
+                                    area : area,
+                                    description : des
+                                }
+                                MController('UPDATEROOM',data)
+                                setEditMode(false)
+                            }
+                            else 
+                            {
+                                setEditMode(true)
+
+                            }
+                        }} style = {{borderRadius:35 , backgroundColor: "#FF6400", alignItems:'center'}}>
+                            <JoyText style={{color:'white', fontWeight:'bold', paddingTop:10 , fontSize: TEXTS.xxl, marginTop: 3, marginBottom: 20 }} multiline={true}> {editMode ? "DONE" : "EDIT ROOM INFORMATION"} </JoyText>
+
+                        </TouchableOpacity>
                     </View>
                 </View>
 

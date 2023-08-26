@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TextInput, Modal, View, Image, ScrollView, TouchableOpacity} from "react-native";
+import { StyleSheet, TextInput, Modal, View, Image, ScrollView, TouchableOpacity, ToastAndroid} from "react-native";
 import JoyText from '../../components/general/JoyText'
 import { COLORS, TEXTS } from '../../constants/theme'
+import MController from "../../controllers/moderatorController";
 
-export default function WalletScreen({ navigation }) {
+export default function WalletScreen({ navigation ,route }) {
 
-    hotelName = 'HARLEY HOUSE'
-    jc = 250000
-
+    const[hotelName,setHotelName] = useState(route.params["hotelName"])
+   
+   
     const [topupPopUp, setTopupPopUp] = useState(false)
     const [withdrawPopUp, setWithdrawPopUp] = useState(false)
-    const [joycoin, setJoycoin] = useState(jc)
+    const [joycoin, setJoycoin] = useState(route.params["wallet"])
     const [money, setMoney] = useState(0)
+   
 
     return (
         <ScrollView >
@@ -33,7 +35,7 @@ export default function WalletScreen({ navigation }) {
                             <JoyText style={{ flex: 7, fontSize: 31, fontWeight: 'bold' }}>{hotelName}</JoyText >
 
                         </View>
-                        <View style={{ flexDirection: 'row', marginTop: 40 }}>
+                        <View style={{ flexDirection: 'row', marginTop: 40, marginBottom: 30 }}>
 
                             <Image style={{ flex: 2, height: 30, width: 30 }} source={require('../../assets/mod/location_orange.png')} />
 
@@ -41,40 +43,25 @@ export default function WalletScreen({ navigation }) {
                             <JoyText style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{joycoin}</JoyText >
 
                         </View>
-                        <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 30 }}>
-                            <Image style={{ flex: 2, height: 30, width: 30 }} source={require('../../assets/mod/star.png')} />
-
-                            <JoyText style={{ marginLeft: 10, flex: 6, fontSize: 17 }}>{'Bank: '}</JoyText >
-                            <JoyText style={{ marginLeft: 10, flex: 15, fontSize: 17, color: '#888888' }}>{'845122142179'}</JoyText >
-                        </View>
+                     
 
                     </View>
 
                     <View style={{ height: 15, backgroundColor: 'transparent' }} />
 
-                    <View style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <JoyText style={{ fontSize: 25, fontWeight: 'bold', color: '#FF6400', marginBottom: 15, marginTop: 15 }}>Nạp/Rút</JoyText >
-                        <View style={{ flexDirection: 'row' }}>
+                    <View style={{ paddingHorizontal: 32, backgroundColor: 'white',}}>
+                        
+                        <View style={{ flexDirection: 'row' , marginBottom: 30 , marginTop: 20 }}>
 
-                            <TouchableOpacity style={{ width: 120, height: 50, borderRadius: 10, borderWidth: 1, marginBottom: 20, marginRight: 15 }} onPress={() => {setTopupPopUp(!topupPopUp)}} >
-                                <JoyText style={{ fontSize: 20, textAlign: 'center', paddingTop: 7 }}>Nạp</JoyText >
-                            </TouchableOpacity>
+                          
                             <TouchableOpacity style={{ width: 120, height: 50, borderRadius: 10, borderWidth: 1, marginBottom: 20 }} onPress={() => {setWithdrawPopUp(!withdrawPopUp)}}>
-                                <JoyText style={{ fontSize: 20, textAlign: 'center', paddingTop: 7 }}>Rút</JoyText >
+                                <JoyText style={{ fontSize: 20, textAlign: 'center', paddingTop: 7 }}>Withdraw</JoyText >
                             </TouchableOpacity>
                         </View>
 
                     </View>
 
                     <View style={{ height: 15, backgroundColor: 'transparent' }} />
-
-                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <JoyText style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Liên kết ngân hàng'}</JoyText >
-                    </TouchableOpacity>
-                    <View style={{ height: 5, backgroundColor: '#888888' }} />
-                    <TouchableOpacity style={{ paddingHorizontal: 32, backgroundColor: 'white' }}>
-                        <JoyText style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 15, marginTop: 15, }}>{'Hủy liên kết ngân hàng'}</JoyText >
-                    </TouchableOpacity>
 
 
                     <Modal
@@ -135,7 +122,7 @@ export default function WalletScreen({ navigation }) {
                                         </JoyText>
                                     </TouchableOpacity>
                                     <View>
-                                        <JoyText style={{ color: COLORS.heading_text,fontSize: TEXTS.xxl,fontWeight: '600',}}>Rut tien</JoyText>
+                                        <JoyText style={{ color: COLORS.heading_text,fontSize: TEXTS.xxl,fontWeight: '600',}}>Withdraw</JoyText>
                                         <TextInput
                                             style = {{marginTop: 30, padding:10, fontSize:TEXTS.lg, height: 60, borderWidth:1, borderRadius:10}}
                                             placeholder="Enter amount of money"
@@ -146,8 +133,16 @@ export default function WalletScreen({ navigation }) {
                                         onPress = {() => { 
                                             if(money <= joycoin)
                                             {
-                                                setJoycoin(joycoin - money)
-                                                setMoney(0)
+                                                if (MController("WITHDRAW",joycoin - money))
+                                                {
+                                                    setJoycoin(joycoin - money)
+                                                    setMoney(0)
+                                                }
+                                                ToastAndroid.show("Successfully !", ToastAndroid.SHORT)
+                                            }
+                                            else 
+                                            {
+                                                ToastAndroid.show("Not enough money !", ToastAndroid.SHORT)
                                             }
                                             setWithdrawPopUp(false)
                                         }} 
