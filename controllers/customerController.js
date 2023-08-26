@@ -12,7 +12,7 @@ import getFavoriteList from "../models/customer/getFavoriteList";
 import sendPayment from "../models/customer/sendPayment";
 import sendRating from "../models/customer/sendRating";
 import sendCancel from "../models/customer/sendCancel";
-
+import sendReport from "../models/customer/sendReport";
 
 export default async function CController (type, ...payload) {
     // console.log('[payload]' , payload)
@@ -58,6 +58,10 @@ export default async function CController (type, ...payload) {
         case 'SENDCANCEL' : {
             const cancel = await sendCancel(payload)
             return cancel
+        }
+        case 'SENDREPORT' : {
+            const report = await sendReport(payload)
+            return report
         }
         // case 'GETDETAILRESERVATION' : {
         //     const reservationInformation = await getDetailReservation()

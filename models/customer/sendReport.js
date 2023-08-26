@@ -1,23 +1,21 @@
 import axiosInstance from "../configs";
 
-export default async function sendRating(payload) {
+export default async function sendReport(payload) {
 
     let bookingId = payload[0]._id
-    let s = payload[1]
-    let ct = payload[2]
+    let ct = payload[1]
 
-    console.log(`[Rating]\Booking ID : ${bookingId}\nStar : ${s} , Content : ${ct}`)
+    console.log(`[Report]\nBooking ID : ${bookingId}\nContent : ${ct}`)
 
     try {
-        res = await axiosInstance.post(`/customer/rating`, {
+        res = await axiosInstance.post(`/customer/report`, {
             booking_id: bookingId,
-            star: s,
-            comment: ct
+            content: ct
         });
 
         res = res.data.message
-
-        console.log('[Rating status] :', res);
+        
+        console.log('[Report status] :', res);
         
         return res
     }

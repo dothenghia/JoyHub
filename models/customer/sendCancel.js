@@ -8,16 +8,16 @@ export default async function sendCancel(payload) {
     console.log(`[Cancel]\nRoom ID : ${roomId}\nHotel ID : ${hotelId}`)
 
     try {
-        res = await axiosInstance.post(`/customer/cancelRoom`, {
+        res = await axiosInstance.put(`/customer/cancelRoom`, {
             hotel_id: hotelId,
             room_id: roomId
         });
 
-        console.log('[Cancel status] :', res);
-        // res = res.data.message
-
+        res = res.data.message
         
-        // return res
+        console.log('[Cancel status] :', res);
+        
+        return res
     }
 
 
