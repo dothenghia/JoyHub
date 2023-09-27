@@ -2,6 +2,7 @@ import React, { useReducer, useMemo, lazy, Suspense } from "react";
 import { Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StatusBar } from 'expo-status-bar';
 
 // Used for set location of DatePicker
 import { en, registerTranslation } from 'react-native-paper-dates'
@@ -22,6 +23,8 @@ export default function App() {
     const screenOptions = useMemo(() => ({ headerShown: false }), []);
     return (
         <GlobalProvider>
+            <StatusBar style="dark" backgroundColor="#00000000" translucent={true}/>
+
             <NavigationContainer>
                 <Stack.Navigator screenOptions={screenOptions}>
                     <Stack.Screen name="LoginPage"
